@@ -31,7 +31,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 baselayer::baselayer(lexer *p, dive *a)
 {
-    cout<<"baselayer_ini "<<endl;
+    cout<<"baselayer_ini"<<endl;
 
 
 
