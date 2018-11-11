@@ -32,25 +32,25 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 baselayer::baselayer(lexer *p, dive *a)
 {
     cout<<"baselayer_ini"<<endl;
-    
 
- 
+
+
     int delta;
 
     pcce = new cce3D(p,a);
 
     pent = new entity*[p->bl_count];
-    
+
 
     count=0;
-	
+
 	delta=count;
 	for(n=0;n<p->B10;++n)
     {
     pent[n+delta] = new box_bl(p,n,1);
     ++count;
     }
-	
+
 	delta=count;
     for(n=0;n<p->B22;++n)
     {
@@ -108,7 +108,3 @@ void baselayer::start(lexer* p, dive* a)
     a->flag(i,j,k)=1;
     }
 }
-
-
-
-
