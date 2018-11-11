@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="DIVEMesh" InternalType="Console" Version="10.0.0">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="Headers">
+    <VirtualDirectory Name="Baselayer">
+      <File Name="baselayer.h"/>
+      <File Name="box_bl.h"/>
+      <File Name="sphere_bl.h"/>
+      <File Name="pipe_x_bl.h"/>
+      <File Name="pipe_y_bl.h"/>
+      <File Name="pipe_z_bl.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Boundary">
+      <File Name="bc.h"/>
+      <File Name="cce.h"/>
+      <File Name="cce3D.h"/>
+      <File Name="surface.h"/>
+      <File Name="boundary_geometry.h"/>
+      <File Name="slice.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Decomposition">
+      <File Name="decomposition.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="DIVE">
+      <File Name="dive.h"/>
+      <VirtualDirectory Name="Initialize">
+        <File Name="initialize.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Interpolation">
+        <File Name="interpolation.h"/>
+        <File Name="inverse_dist.h"/>
+        <File Name="inverse_dist_local.h"/>
+      </VirtualDirectory>
+      <File Name="module.h"/>
+      <File Name="module_void.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Freecoor">
+      <VirtualDirectory Name="DXF">
+        <File Name="dxf.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Container">
+        <File Name="entity.h"/>
+        <File Name="line.h"/>
+        <File Name="spline.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Flag">
+        <File Name="flag_indicate.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Surfdir">
+        <File Name="surface_dir.h"/>
+        <File Name="surfdir_indicate.h"/>
+      </VirtualDirectory>
+      <File Name="freecoor.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Objects">
+      <File Name="box.h"/>
+      <File Name="cylinder_y.h"/>
+      <File Name="cylinder_z.h"/>
+      <File Name="objects.h"/>
+      <File Name="wedge_x.h"/>
+      <File Name="sphere.h"/>
+      <File Name="conical.h"/>
+      <File Name="wedge_y.h"/>
+      <VirtualDirectory Name="Geometry">
+        <File Name="objects_geometry.h"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Topography">
+      <File Name="geodat.h"/>
+      <File Name="bedlevel.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Main">
+      <VirtualDirectory Name="Driver">
+        <File Name="driver_headers.h"/>
+        <File Name="driver_declarations.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Printer">
+        <File Name="print_binary.h"/>
+        <File Name="printer.h"/>
+        <File Name="print_objects.h"/>
+        <File Name="print_stl.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Grid">
+        <File Name="iterators.h"/>
+        <File Name="increment.h"/>
+        <VirtualDirectory Name="Field">
+          <File Name="field.h"/>
+          <File Name="field1d.h"/>
+          <File Name="field2d.h"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="Intfield">
+          <File Name="intfield.h"/>
+          <File Name="intfield1d.h"/>
+          <File Name="intfield1dy.h"/>
+          <File Name="intfield2d.h"/>
+        </VirtualDirectory>
+        <File Name="resize.h"/>
+      </VirtualDirectory>
+      <File Name="driver.h"/>
+      <File Name="main.h"/>
+      <File Name="lexer.h"/>
+      <File Name="template.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Data">
+      <File Name="data.h"/>
+      <VirtualDirectory Name="Kriging">
+        <File Name="kriging.h"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Solid">
+      <File Name="solid.h"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Sources">
+    <VirtualDirectory Name="Baselayer">
+      <File Name="baselayer.cpp"/>
+      <File Name="box_bl.cpp"/>
+      <File Name="pipe_x_bl.cpp"/>
+      <File Name="pipe_y_bl.cpp"/>
+      <File Name="pipe_z_bl.cpp"/>
+      <File Name="sphere_bl.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Boundary">
+      <VirtualDirectory Name="CCE">
+        <File Name="cce.cpp"/>
+        <File Name="cce3D.cpp"/>
+        <File Name="cce3D_addcell.cpp"/>
+        <File Name="cce3D_ini.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="BC">
+        <File Name="bc.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Surface">
+        <File Name="surface.cpp"/>
+        <File Name="surface_dir.cpp"/>
+        <File Name="surface_dist.cpp"/>
+        <File Name="surface_normal.cpp"/>
+        <File Name="surface_solid.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Geometry">
+        <File Name="boundary_geometry.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Slice">
+        <File Name="slice.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Decomposition">
+      <File Name="decomp_partition.cpp"/>
+      <File Name="decomposition.cpp"/>
+      <File Name="decomp_surf.cpp"/>
+      <File Name="decomp_cosurf.cpp"/>
+      <File Name="decomp_analyse.cpp"/>
+      <File Name="decomp_costfunc.cpp"/>
+      <File Name="decomposition_correction.cpp"/>
+      <File Name="decomp_paraslice.cpp"/>
+      <File Name="decomposition_print.cpp"/>
+      <File Name="decomposition_count.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="DIVE">
+      <File Name="dive.cpp"/>
+      <VirtualDirectory Name="Initialize">
+        <File Name="initialize.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Interpolation">
+        <File Name="inverse_dist.cpp"/>
+        <File Name="inverse_dist_local_setup.cpp"/>
+        <File Name="inverse_dist_local.cpp"/>
+      </VirtualDirectory>
+      <File Name="module_void.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Freecoor">
+      <VirtualDirectory Name="Container">
+        <File Name="line.cpp"/>
+        <File Name="line_util.cpp"/>
+        <File Name="spline.cpp"/>
+        <File Name="spline_util.cpp"/>
+        <File Name="spline_coeff.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="DXF">
+        <File Name="dxf.cpp"/>
+        <File Name="dxf_reader.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Surfdir">
+        <File Name="surfdir_indicate.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Flag">
+        <File Name="flag_indicate.cpp"/>
+      </VirtualDirectory>
+      <File Name="freecoor.cpp"/>
+      <File Name="freecoor_sort.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Main">
+      <File Name="driver.cpp"/>
+      <VirtualDirectory Name="Grid">
+        <File Name="increment.cpp"/>
+        <VirtualDirectory Name="Field">
+          <File Name="field.cpp"/>
+          <File Name="field1d.cpp"/>
+          <File Name="field2d.cpp"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="Fieldint">
+          <File Name="intfield.cpp"/>
+          <File Name="intfield1d.cpp"/>
+          <File Name="intfield1dy.cpp"/>
+          <File Name="intfield2d.cpp"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="Resize">
+          <File Name="resize.cpp"/>
+          <File Name="resize_delete.cpp"/>
+          <File Name="resize_resize.cpp"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Driver">
+        <File Name="driver_analytics.cpp"/>
+      </VirtualDirectory>
+      <File Name="ini.cpp"/>
+      <File Name="lexer.cpp"/>
+      <VirtualDirectory Name="Lexer">
+        <File Name="read_stl.cpp"/>
+        <VirtualDirectory Name="Grid Spacing">
+          <File Name="lexer_gridspacing_fsf.cpp"/>
+          <File Name="lexer_gridspacing.cpp"/>
+        </VirtualDirectory>
+        <File Name="lexer_createspace.cpp"/>
+        <File Name="read_control.cpp"/>
+        <File Name="read_geodat.cpp"/>
+        <File Name="read_data.cpp"/>
+        <File Name="read_solid.cpp"/>
+        <File Name="lexer_pos.cpp"/>
+      </VirtualDirectory>
+      <File Name="logic.cpp"/>
+      <File Name="main.cpp"/>
+      <VirtualDirectory Name="Printer">
+        <File Name="print_binary.cpp"/>
+        <File Name="print_debug.cpp"/>
+        <File Name="print_objects.cpp"/>
+        <File Name="print_solid.cpp"/>
+        <File Name="print_bottom.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Objects">
+      <File Name="objects.cpp"/>
+      <VirtualDirectory Name="Geometry">
+        <File Name="objects_geometry.cpp"/>
+      </VirtualDirectory>
+      <File Name="object_conical.cpp"/>
+      <File Name="object_cylinder_y.cpp"/>
+      <File Name="object_cylinder_z.cpp"/>
+      <File Name="object_sphere.cpp"/>
+      <File Name="object_box.cpp"/>
+      <File Name="object_wedge_x.cpp"/>
+      <File Name="object_wedge_y.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Topography">
+      <File Name="geodat_print.cpp"/>
+      <File Name="geodat.cpp"/>
+      <File Name="bedlevel.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Data">
+      <File Name="data.cpp"/>
+      <File Name="data_inversedist.cpp"/>
+      <VirtualDirectory Name="Kriging">
+        <File Name="kriging.cpp"/>
+        <File Name="kriging_rearrange.cpp"/>
+        <File Name="kriging_semivariogram.cpp"/>
+        <File Name="kriging_solve.cpp"/>
+        <File Name="kriging_pointcheck.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Solid">
+      <File Name="solid.cpp"/>
+      <File Name="solid_box.cpp"/>
+      <File Name="solid_cone_z.cpp"/>
+      <File Name="solid_cone_y.cpp"/>
+      <File Name="solid_cone_x.cpp"/>
+      <File Name="solid_wedge_x.cpp"/>
+      <File Name="solid_wedge_y.cpp"/>
+      <File Name="solid_wedge_z.cpp"/>
+      <File Name="solid_ogee-weir.cpp"/>
+      <File Name="solid_gcb.cpp"/>
+      <File Name="solid_dist.cpp"/>
+      <File Name="solid_semicyl_y.cpp"/>
+      <File Name="solid_box_array.cpp"/>
+      <File Name="solid_rotation.cpp"/>
+      <File Name="solid_tetrahedon.cpp"/>
+      <File Name="solid_pyramid.cpp"/>
+      <File Name="solid_wedge.cpp"/>
+      <File Name="solid_hexahedron.cpp"/>
+      <File Name="solid_arch.cpp"/>
+      <File Name="solid_plate_x.cpp"/>
+      <VirtualDirectory Name="Ray Casting">
+        <File Name="solid_ray-cast-stl.cpp"/>
+        <File Name="solid_ray-cast-y.cpp"/>
+        <File Name="solid_ray-cast-z.cpp"/>
+        <File Name="solid_ray-cast.cpp"/>
+        <File Name="solid_ray-cast-x.cpp"/>
+        <File Name="solid_ray-cast-io.cpp"/>
+        <VirtualDirectory Name="ray_gcb">
+          <File Name="solid_ray-cast-x_gcb.cpp"/>
+        </VirtualDirectory>
+        <File Name="solid_ray-cast-correct.cpp"/>
+      </VirtualDirectory>
+      <File Name="solid_cylinder_z.cpp"/>
+      <File Name="solid_ellipsoid.cpp"/>
+      <File Name="solid_ellipsoid_semi.cpp"/>
+      <File Name="solid_sphere.cpp"/>
+      <File Name="solid_ellipsoid_semi_rot.cpp"/>
+      <File Name="solid_jacketmember_x.cpp"/>
+      <File Name="solid_jacketmember_y.cpp"/>
+      <File Name="solid_jacketmember_z.cpp"/>
+      <File Name="solid_stl.cpp"/>
+      <File Name="solid_jacketmember_vert.cpp"/>
+      <File Name="solid_jacketmember_horz.cpp"/>
+      <File Name="solid_jacketmember_norm.cpp"/>
+      <File Name="solid_cylinder_y.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O3;-w" C_Options="-O3;-w" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="./Release/DIVEMesh" IntermediateDirectory="./obj" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
