@@ -57,7 +57,7 @@ void lexer::read_control()
 
 	if (c == '/') 
 	{
-		control.ignore(numeric_limits<streamsize>::max(), '\n');
+		control.ignore(1000, '\n');
 	}
 	else
 	{	
