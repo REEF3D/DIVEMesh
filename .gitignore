@@ -11,11 +11,13 @@ Debug
 *.pyc
 bin
 lib
-.codelite/.tern-port   
-.codelite/DIVEMesh.tags  
+obj
+.codelite/.tern-port
+.codelite/DIVEMesh.tags
 .codelite/refactoring.db
 DIVEMesh.batch_build
 DIVEMesh.mk
+DIVEMesh.txt
 *.workspace.session
 DIVEMesh.txt
 .DS_Store
