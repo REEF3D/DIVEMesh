@@ -29,11 +29,7 @@ void driver::analytics(lexer *p, dive *a)
 	
     int count=0;
 
-    LOOP
-    if(a->flag(i,j,k)>0)
-    ++count;
-
-    cout<<"Number of Cells: "<<count<<endl;
+    
 
 
 	// Min/Max cell size and position
@@ -141,6 +137,13 @@ void driver::analytics(lexer *p, dive *a)
 	cout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
 	cout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
 	cout<<"z "<<ratioz_max<<" at "<<k_max<<endl;		
+    
+    
+    LOOP
+    if(a->flag(i,j,k)>0)
+    ++count;
+
+    cout<<endl<<"Number of Cells: "<<count<<endl;
 	
 	
 	cout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;	
