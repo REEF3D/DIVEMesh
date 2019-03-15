@@ -17,5 +17,7 @@ obj
 .codelite/refactoring.db
 DIVEMesh.batch_build
 DIVEMesh.mk
-DIVEMesh.txt
 *.workspace.session
+DIVEMesh.txt
+.DS_Store
+doxydoc*

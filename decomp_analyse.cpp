@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2018 Hans Bihs
+Copyright 2008-2019 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -107,6 +107,9 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	
 	if(a->mx>=a->my && a->mx>=a->mz)
 	maindir=1;
+    
+    ddout<<"maindir: "<<maindir<<endl;
+    ddout<<"M11: "<<p->M11<<endl;
 	
 	// turn off partition directions
 	if((xvar_per>=p->M31 && yvar_per<p->M31 && zvar_per<p->M31) 
@@ -114,12 +117,15 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	|| (xvar_per<p->M31 && yvar_per<p->M31 && zvar_per>=p->M31))
 	{
 		if(xvar>=yvar && xvar>=zvar)
+        if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 		p->M11=0;
 		
 		if(yvar>xvar && yvar>=zvar)
+        if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10))   
 		p->M12=0;
 		
 		if(zvar>xvar && zvar>yvar)
+        if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10))   
 		p->M13=0;
 	}
 	
@@ -128,35 +134,45 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	if(xvar_per>=p->M31 && yvar_per>=p->M31 && zvar_per<p->M31)
 	{
 		if(xvar>yvar)
+        if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 		p->M11=0;
+
 		
 		if(xvar<yvar)
+        if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10))   
 		p->M12=0;
 		
 		if(xvar==yvar)
 		{
 			if(maindir==1)
+            if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10))   
 			p->M12=0;
 			
 			if(maindir==2)
+            if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 			p->M11=0;
+
 		}
 	}
 	
 	if(xvar_per>=p->M31 && yvar_per<p->M31 && zvar_per>=p->M31)
 	{
 		if(xvar>zvar)
+        if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 		p->M11=0;
 		
 		if(xvar<zvar)
+        if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10)) 
 		p->M13=0;
 		
 		if(xvar==zvar)
 		{
 			if(maindir==1)
+            if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10)) 
 			p->M13=0;
 			
 			if(maindir==3)
+            if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 			p->M11=0;
 		}
 	}
@@ -164,17 +180,21 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	if(xvar_per<p->M31 && yvar_per>=p->M31 && zvar_per>=p->M31)
 	{
 		if(yvar>zvar)
+        if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 		p->M12=0;
 		
 		if(yvar<zvar)
+        if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10))
 		p->M13=0;
 		
 		if(xvar==yvar)
 		{
 			if(maindir==2)
+            if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10))
 			p->M13=0;
 			
 			if(maindir==3)
+            if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10)) 
 			p->M12=0;
 		}
 
@@ -184,6 +204,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	if(xvar_per>=p->M31 && yvar_per>=p->M31 && zvar_per>=p->M31)
 	{
 		if(xcross_m<=ycross_m && xcross_m<=zcross_m)
+        if(p->M11==1 && p->knox>p->M10)
 		{
 		p->M12=0;
 		p->M13=0;
@@ -191,6 +212,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 		}
 		
 		if(ycross_m<=xcross_m && ycross_m<=zcross_m)
+        if(p->M12==1 && p->knoy>p->M10)
 		{
 		p->M11=0;
 		p->M13=0;
@@ -198,6 +220,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 		}
 		
 		if(zcross_m<=xcross_m && zcross_m<=ycross_m)
+        if(p->M13==1 && p->knoz>p->M10)
 		{
 		p->M11=0;
 		p->M12=0;
@@ -207,18 +230,21 @@ void decomp::partition_analyse(lexer *p, dive *a)
 		if(check==0)
 		{
 			if(a->knox>=a->knoy && a->knox>=a->knoz)
+            if(p->M11==1 && p->knox>p->M10)
 			{
 			p->M12=0;
 			p->M13=0;
 			}
 			
 			if(a->knoy>a->knox && a->knoy>=a->knoz)
+            if(p->M12==1 && p->knoy>p->M10)
 			{
 			p->M11=0;
 			p->M13=0;
 			}
 			
 			if(a->knoz>a->knox && a->knoz>a->knoy)
+            if(p->M13==1 && p->knoz>p->M10)
 			{
 			p->M11=0;
 			p->M12=0;
@@ -231,7 +257,10 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	if(maindir==1 && p->M11==0)
 	{
 		if(a->my>=a->mz && p->M12==1)
+        {
+        cout<<"MX: "<<a->mx<<" MY: "<<a->my<<endl;
 		maindir=2;
+        }
 		
 		if(a->mz>=a->my && p->M13==1)
 		maindir=3;
@@ -274,7 +303,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	}
 	
 	
-	ddout<<"Maindir: "<<maindir<<endl;
+	ddout<<"maindir_final: "<<maindir<<endl;
 	ddout<<"M11: "<<p->M11<<endl;
 	ddout<<"M12: "<<p->M12<<endl;
 	ddout<<"M13: "<<p->M13<<endl;
