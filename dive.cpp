@@ -160,7 +160,7 @@ ccpointcount=0;
 //ibm
     maxsurf =int((knox*knoy + knox*knoz + knoy*knoz)); // just in time? pre count in cce3d
 	
-	cout<<"MAXSURF: "<<maxsurf<<endl;
+	//cout<<"MAXSURF: "<<maxsurf<<endl;
 
 	
     Iarray(facet,maxsurf,6);

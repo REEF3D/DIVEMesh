@@ -25,6 +25,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void driver::analytics(lexer *p, dive *a)
 {
+    ofstream nugout;
+    
+    nugout.open("DIVEMesh-Non-Uniform-Mesh.txt");
+    
+    
 	// Number of Cells
 	
     int count=0;
@@ -86,10 +91,10 @@ void driver::analytics(lexer *p, dive *a)
 		}
 	}
 	
-    cout<<"Min/Max Cell Size:"<<endl;
-	cout<<"dx= "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
-	cout<<"dy= "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
-	cout<<"dz= "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
+    nugout<<"Min/Max Cell Size:"<<endl;
+	nugout<<"dx= "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
+	nugout<<"dy= "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
+	nugout<<"dz= "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
 
 
 	// Min/Max Aspect Ratio
@@ -133,18 +138,18 @@ void driver::analytics(lexer *p, dive *a)
 		}
 	}
 
-    cout<<"Max Aspect Ratio:"<<endl;
-	cout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
-	cout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
-	cout<<"z "<<ratioz_max<<" at "<<k_max<<endl;		
+    nugout<<"Max Aspect Ratio:"<<endl;
+	nugout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
+	nugout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
+	nugout<<"z "<<ratioz_max<<" at "<<k_max<<endl;		
     
     
     LOOP
     if(a->flag(i,j,k)>0)
     ++count;
 
-    cout<<endl<<"Number of Cells: "<<count<<endl;
+    nugout<<endl<<"Number of Cells: "<<count<<endl;
 	
 	
-	cout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;	
+	nugout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;	
 }

@@ -99,7 +99,7 @@ void solid::start(lexer* p, dive* a)
     cout<<"SOLID psi: "<<psi<<endl;
     } 
     
-    cout<<"solid "<<p->solid_count<<"  "<<p->tricount<<endl;
+    cout<<"solid "<<endl;
     
     MALOOP
 	{
@@ -353,13 +353,13 @@ void solid::gcb_estimate(lexer *p, dive *a)
 		}
 	++n;
 	}
-    
+    /*
     n=0;
     NLOOP
     {
 	cout<<n<<" solid_gcb_est: "<<a->solid_gcb[n]<<endl;
     ++n;
-    }
+    }*/
 }
 
 

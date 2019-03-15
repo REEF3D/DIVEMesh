@@ -1038,6 +1038,10 @@ cout<<".";
 
 cout<<endl;
 
+cout<<"printing complete"<<endl;
+
+cout<<"__________________________________________"<<endl<<endl;
+
 }
 
 
