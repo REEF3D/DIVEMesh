@@ -96,6 +96,10 @@ void driver::analytics(lexer *p, dive *a)
 	nugout<<"dy= "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
 	nugout<<"dz= "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
 
+    cout<<"Min/Max Cell Size:"<<endl;
+	cout<<"dx= "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
+	cout<<"dy= "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
+	cout<<"dz= "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
 
 	// Min/Max Aspect Ratio
 	
@@ -142,14 +146,20 @@ void driver::analytics(lexer *p, dive *a)
 	nugout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
 	nugout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
 	nugout<<"z "<<ratioz_max<<" at "<<k_max<<endl;		
-    
+
+    cout<<"Max Aspect Ratio:"<<endl;
+	cout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
+	cout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
+	cout<<"z "<<ratioz_max<<" at "<<k_max<<endl;	    
     
     LOOP
     if(a->flag(i,j,k)>0)
     ++count;
 
     nugout<<endl<<"Number of Cells: "<<count<<endl;
+    
+    cout<<endl<<"Number of Cells: "<<count<<endl;
 	
 	
-	nugout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;	
+	cout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;	    
 }
