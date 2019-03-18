@@ -185,5 +185,5 @@ void decomp::paraslicecosurface(lexer* p, dive* a)
 	
     }
 	
-	cout<<"PARACOSLICE  1: "<<a->paracoslice1count<<"  2: "<<a->paracoslice2count<<"  3: "<<a->paracoslice3count<<"  4: "<<a->paracoslice4count<<endl;
+	//cout<<"PARACOSLICE  1: "<<a->paracoslice1count<<"  2: "<<a->paracoslice2count<<"  3: "<<a->paracoslice3count<<"  4: "<<a->paracoslice4count<<endl;
 }
