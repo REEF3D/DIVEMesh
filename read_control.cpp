@@ -73,6 +73,9 @@ void lexer::read_control()
                         B2=1;
                         clear(c,numint);
 						 break;
+               case 3: control>>B3;
+                         clear(c,numint);
+						 break;
                case 5: control>>B5;
                          clear(c,numint);
 						 break;
