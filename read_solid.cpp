@@ -305,6 +305,14 @@ void lexer::solid_preproc()
 	
 	for(n=0;n<S141;++n)
 	trinum+=10966;
+    
+    if(p->S300==1)
+    {
+        for(n=0;n<p->310;++n)
+        
+        
+    }
+    
 	
 	if(S1==0)
 	{
