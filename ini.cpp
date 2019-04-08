@@ -181,6 +181,9 @@ void lexer::ini_default()
     S201 = 0;       // int x-plate
     S202 = 0;       // int y-plate
     S203 = 0;       // int z-plate
+    S300 = 0;       // int turn fluvial box
+    S307 = 0.0;     // double height fluvial box
+    
 
 	solidprint=0;
 

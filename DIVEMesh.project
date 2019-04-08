@@ -274,6 +274,7 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
+      <File Name="solid_fluvial_box.cpp"/>
       <File Name="solid.cpp"/>
       <File Name="solid_box.cpp"/>
       <File Name="solid_cone_z.cpp"/>
