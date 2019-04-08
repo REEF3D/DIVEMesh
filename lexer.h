@@ -265,13 +265,13 @@ public:
     double *S203_z,*S203_xs,*S203_xe,*S203_ys,*S203_ye;
     
     int S300;
-    double S307,S308_x,S308_y,S309;
+    double S306,S307,S308_x,S308_y,S309_x,S309_y,S309_z;
     int S310;
-    double *S310_b,*S310_l;
+    double *S310_l;
     int S320;
-    double *S320_r,*S320_a;
+    double *S320_r,*S320_phi;
     int S330;
-    double *S330_r,*S330_a;
+    double *S330_r,*S330_phi;
 	
 	
 	double xs_stl,xe_stl,ys_stl,ye_stl,zs_stl,ze_stl;

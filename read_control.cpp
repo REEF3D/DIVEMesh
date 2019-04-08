@@ -506,17 +506,20 @@ void lexer::read_control()
                 case 308: control>>S308_x>>S308_y;
 						 clear(c,numint);
 						 break;
-                case 309: control>>S309;
+                case 309: control>>S309_x>>S309_y>>S309_z;
 						 clear(c,numint);
 						 break;
                 case 310: ++S310;
 						 clear(c,numint);
+                        S300=1;
 						 break;
                 case 320: ++S320;
 						 clear(c,numint);
+                        S300=1;
 						 break;
                 case 330: ++S330;
 						 clear(c,numint);
+                        S300=1;
 						 break;
 				}
 				break;
@@ -936,6 +939,14 @@ void lexer::read_control()
 	
 	Darray(S123_R1,S121);
 	Darray(S123_R2,S121);
+    
+    Darray(S310_l,S310);
+    
+    Darray(S320_r,S320);
+    Darray(S320_phi,S320);
+    
+    Darray(S330_r,S330);
+    Darray(S330_phi,S330);
 
     int countB10=0;
     int countB22=0;
@@ -988,6 +999,9 @@ void lexer::read_control()
     int countS201=0;
     int countS202=0;
     int countS203=0;
+    int countS310=0;
+    int countS320=0;
+    int countS330=0;
 	
 	control.open("control.txt", ios_base::in);
 	while(!control.eof())
