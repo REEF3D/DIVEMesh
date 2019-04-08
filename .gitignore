@@ -24,3 +24,5 @@ DIVEMesh.txt
 .DS_Store
 DIVEMESH.txt
 DIVEMesh.txt
+compile_flags.txt
+compile_commands.json
