@@ -497,7 +497,10 @@ void lexer::read_control()
                 case 203: ++S203;
 						 clear(c,numint);
 						 break;
-                case 300: control>>S300;
+                case 305: control>>S305;
+						 clear(c,numint);
+						 break;
+                case 306: control>>S306;
 						 clear(c,numint);
 						 break;
                 case 307: control>>S307;
@@ -511,15 +514,15 @@ void lexer::read_control()
 						 break;
                 case 310: ++S310;
 						 clear(c,numint);
-                        S300=1;
+                        ++S300;
 						 break;
                 case 320: ++S320;
 						 clear(c,numint);
-                        S300=1;
+                        ++S300;
 						 break;
                 case 330: ++S330;
 						 clear(c,numint);
-                        S300=1;
+                        ++S300;
 						 break;
 				}
 				break;
@@ -940,6 +943,8 @@ void lexer::read_control()
 	Darray(S123_R1,S121);
 	Darray(S123_R2,S121);
     
+    Iarray(S300_ord,S300);
+    
     Darray(S310_l,S310);
     
     Darray(S320_r,S320);
@@ -999,6 +1004,7 @@ void lexer::read_control()
     int countS201=0;
     int countS202=0;
     int countS203=0;
+    int countS300=0;
     int countS310=0;
     int countS320=0;
     int countS330=0;
@@ -1250,6 +1256,25 @@ void lexer::read_control()
                         ++countS203;
 						 clear(c,numint);
 						 break;
+                case 310: control>>S310_l[countS310];
+                        ++countS310;
+                        S300_ord[countS300]=1;
+                        ++countS300;
+                        clear(c,numint);
+                        break;
+                case 320: control>>S320_r[countS320]>>S320_phi[countS320];
+                        ++countS320;
+                        S300_ord[countS300]=2;
+                        ++countS300;
+                        clear(c,numint);
+                        break;
+                case 330: control>>S330_r[countS330]>>S330_phi[countS330];
+                        ++countS330;
+                        S300_ord[countS300]=3;
+                        ++countS300;
+                        clear(c,numint);
+                        break;
+                
 				}
 				break;
 		}

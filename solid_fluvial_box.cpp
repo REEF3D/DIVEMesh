@@ -42,7 +42,132 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
         b. 
     
     */
+    cout<<"fluvial box start"<<endl;
+    int countS310=0;
+    int countS320=0;
+    int countS330=0;
+    int countds=1;
+    int numds=0;
+    int ds_count;
+    double dangle,length;
+    double *xl,*yl,*xr,*yr;
+    double x0=0.0; // add origin afterwards
+    double y0=0.0; // add origin
+    double xe=x0;
+    double ye=y0;
+    double phi0 = 0.0;
+    double deltax,deltay;
+    int lastds;
     
+    p->Darray(xl,p->S300_ds);
+    p->Darray(yl,p->S300_ds);
+    p->Darray(xr,p->S300_ds);
+    p->Darray(yr,p->S300_ds);
+    
+    
+    xl[0] = x0;
+    yl[0] = y0 + p->S306*0.5;
+    
+    xr[0] = x0;
+    yr[0] = y0 - p->S306*0.5;
+    
+    
+
+    // get left and right segment
+    for(n=0;n<p->S300;++n)
+    {
+        //straight
+        if(p->S300_ord[n]==1)
+        {
+        xl[countds] = xl[countds-1] + p->S310_l[countS310]*cos(phi0);
+        yl[countds] = yl[countds-1] + p->S310_l[countS310]*sin(phi0);
+        
+        xr[countds] = xr[countds-1] + p->S310_l[countS310]*cos(phi0);
+        yr[countds] = yr[countds-1] + p->S310_l[countS310]*sin(phi0);
+        
+        ++countds;
+        ++countS310;
+        }
+        
+        // left
+        if(p->S300_ord[n]==2)
+        {
+            lastds = countds;
+            length = (p->S320_r[countS320])*p->S320_phi[countS320];
+            ds_count = int(length/(p->S305*p->DXM));
+            dangle = p->S320_phi[countS320]/double(ds_count);
+            
+            deltax = xl[lastds-1] - (p->S320_r[countS320]-p->S306*0.5)*cos(dangle*double(0)+phi0-0.5*PI);
+            deltay = yl[lastds-1] - (p->S320_r[countS320]-p->S306*0.5)*sin(dangle*double(0)+phi0-0.5*PI);
+            
+            for(q=1;q<=ds_count;++q)
+            {
+            xl[countds] = deltax + (p->S320_r[countS320]-p->S306*0.5)*cos(dangle*double(q)+phi0-0.5*PI);
+            yl[countds] = deltay + (p->S320_r[countS320]-p->S306*0.5)*sin(dangle*double(q)+phi0-0.5*PI);
+            
+            xr[countds] = deltax + (p->S320_r[countS320]+p->S306*0.5)*cos(dangle*double(q)+phi0-0.5*PI);
+            yr[countds] = deltay + (p->S320_r[countS320]+p->S306*0.5)*sin(dangle*double(q)+phi0-0.5*PI);
+
+            ++countds;   
+            }
+            
+            phi0 += p->S320_phi[countS320];
+            ++countS320;
+        }
+        
+        
+        // right
+        if(p->S300_ord[n]==3)
+        {
+            lastds = countds;
+            length = (p->S330_r[countS330])*p->S330_phi[countS330];
+            ds_count = int(length/(p->S305*p->DXM));
+            dangle = -p->S330_phi[countS330]/double(ds_count);
+            
+            deltax = xl[lastds-1] - (p->S330_r[countS330]+p->S306*0.5)*cos(dangle*double(0)+phi0-1.5*PI);
+            deltay = yl[lastds-1] - (p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(0)+phi0-1.5*PI);
+            
+        cout<<"deltax: "<<deltax<<" deltay: "<<deltay<<" "<<yl[lastds-1]<<" "
+        <<(p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(0)+phi0-1.5*PI)<<" "
+        <<(p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(1)+phi0-1.5*PI)<<endl;
+        
+            for(q=1;q<=ds_count;++q)
+            {
+            xl[countds] = deltax + (p->S330_r[countS330]+p->S306*0.5)*cos(dangle*double(q)+phi0-1.5*PI);
+            yl[countds] = deltay + (p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(q)+phi0-1.5*PI);
+            
+            xr[countds] = deltax + (p->S330_r[countS330]-p->S306*0.5)*cos(dangle*double(q)+phi0-1.5*PI);
+            yr[countds] = deltay + (p->S330_r[countS330]-p->S306*0.5)*sin(dangle*double(q)+phi0-1.5*PI);
+
+            ++countds;   
+            }
+
+
+            phi0 -= p->S330_phi[countS330];
+            ++countS330;
+        }
+    }
+    
+    numds = countds;
+    cout<<"numds: "<<numds<<endl;
+    cout<<"phi0: "<<phi0*180/PI<<endl;
+    
+    for(n=0;n<numds;++n)
+    cout<<"xl/yl: "<<xl[n]<<" "<<yl[n]<<endl;
+    
+    
+    // with filled segment: get min/max coord, move accordingly
+    
+    
+    
+    
+    
+    
+    // add the rest of the solid geometry
+    
+    
+    
+    cout<<"fluvial box end"<<endl<<endl<<endl;
     
 }
 

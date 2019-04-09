@@ -306,12 +306,40 @@ void lexer::solid_preproc()
 	for(n=0;n<S141;++n)
 	trinum+=10966;
     
-    if(S300==1)
+    if(S300>0)
     {
-       // for(n=0;n<p->310;++n)
+        double length=0.0;
+        int ds_count=0;
             
+        for(n=0;n<S310;++n)
+        {
+        ds_count+=1;
+        S300_ds += 1;
+        }
         
+        for(n=0;n<S320;++n)
+        {
+        S320_phi[n] = S320_phi[n]*PI/180.0;
+        length = (S320_r[n])*S320_phi[n];
+        ds_count = int(length/(S305*DXM));
         
+        S300_ds += ds_count;
+        }
+
+        for(n=0;n<S330;++n)
+        {
+        S330_phi[n] = S330_phi[n]*PI/180.0;
+        length = (S330_r[n])*S330_phi[n];  
+        ds_count = int(length/(S305*DXM));  
+        
+        S300_ds += ds_count;
+        }
+    
+    
+    S300_ds +=1;
+    trinum+=16*ds_count;
+    
+    cout<<"fluvial box dsnum_ini: "<<S300_ds<<endl;
     }
     
 	
