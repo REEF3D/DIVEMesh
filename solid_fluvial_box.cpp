@@ -155,15 +155,86 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     for(n=0;n<numds;++n)
     cout<<"xl/yl: "<<xl[n]<<" "<<yl[n]<<endl;
     
+    cout<<endl<<endl<<" -------------------------------------- "<<endl<<endl;
+    for(n=0;n<numds;++n)
+    cout<<"xr/yr: "<<xr[n]<<" "<<yr[n]<<endl;
+    
     
     // with filled segment: get min/max coord, move accordingly
+    double xmin,xmax,ymin,ymax;
+    
+    xmin=1.0e8;
+    xmax=-1.0e8;
+    ymin=1.0e8;
+    ymax=-1.0e8;
+    
+    for(n=0;n<numds;++n)
+    {
+    xmin = MIN(xmin,xl[n]);
+    xmin = MIN(xmin,xr[n]);
+    
+    xmax = MAX(xmax,xl[n]);
+    xmax = MAX(xmax,xr[n]);
     
     
+    ymin = MIN(ymin,yl[n]);
+    ymin = MIN(ymin,yr[n]);
     
+    ymax = MAX(ymax,yl[n]);
+    ymax = MAX(ymax,yr[n]);
+    }
     
+    double box_xs,box_xe,box_ys,box_ye,box_zs,box_ze;
     
+    box_xs = xmin + p->S308_x - p->S309_x;
+    box_xe = xmax + p->S308_x + p->S309_x;
+    
+    box_ys = ymin + p->S308_y - p->S309_y;
+    box_ye = ymax + p->S308_y + p->S309_y;
+    
+    box_zs =           p->S308_z - p->S309_z;
+    box_ze = p->S307 + p->S308_z + p->S309_z;
     
     // add the rest of the solid geometry
+    
+    ts=p->tricount;
+    
+    // Front Face
+	// Tri 1
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xs;
+	p->tri_y[p->tricount][0] = box_ye;
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = xl[0];
+	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = xl[0];
+	p->tri_y[p->tricount][2] = yl[0];
+	p->tri_z[p->tricount][2] = box_zs;
+	++p->tricount;
+	
+	// Tri 2
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xs;
+	p->tri_y[p->tricount][0] = box_ye;
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = xl[0];
+	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = xl[0];
+	p->tri_y[p->tricount][2] = yl[0];
+	p->tri_z[p->tricount][2] = box_zs;
+	++p->tricount;
     
     
     

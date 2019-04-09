@@ -186,6 +186,9 @@ void lexer::ini_default()
     S305 = 0.5;     // double factor times dx for calculating ds
     S306 = 1.0;     // double width fluival channel
     S307 = 0.5;     // double height fluvial box
+    S308_x = 0.0;   // double deltax fluvial box
+    S308_y = 0.0;   // double deltay fluvial box
+    S308_z = 0.0;   // double deltaz fluvial box
     S310 = 0;       // int straight
     S320 = 0;       // int left bend
     S330 = 0;       // int right bend
