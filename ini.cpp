@@ -196,7 +196,8 @@ void lexer::ini_default()
     S310 = 0;       // int straight
     S320 = 0;       // int left bend
     S330 = 0;       // int right bend
-
+    S340 = 0;       // int meander
+    
 	solidprint=0;
 
     xstep=0.0;      // step, x location

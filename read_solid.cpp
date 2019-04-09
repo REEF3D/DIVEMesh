@@ -334,6 +334,14 @@ void lexer::solid_preproc()
         
         S300_ds += ds_count;
         }
+        
+        for(n=0;n<S340;++n)
+        {
+        S340_teta[n] = S340_teta[n]*PI/180.0;
+        ds_count = int((S340_L[n]*S340_N[n])/(S305*DXM));  
+        
+        S300_ds += ds_count;
+        }
     
     
     S300_ds +=1;

@@ -46,6 +46,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     int countS310=0;
     int countS320=0;
     int countS330=0;
+    int countS340=0;
     int countds=1;
     int numds=0;
     int ds_count;
@@ -58,6 +59,8 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     double phi0 = 0.0;
     double deltax,deltay;
     int lastds;
+    
+    double nx,ny,norm,xc,yc,x1,y1,teta,ds,m;
 
     p->Darray(xl,p->S300_ds);
     p->Darray(yl,p->S300_ds);
@@ -126,10 +129,6 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
             
             deltax = xl[lastds-1] - (p->S330_r[countS330]+p->S306*0.5)*cos(dangle*double(0)+phi0-1.5*PI);
             deltay = yl[lastds-1] - (p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(0)+phi0-1.5*PI);
-       /*     
-        cout<<"deltax: "<<deltax<<" deltay: "<<deltay<<" "<<yl[lastds-1]<<" "
-        <<(p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(0)+phi0-1.5*PI)<<" "
-        <<(p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(1)+phi0-1.5*PI)<<endl;*/
         
             for(q=1;q<=ds_count;++q)
             {
@@ -146,19 +145,61 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
             phi0 -= p->S330_phi[countS330];
             ++countS330;
         }
+        
+        
+        // meander
+        if(p->S300_ord[n]==4)
+        {
+            lastds = countds;
+        
+            ds_count = int((p->S340_L[countS340]*p->S340_N[countS340])/(p->S305*p->DXM));  
+            
+            x1 = 0.5*(xl[lastds-1]+xr[lastds-1]);
+            y1 = 0.5*(yl[lastds-1]+yr[lastds-1]);
+            
+            cout<<"MEANDER dscount: "<<ds_count<<endl;
+            
+            for(q=1;q<=ds_count;++q)
+            {
+            teta = p->S340_teta[countS340]*cos(2.0*PI*(p->S305*p->DXM*double(q))/p->S340_L[countS340] + p->S340_ds[countS340]*PI);
+            
+            xc = x1 + p->S305*p->DXM*cos(teta);
+            yc = y1 + p->S305*p->DXM*sin(teta);
+            
+            m = (yc-y1)/(xc-x1);
+            
+            nx = -m;
+            ny = 1.0;
+
+            norm = sqrt(nx*nx + ny*ny);
+            
+            nx/=fabs(norm>1.0e-20)?norm:1.0e20;
+            ny/=fabs(norm>1.0e-20)?norm:1.0e20;
+            
+            xl[countds] = xc + nx*0.5*p->S306;
+            yl[countds] = yc + ny*0.5*p->S306;
+            
+            xr[countds] = xc - nx*0.5*p->S306;
+            yr[countds] = yc - ny*0.5*p->S306;
+            
+            cout<<"MEANDER: "<<teta<<" "<<m<<" "<<nx<<" "<<ny<<endl;
+            
+            
+            x1=xc;
+            y1=yc;
+            
+            ++countds;
+            }
+
+            //phi0 -= p->S340_phi[countS340];
+            ++countS340;
+        }
     }
     
     numds = countds;
     cout<<"numds: "<<numds<<endl;
     cout<<"phi0: "<<phi0*180/PI<<endl;
-    /*
-    for(n=0;n<numds;++n)
-    cout<<"xl/yl: "<<xl[n]<<" "<<yl[n]<<endl;
-    
-    cout<<endl<<endl<<" -------------------------------------- "<<endl<<endl;
-    for(n=0;n<numds;++n)
-    cout<<"xr/yr: "<<xr[n]<<" "<<yr[n]<<endl;
-    */
+ 
     for(n=0;n<numds;++n)
     {
     xl[n] += p->S308_x;

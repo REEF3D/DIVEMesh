@@ -273,6 +273,8 @@ public:
     double *S320_r,*S320_phi;
     int S330;
     double *S330_r,*S330_phi;
+    int S340;
+    double *S340_teta,*S340_L,*S340_N,*S340_ds;
 	
 	
 	double xs_stl,xe_stl,ys_stl,ye_stl,zs_stl,ze_stl;
