@@ -309,8 +309,8 @@ void solid::start(lexer* p, dive* a)
     if(p->S300>0)
 	{
 	fluvial_box(p,a,qn,tri_start,tri_end);
-    rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast_x_gcb(p,a,tri_start,tri_end);
+    //rotate_triangle(p,a,tri_start,tri_end);
+	//ray_cast_x_gcb(p,a,tri_start,tri_end);
 	}
     
     // finalize solid_dist

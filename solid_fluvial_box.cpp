@@ -58,8 +58,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     double phi0 = 0.0;
     double deltax,deltay;
     int lastds;
-    double dsx;
-    
+
     p->Darray(xl,p->S300_ds);
     p->Darray(yl,p->S300_ds);
     p->Darray(xr,p->S300_ds);
@@ -196,10 +195,8 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     box_zs = -p->S307_bh + p->S308_z - p->S309_z;
     box_ze =  p->S307_fh + p->S308_z + p->S309_z;
     
-    dsx = (box_xe-box_xs)/double(numds-1);
     
     // add the rest of the solid geometry
-    
     ts=p->tricount;
     
     // Front Face
@@ -236,7 +233,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	
 	p->tri_x[p->tricount][2] = box_xs;
 	p->tri_y[p->tricount][2] = yl[0];
-	p->tri_z[p->tricount][2] = box_zs;
+	p->tri_z[p->tricount][2] = box_ze;
 	++p->tricount;
     
     // Tri 3
@@ -267,7 +264,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	p->tri_z[p->tricount][0] = box_zs;
 	
 	p->tri_x[p->tricount][1] = box_xs;
-	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_y[p->tricount][1] = yr[0];
 	p->tri_z[p->tricount][1] = box_zs;
 	
 	p->tri_x[p->tricount][2] = box_xs;
@@ -290,7 +287,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	
 	p->tri_x[p->tricount][2] = box_xs;
 	p->tri_y[p->tricount][2] = box_ys;
-	p->tri_z[p->tricount][2] = box_ze;
+	p->tri_z[p->tricount][2] = box_zs;
 	++p->tricount;
     
     // Tri 6
@@ -347,7 +344,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	
 	p->tri_x[p->tricount][2] = box_xe;
 	p->tri_y[p->tricount][2] = yl[0];
-	p->tri_z[p->tricount][2] = box_zs;
+	p->tri_z[p->tricount][2] = box_ze;
 	++p->tricount;
     
     // Tri 3
@@ -378,7 +375,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	p->tri_z[p->tricount][0] = box_zs;
 	
 	p->tri_x[p->tricount][1] = box_xe;
-	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_y[p->tricount][1] = yr[0];
 	p->tri_z[p->tricount][1] = box_zs;
 	
 	p->tri_x[p->tricount][2] = box_xe;
@@ -401,7 +398,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	
 	p->tri_x[p->tricount][2] = box_xe;
 	p->tri_y[p->tricount][2] = box_ys;
-	p->tri_z[p->tricount][2] = box_ze;
+	p->tri_z[p->tricount][2] = box_zs;
 	++p->tricount;
     
     // Tri 6
@@ -431,16 +428,16 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
         p->trivec_y[p->tricount] = -1.0;
         p->trivec_z[p->tricount] = 0.0;
         
-        p->tri_x[p->tricount][0] = xl[n];
-        p->tri_y[p->tricount][0] = box_ye;
+        p->tri_x[p->tricount][0] = xr[n];
+        p->tri_y[p->tricount][0] = box_ys;
         p->tri_z[p->tricount][0] = box_zs;
         
-        p->tri_x[p->tricount][1] = xr[n];
+        p->tri_x[p->tricount][1] = xr[n+1];
         p->tri_y[p->tricount][1] = box_ys;
         p->tri_z[p->tricount][1] = box_zs;
         
-        p->tri_x[p->tricount][2] = xr[n+1];
-        p->tri_y[p->tricount][2] = box_ys;
+        p->tri_x[p->tricount][2] = xl[n];
+        p->tri_y[p->tricount][2] = box_ye;
         p->tri_z[p->tricount][2] = box_zs;
         ++p->tricount;
         
@@ -459,7 +456,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
         
         p->tri_x[p->tricount][2] = xl[n+1];
         p->tri_y[p->tricount][2] = box_ye;
-        p->tri_z[p->tricount][2] = box_ze;
+        p->tri_z[p->tricount][2] = box_zs;
         ++p->tricount;
         
         
