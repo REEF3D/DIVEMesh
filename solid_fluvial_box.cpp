@@ -58,6 +58,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     double phi0 = 0.0;
     double deltax,deltay;
     int lastds;
+    double dsx;
     
     p->Darray(xl,p->S300_ds);
     p->Darray(yl,p->S300_ds);
@@ -126,10 +127,10 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
             
             deltax = xl[lastds-1] - (p->S330_r[countS330]+p->S306*0.5)*cos(dangle*double(0)+phi0-1.5*PI);
             deltay = yl[lastds-1] - (p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(0)+phi0-1.5*PI);
-            
+       /*     
         cout<<"deltax: "<<deltax<<" deltay: "<<deltay<<" "<<yl[lastds-1]<<" "
         <<(p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(0)+phi0-1.5*PI)<<" "
-        <<(p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(1)+phi0-1.5*PI)<<endl;
+        <<(p->S330_r[countS330]+p->S306*0.5)*sin(dangle*double(1)+phi0-1.5*PI)<<endl;*/
         
             for(q=1;q<=ds_count;++q)
             {
@@ -151,14 +152,14 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     numds = countds;
     cout<<"numds: "<<numds<<endl;
     cout<<"phi0: "<<phi0*180/PI<<endl;
-    
+    /*
     for(n=0;n<numds;++n)
     cout<<"xl/yl: "<<xl[n]<<" "<<yl[n]<<endl;
     
     cout<<endl<<endl<<" -------------------------------------- "<<endl<<endl;
     for(n=0;n<numds;++n)
     cout<<"xr/yr: "<<xr[n]<<" "<<yr[n]<<endl;
-    
+    */
     
     // with filled segment: get min/max coord, move accordingly
     double xmin,xmax,ymin,ymax;
@@ -192,8 +193,10 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     box_ys = ymin + p->S308_y - p->S309_y;
     box_ye = ymax + p->S308_y + p->S309_y;
     
-    box_zs =           p->S308_z - p->S309_z;
-    box_ze = p->S307 + p->S308_z + p->S309_z;
+    box_zs = -p->S307_bh + p->S308_z - p->S309_z;
+    box_ze =  p->S307_fh + p->S308_z + p->S309_z;
+    
+    dsx = (box_xe-box_xs)/double(numds-1);
     
     // add the rest of the solid geometry
     
@@ -209,11 +212,11 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	p->tri_y[p->tricount][0] = box_ye;
 	p->tri_z[p->tricount][0] = box_zs;
 	
-	p->tri_x[p->tricount][1] = xl[0];
+	p->tri_x[p->tricount][1] = box_xs;
 	p->tri_y[p->tricount][1] = yl[0];
 	p->tri_z[p->tricount][1] = box_ze;
 	
-	p->tri_x[p->tricount][2] = xl[0];
+	p->tri_x[p->tricount][2] = box_xs;
 	p->tri_y[p->tricount][2] = yl[0];
 	p->tri_z[p->tricount][2] = box_zs;
 	++p->tricount;
@@ -227,18 +230,510 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
 	p->tri_y[p->tricount][0] = box_ye;
 	p->tri_z[p->tricount][0] = box_zs;
 	
-	p->tri_x[p->tricount][1] = xl[0];
-	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_x[p->tricount][1] = box_xs;
+	p->tri_y[p->tricount][1] = box_ye;
 	p->tri_z[p->tricount][1] = box_ze;
 	
-	p->tri_x[p->tricount][2] = xl[0];
+	p->tri_x[p->tricount][2] = box_xs;
 	p->tri_y[p->tricount][2] = yl[0];
 	p->tri_z[p->tricount][2] = box_zs;
 	++p->tricount;
     
+    // Tri 3
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xs;
+	p->tri_y[p->tricount][0] = yl[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xs;
+	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_z[p->tricount][1] = box_zs+p->S307_bh;
+	
+	p->tri_x[p->tricount][2] = box_xs;
+	p->tri_y[p->tricount][2] = yr[0];
+	p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+	++p->tricount;
+    
+    // Tri 4
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xs;
+	p->tri_y[p->tricount][0] = yl[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xs;
+	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_z[p->tricount][1] = box_zs;
+	
+	p->tri_x[p->tricount][2] = box_xs;
+	p->tri_y[p->tricount][2] = yr[0];
+	p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+	++p->tricount;
+    
+    // Tri 5
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xs;
+	p->tri_y[p->tricount][0] = yr[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xs;
+	p->tri_y[p->tricount][1] = box_ys;
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = box_xs;
+	p->tri_y[p->tricount][2] = box_ys;
+	p->tri_z[p->tricount][2] = box_ze;
+	++p->tricount;
+    
+    // Tri 6
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xs;
+	p->tri_y[p->tricount][0] = yr[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xs;
+	p->tri_y[p->tricount][1] = yr[0];
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = box_xs;
+	p->tri_y[p->tricount][2] = box_ys;
+	p->tri_z[p->tricount][2] = box_ze;
+	++p->tricount;
     
     
-    cout<<"fluvial box end"<<endl<<endl<<endl;
+    
+    // Box Face
+	// Tri 1
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xe;
+	p->tri_y[p->tricount][0] = box_ye;
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xe;
+	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = box_xe;
+	p->tri_y[p->tricount][2] = yl[0];
+	p->tri_z[p->tricount][2] = box_zs;
+	++p->tricount;
+	
+	// Tri 2
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xe;
+	p->tri_y[p->tricount][0] = box_ye;
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xe;
+	p->tri_y[p->tricount][1] = box_ye;
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = box_xe;
+	p->tri_y[p->tricount][2] = yl[0];
+	p->tri_z[p->tricount][2] = box_zs;
+	++p->tricount;
+    
+    // Tri 3
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xe;
+	p->tri_y[p->tricount][0] = yl[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xe;
+	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_z[p->tricount][1] = box_zs+p->S307_bh;
+	
+	p->tri_x[p->tricount][2] = box_xe;
+	p->tri_y[p->tricount][2] = yr[0];
+	p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+	++p->tricount;
+    
+    // Tri 4
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xe;
+	p->tri_y[p->tricount][0] = yl[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xe;
+	p->tri_y[p->tricount][1] = yl[0];
+	p->tri_z[p->tricount][1] = box_zs;
+	
+	p->tri_x[p->tricount][2] = box_xe;
+	p->tri_y[p->tricount][2] = yr[0];
+	p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+	++p->tricount;
+    
+    // Tri 5
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xe;
+	p->tri_y[p->tricount][0] = yr[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xe;
+	p->tri_y[p->tricount][1] = box_ys;
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = box_xe;
+	p->tri_y[p->tricount][2] = box_ys;
+	p->tri_z[p->tricount][2] = box_ze;
+	++p->tricount;
+    
+    // Tri 6
+	p->trivec_x[p->tricount] = 0.0;
+	p->trivec_y[p->tricount] = -1.0;
+	p->trivec_z[p->tricount] = 0.0;
+	
+	p->tri_x[p->tricount][0] = box_xe;
+	p->tri_y[p->tricount][0] = yr[0];
+	p->tri_z[p->tricount][0] = box_zs;
+	
+	p->tri_x[p->tricount][1] = box_xe;
+	p->tri_y[p->tricount][1] = yr[0];
+	p->tri_z[p->tricount][1] = box_ze;
+	
+	p->tri_x[p->tricount][2] = box_xe;
+	p->tri_y[p->tricount][2] = box_ys;
+	p->tri_z[p->tricount][2] = box_ze;
+	++p->tricount;
+    
+    for(n=0; n<numds-1;++n)
+    {
+        
+        // Face 1
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n];
+        p->tri_y[p->tricount][0] = box_ye;
+        p->tri_z[p->tricount][0] = box_zs;
+        
+        p->tri_x[p->tricount][1] = xr[n];
+        p->tri_y[p->tricount][1] = box_ys;
+        p->tri_z[p->tricount][1] = box_zs;
+        
+        p->tri_x[p->tricount][2] = xr[n+1];
+        p->tri_y[p->tricount][2] = box_ys;
+        p->tri_z[p->tricount][2] = box_zs;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n];
+        p->tri_y[p->tricount][0] = box_ye;
+        p->tri_z[p->tricount][0] = box_zs;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = box_ys;
+        p->tri_z[p->tricount][1] = box_zs;
+        
+        p->tri_x[p->tricount][2] = xl[n+1];
+        p->tri_y[p->tricount][2] = box_ye;
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        
+        // Face 2
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n];
+        p->tri_y[p->tricount][0] = box_ys;
+        p->tri_z[p->tricount][0] = box_zs;
+        
+        p->tri_x[p->tricount][1] = xr[n+1];
+        p->tri_y[p->tricount][1] = box_ys;
+        p->tri_z[p->tricount][1] = box_zs;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = box_ys;
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n+1];
+        p->tri_y[p->tricount][0] = box_ys;
+        p->tri_z[p->tricount][0] = box_zs;
+        
+        p->tri_x[p->tricount][1] = xr[n+1];
+        p->tri_y[p->tricount][1] = box_ys;
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = box_ys;
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        
+        // Face 3
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n];
+        p->tri_y[p->tricount][0] = box_ys;
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xr[n+1];
+        p->tri_y[p->tricount][1] = box_ys;
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = yr[n];
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n+1];
+        p->tri_y[p->tricount][0] = box_ys;
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xr[n+1];
+        p->tri_y[p->tricount][1] = yr[n+1];
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = yr[n];
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        
+        // Face 4
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n];
+        p->tri_y[p->tricount][0] = yr[n];
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xr[n+1];
+        p->tri_y[p->tricount][1] = yr[n+1];
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = yr[n];
+        p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n+1];
+        p->tri_y[p->tricount][0] = yr[n+1];
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xr[n+1];
+        p->tri_y[p->tricount][1] = yr[n+1];
+        p->tri_z[p->tricount][1] = box_zs+p->S307_bh;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = yr[n];
+        p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+        ++p->tricount;
+        
+        
+        // Face 5
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n];
+        p->tri_y[p->tricount][0] = yr[n];
+        p->tri_z[p->tricount][0] = box_zs+p->S307_bh;
+        
+        p->tri_x[p->tricount][1] = xr[n+1];
+        p->tri_y[p->tricount][1] = yr[n+1];
+        p->tri_z[p->tricount][1] = box_zs+p->S307_bh;
+        
+        p->tri_x[p->tricount][2] = xl[n];
+        p->tri_y[p->tricount][2] = yl[n];
+        p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xr[n+1];
+        p->tri_y[p->tricount][0] = yr[n+1];
+        p->tri_z[p->tricount][0] = box_zs+p->S307_bh;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = yl[n+1];
+        p->tri_z[p->tricount][1] = box_zs+p->S307_bh;
+        
+        p->tri_x[p->tricount][2] = xl[n];
+        p->tri_y[p->tricount][2] = yl[n];
+        p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+        ++p->tricount;
+        
+        
+        // Face 6
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n];
+        p->tri_y[p->tricount][0] = yl[n];
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = yl[n+1];
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = yr[n];
+        p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n+1];
+        p->tri_y[p->tricount][0] = yl[n+1];
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = yl[n+1];
+        p->tri_z[p->tricount][1] = box_zs+p->S307_bh;
+        
+        p->tri_x[p->tricount][2] = xl[n];
+        p->tri_y[p->tricount][2] = yl[n];
+        p->tri_z[p->tricount][2] = box_zs+p->S307_bh;
+        ++p->tricount;
+        
+        
+        // Face 7
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n];
+        p->tri_y[p->tricount][0] = xl[n];
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = xl[n+1];
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xr[n];
+        p->tri_y[p->tricount][2] = box_ye;
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n+1];
+        p->tri_y[p->tricount][0] = yl[n+1];
+        p->tri_z[p->tricount][0] = box_ze;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = box_ye;
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xl[n];
+        p->tri_y[p->tricount][2] = box_ye;
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        
+        // Face 8
+        // Tri 1
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n];
+        p->tri_y[p->tricount][0] = box_ye;
+        p->tri_z[p->tricount][0] = box_zs;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = box_ye;
+        p->tri_z[p->tricount][1] = box_zs;
+        
+        p->tri_x[p->tricount][2] = xl[n];
+        p->tri_y[p->tricount][2] = box_ye;
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+        
+        // Tri 2
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = -1.0;
+        p->trivec_z[p->tricount] = 0.0;
+        
+        p->tri_x[p->tricount][0] = xl[n+1];
+        p->tri_y[p->tricount][0] = box_ye;
+        p->tri_z[p->tricount][0] = box_zs;
+        
+        p->tri_x[p->tricount][1] = xl[n+1];
+        p->tri_y[p->tricount][1] = box_ye;
+        p->tri_z[p->tricount][1] = box_ze;
+        
+        p->tri_x[p->tricount][2] = xl[n];
+        p->tri_y[p->tricount][2] = box_ye;
+        p->tri_z[p->tricount][2] = box_ze;
+        ++p->tricount;
+    }
+    
+    te=p->tricount;
+    
+    
+    
+    cout<<"fluvial box end  "<<te<<endl<<endl<<endl;
     
 }
 

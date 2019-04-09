@@ -337,9 +337,9 @@ void lexer::solid_preproc()
     
     
     S300_ds +=1;
-    trinum+=16*ds_count;
+    trinum=16*S300_ds;
     
-    cout<<"fluvial box dsnum_ini: "<<S300_ds<<endl;
+    cout<<"fluvial box dsnum_ini: "<<S300_ds<<" trinum: "<<trinum<<endl;
     }
     
 	
