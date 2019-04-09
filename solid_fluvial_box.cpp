@@ -159,7 +159,15 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     for(n=0;n<numds;++n)
     cout<<"xr/yr: "<<xr[n]<<" "<<yr[n]<<endl;
     */
+    for(n=0;n<numds;++n)
+    {
+    xl[n] += p->S308_x;
+    xr[n] += p->S308_x;
     
+    yl[n] += p->S308_y;
+    yr[n] += p->S308_y;
+    }
+        
     // with filled segment: get min/max coord, move accordingly
     double xmin,xmax,ymin,ymax;
     
@@ -186,14 +194,17 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     
     double box_xs,box_xe,box_ys,box_ye,box_zs,box_ze;
     
-    box_xs = xmin + p->S308_x - p->S309_x;
-    box_xe = xmax + p->S308_x + p->S309_x;
+    box_xs = xmin - p->S309_x;
+    box_xe = xmax + p->S309_x;
     
-    box_ys = ymin + p->S308_y - p->S309_y;
-    box_ye = ymax + p->S308_y + p->S309_y;
+    box_ys = ymin - p->S309_y;
+    box_ye = ymax + p->S309_y;
     
-    box_zs = -p->S307_bh + p->S308_z - p->S309_z;
-    box_ze =  p->S307_fh + p->S308_z + p->S309_z;
+    box_zs = -p->S307_bh - p->S309_z;
+    box_ze =  p->S307_fh + p->S309_z;
+    
+    
+    cout<<"fluvial box extend - xs: "<<box_xs<<" xe: "<<box_xe<<" ys: "<<box_ys<<" ye: "<<box_ye<<" zs: "<<box_zs<<" ze: "<<box_ze<<endl;
     
     
     // add the rest of the solid geometry
