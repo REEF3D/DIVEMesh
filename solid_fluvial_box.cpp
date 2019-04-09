@@ -60,7 +60,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     double deltax,deltay;
     int lastds;
     
-    double nx,ny,norm,xc,yc,x1,y1,teta,ds,m;
+    double nx,ny,norm,xc,yc,x1,y1,teta,ds,m,s;
 
     p->Darray(xl,p->S300_ds);
     p->Darray(yl,p->S300_ds);
@@ -154,17 +154,20 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
         
             ds_count = int((p->S340_L[countS340]*p->S340_N[countS340])/(p->S305*p->DXM));  
             
+            s = (p->S340_L[countS340]*p->S340_N[countS340])/double(ds_count);
+            
+            
             x1 = 0.5*(xl[lastds-1]+xr[lastds-1]);
             y1 = 0.5*(yl[lastds-1]+yr[lastds-1]);
             
-            cout<<"MEANDER dscount: "<<ds_count<<endl;
+            //cout<<"MEANDER dscount: "<<ds_count<<endl;
             
             for(q=1;q<=ds_count;++q)
             {
-            teta = p->S340_teta[countS340]*cos(2.0*PI*(p->S305*p->DXM*double(q))/p->S340_L[countS340] + p->S340_ds[countS340]*PI);
+            teta = p->S340_teta[countS340]*cos(2.0*PI*(s*double(q))/p->S340_L[countS340] + p->S340_ds[countS340]*PI);
             
-            xc = x1 + p->S305*p->DXM*cos(teta);
-            yc = y1 + p->S305*p->DXM*sin(teta);
+            xc = x1 + s*cos(teta);
+            yc = y1 + s*sin(teta);
             
             m = (yc-y1)/(xc-x1);
             
@@ -182,7 +185,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
             xr[countds] = xc - nx*0.5*p->S306;
             yr[countds] = yc - ny*0.5*p->S306;
             
-            cout<<"MEANDER: "<<teta<<" "<<m<<" "<<nx<<" "<<ny<<endl;
+            //cout<<"MEANDER: "<<teta<<" "<<m<<" "<<nx<<" "<<ny<<endl;
             
             
             x1=xc;
@@ -197,8 +200,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     }
     
     numds = countds;
-    cout<<"numds: "<<numds<<endl;
-    cout<<"phi0: "<<phi0*180/PI<<endl;
+
  
     for(n=0;n<numds;++n)
     {
