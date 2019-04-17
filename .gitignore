@@ -20,4 +20,7 @@ DIVEMesh.mk
 *.workspace.session
 DIVEMesh.txt
 .DS_Store
-doxydoc*
+.DS_Store
+.DS_Store
+DIVEMESH.txt
+DIVEMesh.txt

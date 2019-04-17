@@ -35,6 +35,7 @@ void lexer::ini_default()
     B2_knox=0;
     B2_knoy=0;
     B2_knoz=0;
+    B3=0;           // int sigma coordinate grid
 	B5=1;			// int turn on true 2D
     B101=0;         // int grid spacing xdir
     B102=0;         // int grid spacing ydir
