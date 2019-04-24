@@ -25,3 +25,5 @@ DIVEMesh.txt
 DIVEMESH.txt
 DIVEMesh.txt
 doxydoc*
+*.json
+*.txt
