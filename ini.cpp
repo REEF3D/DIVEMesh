@@ -181,7 +181,23 @@ void lexer::ini_default()
     S201 = 0;       // int x-plate
     S202 = 0;       // int y-plate
     S203 = 0;       // int z-plate
-
+    S300 = 0;       // int turn fluvial box
+    S300_ds = 0;    // int fluvial box ds num
+    S305 = 0.5;     // double factor times dx for calculating ds
+    S306 = 1.0;     // double width fluival channel
+    S307_fh = 0.5;     // double flowheight fluvial box
+    S307_bh = 0.2;     // double bed height fluvial box
+    S308_x = 0.0;   // double deltax fluvial box
+    S308_y = 0.0;   // double deltay fluvial box
+    S308_z = 0.0;   // double deltaz fluvial box
+    S309_x = 0.0;   // double extra margin x
+    S309_y = 0.2;   // double extra margin y
+    S309_z = 0.0;   // double extra margin z
+    S310 = 0;       // int straight
+    S320 = 0;       // int left bend
+    S330 = 0;       // int right bend
+    S340 = 0;       // int meander
+    
 	solidprint=0;
 
     xstep=0.0;      // step, x location

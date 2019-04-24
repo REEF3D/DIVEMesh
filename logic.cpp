@@ -32,7 +32,7 @@ void driver::logic(lexer* p)
             + p->S41 + p->S42 + p->S43
             + p->S51 + p->S52 + p->S53 + p->S54 + p->S61 
             + p->S62 + p->S81 + p->S82 + p->S83 + p->S84 + p->S63 + p->S121 + p->S131 + p->S141
-            + p->S201 + p->S202 + p->S203;
+            + p->S201 + p->S202 + p->S203 + p->S300;
 
     pini=new initialize;
 

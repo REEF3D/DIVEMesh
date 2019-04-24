@@ -263,6 +263,18 @@ public:
     double *S202_y,*S202_xs,*S202_xe,*S202_zs,*S202_ze;
     int S203;
     double *S203_z,*S203_xs,*S203_xe,*S203_ys,*S203_ye;
+    
+    int S300,S300_ds;
+    int *S300_ord;
+    double S305,S306,S307_fh,S307_bh,S308_x,S308_y,S308_z,S309_x,S309_y,S309_z;
+    int S310;
+    double *S310_l;
+    int S320;
+    double *S320_r,*S320_phi;
+    int S330;
+    double *S330_r,*S330_phi;
+    int S340;
+    double *S340_teta,*S340_L,*S340_N,*S340_ds;
 	
 	
 	double xs_stl,xe_stl,ys_stl,ye_stl,zs_stl,ze_stl;

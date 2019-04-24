@@ -77,8 +77,9 @@ public:
     void jacket_member_norm(lexer*,dive*,int,int&,int&);
     void jacket_member_vert(lexer*,dive*,int,int&,int&);
     void jacket_member_horz(lexer*,dive*,int,int&,int&);
-    
     void plate_x(lexer*,dive*,int,int&,int&);
+    void fluvial_box(lexer*,dive*,int,int&,int&);
+    
 	
 	void rotation(double&,double&,double&,double,double,double);
 	void rotate_triangle(lexer*,dive*,int,int);
