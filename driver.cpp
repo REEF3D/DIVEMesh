@@ -29,7 +29,7 @@ driver::driver()
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
     
-    cout<<"v_dev_from_190418 "<<endl<<endl<<endl;
+    cout<<"v_dev_from_190530 "<<endl<<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -84,6 +84,8 @@ void driver::mainloop()
 	
 	if(p->D10>0)
     pdata->start(p,a);
+    
+    
     
     
 // Slice

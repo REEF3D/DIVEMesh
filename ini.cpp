@@ -70,6 +70,7 @@ void lexer::ini_default()
     D19=0;              // int read letter in front of 3D coordinates
 	D23=0;			// int reverse sign of vertical coordinate in geo.dat file
 	D24=-10.0;
+    D100=0;        // int FNPF state file merge
 
     F3_zs=0.0;         // double z-start
     F3_ze=0.0;         // double z-end

@@ -194,6 +194,9 @@ void lexer::read_control()
 				case 24: control>>D24;
                          clear(c,numint);
 						 break;
+               case 100: control>>D100;
+                         clear(c,numint);
+						 break;
 				}
 				break;
 
