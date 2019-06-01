@@ -41,4 +41,6 @@ void wcp::write(lexer *p, dive *a)
     ddn=simtime[q];
     header.write((char*)&ddn, sizeof (double));
     }
+    
+    // write result
 }
