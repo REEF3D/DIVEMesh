@@ -41,14 +41,30 @@ public:
     void read_header(lexer*, dive*);
     void read_result(lexer*, dive*);
     
+    void filename_in(lexer*, dive*,int,int);
+    
     void merge(lexer*,dive*);
     void decompa(lexer*,dive*);
 	void write(lexer*,dive*);
+    void filename_out(lexer*, dive*);
 
 private:
-	
+    int iin;
+    double ddn;
+    float ffn;
+	char name[200];
+    
+    int n,q,count;
+    int numprocs, numiter;
+    int Nx,Ny,Nz;
+    int NGx,NGy,NGz;
+    
 	double g,wsum,dist;
     double xc,yc;
+    
+    // arrays
+    double *simtime;
+    double ***U,***V,***W,**eta;
 };
 
 #endif

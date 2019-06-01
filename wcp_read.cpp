@@ -29,13 +29,34 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void wcp::read(lexer *p, dive *a)
 {
+    ifstream result;
+    
+    // header
+    read_header(p,a);
+    
+    // allocate arrays
+    p->Darray(U,NGx,NGy,NGz);
+    p->Darray(V,NGx,NGy,NGz);
+    p->Darray(W,NGx,NGy,NGz);
+    p->Darray(eta,NGx,NGy);
+    
+    // result
+    for(n=0; n<numiter; ++n)
+    for(q=0; q<numprocs; ++q)
+    {
     // Open File
-	/*filename(p,a,pgc,p->I41);
+	filename_in(p,a,n,q); 
 	
-	
-	ifstream result;
 	result.open(name, ios::binary);
 	
+    
+    
+    result.close();
+    }
+    
+    
+    
+    /*
     result.read((char*)&iin, sizeof (int));
 	p->count=p->count_wcpstart=iin;
 	
@@ -188,8 +209,53 @@ void wcp::read(lexer *p, dive *a)
 
 
 
-
-
-
-
-
+void wcp::read_header(lexer *p, dive *a)
+{
+    ifstream header;
+	header.open(name, ios::binary);
+    
+    // count numiter
+    header.read((char*)&iin, sizeof (int));
+    header.read((char*)&iin, sizeof (int));
+    header.read((char*)&iin, sizeof (int));
+    header.read((char*)&iin, sizeof (int));
+    
+    numiter=0;
+    while(!header.eof())
+	{
+    header.read((char*)&iin, sizeof (int));
+ 
+    header.read((char*)&ddn, sizeof (double));    
+    ++numiter;
+    }
+    
+    header.close();
+    
+    p->Darray(simtime,numiter);
+    
+    
+    // read header
+    header.open(name, ios::binary);
+    
+    header.read((char*)&iin, sizeof (int));
+	numprocs=iin;
+    
+    header.read((char*)&iin, sizeof (int));
+	NGx=iin;
+    
+    header.read((char*)&iin, sizeof (int));
+	NGy=iin;
+    
+    header.read((char*)&iin, sizeof (int));
+	NGz=iin;
+    
+    count=0;
+    while(!header.eof())
+	{
+    header.read((char*)&iin, sizeof (int));
+ 
+    header.read((char*)&ddn, sizeof (double)); 
+    simtime[count] = ddn;
+    ++count;
+    }
+}
