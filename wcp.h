@@ -42,6 +42,7 @@ public:
     void read_result(lexer*, dive*);
     
     void filename_in(lexer*, dive*,int,int);
+    void filename_out(lexer*, dive*,int,int);
     
     void merge(lexer*,dive*);
     void decompa(lexer*,dive*);
@@ -62,9 +63,13 @@ private:
 	double g,wsum,dist;
     double xc,yc;
     
+    double orig_x, orig_y, orig_z;
+    int orig_i, orig_j, orig_k;
+    
     // arrays
     double *simtime;
-    double ***U,***V,***W,**eta;
+    double *X,*Y,*Z;
+    double ***U,***V,***W,**eta,**bed;
 };
 
 #endif

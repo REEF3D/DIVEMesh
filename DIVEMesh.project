@@ -267,9 +267,9 @@
     </VirtualDirectory>
     <VirtualDirectory Name="Data">
       <VirtualDirectory Name="Wave Coupling">
-        <File Name="wcp_filename.cpp"/>
+        <File Name="wcp_filename_out.cpp"/>
+        <File Name="wcp_filename_in.cpp"/>
         <File Name="wcp_decomp.cpp"/>
-        <File Name="wcp_merge.cpp"/>
         <File Name="wcp_write.cpp"/>
         <File Name="wcp_read.cpp"/>
         <File Name="wcp.cpp"/>
