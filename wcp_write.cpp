@@ -30,17 +30,29 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void wcp::write(lexer *p, dive *a)
 {
     // write header
-    ofstream header;
-	header.open("REEF3D_WCP_Input_Header.r3d", ios::binary);
-    
-    iin=numiter;
-    header.write((char*)&iin, sizeof (int));
-    
-    for(q=0;q<numiter;++q)
+    for(q=0; q<p->M10; ++q)
     {
-    ddn=simtime[q];
-    header.write((char*)&ddn, sizeof (double));
+        ofstream header;
+        
+        filename_header(p,a,q);
+        header.open(name, ios::binary);
+        
+        iin=numiter;
+        header.write((char*)&iin, sizeof (int));
+        
+        for(n=0;n<numiter;++n)
+        {
+        ddn=simtime[n];
+        header.write((char*)&ddn, sizeof (double));
+        }
+        
+    header.close();
     }
     
     // write result
+    for(n=0; n<numiter; ++n)
+    for(q=0; q<p->M10; ++q)
+    {
+        
+    }
 }

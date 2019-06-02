@@ -129,3 +129,22 @@ void wcp::filename_out(lexer *p, dive *a,int num, int rank)
 		sprintf(name,"./REEF3D_WCP_Input/REEF3D-WCP-Input-%d-%d.r3d",num,rank+1);
 	}
 }
+
+void wcp::filename_header(lexer *p, dive *a, int rank)
+{
+    
+	if(rank<9)
+	sprintf(name,"./REEF3D_WCP_Input/REEF3D-WCP-Input-Header-0000%d.r3d",rank+1);
+
+	if(rank<99&&rank>8)
+	sprintf(name,"./REEF3D_WCP_Input/REEF3D-WCP-Input-Header-000%d.r3d",rank+1);
+    
+	if(rank<999&&rank>98)
+	sprintf(name,"./REEF3D_WCP_Input/REEF3D-WCP-Input-Header-00%d.r3d",rank+1);
+
+	if(rank<9999&&rank>998)
+	sprintf(name,"./REEF3D_WCP_Input/REEF3D-WCP-Input-Header-0%d.r3d",rank+1);
+
+	if(rank>9998)
+	sprintf(name,"./REEF3D_WCP_Input/REEF3D-WCP-Input-Header-%d.r3d",rank+1);
+}

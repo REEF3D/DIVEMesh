@@ -44,8 +44,10 @@ public:
     void filename_in(lexer*, dive*,int,int);
     void filename_out(lexer*, dive*,int,int);
     
+    void filename_header(lexer*, dive*,int);
+    
     void merge(lexer*,dive*);
-    void decompa(lexer*,dive*);
+    void decomp(lexer*,dive*);
 	void write(lexer*,dive*);
     void filename_out(lexer*, dive*);
 
