@@ -74,69 +74,69 @@ void wcp::read(lexer *p, dive *a)
     result.read((char*)&iin, sizeof (int));
 	orig_k=iin;
     
-    // Nx,Ny,Nz
+    // NLx,NLy,NLz
     result.read((char*)&iin, sizeof (int));
-	Nx=iin;
+	NLx=iin;
     
     result.read((char*)&iin, sizeof (int));
-	Ny=iin;
+	NLy=iin;
     
     result.read((char*)&iin, sizeof (int));
-	Nz=iin;
+	NLz=iin;
     
     // read coordinates
-    for(i=0;i<Ny;++i)
+    for(i=0;i<NLy;++i)
     {
     result.read((char*)&ddn, sizeof (double)); 
     X[i+orig_i] = ddn;
     }
     
-    for(j=0;j<Ny;++j)
+    for(j=0;j<NLy;++j)
     {
     result.read((char*)&ddn, sizeof (double)); 
     Y[j+orig_j] = ddn;
     }
     
-    for(k=0;k<Nz;++k)
+    for(k=0;k<NLz;++k)
     {
     result.read((char*)&ddn, sizeof (double)); 
     Z[k+orig_k] = ddn;
     }
     
     // read eta and bed
-    for(i=0;i<Ny;++i)
-    for(j=0;j<Ny;++j)
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
     {
     result.read((char*)&ddn, sizeof (double)); 
     eta[i+orig_i][j+orig_j] = ddn;
     }
     
-    for(i=0;i<Ny;++i)
-    for(j=0;j<Ny;++j)
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
     {
     result.read((char*)&ddn, sizeof (double)); 
     bed[i+orig_i][j+orig_j] = ddn;
     }
     
-    for(i=0;i<Ny;++i)
-    for(j=0;j<Ny;++j)
-    for(k=0;k<Nz;++k)
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    for(k=0;k<NLz;++k)
     {
     result.read((char*)&ddn, sizeof (double)); 
     U[i+orig_i][j+orig_j][k+orig_k] = ddn;
     }
     
-    for(i=0;i<Ny;++i)
-    for(j=0;j<Ny;++j)
-    for(k=0;k<Nz;++k)
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    for(k=0;k<NLz;++k)
     {
     result.read((char*)&ddn, sizeof (double)); 
     V[i+orig_i][j+orig_j][k+orig_k] = ddn;
     }
     
-    for(i=0;i<Ny;++i)
-    for(j=0;j<Ny;++j)
-    for(k=0;k<Nz;++k)
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    for(k=0;k<NLz;++k)
     {
     result.read((char*)&ddn, sizeof (double)); 
     W[i+orig_i][j+orig_j][k+orig_k] = ddn;

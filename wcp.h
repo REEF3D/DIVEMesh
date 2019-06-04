@@ -59,7 +59,7 @@ private:
     
     int n,q,count;
     int numprocs, numiter;
-    int Nx,Ny,Nz;
+    int NLx,NLy,NLz;
     int NGx,NGy,NGz;
     
 	double g,wsum,dist;
@@ -72,6 +72,10 @@ private:
     double *simtime;
     double *X,*Y,*Z;
     double ***U,***V,***W,**eta,**bed;
+    
+    int *is,*ie,*js,*je;
+    double *xs,*xe,*ys,*ye;
+    int *Nx,*Ny,*Nz;
 };
 
 #endif
