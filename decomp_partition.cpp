@@ -61,16 +61,16 @@ void decomp::partition(lexer* p, dive* a)
     a->xorig[0]=0.0;
     a->yorig[0]=0.0;
     a->zorig[0]=0.0;
-    a->xnode[0]=x1;
-    a->ynode[0]=y1;
-    a->znode[0]=z1;
+    a->xnode[0]=0;
+    a->ynode[0]=0;
+    a->znode[0]=0;
 
     a->xorig[a->mx]=p->xmax;
     a->yorig[a->my]=p->ymax;
     a->zorig[a->mz]=p->zmax;
-    a->xnode[a->mx]=p->knox+x1;
-    a->ynode[a->my]=p->knoy+y1;
-    a->znode[a->mz]=p->knoz+z1;
+    a->xnode[a->mx]=p->knox;
+    a->ynode[a->my]=p->knoy;
+    a->znode[a->mz]=p->knoz;
 	
 	
     for(n=1;n<a->mx;n++)

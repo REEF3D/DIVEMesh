@@ -26,7 +26,7 @@ field1d::field1d(lexer *p)
 {	
 	p->Darray(feld,p->knox+2*xma);
 
-	dx=-x1+xma;
+	dx=xma;
 }
 
 double& field1d::operator()(int ii)

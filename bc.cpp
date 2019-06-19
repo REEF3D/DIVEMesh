@@ -43,22 +43,22 @@ void bc::makebc(lexer* p, dive* a)
     LOOP
     if(a->flag(i,j,k)>0)
 	{
-        if(i==x1)
+        if(i==0)
         a->flag(i-1,j,k)=-inflow;
 
-        if(i==p->knox-1+x1)
+        if(i==p->knox-1)
         a->flag(i+1,j,k)=-outflow;
 
-        if(j==y1)
+        if(j==0)
         a->flag(i,j-1,k)=-left;
 
-        if(j==p->knoy-1+y1)
+        if(j==p->knoy-1)
         a->flag(i,j+1,k)=-right;
 
-        if(k==z1)
+        if(k==0)
         a->flag(i,j,k-1)=-bottom;
 
-        if(k==p->knoz-1+z1)
+        if(k==p->knoz-1)
         a->flag(i,j,k+1)=-top;
 	}
 

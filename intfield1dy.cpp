@@ -26,7 +26,7 @@ intfield1dy::intfield1dy(lexer *p)
 {
    	p->Iarray(feld,p->knoy+2*yma);
 
-	dy=-y1+yma;
+	dy=yma;
 }
 
 int& intfield1dy::operator()(int jj)

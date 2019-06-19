@@ -123,7 +123,7 @@ void geodat::dryside(lexer *p, dive *a)
     a->topo(i,j) *= p->G25_fz;  
     
     // smoothing
-    k=z1;
+    k=0;
 	XYLOOP
 	if(a->flag(i,j,k)>0)
 	{
@@ -141,7 +141,7 @@ void geodat::dryside(lexer *p, dive *a)
 		a->topo(i,j+1) = a->topo(i,j);
 	}
     
-    k=z1;
+    k=0;
 	for(n=0;n<p->G31;++n)
 	XYLOOP
 	if(a->flag(i,j,k)>0)

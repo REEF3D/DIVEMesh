@@ -216,17 +216,12 @@ void lexer::createspace()
     
     cout<<"DXM: "<<DXM<<endl;
 
-	x1=0;
-	y1=0;
-	z1=0;
-
     cout<<"xma:"<<xma<<" yma: "<<yma<<" zma: "<<zma<<endl;
     cout<<"xmin:"<<xmin<<" ymin: "<<ymin<<" zmin: "<<zmin<<endl;
     cout<<"xmax:"<<xmax<<" ymax: "<<ymax<<" zmax: "<<zmax<<endl;
     cout<<"knox:"<<knox<<" knoy: "<<knoy<<" knoz: "<<knoz<<endl;
 	cout<<"base_cellnum3D: "<<knox*knoy*knoz<<endl;
     cout<<"base_cellnum2D: "<<knox*knoy<<endl;
-    cout<<"x1:"<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl;
 	
 	cout<<"field: "<<(knox+2*xma)*(knoy+2*yma)*(knoz+2*zma)<<endl;
     cout<<"slice: "<<(knox+2*xma)*(knoy+2*yma)<<endl<<endl;

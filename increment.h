@@ -34,24 +34,24 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #define KDIR if(a->k_dir==1)
 	
 
-#define ILOOP for(i=x1;i<a->knox+x1;++i)
-#define JLOOP for(j=y1;j<a->knoy+y1;++j)
-#define KLOOP for(k=z1;k<a->knoz+z1;++k)
+#define ILOOP for(i=0;i<a->knox;++i)
+#define JLOOP for(j=0;j<a->knoy;++j)
+#define KLOOP for(k=0;k<a->knoz;++k)
 #define LOOP ILOOP JLOOP KLOOP
 
-#define IMALOOP for(i=x1-a->xma;i<a->knox+x1+a->xma;++i)
-#define JMALOOP for(j=y1-a->yma;j<a->knoy+y1+a->yma;++j)
-#define KMALOOP for(k=z1-a->zma;k<a->knoz+z1+a->zma;++k)
+#define IMALOOP for(i=-a->xma;i<a->knox+a->xma;++i)
+#define JMALOOP for(j=-a->yma;j<a->knoy+a->yma;++j)
+#define KMALOOP for(k=-a->zma;k<a->knoz+a->zma;++k)
 #define MALOOP IMALOOP JMALOOP KMALOOP
 
-#define IOUTCHECK if(i<x1 || i>=a->knox+x1)
-#define JOUTCHECK if(j<y1 || j>=a->knoy+y1)
-#define KOUTCHECK if(k<z1 || k>=a->knoz+z1)
-#define OUTCHECK if(i<x1 || i>=a->knox+x1 || j<y1 || j>=a->knoy+y1 || k<z1 || k>=a->knoz+z1)
+#define IOUTCHECK if(i<0 || i>=a->knox)
+#define JOUTCHECK if(j<0 || j>=a->knoy)
+#define KOUTCHECK if(k<0 || k>=a->knoz)
+#define OUTCHECK if(i<0 || i>=a->knox || j<0 || j>=a->knoy || k<0 || k>=a->knoz)
 
-#define IINCHECK if(i>=x1 && i<a->knox+x1)
-#define JINCHECK if(j>=y1 && j<a->knoy+y1)
-#define KINCHECK if(k>=z1 && k<a->knoz+z1)
+#define IINCHECK if(i>=0 && i<a->knox)
+#define JINCHECK if(j>=0 && j<a->knoy)
+#define KINCHECK if(k>=0 && k<a->knoz)
 #define INCHECK IINCHECK JINCHECK KINCHECK
 
 #define XYLOOP ILOOP JLOOP
@@ -64,9 +64,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #define YLOOP ILOOP KLOOP JLOOP
 #define ZLOOP ILOOP JLOOP KLOOP
 
-#define INLOOP for(i=x1;i<=a->knox+x1;++i)
-#define JNLOOP for(j=y1;j<=a->knoy+y1;++j)
-#define KNLOOP for(k=z1;k<=a->knoz+z1;++k)
+#define INLOOP for(i=0;i<=a->knox;++i)
+#define JNLOOP for(j=0;j<=a->knoy;++j)
+#define KNLOOP for(k=0;k<=a->knoz;++k)
 #define NODELOOP INLOOP JNLOOP KNLOOP
 
 #define ALOOP for(aa=1;aa<=a->mx;++aa)
@@ -110,7 +110,6 @@ class increment
 	virtual ~increment();
 	static int i,j,k,aa,bb,cc,n,q;
 	static int qn;
-	static int x1,x2,y1,y2,z1,z2;
 	static int xma,yma,zma;
     static int marge;
     static int margin;
