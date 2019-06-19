@@ -548,6 +548,39 @@ void lexer::gridspacing_fsf()
     
     }
     
+    if(B103==10)
+    {
+        char name[100];
+        double val;
+        int count;
+        
+        sprintf(name,"vertical-spacing.dat");
+
+    // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'vertical-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        count=0;
+        while(!file.eof())
+        {
+        file>>val;
+        ZN[count]=val;
+        ++count;
+        }
+        
+        file.close();
+
+       
+            
+        
+        
+    }
+    
     
     
     double mindx=1e20;

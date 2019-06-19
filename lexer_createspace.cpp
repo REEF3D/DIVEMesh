@@ -177,6 +177,36 @@ void lexer::createspace()
     if(B103==9)
     knoz = B126_N1 + B126_N2 + B126_N3;
     
+    if(B103==10)
+    {
+        char name[100];
+        int count;
+        double val;
+        
+        sprintf(name,"vertical-spacing.dat");
+
+    // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'vertical-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        count=0;
+        while(!file.eof())
+        {
+        file>>val;
+        ++count;
+        }
+        
+        file.close();
+
+        
+        knoz=count-1;
+    }
+    
     
     if(B2==0)
     DXM = dx;
