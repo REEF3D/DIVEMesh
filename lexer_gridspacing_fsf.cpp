@@ -569,7 +569,8 @@ void lexer::gridspacing_fsf()
         while(!file.eof())
         {
         file>>val;
-        ZN[count]=val;
+        cout<<"val: "<<val<<endl;
+        ZN[count+marge]=val;
         ++count;
         }
         
@@ -592,9 +593,9 @@ void lexer::gridspacing_fsf()
     for(k=1;k<knoz;++k)
     mindz = MIN(mindz,ZN[KP1]-ZN[KP]);
     
-    //cout<<endl<<endl;
-    //for(k=0;k<knoz+1;++k)
-    //cout<<"Z: "<<ZN[KP]<<endl;
+    cout<<endl<<endl;
+    for(k=0;k<knoz+1;++k)
+    cout<<"Z: "<<ZN[KP]<<endl;
     
     /*
     cout<<endl<<endl;

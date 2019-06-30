@@ -181,7 +181,7 @@ void lexer::createspace()
     {
         char name[100];
         int count;
-        double val;
+        double val,val0;
         
         sprintf(name,"vertical-spacing.dat");
 
@@ -194,17 +194,23 @@ void lexer::createspace()
 
         }
         
+        val=0.0;
+        val0=0.0;
         count=0;
         while(!file.eof())
         {
+        val0=val;
         file>>val;
         ++count;
         }
         
         file.close();
-
         
         knoz=count-1;
+        
+        cout<<"val0 | val "<<val0<<" "<<val<<endl;
+        if(val0==val)
+        knoz--;
     }
     
     
