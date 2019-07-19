@@ -208,7 +208,7 @@ void lexer::createspace()
         
         knoz=count-1;
         
-        cout<<"val0 | val "<<val0<<" "<<val<<endl;
+        //cout<<"val0 | val "<<val0<<" "<<val<<endl;
         if(val0==val)
         knoz--;
     }
