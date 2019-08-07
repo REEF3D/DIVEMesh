@@ -108,6 +108,9 @@
       <File Name="template.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Data">
+      <VirtualDirectory Name="Wave Coupling">
+        <File Name="wcp.h"/>
+      </VirtualDirectory>
       <File Name="data.h"/>
       <VirtualDirectory Name="Kriging">
         <File Name="kriging.h"/>
@@ -263,6 +266,14 @@
       <File Name="bedlevel.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Data">
+      <VirtualDirectory Name="Wave Coupling">
+        <File Name="wcp_filename.cpp"/>
+        <File Name="wcp_decomp.cpp"/>
+        <File Name="wcp_merge.cpp"/>
+        <File Name="wcp_write.cpp"/>
+        <File Name="wcp_read.cpp"/>
+        <File Name="wcp.cpp"/>
+      </VirtualDirectory>
       <File Name="data.cpp"/>
       <File Name="data_inversedist.cpp"/>
       <VirtualDirectory Name="Kriging">

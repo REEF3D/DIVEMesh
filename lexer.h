@@ -113,6 +113,7 @@ public:
 	
 	int D10,D13,D14,D15,D19;
     int D20,D23;
+    int D100;
 	
     double *D10_x, *D10_y, *D10_z, *D10_data;
     double D11_x, D11_y, D11_z;
