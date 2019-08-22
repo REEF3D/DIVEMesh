@@ -29,7 +29,7 @@ driver::driver()
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
     
-    cout<<"v_dev_from_190530 "<<endl<<endl<<endl;
+    cout<<"compiled from commit "<<VERSION<<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
