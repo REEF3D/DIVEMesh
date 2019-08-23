@@ -243,13 +243,59 @@ void lexer::gridspacing_fsf()
     
     
     // ------- 
-    // PART 2    
+    // PART 2   
+
     lx = B124_x3-B124_x1;
-    
     ex = 1.0/double(B124_N2);
+
+    bool focused = false;
+    int nLoop = 0;
+    double fp = B124_x2;
+    double tol = 0.005;
+    double xn, min_dx, min_x;
+        
+    while(focused == false)
+    {
+        c = (fp-xmin-B124_x1)/lx;
+
+        double xn_m1 = B124_x3;
+        double min_dx = lx;
+            
+        for (int i=0; i < knox + 1; ++i)
+        {
+            xn = lx * (sinh(B124_f2*(ex*double(i)-c)) - sinh(-B124_f2*c)) / (sinh(B124_f2*(1.0-c))-sinh(-B124_f2*c))  + XN[marge+B124_N1];
+
+            if (abs(xn - xn_m1) < min_dx)
+            {
+                min_dx = abs(xn - xn_m1);
+                min_x = xn;
+            }
+
+            xn_m1 = xn;
+        }
+        
+        if (abs(min_x - B124_x2) > tol && nLoop < 10000)
+        {
+            if (min_x > B124_x2)
+            {
+                fp = fp - tol;
+            }
+            else
+            {
+                fp = fp + tol;  
+            }
+                
+            nLoop++;
+        }
+        else
+        {
+            focused = true;
+        }
+    }
     
-    c = (B124_x2-xmin-B124_x1)/lx;
+    c = (fp-xmin-B124_x1)/lx;
     
+
     for(i=1;i<B124_N2+1;++i)
     {
     XN[IP+B124_N1] = lx * (sinh(B124_f2*(ex*double(i)-c)) - sinh(-B124_f2*c)) / (sinh(B124_f2*(1.0-c))-sinh(-B124_f2*c))  + XN[marge+B124_N1];
@@ -522,17 +568,63 @@ void lexer::gridspacing_fsf()
     }while(stop==0  && count<maxiter);
     
     // ------- 
-    // PART 2    
+    // PART 2   
+
     ly = B125_y3-B125_y1;
-    
     ey = 1.0/double(B125_N2);
+
+    bool focused = false;
+    int nLoop = 0;
+    double fp = B125_y2;
+    double tol = 0.005;
+    double yn, min_dy, min_y;
+        
+    while(focused == false)
+    {
+        c = (fp-ymin-B125_y1)/ly;
+
+        double yn_m1 = B125_y3;
+        double min_dy = ly;
+            
+        for (int j=0; j < knoy + 1; ++j)
+        {
+            yn = ly * (sinh(B125_f2*(ey*double(j)-c)) - sinh(-B125_f2*c)) / (sinh(B125_f2*(1.0-c))-sinh(-B125_f2*c))  + YN[marge+B125_N1];
+
+            if (abs(yn - yn_m1) < min_dy)
+            {
+                min_dy = abs(yn - yn_m1);
+                min_y = yn;
+            }
+
+            yn_m1 = yn;
+        }
+        
+        if (abs(min_y - B125_y2) > tol && nLoop < 10000)
+        {
+            if (min_y > B125_y2)
+            {
+                fp = fp - tol;
+            }
+            else
+            {
+                fp = fp + tol;  
+            }
+                
+            nLoop++;
+        }
+        else
+        {
+            focused = true;
+        }
+    }
     
-    c = (B125_y2-ymin-B125_y1)/ly;
+    c = (fp-ymin-B125_y1)/ly;
     
     for(j=1;j<B125_N2+1;++j)
     {
     YN[JP+B125_N1] = ly * (sinh(B125_f2*(ey*double(j)-c)) - sinh(-B125_f2*c)) / (sinh(B125_f2*(1.0-c))-sinh(-B125_f2*c))  + YN[marge+B125_N1];
     }
+  
 
     // ------- 
     // PART 3
