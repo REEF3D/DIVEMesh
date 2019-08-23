@@ -866,6 +866,36 @@ void lexer::gridspacing_fsf()
     
     }
     
+    if(B103==10)
+    {
+        char name[100];
+        double val;
+        int count;
+        
+        sprintf(name,"vertical-spacing.dat");
+
+    // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'vertical-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        count=0;
+        while(!file.eof())
+        {
+        file>>val;
+        cout<<"val: "<<val<<endl;
+        ZN[count+marge]=val;
+        ++count;
+        }
+        
+        file.close();
+
+    }
+    
     
     
     double mindx=1e20;
@@ -876,10 +906,10 @@ void lexer::gridspacing_fsf()
 
     for(k=1;k<knoz;++k)
     mindz = MIN(mindz,ZN[KP1]-ZN[KP]);
-    
-    //cout<<endl<<endl;
-    //for(k=0;k<knoz+1;++k)
-    //cout<<"Z: "<<ZN[KP]<<endl;
+   /* 
+    cout<<endl<<endl;
+    for(k=0;k<knoz+1;++k)
+    cout<<"Z: "<<ZN[KP]<<endl;*/
     
     /*
     cout<<endl<<endl;

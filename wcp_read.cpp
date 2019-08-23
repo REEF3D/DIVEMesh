@@ -35,10 +35,14 @@ void wcp::read(lexer *p, dive *a)
     read_header(p,a);
     
     // allocate arrays
+    p->Darray(X,NGx);
+    p->Darray(Y,NGy);
+    p->Darray(Z,NGz);
+    p->Darray(eta,NGx,NGy);
+    p->Darray(bed,NGx,NGy);
     p->Darray(U,NGx,NGy,NGz);
     p->Darray(V,NGx,NGy,NGz);
     p->Darray(W,NGx,NGy,NGz);
-    p->Darray(eta,NGx,NGy);
     
     // result
     for(n=0; n<numiter; ++n)
@@ -49,162 +53,98 @@ void wcp::read(lexer *p, dive *a)
 	
 	result.open(name, ios::binary);
 	
+    // read header section
+    // orig_xyz
+    result.read((char*)&ddn, sizeof (double)); 
+    orig_x = ddn;
+    
+    result.read((char*)&ddn, sizeof (double)); 
+    orig_y = ddn;
+    
+    result.read((char*)&ddn, sizeof (double)); 
+    orig_z = ddn;
+    
+    // orig_ijk
+    result.read((char*)&iin, sizeof (int));
+	orig_i=iin;
+    
+    result.read((char*)&iin, sizeof (int));
+	orig_j=iin;
+    
+    result.read((char*)&iin, sizeof (int));
+	orig_k=iin;
+    
+    // NLx,NLy,NLz
+    result.read((char*)&iin, sizeof (int));
+	NLx=iin;
+    
+    result.read((char*)&iin, sizeof (int));
+	NLy=iin;
+    
+    result.read((char*)&iin, sizeof (int));
+	NLz=iin;
+    
+    // read coordinates
+    for(i=0;i<NLy;++i)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    X[i+orig_i] = ddn;
+    }
+    
+    for(j=0;j<NLy;++j)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    Y[j+orig_j] = ddn;
+    }
+    
+    for(k=0;k<NLz;++k)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    Z[k+orig_k] = ddn;
+    }
+    
+    // read eta and bed
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    eta[i+orig_i][j+orig_j] = ddn;
+    }
+    
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    bed[i+orig_i][j+orig_j] = ddn;
+    }
+    
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    for(k=0;k<NLz;++k)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    U[i+orig_i][j+orig_j][k+orig_k] = ddn;
+    }
+    
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    for(k=0;k<NLz;++k)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    V[i+orig_i][j+orig_j][k+orig_k] = ddn;
+    }
+    
+    for(i=0;i<NLy;++i)
+    for(j=0;j<NLy;++j)
+    for(k=0;k<NLz;++k)
+    {
+    result.read((char*)&ddn, sizeof (double)); 
+    W[i+orig_i][j+orig_j][k+orig_k] = ddn;
+    }
     
     
     result.close();
     }
-    
-    
-    
-    /*
-    result.read((char*)&iin, sizeof (int));
-	p->count=p->count_wcpstart=iin;
-	
-    result.read((char*)&iin, sizeof (int));
-	p->printcount=iin;
-	
-    result.read((char*)&ddn, sizeof (double));
-	p->simtime=ddn;
-    
-    result.read((char*)&ddn, sizeof (double));
-	p->printtime=ddn;
-    
-    result.read((char*)&ddn, sizeof (double));
-	p->sedprinttime=ddn;
-    
-    result.read((char*)&ddn, sizeof (double));
-	p->fsfprinttime=ddn;
-    
-    result.read((char*)&ddn, sizeof (double));
-	p->probeprinttime=ddn;
-    
-    result.read((char*)&ddn, sizeof (double));
-	p->wcpprinttime=ddn;
-    
-    ULOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->u(i,j,k)=double(ffn);
-    }
-	
-	VLOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->v(i,j,k)=double(ffn);
-    }
-	
-	WLOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->w(i,j,k)=double(ffn);
-    }
-	
-	LOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->press(i,j,k)=double(ffn);
-    }
-	
-	LOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->phi(i,j,k)=double(ffn);
-    }
-	
-	LOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    pturb->kinget(i,j,k,ffn);
-    }
-	
-	LOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    pturb->epsget(i,j,k,ffn);
-    }
-	
-	LOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->eddyv(i,j,k)=double(ffn);
-    }
-	
-	ALOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->topo(i,j,k)=double(ffn);
-    }
-	
-	SLICELOOP4
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->bedload(i,j)=double(ffn);
-    }
-	
-	LOOP
-    {
-    result.read((char*)&ffn, sizeof (float));
-    a->conc(i,j,k)=double(ffn);
-    }
-	
-	int gcval_press, gcval_phi, gcval_topo;
-	
-	if(p->B76==0)
-    gcval_press=40;  
-
-    if(p->B76==1)
-    gcval_press=41;
-
-    if(p->B76==2)
-    gcval_press=42;
-
-    if(p->B76==3)
-    gcval_press=43;
-	
-	if(p->B76==4) 
-    gcval_press=44;
-	
-	if(p->B76==5) 
-    gcval_press=45;
-	
-	
-	if(p->F50==1)
-	gcval_phi=51;
-
-	if(p->F50==2)
-	gcval_phi=52;
-
-	if(p->F50==3)
-	gcval_phi=53;
-
-	if(p->F50==4)
-	gcval_phi=54;
-	
-	
-	if(p->S50==1)
-	gcval_topo=151;
-
-	if(p->S50==2)
-	gcval_topo=152;
-
-	if(p->S50==3)
-	gcval_topo=153;
-	
-	if(p->S50==4)
-	gcval_topo=154;
-	
-	
-	pgc->start1(p,a->u,10);
-	pgc->start2(p,a->v,11);
-	pgc->start3(p,a->w,12);
-    pgc->start4(p,a->press,gcval_press);
-	pgc->start4(p,a->phi,gcval_phi);
-	pturb->gcupdate(p,a,pgc);
-	pgc->start4(p,a->eddyv,24);
-	pgc->start4a(p,a->topo,gcval_topo);
-	pgc->start4(p,a->conc,40);
-	
-	result.close();*/
 }
 
 

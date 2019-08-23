@@ -177,6 +177,42 @@ void lexer::createspace()
     if(B103==9)
     knoz = B126_N1 + B126_N2 + B126_N3;
     
+    if(B103==10)
+    {
+        char name[100];
+        int count;
+        double val,val0;
+        
+        sprintf(name,"vertical-spacing.dat");
+
+    // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'vertical-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        val=0.0;
+        val0=0.0;
+        count=0;
+        while(!file.eof())
+        {
+        val0=val;
+        file>>val;
+        ++count;
+        }
+        
+        file.close();
+        
+        knoz=count-1;
+        
+        //cout<<"val0 | val "<<val0<<" "<<val<<endl;
+        if(val0==val)
+        knoz--;
+    }
+    
     
     if(B2==0)
     DXM = dx;
@@ -186,17 +222,12 @@ void lexer::createspace()
     
     cout<<"DXM: "<<DXM<<endl;
 
-	x1=0;
-	y1=0;
-	z1=0;
-
     cout<<"xma:"<<xma<<" yma: "<<yma<<" zma: "<<zma<<endl;
     cout<<"xmin:"<<xmin<<" ymin: "<<ymin<<" zmin: "<<zmin<<endl;
     cout<<"xmax:"<<xmax<<" ymax: "<<ymax<<" zmax: "<<zmax<<endl;
     cout<<"knox:"<<knox<<" knoy: "<<knoy<<" knoz: "<<knoz<<endl;
 	cout<<"base_cellnum3D: "<<knox*knoy*knoz<<endl;
     cout<<"base_cellnum2D: "<<knox*knoy<<endl;
-    cout<<"x1:"<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl;
 	
 	cout<<"field: "<<(knox+2*xma)*(knoy+2*yma)*(knoz+2*zma)<<endl;
     cout<<"slice: "<<(knox+2*xma)*(knoy+2*yma)<<endl<<endl;

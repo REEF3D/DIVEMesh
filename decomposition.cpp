@@ -92,7 +92,6 @@ void decomp::start(lexer* p, dive* a)
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
 }
 
-
 int decomp::partition_check(lexer* p, dive* a)
 {
     int checker=0;

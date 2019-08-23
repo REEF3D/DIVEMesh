@@ -67,7 +67,7 @@ void data::start(lexer* p, dive* a)
 	krig.start(p,a);
 	}
 	
-	k=z1;
+	k=0;
 	XYLOOP
 	if(a->flag(i,j,k)>0)
 	{
@@ -86,7 +86,7 @@ void data::start(lexer* p, dive* a)
 	}
 	
 	
-	k=z1;
+	k=0;
 	for(n=0;n<p->D15;++n)
 	XYLOOP
 	if(a->flag(i,j,k)>0)

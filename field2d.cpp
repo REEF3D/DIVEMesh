@@ -26,8 +26,8 @@ field2d::field2d(lexer *p)
 {
 	p->Darray(feld,p->knox+2*xma,p->knoy+2*yma);
 
-	dx=-x1+xma;
-	dy=-y1+yma;
+	dx=xma;
+	dy=yma;
 }
 
 

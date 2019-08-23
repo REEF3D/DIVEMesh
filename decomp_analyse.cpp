@@ -23,21 +23,21 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void decomp::partition_analyse(lexer *p, dive *a)
 {	
-	for(i=x1;i<a->knox+x1;++i)
-	xcross[i-x1]=0;
+	for(i=0;i<a->knox;++i)
+	xcross[i]=0;
 	
-	for(j=y1;j<a->knoy+y1;++j)
-	ycross[j-y1]=0;
+	for(j=0;j<a->knoy;++j)
+	ycross[j]=0;
 	
-	for(k=z1;k<a->knoz+z1;++k)
-	zcross[k-z1]=0;
+	for(k=0;k<a->knoz;++k)
+	zcross[k]=0;
 	
 	LOOP
 	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 	{
-	++xcross[i-x1];
-	++ycross[j-y1];
-	++zcross[k-z1];
+	xcross[i] += 1;
+	ycross[j] += 1;
+	zcross[k] += 1;
 	}
 	
 	xcross_m=0;
@@ -45,14 +45,14 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	zcross_m=0;
 		
 	
-	for(i=x1;i<a->knox+x1;++i)
-	xcross_m+=xcross[i-x1];
+	for(i=0;i<a->knox;++i)
+	xcross_m+=xcross[i];
 	
-	for(j=y1;j<a->knoy+y1;++j)
-	ycross_m+=ycross[j-x1];
+	for(j=0;j<a->knoy;++j)
+	ycross_m+=ycross[j];
 	
-	for(k=z1;k<a->knoz+z1;++k)
-	zcross_m+=zcross[k-z1];
+	for(k=0;k<a->knoz;++k)
+	zcross_m+=zcross[k];
 	
 	xcross_m=xcross_m/a->knox;
 	ycross_m=ycross_m/a->knoy;
@@ -64,13 +64,13 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	
 	xvar=yvar=zvar=0.0;
 	
-	for(i=x1;i<a->knox+x1;++i)
+	for(i=0;i<a->knox;++i)
 	xvar += pow(xcross[i]-xcross_m,2.0);
 	
-	for(j=y1;j<a->knoy+y1;++j)
+	for(j=0;j<a->knoy;++j)
 	yvar += pow(ycross[j]-ycross_m,2.0);
 	
-	for(k=z1;k<a->knoz+z1;++k)
+	for(k=0;k<a->knoz;++k)
 	zvar += pow(zcross[k]-zcross_m,2.0);
 	
 	xvar=sqrt(xvar/a->knox);

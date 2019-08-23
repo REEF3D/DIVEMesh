@@ -36,7 +36,6 @@ increment::~increment()
 }
 
 int increment::i,increment::j,increment::k,increment::aa,increment::bb,increment::cc,increment::n,increment::q,increment::qn;
-int increment::x1,increment::x2,increment::y1,increment::y2,increment::z1,increment::z2;
 int increment::xma,increment::yma,increment::zma;
 int increment::marge;
 int increment::margin;

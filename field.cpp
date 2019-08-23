@@ -26,9 +26,9 @@ field::field(lexer *p)
 {
 	p->Darray(feld,p->knox+2*xma,p->knoy+2*yma,p->knoz+2*zma);
 	
-	dx=-x1+xma;
-	dy=-y1+yma;
-	dz=-z1+zma;
+	dx=xma;
+	dy=yma;
+	dz=zma;
 }
 
 

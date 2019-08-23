@@ -42,9 +42,12 @@ public:
     void read_result(lexer*, dive*);
     
     void filename_in(lexer*, dive*,int,int);
+    void filename_out(lexer*, dive*,int,int);
+    
+    void filename_header(lexer*, dive*,int);
     
     void merge(lexer*,dive*);
-    void decompa(lexer*,dive*);
+    void decomp(lexer*,dive*);
 	void write(lexer*,dive*);
     void filename_out(lexer*, dive*);
 
@@ -56,15 +59,23 @@ private:
     
     int n,q,count;
     int numprocs, numiter;
-    int Nx,Ny,Nz;
+    int NLx,NLy,NLz;
     int NGx,NGy,NGz;
     
 	double g,wsum,dist;
     double xc,yc;
     
+    double orig_x, orig_y, orig_z;
+    int orig_i, orig_j, orig_k;
+    
     // arrays
     double *simtime;
-    double ***U,***V,***W,**eta;
+    double *X,*Y,*Z;
+    double ***U,***V,***W,**eta,**bed;
+    
+    int *is,*ie,*js,*je;
+    double *xs,*xe,*ys,*ye;
+    int *Nx,*Ny,*Nz;
 };
 
 #endif

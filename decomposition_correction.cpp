@@ -49,24 +49,24 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	{
 		xcount[aa]=0;
 		for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-		for(j=y1;j<a->knoy+y1;++j)
-		for(k=z1;k<a->knoz+z1;++k)
+		for(j=0;j<a->knoy;++j)
+		for(k=0;k<a->knoz;++k)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++xcount[aa];
 	}
 	
-	for(i=x1;i<a->knox+x1;++i)
-	xcross[i-x1]=0;
+	for(i=0;i<a->knox;++i)
+	xcross[i]=0;
 	
-	for(i=x1;i<a->knox+x1;++i)
-	for(j=y1;j<a->knoy+y1;++j)
-	for(k=z1;k<a->knoz+z1;++k)
+	for(i=0;i<a->knox;++i)
+	for(j=0;j<a->knoy;++j)
+	for(k=0;k<a->knoz;++k)
 	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-	++xcross[i-x1];
+	++xcross[i];
 	
 	xcross_m=0;
-	for(i=x1;i<a->knox+x1;++i)
-	xcross_m+=xcross[i-x1];
+	for(i=0;i<a->knox;++i)
+	xcross_m+=xcross[i];
 	
 	xcross_m=xcross_m/a->knox;
 	
@@ -109,15 +109,15 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	// re-partition
 	for(aa=1;aa<=a->mx;++aa)
 	{
-		for(ii=x1;ii<a->knox+x1;++ii)
+		for(ii=0;ii<a->knox;++ii)
 		{
 
 			a->xnode[aa]=ii;
 			
 			xcount[aa]=0;
 			for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-			for(j=y1;j<a->knoy+y1;++j)
-			for(k=z1;k<a->knoz+z1;++k)
+			for(j=0;j<a->knoy;++j)
+			for(k=0;k<a->knoz;++k)
 			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 			++xcount[aa];
 			
@@ -133,15 +133,15 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 		}
 	}
 	
-	a->xnode[a->mx]=a->knox+x1;
+	a->xnode[a->mx]=a->knox;
 	
 	// check last
 	for(aa=1;aa<=a->mx;++aa)
 	{
 		xcount[aa]=0;
 		for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-		for(j=y1;j<a->knoy+y1;++j)
-		for(k=z1;k<a->knoz+z1;++k)
+		for(j=0;j<a->knoy;++j)
+		for(k=0;k<a->knoz;++k)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++xcount[aa];
 	}
@@ -184,8 +184,8 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 			{
 			xcount[aa]=0;
 			for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-			for(j=y1;j<a->knoy+y1;++j)
-			for(k=z1;k<a->knoz+z1;++k)
+			for(j=0;j<a->knoy;++j)
+			for(k=0;k<a->knoz;++k)
 			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 			++xcount[aa];
 			}
@@ -231,8 +231,8 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 			{
 			xcount[aa]=0;
 			for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-			for(j=y1;j<a->knoy+y1;++j)
-			for(k=z1;k<a->knoz+z1;++k)
+			for(j=0;j<a->knoy;++j)
+			for(k=0;k<a->knoz;++k)
 			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 			++xcount[aa];
 			}
@@ -256,8 +256,8 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	{
 		xcount[aa]=0;
 		for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-		for(j=y1;j<a->knoy+y1;++j)
-		for(k=z1;k<a->knoz+z1;++k)
+		for(j=0;j<a->knoy;++j)
+		for(k=0;k<a->knoz;++k)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++xcount[aa];
 	}
@@ -320,25 +320,25 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	{
 		ycount[bb]=0;
 		for(j=a->ynode[bb-1];j<a->xnode[bb];++j)
-		for(i=x1;i<a->knox+x1;++i)
-		for(k=z1;k<a->knoz+z1;++k)
+		for(i=0;i<a->knox;++i)
+		for(k=0;k<a->knoz;++k)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++ycount[bb];
 	}
 
     
-	for(j=y1;j<a->knoy+y1;++j)
-	ycross[j-y1]=0;
+	for(j=0;j<a->knoy;++j)
+	ycross[j]=0;
 	
-	for(i=x1;i<a->knox+x1;++i)
-	for(j=y1;j<a->knoy+y1;++j)
-	for(k=z1;k<a->knoz+z1;++k)
+	for(i=0;i<a->knox;++i)
+	for(j=0;j<a->knoy;++j)
+	for(k=0;k<a->knoz;++k)
 	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-	++ycross[j-y1];
+	++ycross[j];
 
 	ycross_m=0;
-	for(j=y1;j<a->knoy+y1;++j)
-	ycross_m+=ycross[j-y1];
+	for(j=0;j<a->knoy;++j)
+	ycross_m+=ycross[j];
 
 	ycross_m=ycross_m/a->knoy;
 	
@@ -380,15 +380,15 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	// re-partition
 	for(bb=1;bb<=a->my;++bb)
 	{
-		for(jj=y1;jj<a->knoy+y1;++jj)
+		for(jj=0;jj<a->knoy;++jj)
 		{
 
 			a->ynode[bb]=jj;
 			
 			ycount[bb]=0;
 			for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-			for(i=x1;i<a->knox+x1;++i)
-			for(k=z1;k<a->knoz+z1;++k)
+			for(i=0;i<a->knox;++i)
+			for(k=0;k<a->knoz;++k)
 			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 			++ycount[bb];
 			
@@ -405,15 +405,15 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 		}
 	}
 
-	a->ynode[a->my]=a->knoy+y1;
+	a->ynode[a->my]=a->knoy;
 
 	// check last
 	for(bb=1;bb<=a->my;++bb)
 	{
 		ycount[bb]=0;
 		for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-		for(i=x1;i<a->knox+x1;++i)
-		for(k=z1;k<a->knoz+z1;++k)
+		for(i=0;i<a->knox;++i)
+		for(k=0;k<a->knoz;++k)
         //cout<<j<<" "<<bb<<endl;
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++ycount[bb];
@@ -457,8 +457,8 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 			{
 				ycount[bb]=0;
 				for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-				for(i=x1;i<a->knox+x1;++i)
-				for(k=z1;k<a->knoz+z1;++k)
+				for(i=0;i<a->knox;++i)
+				for(k=0;k<a->knoz;++k)
 				if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 				++ycount[bb];
 			}
@@ -505,8 +505,8 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 			{
 				ycount[bb]=0;
 				for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-				for(i=x1;i<a->knox+x1;++i)
-				for(k=z1;k<a->knoz+z1;++k)
+				for(i=0;i<a->knox;++i)
+				for(k=0;k<a->knoz;++k)
 				if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 				++ycount[bb];
 			}
@@ -529,8 +529,8 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	{
 		ycount[bb]=0;
 		for(j=a->ynode[bb-1];j<a->xnode[bb];++j)
-		for(i=x1;i<a->knox+x1;++i)
-		for(k=z1;k<a->knoz+z1;++k)
+		for(i=0;i<a->knox;++i)
+		for(k=0;k<a->knoz;++k)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++ycount[bb];
 	}
@@ -591,24 +591,24 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	{
 		zcount[cc]=0;
 		for(k=a->znode[cc-1];k<a->znode[cc];++k)
-		for(i=x1;i<a->knox+x1;++i)
-		for(j=y1;j<a->knoy+y1;++j)
+		for(i=0;i<a->knox;++i)
+		for(j=0;j<a->knoy;++j)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++zcount[cc];
 	}
 	
-	for(k=z1;k<a->knoz+z1;++k)
-	zcross[k-z1]=0;
+	for(k=0;k<a->knoz;++k)
+	zcross[k]=0;
 	
-	for(i=x1;i<a->knox+x1;++i)
-	for(j=y1;j<a->knoy+y1;++j)
-	for(k=z1;k<a->knoz+z1;++k)
+	for(i=0;i<a->knox;++i)
+	for(j=0;j<a->knoy;++j)
+	for(k=0;k<a->knoz;++k)
 	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-	++zcross[k-z1];
+	++zcross[k];
 	
 	zcross_m=0;
-	for(k=z1;k<a->knoz+z1;++k)
-	zcross_m+=zcross[k-z1];
+	for(k=0;k<a->knoz;++k)
+	zcross_m+=zcross[k];
 	
 	zcross_m=zcross_m/a->knoz;
 	
@@ -651,15 +651,15 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	// re-partition
 	for(cc=1;cc<=a->mz;++cc)
 	{
-		for(kk=z1;kk<a->knoz+z1;++kk)
+		for(kk=0;kk<a->knoz;++kk)
 		{
 
 			a->znode[cc]=kk;
 			
 			zcount[cc]=0;
 			for(k=a->znode[cc-1];k<a->znode[cc];++k)
-			for(i=x1;i<a->knox+x1;++i)
-			for(j=y1;j<a->knoy+y1;++j)
+			for(i=0;i<a->knox;++i)
+			for(j=0;j<a->knoy;++j)
 			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 			++zcount[cc];
 			
@@ -676,15 +676,15 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 		}
 	}
 	
-	a->znode[a->mz]=a->knoz+z1;
+	a->znode[a->mz]=a->knoz;
 	
 	// check last
 	for(cc=1;cc<=a->mz;++cc)
 	{
 		zcount[cc]=0;
 		for(k=a->znode[cc-1];k<a->znode[cc];++k)
-		for(i=x1;i<a->knox+x1;++i)
-		for(j=y1;j<a->knoy+y1;++j)
+		for(i=0;i<a->knox;++i)
+		for(j=0;j<a->knoy;++j)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++zcount[cc];
 	}
@@ -727,8 +727,8 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 			{
 				zcount[cc]=0;
 				for(k=a->znode[cc-1];k<a->znode[cc];++k)
-				for(i=x1;i<a->knox+x1;++i)
-				for(j=y1;j<a->knoy+y1;++j)
+				for(i=0;i<a->knox;++i)
+				for(j=0;j<a->knoy;++j)
 				if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 				++zcount[cc];
 			}
@@ -776,8 +776,8 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 			{
 				zcount[cc]=0;
 				for(k=a->znode[cc-1];k<a->znode[cc];++k)
-				for(i=x1;i<a->knox+x1;++i)
-				for(j=y1;j<a->knoy+y1;++j)
+				for(i=0;i<a->knox;++i)
+				for(j=0;j<a->knoy;++j)
 				if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 				++zcount[cc];
 			}
@@ -800,8 +800,8 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	{
 		zcount[cc]=0;
 		for(k=a->znode[cc-1];k<a->znode[cc];++k)
-		for(i=x1;i<a->knox+x1;++i)
-		for(j=y1;j<a->knoy+y1;++j)
+		for(i=0;i<a->knox;++i)
+		for(j=0;j<a->knoy;++j)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++zcount[cc];
 	}
