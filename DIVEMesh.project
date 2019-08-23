@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="DIVEMesh" InternalType="Console" Version="10.0.0">
+  <Reconciliation>
+    <Regexes/>
+    <Excludepaths/>
+    <Ignorefiles/>
+    <Extensions>
+      <![CDATA[*.cpp;*.c;*.h;*.hpp;*.xrc;*.wxcp;*.fbp]]>
+    </Extensions>
+    <Topleveldir>/Users/tobias/REEF3D/Code/DIVEMesh_dev</Topleveldir>
+  </Reconciliation>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00010001N0007Release000000000000]]>
@@ -402,7 +411,7 @@
       <PostBuild/>
       <CustomBuild Enabled="yes">
         <RebuildCommand>make -f Makefile_terminal_dm -j 8</RebuildCommand>
-        <CleanCommand>make clean</CleanCommand>
+        <CleanCommand>make -f Makefile_terminal_dm clean</CleanCommand>
         <BuildCommand>make -f Makefile_terminal_dm -j 8</BuildCommand>
         <PreprocessFileCommand/>
         <SingleFileCommand/>

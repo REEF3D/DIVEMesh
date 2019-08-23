@@ -177,20 +177,92 @@ void lexer::createspace()
     if(B103==9)
     knoz = B126_N1 + B126_N2 + B126_N3;
     
+    if(B101==10)
+    {
+        char name[100];
+        int count;
+        double val,val0;
+        
+        sprintf(name,"x-spacing.dat");
+
+        // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'x-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        val=0.0;
+        val0=0.0;
+        count=0;
+        while(!file.eof())
+        {
+        val0=val;
+        file>>val;
+        ++count;
+        }
+        
+        file.close();
+        
+        knox=count-1;
+        
+        //cout<<"val0 | val "<<val0<<" "<<val<<endl;
+        if(val0==val)
+        knox--;
+    }
+
+    if(B102==10)
+    {
+        char name[100];
+        int count;
+        double val,val0;
+        
+        sprintf(name,"y-spacing.dat");
+
+        // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'y-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        val=0.0;
+        val0=0.0;
+        count=0;
+        while(!file.eof())
+        {
+        val0=val;
+        file>>val;
+        ++count;
+        }
+        
+        file.close();
+        
+        knoy=count-1;
+        
+        //cout<<"val0 | val "<<val0<<" "<<val<<endl;
+        if(val0==val)
+        knoy--;
+    }
+    
     if(B103==10)
     {
         char name[100];
         int count;
         double val,val0;
         
-        sprintf(name,"vertical-spacing.dat");
+        sprintf(name,"z-spacing.dat");
 
-    // open file------------
+        // open file------------
         ifstream file(name, ios_base::in);
         
         if(!file)
         {
-            cout<<endl<<("no 'vertical-spacing.dat' file found")<<endl<<endl;
+            cout<<endl<<("no 'z-spacing.dat' file found")<<endl<<endl;
 
         }
         

@@ -290,6 +290,38 @@ void lexer::gridspacing_fsf()
     }
     
     
+    if(B101==10)
+    {
+        char name[100];
+        double val;
+        int count;
+        
+        sprintf(name,"x-spacing.dat");
+
+    // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'x-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        count=0;
+        while(!file.eof())
+        {
+        file>>val;
+        cout<<"val: "<<val<<endl;
+        XN[count+marge]=val;
+        ++count;
+        }
+        
+        file.close();
+
+    }
+
+    
+    
 // ---------------------------------------------------------------------------------------
 //  YDIR
 
@@ -536,6 +568,39 @@ void lexer::gridspacing_fsf()
     
     
     }
+    
+
+    if(B102==10)
+    {
+        char name[100];
+        double val;
+        int count;
+        
+        sprintf(name,"y-spacing.dat");
+
+    // open file------------
+        ifstream file(name, ios_base::in);
+        
+        if(!file)
+        {
+            cout<<endl<<("no 'y-spacing.dat' file found")<<endl<<endl;
+
+        }
+        
+        count=0;
+        while(!file.eof())
+        {
+        file>>val;
+        cout<<"val: "<<val<<endl;
+        YN[count+marge]=val;
+        ++count;
+        }
+        
+        file.close();
+
+    }    
+    
+    
 
 // ---------------------------------------------------------------------------------------
 //  ZDIR
@@ -872,14 +937,14 @@ void lexer::gridspacing_fsf()
         double val;
         int count;
         
-        sprintf(name,"vertical-spacing.dat");
+        sprintf(name,"z-spacing.dat");
 
     // open file------------
         ifstream file(name, ios_base::in);
         
         if(!file)
         {
-            cout<<endl<<("no 'vertical-spacing.dat' file found")<<endl<<endl;
+            cout<<endl<<("no 'z-spacing.dat' file found")<<endl<<endl;
 
         }
         
