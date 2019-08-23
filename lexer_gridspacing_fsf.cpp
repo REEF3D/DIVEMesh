@@ -40,7 +40,7 @@ void lexer::gridspacing_fsf()
     ex = 1.0/double(knox);
     ey = 1.0/double(knoy);
     ez = 1.0/double(knoz);
-    
+  
     fac = B111;
     
 //  x-dir
@@ -71,26 +71,117 @@ void lexer::gridspacing_fsf()
         XN[IP] = lx * (tanh(B111*(ex*double(i)-c)) - tanh(-B111*c)) / (tanh(B111*(1.0-c))-tanh(-B111*c));
         }
     }
-    
+  
     if(B101==5)
     {
-    double c;
-    c = (B114_x-xmin)/lx;
+        bool focused = false;
+        int nLoop = 0;
+        double fp = B114_x;
+        double tol = 0.01;
+        double xn, min_dx, min_x;
+        
+        while(focused == false)
+        {
+            c = (fp - xmin)/lx;
+
+            double xn_m1 = xmax;
+            double min_dx = lx;
+            
+            for (int i=0; i < knox + 1; ++i)
+            {
+                xn = lx * (sinh(B111*(ex*double(i)-c)) - sinh(-B111*c)) / (sinh(B111*(1.0-c))-sinh(-B111*c));
+
+                if (abs(xn - xn_m1) < min_dx)
+                {
+                    min_dx = abs(xn - xn_m1);
+                    min_x = xn;
+                }
+
+                xn_m1 = xn;
+            }
+        
+            if (abs(min_x - B114_x) > tol && nLoop < 10000)
+            {
+                if (min_x > B114_x)
+                {
+                    fp = fp - tol;
+                }
+                else
+                {
+                    fp = fp + tol;  
+                }
+                
+                nLoop++;
+            }
+            else
+            {
+                focused = true;
+            }
+        }
+        
+        c = (fp-xmin)/lx;
+        
         for(i=0;i<knox+1;++i)
         {
-        XN[IP] = lx * (sinh(B111*(ex*double(i)-c)) - sinh(-B111*c)) / (sinh(B111*(1.0-c))-sinh(-B111*c));
+            XN[IP] = lx * (sinh(B111*(ex*double(i)-c)) - sinh(-B111*c)) / (sinh(B111*(1.0-c))-sinh(-B111*c));
         }
     }
     
- 
+
     if(B101==6)
-    for(i=0;i<knox+1;++i)
     {
-    s = ex*double(i);
+        bool focused = false;
+        int nLoop = 0;
+        double fp = B114_x;
+        double tol = 0.01;
+        double xn, min_dx, min_x;
+        
+        while(focused == false)
+        {
+            double xn_m1 = xmax;
+            double min_dx = lx;
+            
+            for (int i=0; i < knox + 1; ++i)
+            {
+                s = ex*double(i);
+                xn = lx * s + B111*(fp-lx*s)*s*(1.0-s);
+
+                if (abs(xn - xn_m1) < min_dx)
+                {
+                    min_dx = abs(xn - xn_m1);
+                    min_x = xn;
+                }
+
+                xn_m1 = xn;
+            }
+        
+            if (abs(min_x - B114_x) > tol && nLoop < 10000)
+            {
+                if (min_x > B114_x)
+                {
+                    fp = fp - tol;
+                }
+                else
+                {
+                    fp = fp + tol;  
+                }
+                
+                nLoop++;
+            }
+            else
+            {
+                focused = true;
+            }
+        }
+        
+        for(i=0;i<knox+1;++i)
+        {
+            s = ex*double(i);
     
-    XN[IP] = lx * s + B111*(B114_x-lx*s)*s*(1.0-s);
+            XN[IP] = lx * s + B111*(fp-lx*s)*s*(1.0-s);
+        }
     }
-    
+
     
     if(B101==8)
     {
@@ -230,23 +321,116 @@ void lexer::gridspacing_fsf()
         }
     }
     
-    if(B102==5)
+   if(B102==5)
     {
-    double c;
-    c = (B115_y-ymin)/ly;
+        bool focused = false;
+        int nLoop = 0;
+        double fp = B115_y;
+        double tol = 0.01;
+        double yn, min_dy, min_y;
+        
+        while(focused == false)
+        {
+            c = (fp - ymin)/ly;
+
+            double yn_m1 = ymax;
+            double min_dy = ly;
+            
+            for (int j=0; j < knoy + 1; ++j)
+            {
+                yn = ly * (sinh(B112*(ey*double(j)-c)) - sinh(-B112*c)) / (sinh(B112*(1.0-c))-sinh(-B112*c));
+
+                if (abs(yn - yn_m1) < min_dy)
+                {
+                    min_dy = abs(yn - yn_m1);
+                    min_y = yn;
+                }
+
+                yn_m1 = yn;
+            }
+        
+            if (abs(min_y - B115_y) > tol && nLoop < 10000)
+            {
+                if (min_y > B115_y)
+                {
+                    fp = fp - tol;
+                }
+                else
+                {
+                    fp = fp + tol;  
+                }
+                
+                nLoop++;
+            }
+            else
+            {
+                focused = true;
+            }
+        }
+        
+        c = (fp-ymin)/ly;
+            
         for(j=0;j<knoy+1;++j)
         {
-        YN[JP] = ly * (sinh(B112*(ey*double(j)-c)) - sinh(-B112*c)) / (sinh(B112*(1.0-c))-sinh(-B112*c));
+            YN[JP] = ly * (sinh(B112*(ey*double(j)-c)) - sinh(-B112*c)) / (sinh(B112*(1.0-c))-sinh(-B112*c));
         }
     }
-    
 
-    if(B102==6)
-    for(j=0;j<knoy+1;++j)
+  if(B102==6)
     {
-    s = ey*double(j);
-    
-    YN[JP] = ly * s + B112*(B115_y-ly*s)*s*(1.0-s);
+        bool focused = false;
+        int nLoop = 0;
+        double fp = B115_y;
+        double tol = 0.01;
+        double yn, min_dy, min_y;
+        
+        while(focused == false)
+        {
+            c = (fp - ymin)/ly;
+
+            double yn_m1 = ymax;
+            double min_dy = ly;
+            
+            for (int j=0; j < knoy + 1; ++j)
+            {
+                s = ey*double(j);
+        
+                yn = ly * s + B112*(fp-ly*s)*s*(1.0-s);
+
+                if (abs(yn - yn_m1) < min_dy)
+                {
+                    min_dy = abs(yn - yn_m1);
+                    min_y = yn;
+                }
+
+                yn_m1 = yn;
+            }
+        
+            if (abs(min_y - B115_y) > tol && nLoop < 10000)
+            {
+                if (min_y > B115_y)
+                {
+                    fp = fp - tol;
+                }
+                else
+                {
+                    fp = fp + tol;  
+                }
+                
+                nLoop++;
+            }
+            else
+            {
+                focused = true;
+            }
+        }
+        
+        for(j=0;j<knoy+1;++j)
+        {
+            s = ey*double(j);
+        
+            YN[JP] = ly * s + B112*(fp-ly*s)*s*(1.0-s);
+        }
     }
     
     
@@ -386,24 +570,113 @@ void lexer::gridspacing_fsf()
 
     if(B103==5)
     {
-    
-    c = (B116_z-zmin)/lz;
+        bool focused = false;
+        int nLoop = 0;
+        double fp = B116_z;
+        double tol = 0.01;
+        double zn, min_dz, min_z;
+        
+        while(focused == false)
+        {
+            c = (fp - zmin)/lz;
+
+            double zn_m1 = zmax;
+            double min_dz = lz;
+            
+            for (int k=0; k < knoz + 1; ++k)
+            {
+                zn = lz * (sinh(B113*(ez*k - c)) - sinh(-B113*c)) / (sinh(B113*(1.0-c))-sinh(-B113*c));
+                
+                if (abs(zn - zn_m1) < min_dz)
+                {
+                    min_dz = abs(zn - zn_m1);
+                    min_z = zn;
+                }
+
+                zn_m1 = zn;
+            }
+        
+            if (abs(min_z - B116_z) > tol && nLoop < 10000)
+            {
+                if (min_z > B116_z)
+                {
+                    fp = fp - tol;
+                }
+                else
+                {
+                    fp = fp + tol;  
+                }
+                
+                nLoop++;
+            }
+            else
+            {
+                focused = true;
+            }
+        }
+        
+        c = (fp-zmin)/lz;
     
         for(k=0;k<knoz+1;++k)
         {
         ZN[KP] = lz * (sinh(B113*(ez*double(k)-c)) - sinh(-B113*c)) / (sinh(B113*(1.0-c))-sinh(-B113*c));
         }
     }
-    
+
     
     if(B103==6)
-    for(k=0;k<knoz+1;++k)
     {
-    s = ez*double(k);
-    
-    ZN[KP] = lz * s + B113*(B116_z-lz*s)*s*(1.0-s);
+        bool focused = false;
+        int nLoop = 0;
+        double fp = B116_z;
+        double tol = 0.01;
+        double zn, min_dz, min_z;
+        
+        while(focused == false)
+        {
+            double zn_m1 = zmax;
+            double min_dz = lz;
+            
+            for (int k=0; k < knoz + 1; ++k)
+            {
+                s = ez*double(k);
+                zn = lz * s + B113*(fp-lz*s)*s*(1.0-s);
+                
+                if (abs(zn - zn_m1) < min_dz)
+                {
+                    min_dz = abs(zn - zn_m1);
+                    min_z = zn;
+                }
+
+                zn_m1 = zn;
+            }
+        
+            if (abs(min_z - B116_z) > tol && nLoop < 10000)
+            {
+                if (min_z > B116_z)
+                {
+                    fp = fp - tol;
+                }
+                else
+                {
+                    fp = fp + tol;  
+                }
+                
+                nLoop++;
+            }
+            else
+            {
+                focused = true;
+            }
+        }
+        
+        for(k=0; k<knoz + 1; ++k)
+        {
+            s = ez*double(k);
+        
+            ZN[KP] = lz * s + B113*(fp-lz*s)*s*(1.0-s);
+        }
     }
-    
     
     
     if(B103==7)
@@ -498,12 +771,57 @@ void lexer::gridspacing_fsf()
     
     
     // ------- 
-    // PART 2    
+    // PART 2   
+
     lz = B126_z3-B126_z1;
-    
     ez = 1.0/double(B126_N2);
+
+    bool focused = false;
+    int nLoop = 0;
+    double fp = B126_z2;
+    double tol = 0.005;
+    double zn, min_dz, min_z;
+        
+    while(focused == false)
+    {
+        c = (fp-zmin-B126_z1)/lz;
+
+        double zn_m1 = B126_z3;
+        double min_dz = lz;
+            
+        for (int k=0; k < knoz + 1; ++k)
+        {
+            zn = lz * (sinh(B126_f2*(ez*double(k)-c)) - sinh(-B126_f2*c)) / (sinh(B126_f2*(1.0-c))-sinh(-B126_f2*c))  + ZN[marge+B126_N1];
+
+            if (abs(zn - zn_m1) < min_dz)
+            {
+                min_dz = abs(zn - zn_m1);
+                min_z = zn;
+            }
+
+            zn_m1 = zn;
+        }
+        
+        if (abs(min_z - B126_z2) > tol && nLoop < 10000)
+        {
+            if (min_z > B126_z2)
+            {
+                fp = fp - tol;
+            }
+            else
+            {
+                fp = fp + tol;  
+            }
+                
+            nLoop++;
+        }
+        else
+        {
+            focused = true;
+        }
+    }
     
-    c = (B126_z2-zmin-B126_z1)/lz;
+    c = (fp-zmin-B126_z1)/lz;
     
     for(k=1;k<B126_N2+1;++k)
     {
