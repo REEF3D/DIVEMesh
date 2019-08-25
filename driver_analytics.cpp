@@ -92,21 +92,21 @@ void driver::analytics(lexer *p, dive *a)
 	}
 	
     nugout<<"Min/Max Cell Size:"<<endl;
-	nugout<<"dx= "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
-	nugout<<"dy= "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
-	nugout<<"dz= "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
+	nugout<<"dx = "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
+	nugout<<"dy = "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
+	nugout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
 
     cout<<"Min/Max Cell Size:"<<endl;
-	cout<<"dx= "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
-	cout<<"dy= "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
-	cout<<"dz= "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
+	cout<<"dx = "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
+	cout<<"dy = "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
+	cout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
 
 	// Min/Max Aspect Ratio
 	
 	double ratio;
 	double ratiox_max, ratioy_max, ratioz_max;
 	
-    for(i=-marge;i<p->knox+marge-2;++i)
+    for (i = 0; i <= p->knox; ++i)
 	{
 		ratio =
 			p->DX[IP1] > p->DX[IP] ? p->DX[IP1]/p->DX[IP] : p->DX[IP]/p->DX[IP1];
@@ -118,7 +118,7 @@ void driver::analytics(lexer *p, dive *a)
 		}
 	}
     
-    for(j=-marge;j<p->knoy+marge-2;++j)
+    for (j = 0; j <= p->knoy; ++j)
 	{
 		ratio =
 			p->DY[JP1] > p->DY[JP] ? p->DY[JP1]/p->DY[JP] : p->DY[JP]/p->DY[JP1];
@@ -130,7 +130,7 @@ void driver::analytics(lexer *p, dive *a)
 		}
 	}
 
-    for(k=-marge;k<p->knoz+marge-2;++k)
+    for (k = 0; k <= p->knoz; ++k)
 	{
 		ratio =
 			p->DZ[KP1] > p->DZ[KP] ? p->DZ[KP1]/p->DZ[KP] : p->DZ[KP]/p->DZ[KP1];
@@ -142,12 +142,12 @@ void driver::analytics(lexer *p, dive *a)
 		}
 	}
 
-    nugout<<"Max Aspect Ratio:"<<endl;
+    nugout<<"\nMax Cell Ratio:"<<endl;
 	nugout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
 	nugout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
 	nugout<<"z "<<ratioz_max<<" at "<<k_max<<endl;		
 
-    cout<<"Max Aspect Ratio:"<<endl;
+    cout<<"\nMax Cell Ratio:"<<endl;
 	cout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
 	cout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
 	cout<<"z "<<ratioz_max<<" at "<<k_max<<endl;	    

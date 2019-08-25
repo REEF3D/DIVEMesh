@@ -52,6 +52,13 @@ public:
     
     void gridspacing_fsf();
     
+    double cellBasedSpacing(const double&, const double&, const double&, const double&, const double&, const double&, const double&);
+    void cellBasedSpacing(const double&, const double&, const double&, const double&, const double&, const double&, const double&, int&);
+    void fitFocusPoint(double&, const double&, const double&, const double&, const int&, const double&, const double&, const double&);
+    double fitStretching(const double&, const double&, const double&, const double&, const int&, const double&, double&, const double&);
+    double fitMinSize(bool&, const double&, const double&, const double&, const double&, int&, const double&, double&, const double&);
+    double fitMaxSize(bool&, double&, const double&, const double&, const double&, const double&, const int&, const double&, double&, const double&);
+    
     double posc_x();
     double posc_y();
     double posc_z();
@@ -106,8 +113,12 @@ public:
     int B126;
     double B126_z1,B126_f1,B126_z2,B126_f2,B126_z3,B126_f3;
     int B126_N1,B126_N2,B126_N3;
-    
-    
+    int B127;
+    double B127_dx_min, B127_dx_max, B127_pf, B127_df, B127_r;
+    int B128;
+    double B128_dx_min, B128_dx_max, B128_pf, B128_df, B128_r;
+    int B129;
+    double B129_dx_min, B129_dx_max, B129_pf, B129_df, B129_r;   
 
     int C11,C12,C13,C14,C15,C16;
 	

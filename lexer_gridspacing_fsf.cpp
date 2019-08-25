@@ -23,7 +23,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void lexer::gridspacing_fsf()
 {
-   int maxiter =200000;
+    int maxiter =200000;
     double lx,ly,lz;
     double ex,ey,ez;
     double fac;
@@ -42,6 +42,7 @@ void lexer::gridspacing_fsf()
     ez = 1.0/double(knoz);
   
     fac = B111;
+    
     
 //  x-dir
     if(B101==1)
@@ -358,13 +359,20 @@ void lexer::gridspacing_fsf()
         {
         file>>val;
         cout<<"val: "<<val<<endl;
-        XN[count+marge]=val;
+        XN[count+marge] = xmin + val*xmax;
         ++count;
         }
         
         file.close();
 
     }
+    
+    
+    if (B101 == 11)
+    {
+        int index = 1;
+        cellBasedSpacing(xmin, xmax, B127_pf, B127_df, B127_dx_min, B127_dx_max, B127_r, index);      
+    }    
 
     
     
@@ -684,13 +692,20 @@ void lexer::gridspacing_fsf()
         {
         file>>val;
         cout<<"val: "<<val<<endl;
-        YN[count+marge]=val;
+        YN[count+marge]= ymin + val*ymax;
         ++count;
         }
         
         file.close();
 
-    }    
+    }   
+
+
+    if (B102 == 11)
+    {
+        int index = 2;
+        cellBasedSpacing(ymin, ymax, B128_pf, B128_df, B128_dx_min, B128_dx_max, B128_r, index);          
+    }
     
     
 
@@ -1045,7 +1060,7 @@ void lexer::gridspacing_fsf()
         {
         file>>val;
         cout<<"val: "<<val<<endl;
-        ZN[count+marge]=val;
+        ZN[count+marge]= zmin + val*zmax;
         ++count;
         }
         
@@ -1053,6 +1068,12 @@ void lexer::gridspacing_fsf()
 
     }
     
+    
+    if (B103 == 11)
+    {
+        int index = 3;
+        cellBasedSpacing(zmin, zmax, B129_pf, B129_df, B129_dx_min, B129_dx_max, B129_r, index);        
+    }
     
     
     double mindx=1e20;
@@ -1077,3 +1098,4 @@ void lexer::gridspacing_fsf()
     cout<<"MINDX: "<<mindx<<endl;
     cout<<"MINDZ: "<<mindz<<endl;*/
 }
+

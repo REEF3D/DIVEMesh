@@ -285,6 +285,21 @@ void lexer::createspace()
         knoz--;
     }
     
+    if (B101 == 11)
+    {
+        knox = cellBasedSpacing(xmin, xmax, B127_pf, B127_df, B127_dx_min, B127_dx_max, B127_r);
+    }
+
+    if (B102 == 11)
+    {
+        knoy = cellBasedSpacing(ymin, ymax, B128_pf, B128_df, B128_dx_min, B128_dx_max, B128_r);
+    }
+
+    if (B103 == 11)
+    {
+        knoz = cellBasedSpacing(zmin, zmax, B129_pf, B129_df, B129_dx_min, B129_dx_max, B129_r);
+    }    
+    
     
     if(B2==0)
     DXM = dx;

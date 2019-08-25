@@ -150,7 +150,18 @@ void lexer::read_control()
                         B126=1;
 						 clear(c,numint);
 						 break;
-
+                case 127: control>>B127_dx_min>>B127_dx_max>>B127_pf>>B127_df>>B127_r;
+                        B127=1;
+						 clear(c,numint);
+						 break;
+                case 128: control>>B128_dx_min>>B128_dx_max>>B128_pf>>B128_df>>B128_r;
+                        B128=1;
+						 clear(c,numint);
+						 break;   
+                case 129: control>>B129_dx_min>>B129_dx_max>>B129_pf>>B129_df>>B129_r;
+                        B129=1;
+						 clear(c,numint);
+						 break;                        
 				}
 				break;
 				
