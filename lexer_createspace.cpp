@@ -21,6 +21,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 #include "lexer.h"
 
+#include<iomanip>
 
 void lexer::createspace()
 {
@@ -272,10 +273,10 @@ void lexer::createspace()
         while(!file.eof())
         {
         val0=val;
-        file>>val;
+        file>>val;        
         ++count;
         }
-        
+
         file.close();
         
         knoz=count-1;

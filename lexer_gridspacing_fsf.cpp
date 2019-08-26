@@ -21,6 +21,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 #include "lexer.h"
 
+#include<iomanip>
+
 void lexer::gridspacing_fsf()
 {
     int maxiter =200000;
@@ -355,10 +357,9 @@ void lexer::gridspacing_fsf()
         }
         
         count=0;
-        while(!file.eof())
+        for (i = 0; i <= knox; i++)
         {
         file>>val;
-        cout<<"val: "<<val<<endl;
         XN[count+marge] = xmin + val*xmax;
         ++count;
         }
@@ -688,10 +689,9 @@ void lexer::gridspacing_fsf()
         }
         
         count=0;
-        while(!file.eof())
+        for (j = 0; j <= knoy; j++)
         {
         file>>val;
-        cout<<"val: "<<val<<endl;
         YN[count+marge]= ymin + val*ymax;
         ++count;
         }
@@ -1054,13 +1054,12 @@ void lexer::gridspacing_fsf()
             cout<<endl<<("no 'z-spacing.dat' file found")<<endl<<endl;
 
         }
-        
+
         count=0;
-        while(!file.eof())
+        for (k = 0; k <= knoz; k++)
         {
         file>>val;
-        cout<<"val: "<<val<<endl;
-        ZN[count+marge]= zmin + val*zmax;
+        ZN[count+marge]= zmin + val*zmax;   
         ++count;
         }
         
