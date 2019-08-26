@@ -59,6 +59,8 @@ public:
     double fitMinSize(bool&, const double&, const double&, const double&, const double&, int&, const double&, double&, const double&);
     double fitMaxSize(bool&, double&, const double&, const double&, const double&, const double&, const int&, const double&, double&, const double&);
     
+    void gridspacing_print();
+    
     double posc_x();
     double posc_y();
     double posc_z();
@@ -119,7 +121,8 @@ public:
     double B128_dx_min, B128_dx_max, B128_pf, B128_df, B128_r;
     int B129;
     double B129_dx_min, B129_dx_max, B129_pf, B129_df, B129_r;   
-
+    int B130;
+    
     int C11,C12,C13,C14,C15,C16;
 	
 	int D10,D13,D14,D15,D19;

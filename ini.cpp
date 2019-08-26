@@ -46,7 +46,8 @@ void lexer::ini_default()
     B114=0;         // int stretch position given xdir
     B115=0;         // int stretch position given ydir
     B116=0;         // int stretch position given zdir
-	
+	B130=0;         // int print grid vtk
+    
 	C11=21;          // C12
     C12=21;          // C12
     C13=21;          // C12

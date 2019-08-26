@@ -161,7 +161,10 @@ void lexer::read_control()
                 case 129: control>>B129_dx_min>>B129_dx_max>>B129_pf>>B129_df>>B129_r;
                         B129=1;
 						 clear(c,numint);
-						 break;                        
+						 break;  
+				case 130: control>>B130;
+						 clear(c,numint);
+						 break;                      
 				}
 				break;
 				

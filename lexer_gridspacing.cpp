@@ -120,7 +120,6 @@ void lexer::gridspacing()
     ZN[KP4] = ZN[KP] + 4.0*(ZN[KP]-ZN[KM1]);
     ZN[KP5] = ZN[KP] + 5.0*(ZN[KP]-ZN[KM1]);
 
-
     cout<<".";
     for(i=-marge;i<knox+marge;++i)
     XP[IP] = 0.5*(XN[IP]+XN[IP1]);
@@ -151,6 +150,12 @@ void lexer::gridspacing()
     
     for(k=-marge;k<knoz+marge-1;++k)
     DZP[KP] = 0.5*(ZN[KP2]+ZN[KP1]) - 0.5*(ZN[KP1]+ZN[KP]);
+    
+    
+    if (B130 == 1)
+    {
+        gridspacing_print();
+    }
     
     
     cout<<" finished"<<endl;

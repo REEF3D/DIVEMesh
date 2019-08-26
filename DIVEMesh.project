@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="DIVEMesh" InternalType="Console" Version="10.0.0">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
   <Reconciliation>
     <Regexes/>
     <Excludepaths/>
@@ -9,11 +14,6 @@
     </Extensions>
     <Topleveldir>/Users/tobias/REEF3D/Code/DIVEMesh_dev</Topleveldir>
   </Reconciliation>
-  <Plugins>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0007Release000000000000]]>
-    </Plugin>
-  </Plugins>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="Headers">
@@ -236,6 +236,7 @@
       <VirtualDirectory Name="Lexer">
         <File Name="read_stl.cpp"/>
         <VirtualDirectory Name="Grid Spacing">
+          <File Name="gridspacing_print.cpp"/>
           <File Name="lexer_gridspacing_cellBased.cpp"/>
           <File Name="lexer_gridspacing_fsf.cpp"/>
           <File Name="lexer_gridspacing.cpp"/>
