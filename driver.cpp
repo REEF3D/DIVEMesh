@@ -28,9 +28,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2019 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    
-    cout<<"Release candidate version"<<endl;
-    //cout<<"compiled on branch "<<BRANCH<<" from commit "<<VERSION<<endl<<endl;
+    cout<<endl<<"v_190826" <<endl<<endl;       
 
 	p = new lexer();
 	a = new dive(p);
