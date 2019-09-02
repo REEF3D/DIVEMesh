@@ -439,7 +439,7 @@ double lexer::fitMaxSize
     
     fitted = true;
     
-    if (abs(max_dp - max_dp_aim) > tol)
+    if (fabs(max_dp - max_dp_aim) > tol)
     {
         delta_f -= copysign(1, max_dp - max_dp_aim)*0.01*delta_f;
         

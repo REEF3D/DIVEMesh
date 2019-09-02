@@ -21,8 +21,6 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 #include "lexer.h"
 
-#include<iomanip>
-
 void lexer::gridspacing_fsf()
 {
     int maxiter =200000;
@@ -94,16 +92,16 @@ void lexer::gridspacing_fsf()
             {
                 xn = lx * (sinh(B111*(ex*double(i)-c)) - sinh(-B111*c)) / (sinh(B111*(1.0-c))-sinh(-B111*c));
 
-                if (abs(xn - xn_m1) < min_dx)
+                if (fabs(xn - xn_m1) < min_dx)
                 {
-                    min_dx = abs(xn - xn_m1);
+                    min_dx = fabs(xn - xn_m1);
                     min_x = xn;
                 }
 
                 xn_m1 = xn;
             }
         
-            if (abs(min_x - B114_x) > tol && nLoop < 10000)
+            if (fabs(min_x - B114_x) > tol && nLoop < 10000)
             {
                 if (min_x > B114_x)
                 {
@@ -149,16 +147,16 @@ void lexer::gridspacing_fsf()
                 s = ex*double(i);
                 xn = lx * s + B111*(fp-lx*s)*s*(1.0-s);
 
-                if (abs(xn - xn_m1) < min_dx)
+                if (fabs(xn - xn_m1) < min_dx)
                 {
-                    min_dx = abs(xn - xn_m1);
+                    min_dx = fabs(xn - xn_m1);
                     min_x = xn;
                 }
 
                 xn_m1 = xn;
             }
         
-            if (abs(min_x - B114_x) > tol && nLoop < 10000)
+            if (fabs(min_x - B114_x) > tol && nLoop < 10000)
             {
                 if (min_x > B114_x)
                 {
@@ -268,16 +266,16 @@ void lexer::gridspacing_fsf()
         {
             xn = lx * (sinh(B124_f2*(ex*double(i)-c)) - sinh(-B124_f2*c)) / (sinh(B124_f2*(1.0-c))-sinh(-B124_f2*c))  + XN[marge+B124_N1];
 
-            if (abs(xn - xn_m1) < min_dx)
+            if (fabs(xn - xn_m1) < min_dx)
             {
-                min_dx = abs(xn - xn_m1);
+                min_dx = fabs(xn - xn_m1);
                 min_x = xn;
             }
 
             xn_m1 = xn;
         }
         
-        if (abs(min_x - B124_x2) > tol && nLoop < 10000)
+        if (fabs(min_x - B124_x2) > tol && nLoop < 10000)
         {
             if (min_x > B124_x2)
             {
@@ -427,16 +425,16 @@ void lexer::gridspacing_fsf()
             {
                 yn = ly * (sinh(B112*(ey*double(j)-c)) - sinh(-B112*c)) / (sinh(B112*(1.0-c))-sinh(-B112*c));
 
-                if (abs(yn - yn_m1) < min_dy)
+                if (fabs(yn - yn_m1) < min_dy)
                 {
-                    min_dy = abs(yn - yn_m1);
+                    min_dy = fabs(yn - yn_m1);
                     min_y = yn;
                 }
 
                 yn_m1 = yn;
             }
         
-            if (abs(min_y - B115_y) > tol && nLoop < 10000)
+            if (fabs(min_y - B115_y) > tol && nLoop < 10000)
             {
                 if (min_y > B115_y)
                 {
@@ -484,16 +482,16 @@ void lexer::gridspacing_fsf()
         
                 yn = ly * s + B112*(fp-ly*s)*s*(1.0-s);
 
-                if (abs(yn - yn_m1) < min_dy)
+                if (fabs(yn - yn_m1) < min_dy)
                 {
-                    min_dy = abs(yn - yn_m1);
+                    min_dy = fabs(yn - yn_m1);
                     min_y = yn;
                 }
 
                 yn_m1 = yn;
             }
         
-            if (abs(min_y - B115_y) > tol && nLoop < 10000)
+            if (fabs(min_y - B115_y) > tol && nLoop < 10000)
             {
                 if (min_y > B115_y)
                 {
@@ -599,16 +597,16 @@ void lexer::gridspacing_fsf()
         {
             yn = ly * (sinh(B125_f2*(ey*double(j)-c)) - sinh(-B125_f2*c)) / (sinh(B125_f2*(1.0-c))-sinh(-B125_f2*c))  + YN[marge+B125_N1];
 
-            if (abs(yn - yn_m1) < min_dy)
+            if (fabs(yn - yn_m1) < min_dy)
             {
-                min_dy = abs(yn - yn_m1);
+                min_dy = fabs(yn - yn_m1);
                 min_y = yn;
             }
 
             yn_m1 = yn;
         }
         
-        if (abs(min_y - B125_y2) > tol && nLoop < 10000)
+        if (fabs(min_y - B125_y2) > tol && nLoop < 10000)
         {
             if (min_y > B125_y2)
             {
@@ -759,16 +757,16 @@ void lexer::gridspacing_fsf()
             {
                 zn = lz * (sinh(B113*(ez*k - c)) - sinh(-B113*c)) / (sinh(B113*(1.0-c))-sinh(-B113*c));
                 
-                if (abs(zn - zn_m1) < min_dz)
+                if (fabs(zn - zn_m1) < min_dz)
                 {
-                    min_dz = abs(zn - zn_m1);
+                    min_dz = fabs(zn - zn_m1);
                     min_z = zn;
                 }
 
                 zn_m1 = zn;
             }
         
-            if (abs(min_z - B116_z) > tol && nLoop < 10000)
+            if (fabs(min_z - B116_z) > tol && nLoop < 10000)
             {
                 if (min_z > B116_z)
                 {
@@ -814,16 +812,16 @@ void lexer::gridspacing_fsf()
                 s = ez*double(k);
                 zn = lz * s + B113*(fp-lz*s)*s*(1.0-s);
                 
-                if (abs(zn - zn_m1) < min_dz)
+                if (fabs(zn - zn_m1) < min_dz)
                 {
-                    min_dz = abs(zn - zn_m1);
+                    min_dz = fabs(zn - zn_m1);
                     min_z = zn;
                 }
 
                 zn_m1 = zn;
             }
         
-            if (abs(min_z - B116_z) > tol && nLoop < 10000)
+            if (fabs(min_z - B116_z) > tol && nLoop < 10000)
             {
                 if (min_z > B116_z)
                 {
@@ -965,16 +963,16 @@ void lexer::gridspacing_fsf()
         {
             zn = lz * (sinh(B126_f2*(ez*double(k)-c)) - sinh(-B126_f2*c)) / (sinh(B126_f2*(1.0-c))-sinh(-B126_f2*c))  + ZN[marge+B126_N1];
 
-            if (abs(zn - zn_m1) < min_dz)
+            if (fabs(zn - zn_m1) < min_dz)
             {
-                min_dz = abs(zn - zn_m1);
+                min_dz = fabs(zn - zn_m1);
                 min_z = zn;
             }
 
             zn_m1 = zn;
         }
         
-        if (abs(min_z - B126_z2) > tol && nLoop < 10000)
+        if (fabs(min_z - B126_z2) > tol && nLoop < 10000)
         {
             if (min_z > B126_z2)
             {
