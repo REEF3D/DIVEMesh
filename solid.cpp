@@ -118,200 +118,211 @@ void solid::start(lexer* p, dive* a)
 	ray_cast(p,a,tri_start,tri_end);
     stl_postproc(p,a,tri_start,tri_end);
     }
-	
-	for(qn=0;qn<p->S10;++qn)
-	{
-	box(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S11;++qn)
-	{
-	box_array(p,a,qn,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S32;++qn)
-	{
-	cylinder_y(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
     
-    for(qn=0;qn<p->S33;++qn)
-	{
-	cylinder_z(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
+    ts_stl=tri_start;
+    te_stl=tri_end;
+    tricount_stl=p->tricount;
     
-    for(qn=0;qn<p->S34;++qn)
-	{
-	jacket_member_x(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S35;++qn)
-	{
-	jacket_member_y(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S36;++qn)
-	{
-	jacket_member_z(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S37;++qn)
-	{
-	jacket_member_norm(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S38;++qn)
-	{
-	jacket_member_vert(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S41;++qn)
-	{
-	cone_x(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S42;++qn)
-	{
-	cone_y(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S43;++qn)
-	{
-	cone_z(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S51;++qn)
-	{
-	sphere(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S52;++qn)
-	{
-	ellipsoid(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S53;++qn)
-	{
-	ellipsoid_semi(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S54;++qn)
-	{
-	ellipsoid_semi_rot(p,a,qn,tri_start,tri_end);
-	rotate_triangle_ellipsoid(p,a,qn,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S61;++qn)
-	{
-	wedge_x(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S62;++qn)
-	{
-	wedge_y(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S63;++qn)
-	{
-	wedge_z(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S81;++qn)
-	{
-	tetrahedon(p,a,qn,tri_start,tri_end);
-    rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S82;++qn)
-	{
-	pyramid(p,a,qn,tri_start,tri_end);
-    rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S83;++qn)
-	{
-	wedge(p,a,qn,tri_start,tri_end);
-    rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S84;++qn)
-	{
-	hexahedron(p,a,qn,tri_start,tri_end);
-    rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S121;++qn)
-	{
-	ogee_weir(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S131;++qn)
-	{
-	semicyl_y(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-	
-	for(qn=0;qn<p->S141;++qn)
-	{
-	arch(p,a,qn,tri_start,tri_end);
-	rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
-    
-    for(qn=0;qn<p->S201;++qn)
-	{
-	plate_x(p,a,qn,tri_start,tri_end);
-    rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast_x_gcb(p,a,tri_start,tri_end);
-	}
-	
-    if(p->S300>0)
-	{
-	fluvial_box(p,a,qn,tri_start,tri_end);
-    rotate_triangle(p,a,tri_start,tri_end);
-	ray_cast(p,a,tri_start,tri_end);
-	}
+    for(rayiter=0; rayiter<2; ++rayiter)
+    {
+    tri_start=ts_stl;
+    tri_end=te_stl;
+    p->tricount=tricount_stl;
+        
+        for(qn=0;qn<p->S10;++qn)
+        {
+        box(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S11;++qn)
+        {
+        box_array(p,a,qn,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S32;++qn)
+        {
+        cylinder_y(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S33;++qn)
+        {
+        cylinder_z(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S34;++qn)
+        {
+        jacket_member_x(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S35;++qn)
+        {
+        jacket_member_y(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S36;++qn)
+        {
+        jacket_member_z(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S37;++qn)
+        {
+        jacket_member_norm(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S38;++qn)
+        {
+        jacket_member_vert(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S41;++qn)
+        {
+        cone_x(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S42;++qn)
+        {
+        cone_y(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S43;++qn)
+        {
+        cone_z(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S51;++qn)
+        {
+        sphere(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S52;++qn)
+        {
+        ellipsoid(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S53;++qn)
+        {
+        ellipsoid_semi(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S54;++qn)
+        {
+        ellipsoid_semi_rot(p,a,qn,tri_start,tri_end);
+        rotate_triangle_ellipsoid(p,a,qn,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S61;++qn)
+        {
+        wedge_x(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S62;++qn)
+        {
+        wedge_y(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S63;++qn)
+        {
+        wedge_z(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S81;++qn)
+        {
+        tetrahedon(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S82;++qn)
+        {
+        pyramid(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S83;++qn)
+        {
+        wedge(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S84;++qn)
+        {
+        hexahedron(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S121;++qn)
+        {
+        ogee_weir(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S131;++qn)
+        {
+        semicyl_y(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S141;++qn)
+        {
+        arch(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+        
+        for(qn=0;qn<p->S201;++qn)
+        {
+        plate_x(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast_x_gcb(p,a,tri_start,tri_end);
+        }
+        
+        if(p->S300>0)
+        {
+        fluvial_box(p,a,qn,tri_start,tri_end);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end);
+        }
+    }
     
     // finalize solid_dist
     LOOP
