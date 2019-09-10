@@ -143,10 +143,27 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 			
 			Rz = u*Az + v*Bz + w*Cz;
 			
-			a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
 			
-			for(k=0;k<=p->knoz;++k)
+			k = p->posf_k(Rz);
+            
+            int distcheck=1;
+            
+            if(Rz<p->ZP[KP])
+            if(k>=1 && k<p->knoz)
+            if(a->solid(i,j,k)==-1 && a->solid(i,j,k-1)==-1)
+            distcheck=0;
+            
+            if(Rz>=p->ZP[KP])
+            if(k>=0 && k<p->knoz-1)
+            if(a->solid(i,j,k)==-1 && a->solid(i,j,k+1)==-1)
+            distcheck=0;
+
+            if(distcheck==1)
+			for(k=0;k<p->knoz;++k)
 			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]-p->zmin),a->solid_dist(i,j,k));
+            
+            
+            a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
 			}
 		}
 	}

@@ -150,11 +150,24 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
 			w *= denom;
 			
 			Rx = u*Ax + v*Bx + w*Cx;
- 
-			for(i=0;i<=p->knox;++i)
+            
+            i = p->posf_i(Rx);
+            
+            int distcheck=1;
+            
+            if(Rx<p->XP[IP])
+            if(i>=1 && i<p->knox)
+            if(a->solid(i,j,k)==-1 && a->solid(i-1,j,k)==-1)
+            distcheck=0;
+            
+            if(Rx>=p->XP[IP])
+            if(i>=0 && i<p->knox-1)
+            if(a->solid(i,j,k)==-1 && a->solid(i+1,j,k)==-1)
+            distcheck=0;
+
+            if(distcheck==1)
+			for(i=0;i<p->knox;++i)
 			a->solid_dist(i,j,k)=MIN(fabs(Rx-p->XP[IP]-p->xmin),a->solid_dist(i,j,k));
-                
-			
 			}
 		}
 	}

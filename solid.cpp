@@ -325,6 +325,18 @@ void solid::start(lexer* p, dive* a)
     }
     
     // finalize solid_dist
+    
+    LOOP
+    {
+        if(a->solid(i,j,k)==-1)
+        a->solid_dist(i,j,k)=-fabs(a->solid_dist(i,j,k));
+        
+        
+        if(a->solid(i,j,k)==1)
+        a->solid_dist(i,j,k)=fabs(a->solid_dist(i,j,k));
+    }
+    
+    
     LOOP
 	{
 		if(a->solid_dist(i,j,k)>10.0*p->DXM)
@@ -338,7 +350,6 @@ void solid::start(lexer* p, dive* a)
 	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
 
 }
-
 
 void solid::gcb_estimate(lexer *p, dive *a)
 {

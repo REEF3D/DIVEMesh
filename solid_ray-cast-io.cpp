@@ -173,7 +173,7 @@ void solid::ray_cast_io(lexer* p, dive* a, int ts, int te)
 	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
     {
 	a->solid(i,j,k)=-1;
-    a->solid_dist(i,j,k)=-fabs(a->solid_dist(i,j,k));
+    //a->solid_dist(i,j,k)=-fabs(a->solid_dist(i,j,k));
     }
 
 	count=0;
