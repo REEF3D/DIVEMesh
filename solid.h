@@ -98,6 +98,7 @@ public:
 private:
     void sort(double*, int, int);
     
+    int rayiter,ts_stl,te_stl,tricount_stl;   
     
 	intfield cutl,cutr;
     int n,count;

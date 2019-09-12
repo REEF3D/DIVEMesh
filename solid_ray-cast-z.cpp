@@ -42,7 +42,7 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 	int ir,insidecheck;
 	double u,v,w;
 	double denom;
-    double psi = 1.0e-6*p->DXM;
+    double psi = 1.0e-8*p->DXM;
 
 	for(n=ts; n<te; ++n)
 	{
@@ -143,10 +143,27 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 			
 			Rz = u*Az + v*Bz + w*Cz;
 			
-			a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
 			
-			for(k=0;k<=p->knoz;++k)
+			k = p->posf_k(Rz);
+            
+            int distcheck=1;
+            
+            if(Rz<p->ZP[KP])
+            if(k>=0 && k<=p->knoz)
+            if(a->solid(i,j,k)<0 && a->solid(i,j,k-1)<0)
+            distcheck=0;
+            
+            if(Rz>=p->ZP[KP])
+            if(k>=0 && k<=p->knoz)
+            if(a->solid(i,j,k)<0 && a->solid(i,j,k+1)<0)
+            distcheck=0;
+
+            if(distcheck==1)
+			for(k=0;k<p->knoz;++k)
 			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]-p->zmin),a->solid_dist(i,j,k));
+            
+            
+            a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
 			}
 		}
 	}
