@@ -43,7 +43,7 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
 	double u,v,w;
 	double denom;	
 	int insidecheck;
-    double psi = 1.0e-6*p->DXM;
+    double psi = 1.0e-8*p->DXM;
 
     
 	for(n=ts; n<te; ++n)
@@ -156,13 +156,13 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
             int distcheck=1;
             
             if(Rx<p->XP[IP])
-            if(i>=1 && i<p->knox)
-            if(a->solid(i,j,k)==-1 && a->solid(i-1,j,k)==-1)
+            if(i>=-1 && i<p->knox)
+            if(a->solid(i,j,k)<0 && a->solid(i-1,j,k)<0)
             distcheck=0;
             
             if(Rx>=p->XP[IP])
-            if(i>=0 && i<p->knox-1)
-            if(a->solid(i,j,k)==-1 && a->solid(i+1,j,k)==-1)
+            if(i>=0 && i<p->knox+1)
+            if(a->solid(i,j,k)<0 && a->solid(i+1,j,k)<0)
             distcheck=0;
 
             if(distcheck==1)

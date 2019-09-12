@@ -40,7 +40,7 @@ void solid::ray_cast_io(lexer* p, dive* a, int ts, int te)
 	int js,je,ks,ke;
 	double u,v,w;
 	double denom;
-    double psi = 1.0e-6*p->DXM;
+    double psi = 1.0e-8*p->DXM;
 
 	
     MALOOP
@@ -105,8 +105,8 @@ void solid::ray_cast_io(lexer* p, dive* a, int ts, int te)
 		Pz = p->ZP[KP]+psi + p->zmin;
 		
 		Qx = p->xmax+10.0*p->DXM;
-		Qy = p->YP[JP]+psi + p->ymin;
-		Qz = p->ZP[KP]+psi + p->zmin;
+		Qy = p->YP[JP]-psi + p->ymin;
+		Qz = p->ZP[KP]-psi + p->zmin;
 		
 		
 		PQx = Qx-Px;

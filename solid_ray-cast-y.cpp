@@ -42,7 +42,7 @@ void solid::ray_cast_y(lexer* p, dive* a, int ts, int te)
 	int ir,insidecheck;
 	double u,v,w;
 	double denom;
-	double psi = 1.0e-6*p->DXM;
+	double psi = 1.0e-8*p->DXM;
 
     
 	for(n=ts; n<te; ++n)
@@ -155,13 +155,13 @@ void solid::ray_cast_y(lexer* p, dive* a, int ts, int te)
             int distcheck=1;
             
             if(Ry<p->YP[JP])
-            if(j>=1 && j<p->knoy)
-            if(a->solid(i,j,k)==-1 && a->solid(i,j-1,k)==-1)
+            if(j>=-1 && j<=p->knoy+1)
+            if(a->solid(i,j,k)<0 && a->solid(i,j-1,k)<0)
             distcheck=0;
             
             if(Ry>=p->YP[JP])
-            if(j>=0 && j<p->knoy-1)
-            if(a->solid(i,j,k)==-1 && a->solid(i,j+1,k)==-1)
+            if(j>=-1 && j<=p->knoy+1)
+            if(a->solid(i,j,k)<0 && a->solid(i,j+1,k)<0)
             distcheck=0;
 
             if(distcheck==1)

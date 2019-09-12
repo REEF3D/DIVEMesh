@@ -42,7 +42,7 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 	int ir,insidecheck;
 	double u,v,w;
 	double denom;
-    double psi = 1.0e-6*p->DXM;
+    double psi = 1.0e-8*p->DXM;
 
 	for(n=ts; n<te; ++n)
 	{
@@ -149,13 +149,13 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
             int distcheck=1;
             
             if(Rz<p->ZP[KP])
-            if(k>=1 && k<p->knoz)
-            if(a->solid(i,j,k)==-1 && a->solid(i,j,k-1)==-1)
+            if(k>=0 && k<=p->knoz)
+            if(a->solid(i,j,k)<0 && a->solid(i,j,k-1)<0)
             distcheck=0;
             
             if(Rz>=p->ZP[KP])
-            if(k>=0 && k<p->knoz-1)
-            if(a->solid(i,j,k)==-1 && a->solid(i,j,k+1)==-1)
+            if(k>=0 && k<=p->knoz)
+            if(a->solid(i,j,k)<0 && a->solid(i,j,k+1)<0)
             distcheck=0;
 
             if(distcheck==1)
