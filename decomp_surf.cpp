@@ -33,7 +33,7 @@ void decomp::parasurface(lexer* p, dive* a)
 
     LOOP
     {
-    if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) && a->flag(i-1,j,k)>0 && a->flag(i,j,k)>0)
+    if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) && a->subgrid(i-1,j,k)!=-1)// && a->flag(i-1,j,k)>0 && a->flag(i,j,k)>0)
     {
     a->para1sf[a->para1count][0]=i;
     a->para1sf[a->para1count][1]=j;
@@ -41,7 +41,7 @@ void decomp::parasurface(lexer* p, dive* a)
     a->para1count++;
     }
 
-    if(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) && a->flag(i+1,j,k)>0 && a->flag(i,j,k)>0)
+    if(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) && a->subgrid(i+1,j,k)!=-1)// && a->flag(i+1,j,k)>0 && a->flag(i,j,k)>0)
     {
     a->para4sf[a->para4count][0]=i;
     a->para4sf[a->para4count][1]=j;
@@ -49,7 +49,7 @@ void decomp::parasurface(lexer* p, dive* a)
     a->para4count++;
     }
 
-    if(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) && a->flag(i,j-1,k)>0 && a->flag(i,j,k)>0)
+    if(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) && a->subgrid(i,j-1,k)!=-1)// && a->flag(i,j-1,k)>0 && a->flag(i,j,k)>0)
     {
     a->para3sf[a->para3count][0]=i;
     a->para3sf[a->para3count][1]=j;
@@ -57,7 +57,7 @@ void decomp::parasurface(lexer* p, dive* a)
     a->para3count++;
     }
 
-    if(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) && a->flag(i,j+1,k)>0 && a->flag(i,j,k)>0)
+    if(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) && a->subgrid(i,j+1,k)!=-1)// && a->flag(i,j+1,k)>0 && a->flag(i,j,k)>0)
     {
     a->para2sf[a->para2count][0]=i;
     a->para2sf[a->para2count][1]=j;
@@ -65,7 +65,7 @@ void decomp::parasurface(lexer* p, dive* a)
     a->para2count++;
     }
 
-    if(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) && a->flag(i,j,k-1)>0 && a->flag(i,j,k)>0)
+    if(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) && a->subgrid(i,j,k-1)!=-1)// && a->flag(i,j,k-1)>0 && a->flag(i,j,k)>0)
     {
     a->para5sf[a->para5count][0]=i;
     a->para5sf[a->para5count][1]=j;
@@ -73,7 +73,7 @@ void decomp::parasurface(lexer* p, dive* a)
     a->para5count++;
     }
 
-    if(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) && a->flag(i,j,k+1)>0 && a->flag(i,j,k)>0)
+    if(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) && a->subgrid(i,j,k+1)!=-1)// && a->flag(i,j,k+1)>0 && a->flag(i,j,k)>0)
     {
     a->para6sf[a->para6count][0]=i;
     a->para6sf[a->para6count][1]=j;
