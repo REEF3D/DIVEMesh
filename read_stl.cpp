@@ -197,17 +197,16 @@ void lexer::read_stl()
 }
 
 
-
-
 void lexer::pre_read_stl()
 {
 	string word;
 	int count, vert_count;
     double val;
+    double preS8;
     
     double **tx,**ty,**tz;
 	
-	// read and count number of triangles
+	// pre-read and count number of triangles
 	
 	ifstream stl("solid.stl", ios_base::in);
 	
@@ -228,13 +227,13 @@ void lexer::pre_read_stl()
 	
 	cout<<"STL : "<<trinum<<endl;
 	
-	// create arrays
+	// pre-create arrays
 	Darray(tx,trinum,3);
 	Darray(ty,trinum,3);
 	Darray(tz,trinum,3);
 
 	
-	// reopen and read triangles
+	// pre-reopen and read triangles
 	
 
 	stl.open("solid.stl", ios_base::in);
@@ -285,7 +284,7 @@ void lexer::pre_read_stl()
 	
 	tricount=count+1;
 	
-	// scale STL model
+	// pre-scale STL model
 	for(n=0; n<trinum; ++n)
 	for(q=0; q<3; ++q)
 	{
@@ -294,7 +293,7 @@ void lexer::pre_read_stl()
 	tz[n][q]*=S4;
 	}
 	
-	// change orgin
+	// pre-change orgin
 	if(S7==1)
 	for(n=0; n<trinum; ++n)
 	for(q=0; q<3; ++q)
@@ -305,15 +304,15 @@ void lexer::pre_read_stl()
 	}
 	
 	
-	// rotate STL model
-	S8 = S8*PI/180.0;
+	// pre-rotate STL model
+	preS8 = S8*PI/180.0;
 	
 	double xval,yval;
 	for(n=0; n<trinum; ++n)
 	for(q=0; q<3; ++q)
 	{
-	xval = tx[n][q]*cos(S8) - ty[n][q]*sin(S8);
-	yval = tx[n][q]*sin(S8) + ty[n][q]*cos(S8);
+	xval = tx[n][q]*cos(preS8) - ty[n][q]*sin(preS8);
+	yval = tx[n][q]*sin(preS8) + ty[n][q]*cos(preS8);
 	
 	tx[n][q] = xval;
 	ty[n][q] = yval;
@@ -321,7 +320,7 @@ void lexer::pre_read_stl()
 	
 
 	
-	// find min/max coordinates
+	// pre-find min/max coordinates
 	double Ax,Ay,Az;
 	double Bx,By,Bz;
 	double Cx,Cy,Cz;
