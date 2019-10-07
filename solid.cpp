@@ -320,6 +320,7 @@ void solid::start(lexer* p, dive* a)
         {
         fluvial_box(p,a,qn,tri_start,tri_end);
         rotate_triangle(p,a,tri_start,tri_end);
+        cout<<"RAYITER: "<<rayiter<<endl;
         ray_cast(p,a,tri_start,tri_end);
         }
     }
