@@ -154,16 +154,21 @@ void solid::ray_cast_y(lexer* p, dive* a, int ts, int te)
             
             int distcheck=1;
             
+            
+            //cout<<"IJ: "<<i<<" "<<j<<" "<<k<<" |   : "<<endl;
+            
             if(Ry<p->YP[JP])
-            if(j>=-1 && j<=p->knoy+1)
+            if(j>=0 && j<=p->knoy)
             if(a->solid(i,j,k)<0 && a->solid(i,j-1,k)<0)
             distcheck=0;
             
             if(Ry>=p->YP[JP])
-            if(j>=-1 && j<=p->knoy+1)
+            if(j>=0 && j<=p->knoy)
             if(a->solid(i,j,k)<0 && a->solid(i,j+1,k)<0)
             distcheck=0;
-
+            
+            
+            
             if(distcheck==1)
 			for(j=0;j<p->knoy;++j)
 			a->solid_dist(i,j,k)=MIN(fabs(Ry-p->YP[JP]-p->ymin),a->solid_dist(i,j,k));

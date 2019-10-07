@@ -782,6 +782,11 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     
     te=p->tricount;
     
+    p->del_Darray(xl,p->S300_ds);
+    p->del_Darray(yl,p->S300_ds);
+    p->del_Darray(xr,p->S300_ds);
+    p->del_Darray(yr,p->S300_ds);
+    
     
     
     cout<<"fluvial box end  "<<te<<endl<<endl<<endl;
