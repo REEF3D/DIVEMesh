@@ -85,7 +85,7 @@ void wcp::read(lexer *p, dive *a)
 	NLz=iin;
     
     // read coordinates
-    for(i=0;i<NLy;++i)
+    for(i=0;i<NLx;++i)
     {
     result.read((char*)&ddn, sizeof (double)); 
     X[i+orig_i] = ddn;
@@ -104,21 +104,21 @@ void wcp::read(lexer *p, dive *a)
     }
     
     // read eta and bed
-    for(i=0;i<NLy;++i)
+    for(i=0;i<NLx;++i)
     for(j=0;j<NLy;++j)
     {
     result.read((char*)&ddn, sizeof (double)); 
     eta[i+orig_i][j+orig_j] = ddn;
     }
     
-    for(i=0;i<NLy;++i)
+    for(i=0;i<NLx;++i)
     for(j=0;j<NLy;++j)
     {
     result.read((char*)&ddn, sizeof (double)); 
     bed[i+orig_i][j+orig_j] = ddn;
     }
     
-    for(i=0;i<NLy;++i)
+    for(i=0;i<NLx;++i)
     for(j=0;j<NLy;++j)
     for(k=0;k<NLz;++k)
     {
@@ -126,7 +126,7 @@ void wcp::read(lexer *p, dive *a)
     U[i+orig_i][j+orig_j][k+orig_k] = ddn;
     }
     
-    for(i=0;i<NLy;++i)
+    for(i=0;i<NLx;++i)
     for(j=0;j<NLy;++j)
     for(k=0;k<NLz;++k)
     {
@@ -134,7 +134,7 @@ void wcp::read(lexer *p, dive *a)
     V[i+orig_i][j+orig_j][k+orig_k] = ddn;
     }
     
-    for(i=0;i<NLy;++i)
+    for(i=0;i<NLx;++i)
     for(j=0;j<NLy;++j)
     for(k=0;k<NLz;++k)
     {
