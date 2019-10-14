@@ -29,16 +29,25 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void wcp::write(lexer *p, dive *a)
 {
+    ofstream header;
+    ofstream wfile;
+    
     // write header
     for(q=0; q<p->M10; ++q)
     {
-        ofstream header;
+        
         
         filename_header(p,a,q);
         header.open(name, ios::binary);
         
+        // numer of iterations
         iin=numiter;
         header.write((char*)&iin, sizeof (int));
+        
+        
+        // origin_xyz
+        
+        // Nx,Ny,Nz
         
         for(n=0;n<numiter;++n)
         {
@@ -49,11 +58,52 @@ void wcp::write(lexer *p, dive *a)
     header.close();
     }
     
+    count=0;
     // write result
     for(n=0; n<numiter; ++n)
-    for(q=0; q<p->M10; ++q)
+    NLOOP
     {
+        ++count;
+        // filename
+        // file open
         
+        
+        
+        filename_out(p,a,n,count);
+        wfile.open(name, ios::binary);
+        
+        //ijk loop
+        // ->write
+        for(i=is[aa]; i<ie[aa]; ++i)
+        {
+        ffn=float(X[i]);
+        wfile.write((char*)&ffn, sizeof (float));
+        }
+            
+        for(j=js[bb]; j=je[bb]; ++j)
+        {
+        ffn=float(X[i]);
+        wfile.write((char*)&ffn, sizeof (float));
+        }
+        
+        for(k=0; k<NGz; ++k)
+            
+            
+        for(i=is[aa]; i<ie[aa]; ++i)
+        for(j=js[bb]; j=je[bb]; ++j)
+        for(k=0; k<NGz; ++k)
+        {
+        
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+        // file close
     }
 }
 

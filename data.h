@@ -43,6 +43,9 @@ private:
 	
 	double g,wsum,dist;
     double xc,yc;
+    double ddn;
+    int iin;
+    float ffn;
 };
 
 #endif
