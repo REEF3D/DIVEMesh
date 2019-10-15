@@ -38,6 +38,7 @@ public:
     virtual void start(lexer*,dive*);
     
 	void read(lexer*, dive*);
+    void read_mainheader(lexer*, dive*);
     void read_header(lexer*, dive*);
     void read_result(lexer*, dive*);
     
@@ -49,6 +50,7 @@ public:
     void merge(lexer*,dive*);
     void decomp(lexer*,dive*);
 	void write(lexer*,dive*);
+    void write_header(lexer*,dive*);
     void filename_out(lexer*, dive*);
 
 private:
@@ -61,6 +63,7 @@ private:
     int numprocs, numiter;
     int NLx,NLy,NLz;
     int NGx,NGy,NGz;
+    int nb1,nb2,nb3,nb4;
     
 	double g,wsum,dist;
     double xc,yc;

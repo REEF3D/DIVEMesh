@@ -29,81 +29,67 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void wcp::write(lexer *p, dive *a)
 {
-    ofstream header;
+    
+    // header
+    write_header(p,a);
+        
     ofstream wfile;
     
-    // write header
-    for(q=0; q<p->M10; ++q)
-    {
-        
-        
-        filename_header(p,a,q);
-        header.open(name, ios::binary);
-        
-        // numer of iterations
-        iin=numiter;
-        header.write((char*)&iin, sizeof (int));
-        
-        
-        // origin_xyz
-        
-        // Nx,Ny,Nz
-        
-        for(n=0;n<numiter;++n)
-        {
-        ddn=simtime[n];
-        header.write((char*)&ddn, sizeof (double));
-        }
-        
-    header.close();
-    }
     
-    count=0;
     // write result
     for(n=0; n<numiter; ++n)
-    NLOOP
+    {
+    count=0;
+    for(aa=0;aa<a->mx;++aa)
+    for(bb=0;bb<a->my;++bb)
     {
         ++count;
+        
         // filename
-        // file open
-        
-        
-        
         filename_out(p,a,n,count);
+        
+        // file open
         wfile.open(name, ios::binary);
         
         //ijk loop
         // ->write
-        for(i=is[aa]; i<ie[aa]; ++i)
-        {
-        ffn=float(X[i]);
-        wfile.write((char*)&ffn, sizeof (float));
-        }
+
             
+        for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j=je[bb]; ++j)
         {
-        ffn=float(X[i]);
+        ffn=float(eta[i][j]);
         wfile.write((char*)&ffn, sizeof (float));
         }
-        
-        for(k=0; k<NGz; ++k)
-            
             
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j=je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
+        ffn=float(U[i][j][k]);
+        wfile.write((char*)&ffn, sizeof (float));
+        } 
         
-            
-            
-            
-            
-            
-            
-        }
+        for(i=is[aa]; i<ie[aa]; ++i)
+        for(j=js[bb]; j=je[bb]; ++j)
+        for(k=0; k<NGz; ++k)
+        {
+        ffn=float(V[i][j][k]);
+        wfile.write((char*)&ffn, sizeof (float));
+        } 
+        
+        for(i=is[aa]; i<ie[aa]; ++i)
+        for(j=js[bb]; j=je[bb]; ++j)
+        for(k=0; k<NGz; ++k)
+        {
+        ffn=float(W[i][j][k]);
+        wfile.write((char*)&ffn, sizeof (float));
+        } 
         
         
         // file close
+        wfile.close();
+    }
     }
 }
 

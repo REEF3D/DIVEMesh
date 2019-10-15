@@ -53,55 +53,9 @@ void wcp::read(lexer *p, dive *a)
 	
 	result.open(name, ios::binary);
 	
-    // read header section
-    // orig_xyz
-    result.read((char*)&ddn, sizeof (double)); 
-    orig_x = ddn;
     
-    result.read((char*)&ddn, sizeof (double)); 
-    orig_y = ddn;
     
-    result.read((char*)&ddn, sizeof (double)); 
-    orig_z = ddn;
     
-    // orig_ijk
-    result.read((char*)&iin, sizeof (int));
-	orig_i=iin;
-    
-    result.read((char*)&iin, sizeof (int));
-	orig_j=iin;
-    
-    result.read((char*)&iin, sizeof (int));
-	orig_k=iin;
-    
-    // NLx,NLy,NLz
-    result.read((char*)&iin, sizeof (int));
-	NLx=iin;
-    
-    result.read((char*)&iin, sizeof (int));
-	NLy=iin;
-    
-    result.read((char*)&iin, sizeof (int));
-	NLz=iin;
-    
-    // read coordinates
-    for(i=0;i<NLx;++i)
-    {
-    result.read((char*)&ddn, sizeof (double)); 
-    X[i+orig_i] = ddn;
-    }
-    
-    for(j=0;j<NLy;++j)
-    {
-    result.read((char*)&ddn, sizeof (double)); 
-    Y[j+orig_j] = ddn;
-    }
-    
-    for(k=0;k<NLz;++k)
-    {
-    result.read((char*)&ddn, sizeof (double)); 
-    Z[k+orig_k] = ddn;
-    }
     
     // read eta and bed
     for(i=0;i<NLx;++i)
@@ -109,13 +63,6 @@ void wcp::read(lexer *p, dive *a)
     {
     result.read((char*)&ddn, sizeof (double)); 
     eta[i+orig_i][j+orig_j] = ddn;
-    }
-    
-    for(i=0;i<NLx;++i)
-    for(j=0;j<NLy;++j)
-    {
-    result.read((char*)&ddn, sizeof (double)); 
-    bed[i+orig_i][j+orig_j] = ddn;
     }
     
     for(i=0;i<NLx;++i)
@@ -147,55 +94,3 @@ void wcp::read(lexer *p, dive *a)
     }
 }
 
-
-
-void wcp::read_header(lexer *p, dive *a)
-{
-    ifstream header;
-	header.open(name, ios::binary);
-    
-    // count numiter
-    header.read((char*)&iin, sizeof (int));
-    header.read((char*)&iin, sizeof (int));
-    header.read((char*)&iin, sizeof (int));
-    header.read((char*)&iin, sizeof (int));
-    
-    numiter=0;
-    while(!header.eof())
-	{
-    header.read((char*)&iin, sizeof (int));
- 
-    header.read((char*)&ddn, sizeof (double));    
-    ++numiter;
-    }
-    
-    header.close();
-    
-    p->Darray(simtime,numiter);
-    
-    
-    // read header
-    header.open(name, ios::binary);
-    
-    header.read((char*)&iin, sizeof (int));
-	numprocs=iin;
-    
-    header.read((char*)&iin, sizeof (int));
-	NGx=iin;
-    
-    header.read((char*)&iin, sizeof (int));
-	NGy=iin;
-    
-    header.read((char*)&iin, sizeof (int));
-	NGz=iin;
-    
-    count=0;
-    while(!header.eof())
-	{
-    header.read((char*)&iin, sizeof (int));
- 
-    header.read((char*)&ddn, sizeof (double)); 
-    simtime[count] = ddn;
-    ++count;
-    }
-}

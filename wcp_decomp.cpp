@@ -51,7 +51,7 @@ void wcp::decomp(lexer *p, dive *a)
     js[0]=0;
     
     ie[a->mx-1]=NGx;
-    je[a->mx-1]=NGy;
+    je[a->my-1]=NGy;
     
     // find ijnode 
     for(aa=1;aa<a->mx-1;++aa)
