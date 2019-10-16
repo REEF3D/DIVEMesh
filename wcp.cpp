@@ -22,9 +22,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"wcp.h"
 #include"dive.h"
 #include"lexer.h"
+#include<sys/stat.h>
+#include<sys/types.h>
 
 wcp::wcp(lexer *p, dive *a) 
 {
+    // Create Folder
+	mkdir("./REEF3D_WCP_Input",0777);
 }
 
 wcp::~wcp()
@@ -33,15 +37,24 @@ wcp::~wcp()
 
 void wcp::start(lexer* p, dive* a)
 {
-    // mainheader
+    cout<<"WCP procedure "<<endl;
+
     read_mainheader(p,a);
-    
-    // header
+    allocate(p,a);
     read_header(p,a);
-    
-    // result
-    read(p,a);
-    
     decomp(p,a);
-    write(p,a);
+    write_header(p,a);
+    
+    
+    
+    for(n=0; n<numiter; ++n)
+    {
+        read(p,a);
+        write(p,a);
+    
+    cout<<"WCP I/O iter: "<<n<<endl;
+    }
+    
+    
+    
 }

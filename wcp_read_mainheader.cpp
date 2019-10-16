@@ -30,24 +30,50 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void wcp::read_mainheader(lexer *p, dive *a)
 {
     ifstream mainhead;
+    int ii1,ii2;
+    
+    sprintf(name,"./REEF3D_FNPF_State/REEF3D-FNPF_State_Mainheader.r3d");
+    
 	mainhead.open(name, ios::binary);
     
     // count numiter
     mainhead.read((char*)&iin, sizeof (int));
+	numprocs=iin;
+    
     mainhead.read((char*)&iin, sizeof (int));
+	NGx=iin;
+    
     mainhead.read((char*)&iin, sizeof (int));
+	NGy=iin;
+    
     mainhead.read((char*)&iin, sizeof (int));
+	NGz=iin;
+    
+    cout<<"WCP numprocs: "<<numprocs<<endl;
+    cout<<"WCP NGx: "<<NGx<<endl;
+    cout<<"WCP NGy: "<<NGy<<endl;
+    cout<<"WCP NGz: "<<NGz<<endl;
     
     numiter=0;
     while(!mainhead.eof())
 	{
+    ii1=ii2;
+    
     mainhead.read((char*)&iin, sizeof (int));
+    ii2=iin;
  
-    mainhead.read((char*)&ddn, sizeof (double));    
+    mainhead.read((char*)&ddn, sizeof (double));  
+    
     ++numiter;
     }
     
+    
+    if(ii1==ii2)
+    --numiter;
+    
     mainhead.close();
+    
+    cout<<"WCP numiter: "<<numiter<<endl;
     
     
     // allocate simtime

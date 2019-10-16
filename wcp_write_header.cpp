@@ -36,6 +36,7 @@ void wcp::write_header(lexer *p, dive *a)
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {
+        cout<<"WCP write_header: "<<count<<endl;
         filename_out_header(p,a,count);
         header.open(name, ios::binary);
         
@@ -71,7 +72,7 @@ void wcp::write_header(lexer *p, dive *a)
         header.write((char*)&ffn, sizeof (float));
         }
             
-        for(j=js[bb]; j=je[bb]; ++j)
+        for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=float(Y[i]);
         header.write((char*)&ffn, sizeof (float));
@@ -85,7 +86,7 @@ void wcp::write_header(lexer *p, dive *a)
         
         // write bed
         for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j=je[bb]; ++j)
+        for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=float(bed[i][j]);
         header.write((char*)&ffn, sizeof (float));
@@ -101,7 +102,6 @@ void wcp::write_header(lexer *p, dive *a)
         ffn=simtime[n];
         header.write((char*)&ffn, sizeof (double));
         }
-        
         ++count;
         
     header.close();

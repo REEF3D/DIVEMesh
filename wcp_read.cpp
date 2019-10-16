@@ -31,19 +31,8 @@ void wcp::read(lexer *p, dive *a)
 {
     ifstream result;
     
-    
-    // allocate arrays
-    p->Darray(X,NGx);
-    p->Darray(Y,NGy);
-    p->Darray(Z,NGz);
-    p->Darray(eta,NGx,NGy);
-    p->Darray(bed,NGx,NGy);
-    p->Darray(U,NGx,NGy,NGz);
-    p->Darray(V,NGx,NGy,NGz);
-    p->Darray(W,NGx,NGy,NGz);
-    
+
     // result
-    for(n=0; n<numiter; ++n)
     for(q=0; q<numprocs; ++q)
     {
     // Open File

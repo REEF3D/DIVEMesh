@@ -134,6 +134,7 @@
   <VirtualDirectory Name="Sources">
     <VirtualDirectory Name="Hydrodynamic Coupling">
       <VirtualDirectory Name="Wave Coupling">
+        <File Name="wcp_allocate.cpp"/>
         <File Name="wcp_write_header.cpp"/>
         <File Name="wcp_write.cpp"/>
         <File Name="wcp_read_mainheader.cpp"/>

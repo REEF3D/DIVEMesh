@@ -37,6 +37,8 @@ public:
 
     virtual void start(lexer*,dive*);
     
+    void allocate(lexer*, dive*);
+    
 	void read(lexer*, dive*);
     void read_mainheader(lexer*, dive*);
     void read_header(lexer*, dive*);

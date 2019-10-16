@@ -31,19 +31,16 @@ void wcp::write(lexer *p, dive *a)
 {
     
     // header
-    write_header(p,a);
+    
+    
         
     ofstream wfile;
     
-    
     // write result
-    for(n=0; n<numiter; ++n)
-    {
     count=0;
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
-    {
-        ++count;
+    {    
         
         // filename
         filename_out(p,a,n,count);
@@ -55,14 +52,14 @@ void wcp::write(lexer *p, dive *a)
         //ijk loop
         // ->write
         for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j=je[bb]; ++j)
+        for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=float(eta[i][j]);
         wfile.write((char*)&ffn, sizeof (float));
         }
             
         for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j=je[bb]; ++j)
+        for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(U[i][j][k]);
@@ -70,7 +67,7 @@ void wcp::write(lexer *p, dive *a)
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j=je[bb]; ++j)
+        for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(V[i][j][k]);
@@ -78,17 +75,16 @@ void wcp::write(lexer *p, dive *a)
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j=je[bb]; ++j)
+        for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(W[i][j][k]);
         wfile.write((char*)&ffn, sizeof (float));
         } 
-        
+        ++count;
         
         // file close
         wfile.close();
-    }
     }
 }
 

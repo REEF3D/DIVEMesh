@@ -31,25 +31,10 @@ void wcp::read_header(lexer *p, dive *a)
 {
     ifstream header;
     
-    p->Iarray(orig_i,numprocs);
-    p->Iarray(orig_j,numprocs);
-    p->Iarray(orig_k,numprocs);
-    
-    p->Darray(orig_x,numprocs);
-    p->Darray(orig_y,numprocs);
-    p->Darray(orig_z,numprocs);
-    
-    p->Iarray(nb1,numprocs);
-    p->Iarray(nb2,numprocs);
-    p->Iarray(nb3,numprocs);
-    p->Iarray(nb4,numprocs);
-    
-    p->Iarray(NLx,numprocs);
-    p->Iarray(NLy,numprocs);
-    p->Iarray(NLz,numprocs);
+    cout<<"WCP numprocs:"<<numprocs<<endl;
     
     
-    
+
     for(q=0; q<numprocs; ++q)
     {
         // filename
@@ -83,7 +68,6 @@ void wcp::read_header(lexer *p, dive *a)
         
 
         
-        
         // NLx[q],NLy[q],NLz[q]
         header.read((char*)&iin, sizeof (int));
         NLx[q]=iin;
@@ -107,6 +91,25 @@ void wcp::read_header(lexer *p, dive *a)
         
         header.read((char*)&iin, sizeof (int));
         nb4[q]=iin;
+        
+        /*
+        cout<<"WCP read coords: "<<q<<endl;
+        
+        cout<<"WCP NGx: "<<NGx<<endl;
+        cout<<"WCP NGy: "<<NGy<<endl;
+        cout<<"WCP NGz: "<<NGz<<endl;
+        
+        cout<<"WCP NLx: "<<NLx[q]<<endl;
+        cout<<"WCP NLy: "<<NLy[q]<<endl;
+        cout<<"WCP NLz: "<<NLz[q]<<endl;
+        
+        cout<<"WCP orig_i: "<<orig_i[q]<<endl;
+        cout<<"WCP orig_j: "<<orig_j[q]<<endl;
+        cout<<"WCP orig_k: "<<orig_k[q]<<endl;
+        
+        cout<<"WCP orig_x: "<<orig_x[q]<<endl;
+        cout<<"WCP orig_y: "<<orig_y[q]<<endl;
+        cout<<"WCP orig_z: "<<orig_z[q]<<endl;*/
         
         
           // read coordinates
