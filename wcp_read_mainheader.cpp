@@ -49,6 +49,8 @@ void wcp::read_mainheader(lexer *p, dive *a)
     
     mainhead.close();
     
+    
+    // allocate simtime
     p->Darray(simtime,numiter);
     
     

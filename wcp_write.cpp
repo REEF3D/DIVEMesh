@@ -51,10 +51,9 @@ void wcp::write(lexer *p, dive *a)
         // file open
         wfile.open(name, ios::binary);
         
+        
         //ijk loop
         // ->write
-
-            
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j=je[bb]; ++j)
         {

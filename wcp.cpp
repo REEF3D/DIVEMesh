@@ -33,7 +33,15 @@ wcp::~wcp()
 
 void wcp::start(lexer* p, dive* a)
 {
+    // mainheader
+    read_mainheader(p,a);
+    
+    // header
+    read_header(p,a);
+    
+    // result
     read(p,a);
+    
     decomp(p,a);
     write(p,a);
 }

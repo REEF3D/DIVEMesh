@@ -129,3 +129,23 @@ void wcp::filename_in(lexer *p, dive *a,int num, int rank)
 		sprintf(name,"./REEF3D_FNPF_State/REEF3D_FNPF-State-%d-%d.r3d",num,rank+1);
 	}
 }
+
+void wcp::filename_in_header(lexer *p, dive *a,int rank)
+{
+    if(rank<9)
+	sprintf(name,"./REEF3D_FNPF_State/REEF3D-FNPF-State-Header-0000%d.r3d",rank+1);
+
+	if(rank<99&&rank>8)
+	sprintf(name,"./REEF3D_FNPF_State/REEF3D-FNPF-State-Header-000%d.r3d",rank+1);
+    
+	if(rank<999&&rank>98)
+	sprintf(name,"./REEF3D_FNPF_State/REEF3D-FNPF-State-Header-00%d.r3d",rank+1);
+
+	if(rank<9999&&rank>998)
+	sprintf(name,"./REEF3D_FNPF_State/REEF3D-FNPF-State-Header-0%d.r3d",rank+1);
+
+	if(rank>9998)
+	sprintf(name,"./REEF3D_FNPF_State/REEF3D-FNPF-State-Header-%d.r3d",rank+1);
+    
+    
+}

@@ -43,9 +43,10 @@ public:
     void read_result(lexer*, dive*);
     
     void filename_in(lexer*, dive*,int,int);
-    void filename_out(lexer*, dive*,int,int);
+    void filename_in_header(lexer*, dive*,int);
     
-    void filename_header(lexer*, dive*,int);
+    void filename_out(lexer*, dive*,int,int);
+    void filename_out_header(lexer*, dive*,int);
     
     void merge(lexer*,dive*);
     void decomp(lexer*,dive*);
@@ -61,17 +62,20 @@ private:
     
     int n,q,count;
     int numprocs, numiter;
-    int NLx,NLy,NLz;
     int NGx,NGy,NGz;
-    int nb1,nb2,nb3,nb4;
+    
     
 	double g,wsum,dist;
     double xc,yc;
     
-    double orig_x, orig_y, orig_z;
-    int orig_i, orig_j, orig_k;
+    
     
     // arrays
+    double *orig_x, *orig_y, *orig_z;
+    int *orig_i, *orig_j, *orig_k;
+    int *nb1,*nb2,*nb3,*nb4;
+    int *NLx,*NLy,*NLz;
+    
     double *simtime;
     double *X,*Y,*Z;
     double ***U,***V,***W,**eta,**bed;

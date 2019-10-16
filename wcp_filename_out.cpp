@@ -130,7 +130,7 @@ void wcp::filename_out(lexer *p, dive *a,int num, int rank)
 	}
 }
 
-void wcp::filename_header(lexer *p, dive *a, int rank)
+void wcp::filename_out_header(lexer *p, dive *a, int rank)
 {
     
 	if(rank<9)

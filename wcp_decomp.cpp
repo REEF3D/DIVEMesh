@@ -57,7 +57,7 @@ void wcp::decomp(lexer *p, dive *a)
     for(aa=1;aa<a->mx-1;++aa)
     {
         xstart = a->xorig[aa];
-        xend = a->xorig[aa+1];
+        xend  = a->xorig[aa+1];
         
         for(i=0;i<NGx;++i)
         {

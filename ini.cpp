@@ -118,6 +118,8 @@ void lexer::ini_default()
     G32=0.5;        // double smoothing factor
 	G35=16.0;		// double inverse distance factor
     G41=0;          // print SWAN bottom file
+    
+    H10=0;          // int turn on hydrodynamic coupling procedures
 	
 	M10=1;          // int number of grids
 	M11=1;          // int decompose in x-dir

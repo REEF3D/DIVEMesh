@@ -17,6 +17,11 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="Headers">
+    <VirtualDirectory Name="Hydrodynamic Coupling">
+      <VirtualDirectory Name="Wave Coupling">
+        <File Name="wcp.h"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
     <VirtualDirectory Name="Baselayer">
       <File Name="baselayer.h"/>
       <File Name="box_bl.h"/>
@@ -117,9 +122,6 @@
       <File Name="template.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Data">
-      <VirtualDirectory Name="Wave Coupling">
-        <File Name="wcp.h"/>
-      </VirtualDirectory>
       <File Name="data.h"/>
       <VirtualDirectory Name="Kriging">
         <File Name="kriging.h"/>
@@ -130,6 +132,19 @@
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="Sources">
+    <VirtualDirectory Name="Hydrodynamic Coupling">
+      <VirtualDirectory Name="Wave Coupling">
+        <File Name="wcp_write_header.cpp"/>
+        <File Name="wcp_write.cpp"/>
+        <File Name="wcp_read_mainheader.cpp"/>
+        <File Name="wcp_read_header.cpp"/>
+        <File Name="wcp_read.cpp"/>
+        <File Name="wcp_filename_out.cpp"/>
+        <File Name="wcp_filename_in.cpp"/>
+        <File Name="wcp_decomp.cpp"/>
+        <File Name="wcp.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
     <VirtualDirectory Name="Baselayer">
       <File Name="baselayer.cpp"/>
       <File Name="box_bl.cpp"/>
@@ -277,17 +292,6 @@
       <File Name="bedlevel.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Data">
-      <VirtualDirectory Name="Wave Coupling">
-        <File Name="wcp_read_mainheader.cpp"/>
-        <File Name="wcp_write_header.cpp"/>
-        <File Name="wcp_read_header.cpp"/>
-        <File Name="wcp_filename_out.cpp"/>
-        <File Name="wcp_filename_in.cpp"/>
-        <File Name="wcp_decomp.cpp"/>
-        <File Name="wcp_write.cpp"/>
-        <File Name="wcp_read.cpp"/>
-        <File Name="wcp.cpp"/>
-      </VirtualDirectory>
       <File Name="data.cpp"/>
       <File Name="data_inversedist.cpp"/>
       <VirtualDirectory Name="Kriging">

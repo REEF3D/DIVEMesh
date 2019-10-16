@@ -30,90 +30,114 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void wcp::read_header(lexer *p, dive *a)
 {
     ifstream header;
-
-    // read header
-    header.open(name, ios::binary);
     
-
+    p->Iarray(orig_i,numprocs);
+    p->Iarray(orig_j,numprocs);
+    p->Iarray(orig_k,numprocs);
     
-    // read header section
+    p->Darray(orig_x,numprocs);
+    p->Darray(orig_y,numprocs);
+    p->Darray(orig_z,numprocs);
     
-    // orig_ijk
-    header.read((char*)&iin, sizeof (int));
-	orig_i=iin;
+    p->Iarray(nb1,numprocs);
+    p->Iarray(nb2,numprocs);
+    p->Iarray(nb3,numprocs);
+    p->Iarray(nb4,numprocs);
     
-    header.read((char*)&iin, sizeof (int));
-	orig_j=iin;
-    
-    header.read((char*)&iin, sizeof (int));
-	orig_k=iin;
-    
-    // orig_xyz
-    header.read((char*)&ffn, sizeof (float)); 
-    orig_x = ffn;
-    
-    header.read((char*)&ffn, sizeof (float)); 
-    orig_y = ffn;
-    
-    header.read((char*)&ffn, sizeof (float)); 
-    orig_z = ffn;
-    
-
+    p->Iarray(NLx,numprocs);
+    p->Iarray(NLy,numprocs);
+    p->Iarray(NLz,numprocs);
     
     
-    // NLx,NLy,NLz
-    header.read((char*)&iin, sizeof (int));
-	NLx=iin;
     
-    header.read((char*)&iin, sizeof (int));
-	NLy=iin;
-    
-    header.read((char*)&iin, sizeof (int));
-	NLz=iin;
-    
-    
-    // nbx
-    header.read((char*)&iin, sizeof (int));
-	nb1=iin;
-    
-    header.read((char*)&iin, sizeof (int));
-	nb2=iin;
-
-    header.read((char*)&iin, sizeof (int));
-	nb3=iin;
-    
-    header.read((char*)&iin, sizeof (int));
-	nb4=iin;
-    
-    
-      // read coordinates
-    for(i=0;i<NLx;++i)
+    for(q=0; q<numprocs; ++q)
     {
-    header.read((char*)&ffn, sizeof (float)); 
-    X[i+orig_i] = ffn;
+        // filename
+        filename_in_header(p,a,q);
+        
+        // read header
+        header.open(name, ios::binary);
+        
+ 
+        // read header section
+        
+        // orig_ijk
+        header.read((char*)&iin, sizeof (int));
+        orig_i[q]=iin;
+        
+        header.read((char*)&iin, sizeof (int));
+        orig_j[q]=iin;
+        
+        header.read((char*)&iin, sizeof (int));
+        orig_k[q]=iin;
+        
+        // orig_xyz
+        header.read((char*)&ffn, sizeof (float)); 
+        orig_x[q] = ffn;
+        
+        header.read((char*)&ffn, sizeof (float)); 
+        orig_y[q] = ffn;
+        
+        header.read((char*)&ffn, sizeof (float)); 
+        orig_z[q] = ffn;
+        
+
+        
+        
+        // NLx[q],NLy[q],NLz[q]
+        header.read((char*)&iin, sizeof (int));
+        NLx[q]=iin;
+        
+        header.read((char*)&iin, sizeof (int));
+        NLy[q]=iin;
+        
+        header.read((char*)&iin, sizeof (int));
+        NLz[q]=iin;
+        
+        
+        // nbx
+        header.read((char*)&iin, sizeof (int));
+        nb1[q]=iin;
+        
+        header.read((char*)&iin, sizeof (int));
+        nb2[q]=iin;
+
+        header.read((char*)&iin, sizeof (int));
+        nb3[q]=iin;
+        
+        header.read((char*)&iin, sizeof (int));
+        nb4[q]=iin;
+        
+        
+          // read coordinates
+        for(i=0;i<NLx[q];++i)
+        {
+        header.read((char*)&ffn, sizeof (float)); 
+        X[i+orig_i[q]] = ffn;
+        }
+        
+        for(j=0;j<NLy[q];++j)
+        {
+        header.read((char*)&ffn, sizeof (float)); 
+        Y[j+orig_j[q]] = ffn;
+        }
+        
+        for(k=0;k<NLz[q];++k)
+        {
+        header.read((char*)&ffn, sizeof (float)); 
+        Z[k+orig_k[q]] = ffn;
+        }
+        
+        
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        {
+        header.read((char*)&ffn, sizeof (float)); 
+        bed[i+orig_i[q]][j+orig_j[q]] = ffn;
+        }
+        
+        
+        header.close();
     }
-    
-    for(j=0;j<NLy;++j)
-    {
-    header.read((char*)&ffn, sizeof (float)); 
-    Y[j+orig_j] = ffn;
-    }
-    
-    for(k=0;k<NLz;++k)
-    {
-    header.read((char*)&ffn, sizeof (float)); 
-    Z[k+orig_k] = ffn;
-    }
-    
-    
-    for(i=0;i<NLx;++i)
-    for(j=0;j<NLy;++j)
-    {
-    header.read((char*)&ffn, sizeof (float)); 
-    bed[i+orig_i][j+orig_j] = ffn;
-    }
-    
-    
-    header.close();
 
 }

@@ -60,6 +60,7 @@ public:
 	solid *psolid;
     slice *pslice;
     bedlevel *pbed;
+    wcp *pwcp;
 
 	//driver ();
 

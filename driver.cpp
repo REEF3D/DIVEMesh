@@ -28,7 +28,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2019 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_191015" <<endl<<endl;       
+    cout<<endl<<"v_191016" <<endl<<endl;       
 
 	p = new lexer();
 	a = new dive(p);
@@ -85,8 +85,6 @@ void driver::mainloop()
     pdata->start(p,a);
 
 
-
-
 // Slice
     pslice->start(p,a);
 
@@ -105,6 +103,10 @@ void driver::mainloop()
 
     if(p->G10>0)
 	pgeo->gcb_estimate(p,a);
+    
+// Hydrodynamic Coupling
+    if(p->H10==4)
+    pwcp->start(p,a);
 
 
     pprint->start(p,a);

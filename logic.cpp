@@ -58,6 +58,9 @@ void driver::logic(lexer* p)
     pgeo = new geodat(p,a);
     
     pbed = new bedlevel(p,a);
+    
+    if(p->H10>0)
+    pwcp = new wcp(p,a);
 	
 	if(p->D10>0)
     pdata = new data(p,a);

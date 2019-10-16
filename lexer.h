@@ -161,6 +161,8 @@ public:
     double G22_x, G22_y, G22_z;
     int G31,G41;
 	double G32,G35;
+    
+    int H10;
 
     int M10,M11,M12,M13;
 	int M20;

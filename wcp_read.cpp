@@ -31,8 +31,6 @@ void wcp::read(lexer *p, dive *a)
 {
     ifstream result;
     
-    // header
-    read_header(p,a);
     
     // allocate arrays
     p->Darray(X,NGx);
@@ -54,39 +52,36 @@ void wcp::read(lexer *p, dive *a)
 	result.open(name, ios::binary);
 	
     
-    
-    
-    
     // read eta and bed
-    for(i=0;i<NLx;++i)
-    for(j=0;j<NLy;++j)
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
     {
     result.read((char*)&ddn, sizeof (double)); 
-    eta[i+orig_i][j+orig_j] = ddn;
+    eta[i+orig_i[q]][j+orig_j[q]] = ddn;
     }
     
-    for(i=0;i<NLx;++i)
-    for(j=0;j<NLy;++j)
-    for(k=0;k<NLz;++k)
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
+    for(k=0;k<NLz[q];++k)
     {
     result.read((char*)&ddn, sizeof (double)); 
-    U[i+orig_i][j+orig_j][k+orig_k] = ddn;
+    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ddn;
     }
     
-    for(i=0;i<NLx;++i)
-    for(j=0;j<NLy;++j)
-    for(k=0;k<NLz;++k)
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
+    for(k=0;k<NLz[q];++k)
     {
     result.read((char*)&ddn, sizeof (double)); 
-    V[i+orig_i][j+orig_j][k+orig_k] = ddn;
+    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ddn;
     }
     
-    for(i=0;i<NLx;++i)
-    for(j=0;j<NLy;++j)
-    for(k=0;k<NLz;++k)
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
+    for(k=0;k<NLz[q];++k)
     {
     result.read((char*)&ddn, sizeof (double)); 
-    W[i+orig_i][j+orig_j][k+orig_k] = ddn;
+    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ddn;
     }
     
     

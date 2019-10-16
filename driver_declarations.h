@@ -39,4 +39,5 @@ class print_objects;
 class solid;
 class slice;
 class bedlevel;
+class wcp;
 
