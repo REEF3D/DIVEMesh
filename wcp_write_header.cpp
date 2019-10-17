@@ -40,6 +40,10 @@ void wcp::write_header(lexer *p, dive *a)
         filename_out_header(p,a,count);
         header.open(name, ios::binary);
         
+        // jdir
+        iin=jdir;
+        header.write((char*)&iin, sizeof (int));
+        
         // origin_ij
         iin=is[aa];
         header.write((char*)&iin, sizeof (int));

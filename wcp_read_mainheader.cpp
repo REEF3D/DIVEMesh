@@ -41,6 +41,9 @@ void wcp::read_mainheader(lexer *p, dive *a)
 	numprocs=iin;
     
     mainhead.read((char*)&iin, sizeof (int));
+	jdir=iin;
+    
+    mainhead.read((char*)&iin, sizeof (int));
 	NGx=iin;
     
     mainhead.read((char*)&iin, sizeof (int));
@@ -53,6 +56,7 @@ void wcp::read_mainheader(lexer *p, dive *a)
     cout<<"WCP NGx: "<<NGx<<endl;
     cout<<"WCP NGy: "<<NGy<<endl;
     cout<<"WCP NGz: "<<NGz<<endl;
+    cout<<"WCP jdir: "<<jdir<<endl;
     
     numiter=0;
     while(!mainhead.eof())
@@ -85,6 +89,9 @@ void wcp::read_mainheader(lexer *p, dive *a)
     
     mainhead.read((char*)&iin, sizeof (int));
 	numprocs=iin;
+    
+    mainhead.read((char*)&iin, sizeof (int));
+	jdir=iin;
     
     mainhead.read((char*)&iin, sizeof (int));
 	NGx=iin;

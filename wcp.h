@@ -63,7 +63,7 @@ private:
 	char name[200];
     
     int n,q,count;
-    int numprocs, numiter;
+    int numprocs, jdir, numiter;
     int NGx,NGy,NGz;
     
     

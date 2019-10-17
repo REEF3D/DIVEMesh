@@ -73,7 +73,7 @@ void wcp::decomp(lexer *p, dive *a)
             if(i>1)
             if((X[i]>=xend && X[i-1]<xend))
             {
-            ie[aa] = i;
+            ie[aa] = i+1;
             xe[aa] = X[i];
             }
             
@@ -102,7 +102,7 @@ void wcp::decomp(lexer *p, dive *a)
             if(j>1)
             if(Y[j]>=yend && Y[j-1]<yend)
             {
-            je[bb] = j;
+            je[bb] = j+1;
             ye[bb] = Y[j];
             }
             
