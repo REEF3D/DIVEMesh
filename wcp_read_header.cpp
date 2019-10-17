@@ -116,19 +116,19 @@ void wcp::read_header(lexer *p, dive *a)
         for(i=0;i<NLx[q];++i)
         {
         header.read((char*)&ffn, sizeof (float)); 
-        X[i+orig_i[q]] = ffn;
+        X[i+orig_i[q]] = double(ffn)-p->H21;
         }
         
         for(j=0;j<NLy[q];++j)
         {
         header.read((char*)&ffn, sizeof (float)); 
-        Y[j+orig_j[q]] = ffn;
+        Y[j+orig_j[q]] = double(ffn)-p->H22;
         }
         
         for(k=0;k<NLz[q];++k)
         {
         header.read((char*)&ffn, sizeof (float)); 
-        Z[k+orig_k[q]] = ffn;
+        Z[k+orig_k[q]] = double(ffn)-p->H23;
         }
         
         

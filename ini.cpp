@@ -120,6 +120,13 @@ void lexer::ini_default()
     G41=0;          // print SWAN bottom file
     
     H10=0;          // int turn on hydrodynamic coupling procedures
+    H21=0.0;        // double deltax
+    H22=0.0;        // double deltay
+    H23=0.0;        // double deltaz
+    H31=-1.0e20;    // double starttime
+    H32= 1.0e20;    // double endtime
+    H33=-2147483647;      // int start iter
+    H34= 2147483647;      // int end iter
 	
 	M10=1;          // int number of grids
 	M11=1;          // int decompose in x-dir

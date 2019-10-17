@@ -50,8 +50,8 @@ void wcp::decomp(lexer *p, dive *a)
     is[0]=0;
     js[0]=0;
     
-    ie[a->mx-1]=NGx;
-    je[a->my-1]=NGy;
+    ie[a->mx-1]=0;
+    je[a->my-1]=0;
     
     // find ijnode 
     for(aa=0;aa<a->mx;++aa)
@@ -59,17 +59,27 @@ void wcp::decomp(lexer *p, dive *a)
         xstart = a->xorig[aa];
         xend  = a->xorig[aa+1];
         
-        for(i=1;i<NGx;++i)
+        cout<<" WCP decomp x_se: "<<xstart<<" "<<xend<<endl;
+        
+        for(i=0;i<NGx;++i)
         {
+            if(i<NGx-1)
             if(X[i+1]>=xstart && X[i]<xstart)
             {
             is[aa] = i;
             xs[aa] = X[i];
             }
             
-            if(X[i]>=xend && X[i-1]<xend)
+            if(i>1)
+            if((X[i]>=xend && X[i-1]<xend))
             {
             ie[aa] = i;
+            xe[aa] = X[i];
+            }
+            
+            if((i==NGx-1 && X[i]<xend && X[i]>xstart))
+            {
+            ie[aa] = i+1;
             xe[aa] = X[i];
             }
         }
@@ -82,15 +92,23 @@ void wcp::decomp(lexer *p, dive *a)
         
         for(j=0;j<NGy;++j)
         {
+            if(j<NGy-1)
             if(Y[j+1]>=ystart && Y[j]<ystart)
             {
             js[bb] = j;
             ys[bb] = Y[j];
             }
             
+            if(j>1)
             if(Y[j]>=yend && Y[j-1]<yend)
             {
             je[bb] = j;
+            ye[bb] = Y[j];
+            }
+            
+            if((j==NGy-1 && Y[j]<yend && Y[j]>ystart))
+            {
+            je[bb] = j+1;
             ye[bb] = Y[j];
             }
         }

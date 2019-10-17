@@ -69,7 +69,7 @@ void wcp::write_header(lexer *p, dive *a)
         for(i=is[aa]; i<ie[aa]; ++i)
         {
         ffn=float(X[i]);
-        cout<<i<<" "<<X[i]<<endl;
+        //cout<<i<<" "<<X[i]<<endl;
         header.write((char*)&ffn, sizeof (float));
         }
             
@@ -95,10 +95,20 @@ void wcp::write_header(lexer *p, dive *a)
         
         
         // numer of iterations
-        iin=numiter;
+        int qn=0;
+        for(n=0;n<numiter;++n)
+        if(simtime[n]>=p->H31 && simtime[n]<p->H32)
+        if(n>=p->H33 && n<p->H34)
+        ++qn;
+        
+        cout<<"WCP final iteration print: "<<qn<<" "<<p->H31<<" "<<p->H32<<" "<<p->H33<<" "<<p->H34<<endl;
+            
+        iin=qn;
         header.write((char*)&iin, sizeof (int));
         
         for(n=0;n<numiter;++n)
+        if(simtime[n]>=p->H31 && simtime[n]<p->H32)
+        if(n>=p->H33 && n<p->H34)
         {
         ddn=simtime[n];
         header.write((char*)&ddn, sizeof (double));

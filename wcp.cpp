@@ -48,6 +48,8 @@ void wcp::start(lexer* p, dive* a)
     
     
     for(n=0; n<numiter; ++n)
+    if(simtime[n]>=p->H31 && simtime[n]<p->H32)
+    if(n>=p->H33 && n<p->H34)
     {
         read(p,a);
         write(p,a);

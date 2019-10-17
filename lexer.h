@@ -163,6 +163,9 @@ public:
 	double G32,G35;
     
     int H10;
+    double H21,H22,H23;
+    double H31,H32;
+    int H33,H34;
 
     int M10,M11,M12,M13;
 	int M20;
