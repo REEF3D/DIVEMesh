@@ -58,7 +58,7 @@ void wcp::write_header(lexer *p, dive *a)
         iin=ie[aa]-is[aa];
         header.write((char*)&iin, sizeof (int));
         
-        iin=je[aa]-js[aa];
+        iin=je[bb]-js[bb];
         header.write((char*)&iin, sizeof (int));
         
         iin=NGz;
@@ -69,18 +69,19 @@ void wcp::write_header(lexer *p, dive *a)
         for(i=is[aa]; i<ie[aa]; ++i)
         {
         ffn=float(X[i]);
+        cout<<i<<" "<<X[i]<<endl;
         header.write((char*)&ffn, sizeof (float));
         }
             
         for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=float(Y[i]);
+        ffn=float(Y[j]);
         header.write((char*)&ffn, sizeof (float));
         }
         
         for(k=0; k<NGz; ++k)
         {
-        ffn=float(Z[i]);
+        ffn=float(Z[k]);
         header.write((char*)&ffn, sizeof (float));
         }
         
@@ -99,8 +100,8 @@ void wcp::write_header(lexer *p, dive *a)
         
         for(n=0;n<numiter;++n)
         {
-        ffn=simtime[n];
-        header.write((char*)&ffn, sizeof (double));
+        ddn=simtime[n];
+        header.write((char*)&ddn, sizeof (double));
         }
         ++count;
         

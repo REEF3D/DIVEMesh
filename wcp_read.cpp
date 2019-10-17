@@ -45,32 +45,32 @@ void wcp::read(lexer *p, dive *a)
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     {
-    result.read((char*)&ddn, sizeof (double)); 
-    eta[i+orig_i[q]][j+orig_j[q]] = ddn;
+    result.read((char*)&ffn, sizeof (float)); 
+    eta[i+orig_i[q]][j+orig_j[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     for(k=0;k<NLz[q];++k)
     {
-    result.read((char*)&ddn, sizeof (double)); 
-    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ddn;
+    result.read((char*)&ffn, sizeof (float)); 
+    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     for(k=0;k<NLz[q];++k)
     {
-    result.read((char*)&ddn, sizeof (double)); 
-    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ddn;
+    result.read((char*)&ffn, sizeof (float)); 
+    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     for(k=0;k<NLz[q];++k)
     {
-    result.read((char*)&ddn, sizeof (double)); 
-    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ddn;
+    result.read((char*)&ffn, sizeof (float)); 
+    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
     }
     
     
