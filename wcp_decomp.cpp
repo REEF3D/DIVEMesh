@@ -73,7 +73,7 @@ void wcp::decomp(lexer *p, dive *a)
             if(i>1)
             if((X[i]>=xend && X[i-1]<xend))
             {
-            ie[aa] = i+1;
+            ie[aa] = i+2;
             xe[aa] = X[i];
             }
             
