@@ -84,7 +84,7 @@ void wcp::decomp(lexer *p, dive *a)
             }
         }
     }
-    
+    if(jdir==1)
     for(bb=0;bb<a->my;++bb)
     {
         ystart = a->yorig[bb];
@@ -113,6 +113,16 @@ void wcp::decomp(lexer *p, dive *a)
             }
         }
     }
+    
+    if(jdir==0)
+    {
+    js[0] = 0;
+    ys[0] = Y[0];
+    
+    je[0] = 1;
+    ye[0] = Y[0];
+    }
+            
     
     
     for(aa=0;aa<a->mx;++aa)
