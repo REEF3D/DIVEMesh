@@ -26,6 +26,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"resize.h"
 #include"field.h"
 #include"increment.h"
+#include<stdlib.h>
 
 #ifndef LEXER_H_
 #define LEXER_H_
