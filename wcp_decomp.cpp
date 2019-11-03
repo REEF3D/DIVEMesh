@@ -115,12 +115,13 @@ void wcp::decomp(lexer *p, dive *a)
     }
     
     if(jdir==0)
+    for(bb=0;bb<a->my;++bb)
     {
-    js[0] = 0;
-    ys[0] = Y[0];
+    js[bb] = 0;
+    ys[bb] = Y[0];
     
-    je[0] = 1;
-    ye[0] = Y[0];
+    je[bb] = 1;
+    ye[bb] = Y[0];
     }
             
     
@@ -128,6 +129,7 @@ void wcp::decomp(lexer *p, dive *a)
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {
+    cout<<"jdir: "<<jdir<<endl;
     cout<<"WCP xorig["<<aa<<"]: "<<a->xorig[aa]<<" yorig["<<bb<<"]: "<<a->yorig[bb]<<endl;
     cout<<"WCP is: "<<is[aa]<<" ie: "<<ie[aa]<<" js: "<<js[bb]<<" je: "<<je[bb]<<endl;
     cout<<"WCP xs: "<<xs[aa]<<" xe: "<<xe[aa]<<" ys: "<<ys[bb]<<" ye: "<<ye[bb]<<endl<<endl;
