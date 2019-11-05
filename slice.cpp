@@ -27,7 +27,6 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 slice::slice(lexer *p, dive *a)
 {
-    
 }
 
 slice::~slice()
@@ -44,8 +43,9 @@ void slice::start(lexer* p, dive* a)
     
     LOOP
     {
-        if(a->flag(i,j,k)==1 && (p->solid_count==0||a->solid(i,j,k)>0||p->B3==1))
+        if(a->flag(i,j,k)==1 && (a->solid(i,j,k)>0||p->B3==1))
         a->flagslice(i,j)=1;
     }
+
 }
 

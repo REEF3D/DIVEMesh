@@ -70,11 +70,11 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 	js = p->posf_j(ys);
 	je = p->posf_j(ye);
     
-    xs = MIN3(Ax,Bx,Cx) - epsi*p->XP[is + marge-1];
-	xe = MAX3(Ax,Bx,Cx) + epsi*p->XP[ie + marge+1];
+    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge-1];
+	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge+1];
 	
-	ys = MIN3(Ay,By,Cy) - epsi*p->YP[js + marge];
-	ye = MAX3(Ay,By,Cy) + epsi*p->YP[je + marge+1];
+	ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
+	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge+1];
 	
 	is = p->posf_i(xs);
 	ie = p->posf_i(xe);
@@ -162,9 +162,13 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 			for(k=0;k<p->knoz;++k)
 			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]-p->zmin),a->solid_dist(i,j,k));
             
-            
+            if(Rz>p->zmin && Rz<p->zmax)
+            {
             a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
 			}
+            
+            }
 		}
 	}
 }
+

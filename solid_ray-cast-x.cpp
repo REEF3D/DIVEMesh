@@ -74,11 +74,11 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
     ks = p->posf_k(zs);
     ke = p->posf_k(ze);
     
-    ys = MIN3(Ay,By,Cy) - epsi*p->YP[js + marge-1];
-	ye = MAX3(Ay,By,Cy) + epsi*p->YP[je + marge+1];
+    ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge-1];
+	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge+1];
 	
-	zs = MIN3(Az,Bz,Cz) - epsi*p->ZP[ks + marge-1];
-	ze = MAX3(Az,Bz,Cz) + epsi*p->ZP[ke + marge+1];
+	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks + marge-1];
+	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke + marge+1];
 
     js = p->posf_j(ys);
     je = p->posf_j(ye);

@@ -37,8 +37,9 @@ void bedlevel::start(lexer* p, dive* a)
 {
     cout<<"bedlevel"<<endl;
     
+    /*
     XYLOOP
-    a->bedlevel(i,j)=p->xmin;
+    a->bedlevel(i,j)=p->zmin;
     
     // geodat
     LOOP
@@ -47,10 +48,14 @@ void bedlevel::start(lexer* p, dive* a)
     a->bedlevel(i,j) = MAX(a->bedlevel(i,j),p->posc_z()-0.5*p->DZ[KP]);
     
     if(a->solid_dist(i,j,k)>0.0 && a->solid_dist(i,j,k-1)<0.0)
-    a->bedlevel(i,j) = MAX(a->bedlevel(i,j),(p->posc_z()-p->DZ[KP]+a->solid_dist(i,j,k)));
-    
-	}
+    a->bedlevel(i,j) = MAX(a->bedlevel(i,j),a->solid_dist(i,j,k));
+	}*/
 	
+    XYLOOP
+    a->bedlevel(i,j) = MAX(a->bedlevel(i,j),p->zmin);
+    
+    XYLOOP
+    cout<<a->bedlevel(i,j)<<endl;
 	
     // check for lowest bedlevel
     

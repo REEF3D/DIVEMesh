@@ -28,7 +28,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2019 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_191101" <<endl<<endl;
+    cout<<endl<<"v_191105" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -89,7 +89,7 @@ void driver::mainloop()
     pslice->start(p,a);
 
 // Bedlevel
-    //pbed->start(p,a);
+    pbed->start(p,a);
 
 // Post-Proc
     pbc->makebc(p,a);

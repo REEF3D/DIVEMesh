@@ -111,11 +111,22 @@ void solid::start(lexer* p, dive* a)
     if(p->S2==1)
 	LOOP
 	a->flag(i,j,k)=1;
+    
+    ts_stl=tri_start;
+    te_stl=tri_end;
+    tricount_stl=p->tricount;
 	
 	if(p->S1==1)
+    for(rayiter=0; rayiter<2; ++rayiter)
     {
+    tri_start=ts_stl;
+    tri_end=te_stl;
+    p->tricount=tricount_stl;
+    
     stl_preproc(p,a,tri_start,tri_end);
 	ray_cast(p,a,tri_start,tri_end);
+    
+    if(rayiter==0)
     stl_postproc(p,a,tri_start,tri_end);
     }
     
