@@ -71,11 +71,11 @@ void solid::ray_cast_y(lexer* p, dive* a, int ts, int te)
 	ks = p->posf_k(zs);
     ke = p->posf_k(ze);
     
-    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is +marge-1];
-	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie +marge+1];
+    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is +marge];
+	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie +marge];
 	
-	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks +marge-1];
-	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke +marge+1];
+	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks +marge];
+	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke +marge];
 	
 	is = p->posf_i(xs);
 	ie = p->posf_i(xe);
@@ -96,13 +96,13 @@ void solid::ray_cast_y(lexer* p, dive* a, int ts, int te)
 		{
 			
 		
-		Px = p->XN[IP1]+psi + p->xmin;
+		Px = p->XP[IP]+psi + p->xmin;
 		Py = p->ymin-10.0*p->DXM ;
-		Pz = p->ZN[KP1]+psi + p->zmin;
+		Pz = p->ZP[KP]+psi + p->zmin;
 		
-		Qx = p->XN[IP1]+psi + p->xmin;
+		Qx = p->XP[IP]+psi + p->xmin;
 		Qy = p->ymax+10.0*p->DXM ;
-		Qz = p->ZN[KP1]+psi + p->zmin;
+		Qz = p->ZP[KP]+psi + p->zmin;
 		
 		
 		PQx = Qx-Px;
@@ -155,23 +155,21 @@ void solid::ray_cast_y(lexer* p, dive* a, int ts, int te)
             int distcheck=1;
             
             
-            //cout<<"IJ: "<<i<<" "<<j<<" "<<k<<" |   : "<<endl;
             
-            if(Ry<p->YN[JP1])
+            if(Ry<p->YP[JP])
             if(j>=0 && j<=p->knoy)
             if(a->solid(i,j,k)<0 && a->solid(i,j-1,k)<0)
             distcheck=0;
             
-            if(Ry>=p->YN[JP1])
+            if(Ry>=p->YP[JP])
             if(j>=0 && j<=p->knoy)
             if(a->solid(i,j,k)<0 && a->solid(i,j+1,k)<0)
             distcheck=0;
             
             
-            
             if(distcheck==1)
 			for(j=0;j<p->knoy;++j)
-			a->solid_dist(i,j,k)=MIN(fabs(Ry-p->YN[JP1]-p->ymin),a->solid_dist(i,j,k));
+			a->solid_dist(i,j,k)=MIN(fabs(Ry-p->YP[JP]-p->ymin),a->solid_dist(i,j,k));
 			}
 		}
 	}

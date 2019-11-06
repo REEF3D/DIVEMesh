@@ -331,13 +331,11 @@ void solid::start(lexer* p, dive* a)
         {
         fluvial_box(p,a,qn,tri_start,tri_end);
         rotate_triangle(p,a,tri_start,tri_end);
-        cout<<"RAYITER: "<<rayiter<<endl;
         ray_cast(p,a,tri_start,tri_end);
         }
     }
     
     // finalize solid_dist
-    
     LOOP
     {
         if(a->solid(i,j,k)==-1)
@@ -373,10 +371,7 @@ void solid::gcb_estimate(lexer *p, dive *a)
 		if(a->solid(i-1,j,k)==-1 || a->solid(i+1,j,k)==-1 || a->solid(i,j-1,k)==-1 || a->solid(i,j+1,k)==-1 || a->solid(i,j,k-1)==-1 || a->solid(i,j,k+1)==-1)
 		++n;
     }
-    
-    //cout<<"solid_gcb_est: "<<n<<endl;
-        
-        
+
 	int qn;
 	
 	for(qn=0; qn<p->M10;qn++)
@@ -393,13 +388,6 @@ void solid::gcb_estimate(lexer *p, dive *a)
 		}
 	++n;
 	}
-    /*
-    n=0;
-    NLOOP
-    {
-	cout<<n<<" solid_gcb_est: "<<a->solid_gcb[n]<<endl;
-    ++n;
-    }*/
 }
 
 

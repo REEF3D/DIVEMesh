@@ -76,11 +76,11 @@ void solid::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 	js = p->posf_j(ys);
 	je = p->posf_j(ye);
     
-    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge-1];
-	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge+1];
+    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge];
+	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge];
 	
 	ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
-	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge+1];
+	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge];
 	
 	is = p->posf_i(xs);
 	ie = p->posf_i(xe);
@@ -99,12 +99,12 @@ void solid::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 		for(i=is;i<ie;i++)
 		for(j=js;j<je;j++)
 		{
-		Px = p->XN[IP1]+psi + p->xmin;
-		Py = p->YN[JP1]+psi + p->ymin;
+		Px = p->XP[IP]+psi + p->xmin;
+		Py = p->YP[JP]+psi + p->ymin;
 		Pz = p->zmin-10.0*p->DXM ;
 		
-		Qx = p->XN[IP1]+psi + p->xmin;
-		Qy = p->YN[JP1]+psi + p->ymin;
+		Qx = p->XP[IP]+psi + p->xmin;
+		Qy = p->YP[JP]+psi + p->ymin;
 		Qz = p->zmax+10.0*p->DXM ;
 		
 		
@@ -158,10 +158,10 @@ void solid::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 
 				for(k=0;k<=a->knoz;++k)
 				{
-				if(p->ZN[KP1]<Rz-p->zmin)
+				if(p->ZP[KP]<Rz-p->zmin)
 				cutr(i,j,k) += 1;
 				
-				if(p->ZN[KP1]>=Rz-p->zmin)
+				if(p->ZP[KP]>=Rz-p->zmin)
 				cutl(i,j,k) += 1;
 				}
 			}

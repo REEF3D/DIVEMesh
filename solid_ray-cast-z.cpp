@@ -64,23 +64,23 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 	ys = MIN3(Ay,By,Cy);
 	ye = MAX3(Ay,By,Cy);
 	
-	is = p->posc_i(xs);
-	ie = p->posc_i(xe);
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
 	
-	js = p->posc_j(ys);
-	je = p->posc_j(ye);
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
     
-    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge-1];
-	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge+1];
+    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge];
+	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge];
 	
 	ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
-	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge+1];
+	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge];
 	
-	is = p->posc_i(xs);
-	ie = p->posc_i(xe);
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
 	
-	js = p->posc_j(ys);
-	je = p->posc_j(ye);
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
 
 
 	is = MAX(is,0);
@@ -93,12 +93,12 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 		for(i=is;i<ie;i++)
 		for(j=js;j<je;j++)
 		{
-		Px = p->XN[IP1]+psi + p->xmin;
-		Py = p->YN[JP1]+psi + p->ymin;
+		Px = p->XP[IP]+psi + p->xmin;
+		Py = p->YP[JP]+psi + p->ymin;
 		Pz = p->zmin-10.0*p->DXM ;
 		
-		Qx = p->XN[IP1]+psi + p->xmin;
-		Qy = p->YN[JP1]+psi + p->ymin;
+		Qx = p->XP[IP]+psi + p->xmin;
+		Qy = p->YP[JP]+psi + p->ymin;
 		Qz = p->zmax+10.0*p->DXM ;
 		
 		
@@ -144,23 +144,23 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 			Rz = u*Az + v*Bz + w*Cz;
 			
 			
-			k = p->posc_k(Rz);
+			k = p->posf_k(Rz);
             
             int distcheck=1;
             
-            if(Rz<p->ZN[KP1])
+            if(Rz<p->ZP[KP])
             if(k>=0 && k<=p->knoz)
             if(a->solid(i,j,k)<0 && a->solid(i,j,k-1)<0)
             distcheck=0;
             
-            if(Rz>=p->ZN[KP1])
+            if(Rz>=p->ZP[KP])
             if(k>=0 && k<=p->knoz)
             if(a->solid(i,j,k)<0 && a->solid(i,j,k+1)<0)
             distcheck=0;
 
             if(distcheck==1)
 			for(k=0;k<p->knoz;++k)
-			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZN[KP1]-p->zmin),a->solid_dist(i,j,k));
+			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]-p->zmin),a->solid_dist(i,j,k));
             
             if(Rz>p->zmin && Rz<p->zmax)
             {

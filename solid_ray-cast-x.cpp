@@ -44,6 +44,9 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
 	double denom;	
 	int insidecheck;
     double psi = 1.0e-8*p->DXM;
+    
+    
+    //cout<<"XN[0]: "<<p->XN[0+marge]<<" XP[0]: "<<p->XP[0+marge]<<"  XN[1]: "<<p->XN[1+marge]<<" XP[1]: "<<p->XP[1+marge]<<endl;
 
     
 	for(n=ts; n<te; ++n)
@@ -74,11 +77,11 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
     ks = p->posf_k(zs);
     ke = p->posf_k(ze);
     
-    ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge-1];
-	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge+1];
+    ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
+	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge];
 	
-	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks + marge-1];
-	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke + marge+1];
+	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks + marge];
+	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke + marge];
 
     js = p->posf_j(ys);
     je = p->posf_j(ye);
@@ -98,12 +101,12 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
 		for(k=ks;k<ke;k++)
 		{
 		Px = p->xmin-10.0*p->DXM;
-		Py = p->YN[JP1]+psi + p->ymin;
-		Pz = p->ZN[KP]+psi + p->zmin;
+		Py = p->YP[JP]+psi + p->ymin;
+		Pz = p->ZP[KP]+psi + p->zmin;
 		
 		Qx = p->xmax+10.0*p->DXM;
-		Qy = p->YN[JP1]+psi + p->ymin;
-		Qz = p->ZN[KP1]+psi + p->zmin;
+		Qy = p->YP[JP]+psi + p->ymin;
+		Qz = p->ZP[KP]+psi + p->zmin;
 		
 		
 		PQx = Qx-Px;
@@ -154,22 +157,21 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
             i = p->posf_i(Rx);
             
             int distcheck=1;
+  
             
-            //cout<<"JK: "<<j<<" "<<k<<endl;
-            
-            if(Rx<p->XN[IP1])
-            if(i>=0 && i<p->knox)
+            if(Rx<p->XP[IP])
+            if(i>=0 && i<=p->knox)
             if(a->solid(i,j,k)<0 && a->solid(i-1,j,k)<0)
             distcheck=0;
             
-            if(Rx>=p->XN[IP1])
-            if(i>=0 && i<p->knox)
+            if(Rx>=p->XP[IP])
+            if(i>=0 && i<=p->knox)
             if(a->solid(i,j,k)<0 && a->solid(i+1,j,k)<0)
             distcheck=0;
 
             if(distcheck==1)
 			for(i=0;i<p->knox;++i)
-			a->solid_dist(i,j,k)=MIN(fabs(Rx-p->XN[IP1]-p->xmin),a->solid_dist(i,j,k));
+			a->solid_dist(i,j,k)=MIN(fabs(Rx-p->XP[IP]-p->xmin),a->solid_dist(i,j,k));
 			}
 		}
 	}
