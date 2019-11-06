@@ -54,8 +54,8 @@ void bedlevel::start(lexer* p, dive* a)
     XYLOOP
     a->bedlevel(i,j) = MAX(a->bedlevel(i,j),p->zmin);
     
-    XYLOOP
-    cout<<a->bedlevel(i,j)<<endl;
+    //XYLOOP
+    //cout<<a->bedlevel(i,j)<<endl;
 	
     // check for lowest bedlevel
     
