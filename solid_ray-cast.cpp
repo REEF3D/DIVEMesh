@@ -27,13 +27,16 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void solid::ray_cast(lexer* p, dive* a, int ts, int te)
 {
     if(rayiter==0)
-	ray_cast_io(p,a,tri_start,tri_end);	
-    
-    
+    {
+	ray_cast_io_x(p,a,tri_start,tri_end);	
+    //ray_cast_io_ycorr(p,a,tri_start,tri_end);
+    //ray_cast_io_zcorr(p,a,tri_start,tri_end);	
+    }
+    /*
     if(rayiter==1)
     {
 	ray_cast_x(p,a,tri_start,tri_end);
 	ray_cast_y(p,a,tri_start,tri_end);
 	ray_cast_z(p,a,tri_start,tri_end);
-    }
+    }*/
 }

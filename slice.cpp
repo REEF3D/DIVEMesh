@@ -43,9 +43,8 @@ void slice::start(lexer* p, dive* a)
     
     LOOP
     {
-        if(a->flag(i,j,k)==1 && (a->solid(i,j,k)>0||p->B3==1))
+        if(a->flag(i,j,k)==1 && a->solid(i,j,k)>0)
         a->flagslice(i,j)=1;
     }
-
 }
 

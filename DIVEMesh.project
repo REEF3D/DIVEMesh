@@ -326,12 +326,14 @@
       <File Name="solid_arch.cpp"/>
       <File Name="solid_plate_x.cpp"/>
       <VirtualDirectory Name="Ray Casting">
+        <File Name="solid_ray-cast-io-zcorr.cpp"/>
+        <File Name="solid_ray-cast-io-ycorr.cpp"/>
+        <File Name="solid_ray-cast-io-x.cpp"/>
         <File Name="solid_ray-cast-stl.cpp"/>
         <File Name="solid_ray-cast-y.cpp"/>
         <File Name="solid_ray-cast-z.cpp"/>
         <File Name="solid_ray-cast.cpp"/>
         <File Name="solid_ray-cast-x.cpp"/>
-        <File Name="solid_ray-cast-io.cpp"/>
         <VirtualDirectory Name="ray_gcb">
           <File Name="solid_ray-cast-x_gcb.cpp"/>
         </VirtualDirectory>

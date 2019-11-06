@@ -98,12 +98,12 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
 		for(k=ks;k<ke;k++)
 		{
 		Px = p->xmin-10.0*p->DXM;
-		Py = p->YP[JP]+psi + p->ymin;
-		Pz = p->ZP[KP]+psi + p->zmin;
+		Py = p->YN[JP1]+psi + p->ymin;
+		Pz = p->ZN[KP]+psi + p->zmin;
 		
 		Qx = p->xmax+10.0*p->DXM;
-		Qy = p->YP[JP]+psi + p->ymin;
-		Qz = p->ZP[KP]+psi + p->zmin;
+		Qy = p->YN[JP1]+psi + p->ymin;
+		Qz = p->ZN[KP1]+psi + p->zmin;
 		
 		
 		PQx = Qx-Px;
@@ -157,19 +157,19 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
             
             //cout<<"JK: "<<j<<" "<<k<<endl;
             
-            if(Rx<p->XP[IP])
+            if(Rx<p->XN[IP1])
             if(i>=0 && i<p->knox)
             if(a->solid(i,j,k)<0 && a->solid(i-1,j,k)<0)
             distcheck=0;
             
-            if(Rx>=p->XP[IP])
+            if(Rx>=p->XN[IP1])
             if(i>=0 && i<p->knox)
             if(a->solid(i,j,k)<0 && a->solid(i+1,j,k)<0)
             distcheck=0;
 
             if(distcheck==1)
 			for(i=0;i<p->knox;++i)
-			a->solid_dist(i,j,k)=MIN(fabs(Rx-p->XP[IP]-p->xmin),a->solid_dist(i,j,k));
+			a->solid_dist(i,j,k)=MIN(fabs(Rx-p->XN[IP1]-p->xmin),a->solid_dist(i,j,k));
 			}
 		}
 	}

@@ -23,8 +23,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"dive.h"
 #include"lexer.h"
 
-
-void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
+void solid::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -38,11 +37,18 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 	double PBx,PBy,PBz;
 	double PCx,PCy,PCz;
 	double Mx,My,Mz;
-	int is,ie,js,je,ks,ke;
-	int ir,insidecheck;
+	int js,je,ks,ke;
+    int ie,is;
 	double u,v,w;
 	double denom;
     double psi = 1.0e-8*p->DXM;
+
+	
+    MALOOP
+	{
+	cutl(i,j,k)=0;
+	cutr(i,j,k)=0;
+	}
 
 	for(n=ts; n<te; ++n)
 	{
@@ -64,11 +70,11 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 	ys = MIN3(Ay,By,Cy);
 	ye = MAX3(Ay,By,Cy);
 	
-	is = p->posc_i(xs);
-	ie = p->posc_i(xe);
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
 	
-	js = p->posc_j(ys);
-	je = p->posc_j(ye);
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
     
     xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge-1];
 	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge+1];
@@ -76,11 +82,11 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 	ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
 	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge+1];
 	
-	is = p->posc_i(xs);
-	ie = p->posc_i(xe);
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
 	
-	js = p->posc_j(ys);
-	je = p->posc_j(ye);
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
 
 
 	is = MAX(is,0);
@@ -132,43 +138,50 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 		  
 		w = PQx*(By*Az - Bz*Ay) + PQy*(Bz*Ax - Bx*Az) + PQz*(Bx*Ay - By*Ax)
 		  + Mx*(Bx-Ax) + My*(By-Ay) + Mz*(Bz-Az);
-
 		
-			if((u>0.0 && v>0.0 && w>0.0) || (u<0.0 && v<0.0 && w<0.0))
+		
+		int check=1;
+		if(u==0.0 && v==0.0 && w==0.0)
+		check = 0;
+		
+			if(((u>0.0 && v>0.0 && w>0.0) || (u<0.0 && v<0.0 && w<0.0)) && check==1)
 			{
 			denom = 1.0/(u+v+w);
 			u *= denom;
 			v *= denom;
 			w *= denom;
 			
+			Rx = u*Ax + v*Bx + w*Cx;
+			Ry = u*Ay + v*By + w*Cy;
 			Rz = u*Az + v*Bz + w*Cz;
-			
-			
-			k = p->posc_k(Rz);
-            
-            int distcheck=1;
-            
-            if(Rz<p->ZN[KP1])
-            if(k>=0 && k<=p->knoz)
-            if(a->solid(i,j,k)<0 && a->solid(i,j,k-1)<0)
-            distcheck=0;
-            
-            if(Rz>=p->ZN[KP1])
-            if(k>=0 && k<=p->knoz)
-            if(a->solid(i,j,k)<0 && a->solid(i,j,k+1)<0)
-            distcheck=0;
 
-            if(distcheck==1)
-			for(k=0;k<p->knoz;++k)
-			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZN[KP1]-p->zmin),a->solid_dist(i,j,k));
-            
-            if(Rz>p->zmin && Rz<p->zmax)
-            {
-            a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
+
+				for(k=0;k<=a->knoz;++k)
+				{
+				if(p->ZN[KP1]<Rz-p->zmin)
+				cutr(i,j,k) += 1;
+				
+				if(p->ZN[KP1]>=Rz-p->zmin)
+				cutl(i,j,k) += 1;
+				}
 			}
-            
-            }
 		}
 	}
+
+	LOOP
+	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
+	a->solid(i,j,k)=-1;
+
+	count=0;
+	LOOP
+	if(a->solid(i,j,k)>0)
+	++count;
+
+	
+	cout<<"Number of active cells after solid: "<<count<<endl;
+	
 }
+
+
+
 

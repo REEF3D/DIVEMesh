@@ -41,7 +41,9 @@ public:
 	void gcb(lexer*,dive*);
 	void dist(lexer*,dive*);
 	void ray_cast(lexer*,dive*,int,int);
-    void ray_cast_io(lexer*,dive*,int,int);
+    void ray_cast_io_x(lexer*,dive*,int,int);
+    void ray_cast_io_ycorr(lexer*,dive*,int,int);
+    void ray_cast_io_zcorr(lexer*,dive*,int,int);
     void ray_cast_correct(lexer*,dive*,int,int);
 	void ray_cast_x(lexer*,dive*,int,int);
 	void ray_cast_y(lexer*,dive*,int,int);
