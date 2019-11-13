@@ -23,6 +23,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void decomp::partition_analyse(lexer *p, dive *a)
 {	
+    
 	for(i=0;i<a->knox;++i)
 	xcross[i]=0;
 	
@@ -108,26 +109,27 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	if(a->mx>=a->my && a->mx>=a->mz)
 	maindir=1;
     
-    ddout<<"maindir: "<<maindir<<endl;
-    ddout<<"M11: "<<p->M11<<endl;
+    cout<<"xvar: "<<xvar<<" yvar: "<<yvar<<" zvar: "<<zvar<<endl;
+    //cout<<"xvar_per: "<<xvar_per<<" yvar_per: "<<yvar_per<<" zvar_per: "<<zvar_per<<endl;
 	
 	// turn off partition directions
 	if((xvar_per>=p->M31 && yvar_per<p->M31 && zvar_per<p->M31) 
 	|| (xvar_per<p->M31 && yvar_per>=p->M31 && zvar_per<p->M31)
 	|| (xvar_per<p->M31 && yvar_per<p->M31 && zvar_per>=p->M31))
 	{
-		if(xvar>=yvar && xvar>=zvar)
+		if(xvar>=p->M35*yvar && xvar>=p->M35*zvar)
         if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 		p->M11=0;
 		
-		if(yvar>xvar && yvar>=zvar)
+		if(yvar>p->M35*xvar && yvar>=p->M35*zvar)
         if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10))   
 		p->M12=0;
 		
-		if(zvar>xvar && zvar>yvar)
+		if(zvar>p->M35*xvar && zvar>p->M35*yvar)
         if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10))   
 		p->M13=0;
 	}
+    
 	
 	//---
 	
@@ -154,6 +156,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 
 		}
 	}
+    
 	
 	if(xvar_per>=p->M31 && yvar_per<p->M31 && zvar_per>=p->M31)
 	{
@@ -252,7 +255,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 				
 		}
 	}
-	
+
 	// maindir change
 	if(maindir==1 && p->M11==0)
 	{
@@ -286,7 +289,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 		if(p->M13==0)
 		maindir=1;
 	}
-	
+
 	if(maindir==3 && p->M13==0)
 	{
 		if(a->mx>=a->my && p->M11==1)
@@ -301,7 +304,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 		if(p->M12==0)
 		maindir=1;
 	}
-	
+    
 	
 	ddout<<"maindir_final: "<<maindir<<endl;
 	ddout<<"M11: "<<p->M11<<endl;

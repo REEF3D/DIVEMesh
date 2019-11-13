@@ -170,7 +170,7 @@ public:
 
     int M10,M11,M12,M13;
 	int M20;
-	double M31;
+	double M31, M35;
 	
 	int P10;
 

@@ -23,6 +23,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void decomp::partition_correction(lexer* p, dive* a)
 {
+    cout<<" maindir: "<<maindir<<endl;
+    
+    
 	if(maindir==1)
 	partition_correct_x(p,a);
 	
@@ -316,10 +319,10 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	ycount[0]=0;
 	
 	// y-partition
-	for(bb=1;bb<=a->mx;++bb)
+	for(bb=1;bb<=a->my;++bb)
 	{
 		ycount[bb]=0;
-		for(j=a->ynode[bb-1];j<a->xnode[bb];++j)
+		for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
 		for(i=0;i<a->knox;++i)
 		for(k=0;k<a->knoz;++k)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
@@ -342,10 +345,11 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 
 	ycross_m=ycross_m/a->knoy;
 	
-		
+    
 	yaverage=0;
 	for(bb=1;bb<=a->my;++bb)
 	yaverage+=ycount[bb];
+    
 	
 	yaverage/=a->my;
 
@@ -355,6 +359,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	ycount_sum=0;
 	for(bb=1;bb<=a->my;++bb)
 	ycount_sum+=ycount[bb];
+    
 
 	for(bb=1;bb<=a->my;++bb)
 	ddout<<"old ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
@@ -363,6 +368,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	
 	for(q=0;q<p->M10;++q)
 	subcell[q]=0;
+    
 
 	q=0;
 	NLOOP
@@ -373,7 +379,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	
 	++q;
 	}
-
+    
 	for(q=0;q<p->M10;++q)
 	ddout<<"old subcell_count: "<<subcell[q]<<endl;
 
@@ -405,6 +411,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 		}
 	}
 
+
 	a->ynode[a->my]=a->knoy;
 
 	// check last
@@ -418,13 +425,15 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++ycount[bb];
 	}
-
 	int fac,mincell,jloc;
 	double diff;
 	
+    
+    
 	mincell=1e9;
-	for(aa=1;aa<a->mx;++aa)
-	mincell=MIN(mincell,xcount[aa]);
+	for(bb=1;bb<a->my;++bb)
+	mincell=MIN(mincell,ycount[bb]);
+    
 	
 	if(ycount[a->my]>yaverage+ycross_m/2)
 	{
@@ -432,10 +441,10 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 		for(bb=0;bb<=a->my;++bb)
 		ddout<<"inter ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
 	
-		diff = xcount[a->mx]-xaverage;
-		fac = diff/xcross_m;
+		diff = ycount[a->my]-yaverage;
+		fac = diff/ycross_m;
 		
-		ddout<<xcount[a->mx]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
+		ddout<<ycount[a->my]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
 		
 		count=0;
 		do{
@@ -524,31 +533,34 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 		
 		}while(maxcell>yaverage+ycross_m/2 && count<p->M10*5);
 
+
 	//count again
 	for(bb=1;bb<=a->my;++bb)
 	{
 		ycount[bb]=0;
-		for(j=a->ynode[bb-1];j<a->xnode[bb];++j)
+		for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
 		for(i=0;i<a->knox;++i)
 		for(k=0;k<a->knoz;++k)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++ycount[bb];
 	}
+    
 
 	for(bb=0;bb<=a->my;++bb)
 	a->yorig[bb] = p->YN[a->ynode[bb]+marge];
 	
+
 	ycount_sum=0;
 	for(bb=1;bb<=a->my;++bb)
 	ycount_sum+=ycount[bb];
 	
-	
+    
 	for(bb=0;bb<=a->my;++bb)
 	ddout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
 	
 	ddout<<"ycount_sum: "<<ycount_sum<<endl;
-	
-	
+
+
 	MALOOP
     a->subgrid(i,j,k)=-1;
 
@@ -559,7 +571,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
     a->subslice(i,j)=PARANUM;
     }
 	
-
+    
 	for(q=0;q<p->M10;++q)
 	subcell[q]=0;
 

@@ -133,7 +133,8 @@ void lexer::ini_default()
 	M13=0;          // int decompose in z-dir
 	M20=1;          // int decompossition method
 	M31=0.1;		// double variance percentage parameter
-	
+    M35=5.0;       // double xvar factor
+
 	O10 = 0;
 	O32 = 0;
 	O33 = 0;
