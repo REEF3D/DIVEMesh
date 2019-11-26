@@ -97,8 +97,8 @@ void lexer::ini_default()
 	G13=0;			  // int turn geo coordinates
 	G13_phi=0.0;     // doubel turn angle geo coordinates
 	G14=0;			  // int read origin for turn angle
-	G14_x=1.0;       // double x origin for turn angle
-    G14_y=1.0;       // double y origin for turn angle
+	G14_x=0.0;       // double x origin for turn angle
+    G14_y=0.0;       // double y origin for turn angle
     G15=2;           // int interpolation scheme
     G16=0.0;         // double base topo level for local IDW
     G17=2;          // int dij limit
