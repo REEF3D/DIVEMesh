@@ -25,14 +25,48 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void solid::rotate_triangle(lexer* p, dive* a, int ts, int te)
 {
+    double beta,xval,yval;
+    
+    if(fabs(p->S5_phi)>0.0 || fabs(p->S5_psi)>0.0 || fabs(p->S5_theta)>0.0)
 	for(int qr=ts;qr<te;++qr)
 	{
 		rotation(p->tri_x[qr][0],p->tri_y[qr][0],p->tri_z[qr][0],phi,theta,psi);
 		rotation(p->tri_x[qr][1],p->tri_y[qr][1],p->tri_z[qr][1],phi,theta,psi);
 		rotation(p->tri_x[qr][2],p->tri_y[qr][2],p->tri_z[qr][2],phi,theta,psi);
 	}
+    
+    if(fabs(p->S8)>0.0)
+    {
+ 
+            double x0 = p->xmin + 0.5*(p->xmax-p->xmin);
+            double y0 = p->ymin + 0.5*(p->ymax-p->ymin);
+            
+            
+        for(int qr=ts;qr<te;++qr)
+        {
+        beta = p->S8*PI/180.0;
+        
+        xval = x0 + (p->tri_x[qr][0]-x0)*cos(beta) - (p->tri_y[qr][0]-y0)*sin(beta);
+        yval = y0 + (p->tri_x[qr][0]-x0)*sin(beta) + (p->tri_y[qr][0]-y0)*cos(beta);
+        p->tri_x[qr][0]=xval;
+        p->tri_y[qr][0]=yval;
+        
+        xval = x0 + (p->tri_x[qr][1]-x0)*cos(beta) - (p->tri_y[qr][1]-y0)*sin(beta);
+        yval = y0 + (p->tri_x[qr][1]-x0)*sin(beta) + (p->tri_y[qr][1]-y0)*cos(beta);
+        p->tri_x[qr][1]=xval;
+        p->tri_y[qr][1]=yval;
+        
+        xval = x0 + (p->tri_x[qr][2]-x0)*cos(beta) - (p->tri_y[qr][2]-y0)*sin(beta);
+        yval = y0 + (p->tri_x[qr][2]-x0)*sin(beta) + (p->tri_y[qr][2]-y0)*cos(beta);
+        p->tri_x[qr][2]=xval;
+        p->tri_y[qr][2]=yval;
+        
+
+        }
+    }
 	
 }
+
 
 void solid::rotation(double &xvec,double &yvec,double &zvec,double phi, double theta, double psi)
 {
@@ -71,6 +105,7 @@ void solid::rotation(double &xvec,double &yvec,double &zvec,double phi, double t
     xvec=a+xrot;
 	yvec=b+yrot;
 	zvec=c+zrot;
+    
 }
 
 double solid::xtrans(double xvec,double yvec,double zvec,double xrot,double yrot,double zrot,double alpha,double beta,double gamma)
