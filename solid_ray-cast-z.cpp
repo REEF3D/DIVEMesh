@@ -164,8 +164,9 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
             
             if(Rz>p->zmin && Rz<p->zmax)
             {
+            if(Rz<p->zmax-1.0e-10)
             a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
-			}
+			 } 
             
             }
 		}

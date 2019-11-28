@@ -51,8 +51,14 @@ void bedlevel::start(lexer* p, dive* a)
     a->bedlevel(i,j) = MAX(a->bedlevel(i,j),a->solid_dist(i,j,k));
 	}*/
 	
-    XYLOOP
-    a->bedlevel(i,j) = MAX(a->bedlevel(i,j),p->zmin);
+    
+    
+
+    //XYLOOP
+    //a->bedlevel(i,j) = MAX(a->bedlevel(i,j),p->zmin);
+    
+    
+    
     
     //XYLOOP
     //cout<<a->bedlevel(i,j)<<endl;
