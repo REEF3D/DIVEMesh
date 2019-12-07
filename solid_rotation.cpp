@@ -64,9 +64,7 @@ void solid::rotate_triangle(lexer* p, dive* a, int ts, int te)
 
         }
     }
-	
 }
-
 
 void solid::rotation(double &xvec,double &yvec,double &zvec,double phi, double theta, double psi)
 {
