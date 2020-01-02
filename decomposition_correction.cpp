@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2019 Hans Bihs
+Copyright 2008-2020 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -87,7 +87,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	for(aa=1;aa<=a->mx;++aa)
 	xcount_sum+=xcount[aa];
 	
-	for(aa=1;aa<=a->mx;++aa)
+	for(aa=0;aa<=a->mx;++aa)
 	ddout<<"old xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 	
 	ddout<<"xcount_sum: "<<xcount_sum<<endl;
@@ -158,7 +158,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	if(xcount[a->mx]>xaverage+xcross_m/2)
 	{
 	
-		for(aa=1;aa<=a->mx;++aa)
+		for(aa=0;aa<=a->mx;++aa)
 		ddout<<"inter xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 	
 		diff = xcount[a->mx]-xaverage;
@@ -273,7 +273,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	xcount_sum+=xcount[aa];
 	
 	
-	for(aa=1;aa<=a->mx;++aa)
+	for(aa=0;aa<=a->mx;++aa)
 	ddout<<"new xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 	
 	ddout<<"xcount_sum: "<<xcount_sum<<endl;
