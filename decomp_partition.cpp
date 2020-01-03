@@ -120,6 +120,10 @@ void decomp::partition(lexer* p, dive* a)
     a->subgrid(i,j,k)=PARANUM;
     a->subslice(i,j)=PARANUM;
     }
+    
+    
+    for(aa=0;aa<=a->mx;++aa)
+	ddout<<"xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 }
 
 void decomp::partition_voidcheck(lexer* p, dive* a)

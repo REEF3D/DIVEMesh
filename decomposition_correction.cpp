@@ -305,7 +305,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	}
 	
 	for(q=0;q<p->M10;++q)
-	ddout<<"new subcell_count: "<<subcell[q]<<endl;
+	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 	
 
 }
@@ -586,7 +586,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	}
 
 	for(q=0;q<p->M10;++q)
-	ddout<<"new subcell_count: "<<subcell[q]<<endl;
+	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 }
 
 
@@ -858,7 +858,7 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	}
 	
 	for(q=0;q<p->M10;++q)
-	ddout<<"new subcell_count: "<<subcell[q]<<endl;
+	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 	
 
 }

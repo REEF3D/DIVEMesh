@@ -34,6 +34,6 @@ void decomp::print_partition(lexer* p, dive* a)
 	}
 
 	for(q=0;q<p->M10;++q)
-	ddout<<"new subcell_count: "<<subcell[q]<<endl;
+	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
     
 }
