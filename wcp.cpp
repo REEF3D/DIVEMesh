@@ -54,7 +54,7 @@ void wcp::start(lexer* p, dive* a)
         read(p,a);
         write(p,a);
     
-    cout<<"WCP I/O iter: "<<n<<endl;
+    cout<<"WCP I/O iter: "<<n<<"   simtime: "<<simtime[n]<<endl;
     }
     
     

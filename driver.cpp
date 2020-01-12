@@ -25,10 +25,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 driver::driver()
 {
 	cout<<endl<<endl;
-	cout<<"DIVEMesh (c) 2008-2019 Hans Bihs"<<endl<<endl;
+	cout<<"DIVEMesh (c) 2008-2020 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_200103" <<endl<<endl;
+    cout<<endl<<"v_200112" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
