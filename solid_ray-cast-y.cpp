@@ -157,12 +157,12 @@ void solid::ray_cast_y(lexer* p, dive* a, int ts, int te)
             
             
             if(Ry<p->YP[JP])
-            if(j>=0 && j<=p->knoy)
+            if(j>=0 && j<p->knoy)
             if(a->solid(i,j,k)<0 && a->solid(i,j-1,k)<0)
             distcheck=0;
             
             if(Ry>=p->YP[JP])
-            if(j>=0 && j<=p->knoy)
+            if(j>=0 && j<p->knoy)
             if(a->solid(i,j,k)<0 && a->solid(i,j+1,k)<0)
             distcheck=0;
             

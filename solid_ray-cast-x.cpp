@@ -160,12 +160,12 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
   
             
             if(Rx<p->XP[IP])
-            if(i>=0 && i<=p->knox)
+            if(i>=0 && i<p->knox)
             if(a->solid(i,j,k)<0 && a->solid(i-1,j,k)<0)
             distcheck=0;
             
             if(Rx>=p->XP[IP])
-            if(i>=0 && i<=p->knox)
+            if(i>=0 && i<p->knox)
             if(a->solid(i,j,k)<0 && a->solid(i+1,j,k)<0)
             distcheck=0;
 

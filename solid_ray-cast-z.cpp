@@ -149,12 +149,12 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
             int distcheck=1;
             
             if(Rz<p->ZP[KP])
-            if(k>=0 && k<=p->knoz)
+            if(k>=0 && k<p->knoz)
             if(a->solid(i,j,k)<0 && a->solid(i,j,k-1)<0)
             distcheck=0;
             
             if(Rz>=p->ZP[KP])
-            if(k>=0 && k<=p->knoz)
+            if(k>=0 && k<p->knoz)
             if(a->solid(i,j,k)<0 && a->solid(i,j,k+1)<0)
             distcheck=0;
 

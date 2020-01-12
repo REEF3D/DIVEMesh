@@ -182,6 +182,6 @@ void solid::ray_cast_io_x(lexer* p, dive* a, int ts, int te)
 	++count;
 
 	
-	cout<<"Number of active cells after solid: "<<count<<endl;
+	cout<<"Number of active cells after solid_x: "<<count<<endl;
 	
 }
