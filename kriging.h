@@ -19,23 +19,25 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
+#include"interpolation.h"
 #include"increment.h"
 
 class lexer;
 class dive;
+class field2d;
 
 using namespace std;
 
 #ifndef KRIGING_H_
 #define KRIGING_H_
 
-class kriging : public increment
+class kriging : public interpolation, public increment
 {
 public:
-    kriging(lexer*,dive*);
+    kriging(lexer*,dive*,int,double*,double*,double*);
     virtual ~kriging();
 
-    virtual void start(lexer*,dive*);
+    virtual void start(lexer*,dive*,int,double*,double*,double*,field2d&);
 	virtual double semivariogram(double);
 	virtual void rearrange(lexer*);
 	virtual void rearrange_b(lexer*);

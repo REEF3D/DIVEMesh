@@ -42,7 +42,7 @@ void lexer::read_geodat()
 
         ++countG10;
         }
-        G10=countG10;
+        G10=countG10-1;
         cout<<"GEODAT  "<<G10<<endl;
         geo.close();
 
@@ -54,7 +54,7 @@ void lexer::read_geodat()
         geo.open("geo.dat", ios_base::in);
 
         countG10=0;
-        while(!geo.eof())
+        while(!geo.eof()&&countG10<G10)
         {
         if(G19==0)
         geo>>G10_x[countG10]>>G10_y[countG10]>>G10_z[countG10];

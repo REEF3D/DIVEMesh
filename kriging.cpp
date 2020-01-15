@@ -22,40 +22,40 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"kriging.h"
 #include"dive.h"
 #include"lexer.h"
+#include"field2d.h"
 
-kriging::kriging(lexer *p, dive *a) 
+kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
 	
 	pointcheck(p,a);
-	cout<<"D10 = "<<p->D10<<endl;
+	//cout<<"D10 = "<<numpt<<endl;
 	
-	numpt = p->D10 + 1;
 	
 	xmin=ymin=1.0e15;
 	xmax=ymax=-1.0e15;
 	mean=0.0;
 	
 	
-	for(n=0; n<p->D10; ++n)
+	for(n=0; n<numpt; ++n)
 	{
-	xmin = MIN(xmin,p->D10_x[n]);
-	xmax = MAX(xmax,p->D10_x[n]);
+	xmin = MIN(xmin,X[n]);
+	xmax = MAX(xmax,X[n]);
 	
-	ymin = MIN(ymin,p->D10_y[n]);
-	ymax = MAX(ymax,p->D10_y[n]);
+	ymin = MIN(ymin,Y[n]);
+	ymax = MAX(ymax,Y[n]);
 	
-	mean += p->D10_data[n];
+	mean += F[n];
 	}
 	
 	range = p->D18*sqrt(pow(xmax-xmin,2.0) + pow(ymax-ymin,2.0));
 	
-	mean/=double(p->D10);
+	mean/=double(numpt);
 	
 	variance=0.0;
-	for(n=0; n<p->D10; ++n)
-	variance += pow(p->D10_data[n] - mean, 2.0);
+	for(n=0; n<numpt; ++n)
+	variance += pow(F[n] - mean, 2.0);
 	
-	variance/=double(p->D10);
+	variance/=double(numpt);
 	
 	cout<<"mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
 }
@@ -64,38 +64,40 @@ kriging::~kriging()
 {
 }
 
-void kriging::start(lexer* p, dive* a)
+void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *F, field2d &f)
 {
 	cout<<"kriging"<<endl;
 	
-	p->Darray(A,numpt,numpt);
-	p->Darray(B,numpt,numpt);
+	p->Darray(A,numpt+1,numpt+1);
+	p->Darray(B,numpt+1,numpt+1);
 
-	p->Darray(b,numpt);
-	p->Darray(x,numpt);
-	p->Darray(s,numpt);
-	p->Darray(row,numpt);
+	p->Darray(b,numpt+1);
+	p->Darray(x,numpt+1);
+	p->Darray(s,numpt+1);
+	p->Darray(row,numpt+1);
 
 	
 	
 	cout<<"fill Aij"<<endl;
-	for(n=0; n<p->D10; ++n)
-	for(q=0; q<p->D10; ++q)
+	for(n=0; n<numpt; ++n)
+	for(q=0; q<numpt; ++q)
 	{
-		dist = sqrt(pow(p->D10_x[n]-p->D10_x[q],2.0) + pow(p->D10_y[n]-p->D10_y[q],2.0));
+		dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
+        
+        dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
 		
 		A[n][q] = semivariogram(dist); 
 	}
 
-	n=p->D10;
-	for(q=0; q<p->D10; ++q)
+	n=numpt;
+	for(q=0; q<numpt; ++q)
 	A[n][q] = 1.0; 
 	
-	q=p->D10;
-	for(n=0; n<p->D10; ++n)
+	q=numpt;
+	for(n=0; n<numpt; ++n)
 	A[n][q] = 1.0; 
 	
-	A[p->D10][p->D10] = 0.0; 	
+	A[numpt][numpt] = 0.0; 	
 	
 	rearrange(p);
 	
@@ -106,7 +108,7 @@ void kriging::start(lexer* p, dive* a)
 	cout<<"mainloop kriging"<<endl<<endl;
 	
 	XYLOOP
-	a->data(i,j) = 0.0;
+	f(i,j) = 0.0;
 	
 	count=0;
 	XYLOOP
@@ -114,34 +116,37 @@ void kriging::start(lexer* p, dive* a)
 	xc = p->XP[IP];
     yc = p->YP[JP];
 	
-		for(n=0; n<p->D10; ++n)
+		for(n=0; n<numpt; ++n)
 		{
-			dist = sqrt(pow(xc-p->D10_x[n],2.0) + pow(yc-p->D10_y[n],2.0));
+			dist = sqrt(pow(xc-X[n],2.0) + pow(yc-Y[n],2.0));
 		
 			b[n] = semivariogram(dist);
 		}
 		
-		b[p->D10]=1.0;
+		b[numpt]=1.0;
 		
 		rearrange_b(p);
 
 	
 	matvec(p,B,b,x);
-	//backsubstitution(p,A,b);
+	backsubstitution(p,A,b);
 	
-	//solve(p,B,x,b);
+	solve(p,B,x,b);
 	
 	
 		val=0.0;
-		for(n=0; n<p->D10; ++n)
+		for(n=0; n<numpt; ++n)
 		val += x[n];
 		
 		cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
 		
-	for(n=0; n<p->D10; ++n)
-	a->data(i,j) += x[n] * p->D10_data[n];
+	for(n=0; n<numpt; ++n)
+	f(i,j) += x[n] * F[n];
 	
 	++count;
+    
+    if(count%1000==0)
+    cout<<count<<endl;
 	}
 
 }

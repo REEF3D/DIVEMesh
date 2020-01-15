@@ -62,9 +62,9 @@ void data::start(lexer* p, dive* a)
 	
 	if(p->D14==2)
 	{
-	kriging krig(p,a);
+	kriging krig(p,a,p->D10,p->D10_x,p->D10_y,p->D10_data);
 	
-	krig.start(p,a);
+	krig.start(p,a,p->D10,p->D10_x,p->D10_y,p->D10_data,a->data);
 	}
 	
 	k=0;

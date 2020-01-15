@@ -24,14 +24,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"lexer.h"
 #include"inverse_dist.h"
 #include"inverse_dist_local.h"
+#include"kriging.h"
 
 geodat::geodat(lexer *p, dive *a)
 {
-    if(p->G15==1)
-    pipol = new inverse_dist(p,a);
     
-    if(p->G15==2)
-    pipol = new inverse_dist_local(p,a);
 
     for(n=0; n<p->G10; ++n)
     {
@@ -50,6 +47,19 @@ geodat::geodat(lexer *p, dive *a)
 	if(p->G23==1)
 	for(n=0; n<p->G10; ++n)
 	p->G10_z[n] *= -1.0;
+    
+    
+    if(p->G15==1)
+    pipol = new inverse_dist(p,a);
+    
+    if(p->G15==2)
+    pipol = new inverse_dist_local(p,a);
+    
+    if(p->G15==3)
+    pipol = new kriging(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z);
+    
+    
+     print(p,a);
 }
 
 geodat::~geodat()
@@ -66,10 +76,6 @@ void geodat::start(lexer* p, dive* a)
 	
 	XYLOOP
 	a->bedlevel(i,j) = MAX(a->bedlevel(i,j),a->topo(i,j));
-    
-    
-    print(p,a);
-    
 }
 
 void geodat::gcb_estimate(lexer *p, dive *a)

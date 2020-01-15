@@ -40,6 +40,9 @@ void inverse_dist_local::start(lexer *p, dive *a, int Np, double *Fx, double *Fy
     {
     data(i,j) = gxy(p,a,Np,Fx,Fy,Fz);
     ++counter;
+    
+    if(counter%1000==0)
+    cout<<counter<<endl;
     }
 }
 
@@ -60,7 +63,7 @@ double inverse_dist_local::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy
         js=MAX(j-dij-cp,-3);
         je=MIN(j+dij+cp,Ny-3);
         
-        //cout<<counter<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<endl;
+        //cout<<counter<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<endl;
         zmean=0.0;
         count=0;
         for(r=is;r<ie;++r)
@@ -91,7 +94,7 @@ double inverse_dist_local::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy
     //if(s>330)
     //cout<<i<<"  "<<j<<"  IDW   cp:"<<cp<<" count: "<<count<<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" zmean: "<<zmean<<" wsum: "<<wsum<<" g: "<<g<<" z: "<<g/(wsum>1.0e-15?wsum:1.0e15)<<endl;      
         
-    cp+=2;
+    cp+=10;
     }while(count<MIN(19,Np));
     
     if(wsum>0.0)
