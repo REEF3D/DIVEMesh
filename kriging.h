@@ -47,15 +47,16 @@ public:
 	virtual void backsubstitution(lexer*,double**, double*);
 	virtual void matvec(lexer*,double**, double*, double*);
 	virtual void solve(lexer*,double**, double*, double*);
-	virtual void pointcheck(lexer*,dive*);
+	virtual void pointcheck(lexer*,dive*,double*,double*,double*);
 
 
 private:
 	
 	double **A,**B;
 	double *x,*b,*s,*row;
+    int *flag;
 
-	int numpt,n,m,q,r,count;
+	int Np,n,m,q,r,count;
 	double dist,xc,yc;
 	double xmin,xmax,ymin,ymax;
 	double mean, variance, range;

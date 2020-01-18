@@ -23,27 +23,30 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"dive.h"
 #include"lexer.h"
 
-void kriging::pointcheck(lexer *p, dive *a)
+void kriging::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
 {
-	double epsi=1.0e-15;
+	double epsi=p->G18*p->DXYM;
 	double xdiff,ydiff,ddiff;
 	int count=0;
+    
+    for(n=0; n<Np; ++n)
+    flag[n]=0;
 	
-	for(n=0; n<p->D10; ++n)
+	for(n=0; n< Np; ++n)
 	{
-		for(q=0; q<p->D10; ++q)
+		for(q=0; q< Np; ++q)
 		if(n!=q)
 		{
-		xdiff = fabs(p->D10_x[n]-p->D10_x[q]);
-		ydiff = fabs(p->D10_y[n]-p->D10_y[q]);
-		ddiff = fabs(p->D10_data[n]-p->D10_data[q]);
+		xdiff = fabs(X[n]-X[q]);
+		ydiff = fabs(Y[n]-Y[q]);
+		ddiff = fabs(F[n]-F[q]);
 		
 			if(xdiff<epsi && ydiff<epsi)
 			{
-			p->D10_x[q] = p->D10_x[p->D10-1];
-			p->D10_y[q] = p->D10_y[p->D10-1];
-			p->D10_data[q] = p->D10_data[p->D10-1];
-			--p->D10;
+			X[q] = X[Np-1];
+			Y[q] = Y[Np-1];
+			F[q] = F[Np-1];
+			-- Np;
 			--q;
 			++count;
 			

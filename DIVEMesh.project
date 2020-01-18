@@ -288,6 +288,7 @@
       <File Name="object_wedge_y.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Topography">
+      <File Name="geodat_multigrid.cpp"/>
       <File Name="geodat_print.cpp"/>
       <File Name="geodat.cpp"/>
       <File Name="bedlevel.cpp"/>

@@ -23,6 +23,43 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"dive.h"
 #include"lexer.h"
 
+void kriging::solve(lexer *p,double **A, double *x, double *b)
+{
+	// LU decomp
+	for (r=0; r<Np; r++) 
+	{
+	
+	aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
+	
+		for (n=r+1; n<Np; n++) 	
+		{
+		A[n][r]=A[n][r]*aii;
+		
+			for (q=r+1; q<Np; q++) 
+			A[n][q]-=A[r][q]*A[n][r];
+		}
+	}
+	
+	// forward substitution
+	for (q=0;q<Np;++q) 
+	{
+		for (n=0;n<q;++n) 
+		b[q]-=A[q][n]*b[n];
+	}
+	
+	// backward substitution
+	for (q=Np-1;q>=0;q--) 
+	{ 
+		for (n=1+q; n < Np; n++) 
+		b[q]-=A[q][n]*b[n];
+	
+	b[q]=b[q]/(fabs(A[q][q])>1.0e-19?A[q][q]:1.0e-19);
+	}
+
+
+}
+
+
 void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
 {
 	cout<<"    decomp"<<endl;
@@ -30,19 +67,20 @@ void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
 	decomp(p,A,B);
 	
 	cout<<"    invert"<<endl;
+    
 	// invert
-	for(q=0;q<numpt;++q) 
+	for(q=0;q<Np;++q) 
 	{	
 		cout<<"column: "<<q<<endl;
 		
-		for(n=0;n<numpt;++n)
+		for(n=0;n<Np;++n)
 		s[n]=0.0;
 		
 		s[q]=1.0;
 		
 		backsubstitution(p,A,s);
 		
-		for(n=0;n<numpt;++n)
+		for(n=0;n<Np;++n)
 		B[n][q] = s[n];
 	}
 	
@@ -51,16 +89,17 @@ void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
 void kriging::decomp(lexer *p,double **A,double **B)
 {
 	// LU decomp
-	for(r=0; r<numpt; ++r) 
+	for(r=0; r<Np; ++r) 
 	{
+    cout<<"decomp: "<<r<<endl;
 	
 	aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
 	
-		for(n=r+1; n<numpt; n++) 	
+		for(n=r+1; n<Np; ++n) 	
 		{
 		A[n][r]=A[n][r]*aii;
 		
-			for(q=r+1; q<numpt; q++) 
+			for(q=r+1; q<Np; q++) 
 			A[n][q]-=A[r][q]*A[n][r];
 		}
 	}
@@ -71,16 +110,16 @@ void kriging::backsubstitution(lexer *p,double **A, double *b)
 	int qq,nn;
 	
 	// forward substitution
-	for(qq=0;qq<numpt;++qq) 
+	for(qq=0;qq<Np;++qq) 
 	{	
 		for (nn=0;nn<qq;++nn) 
 		b[qq]-=A[qq][nn]*b[nn]; 
 	}
 	
 	// backward substitution
-	for (qq=numpt-1;qq>=0;qq--) 
+	for (qq=Np-1;qq>=0;qq--) 
 	{ 
-		for (nn=1+qq; nn < numpt; nn++) 
+		for (nn=1+qq; nn < Np; nn++) 
 		b[qq]-=A[qq][nn]*b[nn];
 	
 	b[qq]=b[qq]/(fabs(A[qq][qq])>1.0e-19?A[qq][qq]:1.0e-19);
@@ -92,49 +131,14 @@ void kriging::matvec(lexer *p,double **A, double *b, double *x)
 {
 	int qq,nn;
 	
-	for(n=0;n<numpt;++n) 
+	for(nn=0;nn<Np;++nn) 
 	{	
-		x[n]=0.0;
+		x[nn]=0.0;
 		
-		for(q=0;q<numpt;++q)
-		x[n]+=A[n][q]*b[q];
+		for(qq=0;qq<Np;++qq)
+		x[nn]+=A[nn][qq]*b[qq];
 	}
 }
 
-void kriging::solve(lexer *p,double **A, double *x, double *b)
-{
-	// LU decomp
-	for (r=0; r<numpt; r++) 
-	{
-	
-	aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
-	
-		for (n=r+1; n<numpt; n++) 	
-		{
-		A[n][r]=A[n][r]*aii;
-		
-			for (q=r+1; q<numpt; q++) 
-			A[n][q]-=A[r][q]*A[n][r];
-		}
-	}
-	
-	// forward substitution
-	for (q=0;q<numpt;++q) 
-	{
-		for (n=0;n<q;++n) 
-		b[q]-=A[q][n]*b[n];
-	}
-	
-	// backward substitution
-	for (q=numpt-1;q>=0;q--) 
-	{ 
-		for (n=1+q; n < numpt; n++) 
-		b[q]-=A[q][n]*b[n];
-	
-	b[q]=b[q]/(fabs(A[q][q])>1.0e-19?A[q][q]:1.0e-19);
-	}
-
-
-}
 
 

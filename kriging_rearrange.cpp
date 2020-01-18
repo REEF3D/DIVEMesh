@@ -26,24 +26,24 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void kriging::rearrange(lexer *p)
 {
 	// A
-	for(q=0;q<numpt;++q)
+	for(q=0;q<Np;++q)
 	row[q] = A[0][q];
 	
-	for(n=0;n<numpt-1;++n)
-	for(q=0;q<numpt;++q)
+	for(n=0;n<Np-1;++n)
+	for(q=0;q<Np;++q)
 	A[n][q] = A[n+1][q];
 	
-	for(q=0;q<numpt;++q)
-	A[numpt-1][q]=row[q];
+	for(q=0;q<Np;++q)
+	A[Np-1][q]=row[q];
 
 /*
 	// data
 	val = p->D10_data[0];
 	
-	for(n=0;n<numpt-1;++n)
+	for(n=0;n<Np-1;++n)
 	p->D10_data[n] = p->D10_data[n+1];
 	
-	p->D10_data[numpt-1] = val;
+	p->D10_data[Np-1] = val;
 		*/
 }
 
@@ -52,9 +52,9 @@ void kriging::rearrange_b(lexer *p)
 	// b
 	val = b[0];
 	
-	for(n=0;n<numpt-1;++n)
+	for(n=0;n<Np-1;++n)
 	b[n] = b[n+1];
 	
-	b[numpt-1] = val;
+	b[Np-1] = val;
 }
 

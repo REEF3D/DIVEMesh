@@ -42,8 +42,21 @@ public:
 
 private:
     void dryside(lexer*,dive*);
+    void coarsen(lexer*,dive*);
+    void prolong(lexer*,dive*);
+    
+    double lintsl4(lexer*,double*, int&,int&, double, double);
+    double ccslipol4(lexer*,double*, double, double);
     
     interpolation *pipol;
+    
+    double *XC,*YC;
+    
+    int kx,ky;
+    int ii,jj;
+    
+    double wa,wb,value;
+    double v1,v2,v3,v4,c1,c2,c3,c4;
 
 
 };

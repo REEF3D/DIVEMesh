@@ -26,10 +26,25 @@ void lexer::gridspacing()
     cout<<"grid_spacing: ";
     
     if(B2==0)
-    DXM = dx;
+    DXM = DXYM = dx;
+    
+    if(knoy==1)
+    {
+    if(B2==1)
+    DXM=dx = (1./2.0) * ((xmax-xmin)/double(knox)+ (zmax-zmin)/double(knoz));
     
     if(B2==1)
+    DXYM = (xmax-xmin)/double(knox);
+    }
+    
+    if(knoy>1)
+    {
+    if(B2==1)
     DXM=dx = (1./3.0) * ((xmax-xmin)/double(knox) + (ymax-ymin)/double(knoy) + (zmax-zmin)/double(knoz));
+    
+    if(B2==1)
+    DXYM = (1./2.0) * ((xmax-xmin)/double(knox) + (ymax-ymin)/double(knoy));
+    }
     
     
     Darray(XN,knox+14);

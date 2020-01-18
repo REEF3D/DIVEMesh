@@ -33,9 +33,18 @@ inverse_dist::~inverse_dist()
 
 void inverse_dist::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, field2d &data)
 {
+    int counter=0;
     
     XYLOOP
+    {
     data(i,j) = gxy(p,a,Np,Fx,Fy,Fz);
+    
+    ++counter;
+    
+    
+    if(counter%1000==0)
+    cout<<counter<<endl;
+    }
 }
 
 double inverse_dist::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz)

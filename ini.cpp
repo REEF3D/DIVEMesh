@@ -102,6 +102,7 @@ void lexer::ini_default()
     G15=2;           // int interpolation scheme
     G16=0.0;         // double base topo level for local IDW
     G17=2;          // int dij limit
+    G18=1.0;        // doulble kriging duplicate points factor times DXM
     G19=0;              // int read letter in front of 3D coordinates
     G20=0;              // int auto box
     G21_x=0.0;       // double dxmin
@@ -113,6 +114,7 @@ void lexer::ini_default()
 	G23=0;			// int reverse sign of vertical coordinate in geo.dat file
     G24=0;          // int raise dry side by a dz
     G25=0;          // int increase dry side by multiplication factor
+    G30=1;          // int skip horizontal cells for geodat interpolation algorithm
     G31=0;          // int number of smoothing iterations
     G32=0.5;        // double smoothing factor
 	G35=16.0;		// double inverse distance factor

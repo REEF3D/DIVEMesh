@@ -60,6 +60,9 @@ geodat::geodat(lexer *p, dive *a)
     
     
      print(p,a);
+     
+     p->Darray(XC,p->knox+10);
+     p->Darray(YC,p->knoy+10);
 }
 
 geodat::~geodat()
@@ -69,8 +72,13 @@ geodat::~geodat()
 void geodat::start(lexer* p, dive* a)
 {
     cout<<"geodat"<<endl;
+    
+    
+    coarsen(p,a);
 
     pipol->start(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z,a->topo);
+    
+    prolong(p,a);
     
     dryside(p,a);
 	
