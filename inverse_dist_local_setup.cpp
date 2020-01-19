@@ -23,7 +23,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"dive.h"
 #include"lexer.h"
 
-void inverse_dist_local::setup(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, field2d &data)
+void inverse_dist_local::setup(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz)
 {
      
     xmin=+1.0e19;

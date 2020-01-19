@@ -31,7 +31,7 @@ kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 	Np = numpt;
     
 	pointcheck(p,a,X,Y,F);
-	//cout<<"D10 = "<<Np<<endl;
+	cout<<"new Np = "<<Np<<endl;
 	
 	
 	xmin=ymin=1.0e15;
@@ -67,7 +67,7 @@ kriging::~kriging()
 {
 }
 
-void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *F, field2d &f)
+void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *F, double *XC, double *YC, int kx, int ky, double **f)
 {
     //Np=numpt;
 	cout<<"kriging  Np: "<<Np<<endl;
@@ -112,14 +112,16 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 	
 	cout<<"mainloop kriging"<<endl<<endl;
 	
-	XYLOOP
-	f(i,j) = 0.0;
+	for(i=0;i<kx;++i)
+    for(j=0;j<ky;++j)
+	f[i][j] = 0.0;
 	
 	count=0;
-	XYLOOP
+	for(i=0;i<kx;++i)
+    for(j=0;j<ky;++j)
 	{
-	xc = p->XP[IP];
-    yc = p->YP[JP];
+	xc = XC[IP];
+    yc = YC[JP];
 	
 		for(n=0; n<Np; ++n)
 		{
@@ -147,7 +149,7 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 		cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
 		
 	for(n=0; n<Np; ++n)
-	f(i,j) += x[n] * F[n];
+	f[i][j] += x[n] * F[n];
 	
 	++count;
     

@@ -36,9 +36,9 @@ public:
     inverse_dist_local(lexer*,dive*);
     virtual ~inverse_dist_local();
 
-    virtual void start(lexer*,dive*,int,double*,double*,double*,field2d&);
-    virtual double gxy(lexer*,dive*,int,double*,double*,double*);
-    virtual void setup(lexer*,dive*,int,double*,double*,double*,field2d&);
+    virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
+    virtual double gxy(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
+    virtual void setup(lexer*,dive*,int,double*,double*,double*);
 
 private:
     double xmin,xmax,ymin,ymax,zmin,zmax;

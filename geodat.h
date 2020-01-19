@@ -45,18 +45,24 @@ private:
     void coarsen(lexer*,dive*);
     void prolong(lexer*,dive*);
     
-    double lintsl4(lexer*,double*, int&,int&, double, double);
-    double ccslipol4(lexer*,double*, double, double);
+    double ccipol(lexer*, double**, double, double);
+    double lint(lexer*, double**, int&,int&, double, double);
+    
+    int posc_i(double);
+    int posc_j(double);
+    int ihalf(int,int);
     
     interpolation *pipol;
     
     double *XC,*YC;
+    double **topof;
     
     int kx,ky;
     int ii,jj;
     
     double wa,wb,value;
     double v1,v2,v3,v4,c1,c2,c3,c4;
+    double x1,x2;
 
 
 };

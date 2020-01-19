@@ -32,7 +32,7 @@ class interpolation
 {
 public:
 
-    virtual void start(lexer*,dive*,int,double*,double*,double*,field2d&)=0;
+    virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**)=0;
 };
 
 #endif

@@ -37,7 +37,7 @@ public:
     kriging(lexer*,dive*,int,double*,double*,double*);
     virtual ~kriging();
 
-    virtual void start(lexer*,dive*,int,double*,double*,double*,field2d&);
+    virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
 	virtual double semivariogram(double);
 	virtual void rearrange(lexer*);
 	virtual void rearrange_b(lexer*);
@@ -51,6 +51,7 @@ public:
 
 
 private:
+    
 	
 	double **A,**B;
 	double*x,*b,*s,*row;

@@ -64,7 +64,7 @@ void data::start(lexer* p, dive* a)
 	{
 	kriging krig(p,a,p->D10,p->D10_x,p->D10_y,p->D10_data);
 	
-	krig.start(p,a,p->D10,p->D10_x,p->D10_y,p->D10_data,a->data);
+	//krig.start(p,a,p->D10,p->D10_x,p->D10_y,p->D10_data,p->XP,p->YP,p->knox,p->knoy,a->data);
 	}
 	
 	k=0;

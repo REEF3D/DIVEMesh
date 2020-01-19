@@ -31,14 +31,15 @@ inverse_dist_local::~inverse_dist_local()
 {
 }
 
-void inverse_dist_local::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, field2d &data)
+void inverse_dist_local::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {
-    setup(p,a,Np,Fx,Fy,Fz,data);
+    setup(p,a,Np,Fx,Fy,Fz);
     
     counter=0;
-    XYLOOP
+    for(i=0;i<kx;++i)
+    for(j=0;j<ky;++j)
     {
-    data(i,j) = gxy(p,a,Np,Fx,Fy,Fz);
+    f[i][j] = gxy(p,a,Np,Fx,Fy,Fz,XC,YC,kx,ky,f);
     ++counter;
     
     if(counter%1000==0)
@@ -46,10 +47,10 @@ void inverse_dist_local::start(lexer *p, dive *a, int Np, double *Fx, double *Fy
     }
 }
 
-double inverse_dist_local::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz)
+double inverse_dist_local::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {    
-    xc = p->XP[IP]+p->xmin;
-    yc = p->YP[JP]+p->ymin;
+    xc = XC[IP]+p->xmin;
+    yc = YC[JP]+p->ymin;
 
     g=p->G16;
     wsum=0.0;

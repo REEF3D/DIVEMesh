@@ -31,13 +31,14 @@ inverse_dist::~inverse_dist()
 {
 }
 
-void inverse_dist::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, field2d &data)
+void inverse_dist::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {
     int counter=0;
     
-    XYLOOP
+    for(i=0;i<kx;++i)
+    for(j=0;j<ky;++j)
     {
-    data(i,j) = gxy(p,a,Np,Fx,Fy,Fz);
+    f[i][j] = gxy(p,a,Np,Fx,Fy,Fz,XC,YC,kx,ky,f);
     
     ++counter;
     
@@ -47,11 +48,11 @@ void inverse_dist::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, doub
     }
 }
 
-double inverse_dist::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz)
+double inverse_dist::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {    
 
-    xc = p->XP[IP]+p->xmin;
-    yc = p->YP[JP]+p->ymin;
+    xc = XC[IP]+p->xmin;
+    yc = YC[JP]+p->ymin;
 
     g=0.0;
     wsum=0.0;
