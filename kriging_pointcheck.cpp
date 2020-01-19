@@ -29,8 +29,6 @@ void kriging::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
 	double xdiff,ydiff,ddiff;
 	int count=0;
     
-    for(n=0; n<Np; ++n)
-    flag[n]=0;
 	
 	for(n=0; n< Np; ++n)
 	{

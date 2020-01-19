@@ -53,8 +53,7 @@ public:
 private:
 	
 	double **A,**B;
-	double *x,*b,*s,*row;
-    int *flag;
+	double*x,*b,*s,*row;
 
 	int Np,n,m,q,r,count;
 	double dist,xc,yc;

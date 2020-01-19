@@ -30,7 +30,6 @@ kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
 	Np = numpt;
     
-    p->Iarray(flag,Np+1);
 	pointcheck(p,a,X,Y,F);
 	//cout<<"D10 = "<<Np<<endl;
 	
