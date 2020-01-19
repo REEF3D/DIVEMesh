@@ -63,7 +63,7 @@ private:
     double wa,wb,value;
     double v1,v2,v3,v4,c1,c2,c3,c4;
     double x1,x2;
-
+    
 
 };
 

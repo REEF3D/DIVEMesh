@@ -53,19 +53,26 @@ void geodat::coarsen(lexer *p, dive *a)
     
     cout<<"coarsen knox:"<<p->knox<<" kx: "<<kx<<" | knoy:"<<p->knoy<<" ky: "<<ky<<endl;
     
+    
+    // bc
+    XC[marge-1] = XC[marge+1]-XC[marge];
+    XC[marge+1] = XC[marge+kx-1]-XC[marge+kx-2];
+    
+    YC[marge-1] = YC[marge+1]-XC[marge];
+    YC[marge+1] = YC[marge+ky-1]-XC[marge+ky-2];
+    
 }
 
 void geodat::prolong(lexer *p, dive *a)
 {
     
+    cout<<"prolong "<<endl;
+    
     XYLOOP
     {
     a->topo(i,j) = ccipol(p,topof,p->XP[IP],p->YP[JP]);       
     }
-    
-    
 }
-
 
 
 double geodat::ccipol(lexer *p, double **f, double xp, double yp)
@@ -73,8 +80,10 @@ double geodat::ccipol(lexer *p, double **f, double xp, double yp)
     ii=i;
     jj=j;
     
-    i = p->posc_i(xp);
-    j = p->posc_j(yp);
+    i = posc_i(xp);
+    j = posc_j(yp);
+    
+    cout<<"pos_ij: "<<i<<" "<<j<<endl;
 		
     // wa
     wa = (XC[IP1]-xp)/(XC[IP1]-XC[IP]);
@@ -196,7 +205,9 @@ int geodat::posc_i(double xs)
     is = -marge;
     ie = kx+marge;
     
-    xs-=xmin;
+    
+    
+    xs-=XC[marge];
     
     count=0;
     do{
@@ -208,39 +219,39 @@ int geodat::posc_i(double xs)
     //cout<<"iloc: "<<iloc<<" is: "<<is<<" ie: "<<ie<<endl;
     
         // matching criterion
-        if(xs<XP[iloc+marge] && xs>=XP[iloc-1+marge])
+        if(xs<XC[iloc+marge] && xs>=XC[iloc-1+marge])
         {
             ii = iloc;
             
-            //cout<<"EXIT_i_1 "<<iloc<<"   xs: "<<xs<<" XP[iloc+marge]: "<<XP[iloc+marge]<<" XP[iloc-1+marge]: "<<XP[iloc-1+marge]<<endl;
+            //cout<<"EXIT_i_1 "<<iloc<<"   xs: "<<xs<<" XC[iloc+marge]: "<<XC[iloc+marge]<<" XC[iloc-1+marge]: "<<XC[iloc-1+marge]<<endl;
             
          stop=1;
          break;   
         }
         
-        if(xs>=XP[iloc+marge] && xs<XP[iloc+1+marge])
+        if(xs>=XC[iloc+marge] && xs<XC[iloc+1+marge])
         {
             ii = iloc+1;
 
-            //cout<<"EXIT_i_2 "<<iloc<<"   xs: "<<xs<<" XP[iloc+marge]: "<<XP[iloc+marge]<<" XP[iloc+1+marge]: "<<XP[iloc+1+marge]<<endl;
+            //cout<<"EXIT_i_2 "<<iloc<<"   xs: "<<xs<<" XC[iloc+marge]: "<<XC[iloc+marge]<<" XC[iloc+1+marge]: "<<XC[iloc+1+marge]<<endl;
    
          stop=1;
          break;   
         }
         
         // out of bounds
-        if(xs<XP[0])
+        if(xs<XC[0])
         {
-            ii = -marge;
+            ii = -1;
             
-            //cout<<"EXIT 0m"<<" xs: "<<xs<<" XP: "<<XP[0+marge]<<endl;
+            //cout<<"EXIT 0m"<<" xs: "<<xs<<" XP: "<<XC[0+marge]<<endl;
    
          stop=1;
          break;   
         }
         
         // out of bounds
-        if(xs>XP[kx-1+marge])
+        if(xs>XC[kx-1+marge])
         {
             ii = kx+marge;
             
@@ -251,10 +262,10 @@ int geodat::posc_i(double xs)
         }
         
         // further division
-        if(xs<XP[iloc+marge] && xs<XP[iloc-1+marge])
+        if(xs<XC[iloc+marge] && xs<XC[iloc-1+marge])
         ie=iloc;
         
-        if(xs>XP[iloc+marge] && xs>XP[iloc+1+marge])
+        if(xs>XC[iloc+marge] && xs>XC[iloc+1+marge])
         is=iloc;
         
         
@@ -273,7 +284,7 @@ int geodat::posc_j(double ys)
     js = -marge;
     je = ky+marge;
     
-    ys-=ymin;
+    ys-=YC[marge];
     
     count=0;
     do{
@@ -285,53 +296,53 @@ int geodat::posc_j(double ys)
     //cout<<"ys: "<<ys<<" jloc: "<<jloc<<" js: "<<js<<" je: "<<je<<endl;
     
         // matching criterion
-        if(ys<YP[jloc+marge] && ys>=YP[jloc-1+marge])
+        if(ys<YC[jloc+marge] && ys>=YC[jloc-1+marge])
         {
             jj = jloc;
             
-            //cout<<"EXIT 1 "<<jloc<<"   ys: "<<ys<<" YP[jloc+marge]: "<<YP[jloc+marge]<<" YP[jloc-1+marge]: "<<YP[jloc-1+marge]<<endl;
+            //cout<<"EXIT 1 "<<jloc<<"   ys: "<<ys<<" YC[jloc+marge]: "<<YC[jloc+marge]<<" YC[jloc-1+marge]: "<<YC[jloc-1+marge]<<endl;
             
          stop=1;
          break;   
         }
         
-        if(ys>=YP[jloc+marge] && ys<YP[jloc+1+marge])
+        if(ys>=YC[jloc+marge] && ys<YC[jloc+1+marge])
         {
             jj = jloc+1;
             
-            //cout<<"EXIT 2 "<<jloc<<"   ys: "<<ys<<" YP[jloc+marge]: "<<YP[jloc+marge]<<" YP[jloc+1+marge]: "<<YP[jloc+1+marge]<<endl;
+            //cout<<"EXIT 2 "<<jloc<<"   ys: "<<ys<<" YC[jloc+marge]: "<<YC[jloc+marge]<<" YC[jloc+1+marge]: "<<YC[jloc+1+marge]<<endl;
    
          stop=1;
          break;   
         }
         
         // out of bounds
-        if(ys<YP[0])
+        if(ys<YC[0])
         {
-            jj = -marge;
+            jj = -1;
             
-            //cout<<"EXIT 0m  ys: "<<ys<<" YP: "<<YP[0]<<endl;
+            //cout<<"EXIT 0m  ys: "<<ys<<" YP: "<<YC[0]<<endl;
    
          stop=1;
          break;   
         }
         
         // out of bounds
-        if(ys>YP[ky-1+marge])
+        if(ys>YC[ky-1+marge])
         {
             jj = ky+marge;
             
-            //cout<<"EXIT 0p  "<<YP[ky-1]<<endl;
+            //cout<<"EXIT 0p  "<<YC[ky-1]<<endl;
    
          stop=1;
          break;   
         }
         
         // further divjsion
-        if(ys<YP[jloc+marge] && ys<YP[jloc-1+marge])
+        if(ys<YC[jloc+marge] && ys<YC[jloc-1+marge])
         je=jloc;
         
-        if(ys>YP[jloc+marge] && ys>YP[jloc+1+marge])
+        if(ys>YC[jloc+marge] && ys>YC[jloc+1+marge])
         js=jloc;
         
         

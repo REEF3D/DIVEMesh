@@ -63,6 +63,7 @@ geodat::geodat(lexer *p, dive *a)
      
      p->Darray(XC,p->knox+14);
      p->Darray(YC,p->knoy+14);
+     
 }
 
 geodat::~geodat()
