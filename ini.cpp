@@ -102,7 +102,7 @@ void lexer::ini_default()
     G15=2;           // int interpolation scheme
     G16=0.0;         // double base topo level for local IDW
     G17=2;          // int dij limit
-    G18=1.0;        // doulble kriging duplicate points factor times DXM
+    G18=0.0001;        // doulble kriging duplicate points factor times DXM
     G19=0;              // int read letter in front of 3D coordinates
     G20=0;              // int auto box
     G21_x=0.0;       // double dxmin

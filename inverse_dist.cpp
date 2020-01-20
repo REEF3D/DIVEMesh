@@ -31,14 +31,17 @@ inverse_dist::~inverse_dist()
 {
 }
 
-void inverse_dist::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
+void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {
+    Np=numpt;
+    pointcheck(p,a,Fx,Fy,Fz);
+    
     int counter=0;
     
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-    f[i][j] = gxy(p,a,Np,Fx,Fy,Fz,XC,YC,kx,ky,f);
+    f[i][j] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
     
     ++counter;
     
@@ -48,7 +51,7 @@ void inverse_dist::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, doub
     }
 }
 
-double inverse_dist::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
+double inverse_dist::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {    
 
     xc = XC[IP]+p->xmin;
@@ -83,6 +86,38 @@ double inverse_dist::w(lexer  *p, int Np, double *Fx, double *Fy, double *Fz)
     return dist;
 }
 
+void inverse_dist::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
+{
+	double epsi=p->G18*p->DXYM;
+	double xdiff,ydiff,ddiff;
+	int count=0;
+    
+	
+	for(n=0; n< Np; ++n)
+	{
+		for(q=0; q< Np; ++q)
+		if(n!=q)
+		{
+		xdiff = fabs(X[n]-X[q]);
+		ydiff = fabs(Y[n]-Y[q]);
+		ddiff = fabs(F[n]-F[q]);
+		
+			if(xdiff<epsi && ydiff<epsi)
+			{
+			X[q] = X[Np-1];
+			Y[q] = Y[Np-1];
+			F[q] = F[Np-1];
+			-- Np;
+			--q;
+			++count;
+			
+			
+			}
+		}
+	}
+    
+    cout<<"Np after pointcheck: "<<Np<<endl;
+}
 
 
 

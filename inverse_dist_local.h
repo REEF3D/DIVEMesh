@@ -37,12 +37,15 @@ public:
     virtual ~inverse_dist_local();
 
     virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
-    virtual double gxy(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
-    virtual void setup(lexer*,dive*,int,double*,double*,double*);
+    virtual double gxy(lexer*,dive*,double*,double*,double*,double*,double*,int,int,double**);
+    virtual void setup(lexer*,dive*,double*,double*,double*);
 
 private:
+    void pointcheck(lexer*,dive*,double*,double*,double*);
+    
     double xmin,xmax,ymin,ymax,zmin,zmax;
     
+    int Np;
     int Nx,Ny;
     int count,cp;
     int counter;

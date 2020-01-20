@@ -36,13 +36,17 @@ public:
     virtual ~inverse_dist();
 
     virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
-    virtual double gxy(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
+    virtual double gxy(lexer*,dive*,double*,double*,double*,double*,double*,int,int,double**);
 
 private:
+    void pointcheck(lexer*,dive*,double*,double*,double*);
+    
     double w(lexer*,int,double*,double*,double*);
 
     double g,wsum,dist;
     double xc,yc;
+    
+    int Np;
 
 };
 

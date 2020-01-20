@@ -31,15 +31,18 @@ inverse_dist_local::~inverse_dist_local()
 {
 }
 
-void inverse_dist_local::start(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
+void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {
-    setup(p,a,Np,Fx,Fy,Fz);
+    Np = numpt; 
+    
+    pointcheck(p,a,Fx,Fy,Fz);
+    setup(p,a,Fx,Fy,Fz);
     
     counter=0;
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-    f[i][j] = gxy(p,a,Np,Fx,Fy,Fz,XC,YC,kx,ky,f);
+    f[i][j] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
     ++counter;
     
     if(counter%1000==0)
@@ -47,7 +50,7 @@ void inverse_dist_local::start(lexer *p, dive *a, int Np, double *Fx, double *Fy
     }
 }
 
-double inverse_dist_local::gxy(lexer *p, dive *a, int Np, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
+double inverse_dist_local::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {    
     xc = XC[IP]+p->xmin;
     yc = YC[JP]+p->ymin;
