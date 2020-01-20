@@ -31,7 +31,6 @@ kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 	Np = numpt;
     
 	pointcheck(p,a,X,Y,F);
-	cout<<"new Np = "<<Np<<endl;
 	
 	
 	xmin=ymin=1.0e15;
@@ -137,15 +136,13 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 
 	
 	matvec(p,B,b,x);
-	//backsubstitution(p,A,b);
-	//solve(p,B,x,b);
-	
 	
 		val=0.0;
 		for(n=0; n<Np; ++n)
         {
 		val += x[n];
 		}
+        if(count%1000==0)
 		cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
 		
 	for(n=0; n<Np; ++n)

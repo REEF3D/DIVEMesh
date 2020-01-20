@@ -71,6 +71,7 @@ void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
 	// invert
 	for(q=0;q<Np;++q) 
 	{	
+        if(q%1000==0)
 		cout<<"column: "<<q<<endl;
 		
 		for(n=0;n<Np;++n)
@@ -91,6 +92,7 @@ void kriging::decomp(lexer *p,double **A,double **B)
 	// LU decomp
 	for(r=0; r<Np; ++r) 
 	{
+    if(r%1000==0)
     cout<<"decomp: "<<r<<endl;
 	
 	aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);

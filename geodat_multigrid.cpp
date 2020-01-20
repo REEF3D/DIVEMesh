@@ -38,6 +38,9 @@ void geodat::coarsen(lexer *p, dive *a)
     
     kx=count;
     
+    //for(i=0;i<kx;++i)
+    //cout<<"XC: "<<XC[i+marge]<<endl;
+    
     // y
     count=0;
     JLOOP
@@ -56,34 +59,47 @@ void geodat::coarsen(lexer *p, dive *a)
     
     // bc
     XC[marge-1] = XC[marge+1]-XC[marge];
-    XC[marge+1] = XC[marge+kx-1]-XC[marge+kx-2];
+    XC[marge-2] = XC[marge+1]-XC[marge];
+    XC[marge+kx+1] = XC[marge+kx-1]-XC[marge+kx-2];
+    XC[marge+kx+2] = XC[marge+kx-1]-XC[marge+kx-2];
     
-    YC[marge-1] = YC[marge+1]-XC[marge];
-    YC[marge+1] = YC[marge+ky-1]-XC[marge+ky-2];
+    YC[marge-1] = YC[marge+1]-YC[marge];
+    YC[marge-2] = YC[marge+1]-YC[marge];
+    YC[marge+ky+1] = YC[marge+ky-1]-YC[marge+ky-2];
+    YC[marge+ky+2] = YC[marge+ky-1]-YC[marge+ky-2];
     
 }
 
 void geodat::prolong(lexer *p, dive *a)
 {
-    
+    double xc,yc,val;
+
     cout<<"prolong "<<endl;
     
     XYLOOP
     {
-    a->topo(i,j) = ccipol(p,topof,p->XP[IP],p->YP[JP]);       
+    xc = p->XP[IP];
+    yc = p->YP[JP];
+    
+    //cout<<"pos_xy: "<<i<<" "<<j<<" | "<<xc<<" "<<yc<<endl;
+    
+    val = ccipol(p,topof,xc,yc);   
+
+    a->topo(i,j) = val;    
     }
 }
 
 
 double geodat::ccipol(lexer *p, double **f, double xp, double yp)
 {
-    ii=i;
-    jj=j;
+    iii=i;
+    jjj=j;
+    
+    
     
     i = posc_i(xp);
     j = posc_j(yp);
-    
-    cout<<"pos_ij: "<<i<<" "<<j<<endl;
+    cout<<"pos_ij: "<<i<<" "<<j<<" | "<<xp<<" "<<yp<<endl;
 		
     // wa
     wa = (XC[IP1]-xp)/(XC[IP1]-XC[IP]);
@@ -118,11 +134,12 @@ double geodat::ccipol(lexer *p, double **f, double xp, double yp)
     
     
     value =  lint(p,f,i,j,wa,wb);
-
-    i=ii;
-    j=jj;
+    
     
 
+    i=iii;
+    j=jjj;
+    
     return value;
 }
 
@@ -272,6 +289,9 @@ int geodat::posc_i(double xs)
         ++count;
     }while(stop==0 && count<1000);
     
+    ii=MAX(ii,0);
+    ii=MIN(ii,kx-1);
+    
     
     return ii;
 }
@@ -348,6 +368,9 @@ int geodat::posc_j(double ys)
         
         ++count;
     }while(stop==0 && count<1000);
+    
+    jj=MAX(jj,0);
+    jj=MIN(jj,ky-1);
     
     
     return jj;

@@ -48,8 +48,10 @@ void kriging::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
 			--q;
 			++count;
 			
-			//cout<<"double data entry "<<count<<endl;
+			
 			}
 		}
 	}
+    
+    cout<<"Np after pointcheck: "<<Np<<endl;
 }
