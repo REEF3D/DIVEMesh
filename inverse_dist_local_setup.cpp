@@ -23,7 +23,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"dive.h"
 #include"lexer.h"
 
-void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz)
+void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
      
     xmin=+1.0e19;
@@ -47,8 +47,11 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     // Grid
     dd = 3;
     
-    Nx = MAX(p->knox+2*dd+1,int((xmax-xmin)/p->DXM)+2*dd+1);
-    Ny = MAX(p->knoy+2*dd+1,int((ymax-ymin)/p->DXM)+2*dd+1);
+    //Nx = MAX(p->knox+2*dd+1,int((xmax-xmin)/p->DXM)+2*dd+1);
+    //Ny = MAX(p->knoy+2*dd+1,int((ymax-ymin)/p->DXM)+2*dd+1);
+    
+    Nx = kx + 2*dd+1;
+    Ny = ky + 2*dd+1;
 
     p->Iarray(ptnum,Nx,Ny);
     
@@ -58,11 +61,8 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
 
     for(n=0;n<Np;++n)
     {
-    ic = p->posc_i(Fx[n]);
-    jc = p->posc_j(Fy[n]);
-    
-    //ic = int((Fx[n]-p->xmin)/p->DXM);
-    //jc = int((Fy[n]-p->ymin)/p->DXM);
+    ic = p->poscgen_i(Fx[n],XC,kx);
+    jc = p->poscgen_j(Fy[n],YC,ky);
     
     ICFLAG
     ++ptnum[ic+dd][jc+dd];
@@ -83,11 +83,8 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     
     for(n=0;n<Np;++n)
     {
-    ic = p->posc_i(Fx[n]);
-    jc = p->posc_j(Fy[n]);
-    
-    //ic = int((Fx[n]-p->xmin)/p->DXM);
-    //jc = int((Fy[n]-p->ymin)/p->DXM);
+    ic = p->poscgen_i(Fx[n],XC,kx);
+    jc = p->poscgen_j(Fy[n],YC,ky);
     
     ICFLAG
     {
@@ -109,11 +106,13 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
 
 void inverse_dist_local::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
 {
-	double epsi=p->G18*p->DXYM;
+	double epsi=p->G36*p->DXYM;
 	double xdiff,ydiff,ddiff;
 	int count=0;
+    double fac=0.1;
     
-	
+    
+    if(p->G37_select==0)
 	for(n=0; n< Np; ++n)
 	{
 		for(q=0; q< Np; ++q)
@@ -136,6 +135,39 @@ void inverse_dist_local::pointcheck(lexer *p, dive *a, double *X, double *Y, dou
 			}
 		}
 	}
+    
+    
+    if(p->G37_select==1)
+    do{
+    epsi=fac*p->DXYM;
+    
+        for(n=0; n< Np; ++n)
+        {
+            for(q=0; q< Np; ++q)
+            if(n!=q)
+            {
+            xdiff = fabs(X[n]-X[q]);
+            ydiff = fabs(Y[n]-Y[q]);
+            ddiff = fabs(F[n]-F[q]);
+            
+                if(xdiff<epsi && ydiff<epsi)
+                {
+                X[q] = X[Np-1];
+                Y[q] = Y[Np-1];
+                F[q] = F[Np-1];
+                -- Np;
+                --q;
+                ++count;
+                
+                
+                }
+            }
+        }
+    fac+=0.05;
+    }while(Np>p->G37);
+    
+    
+    
     
     cout<<"Np after pointcheck: "<<Np<<endl;
 }

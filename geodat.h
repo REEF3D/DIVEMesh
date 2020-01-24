@@ -41,6 +41,7 @@ public:
     virtual void print(lexer*,dive*);
 
 private:
+    void pointcheck(lexer*,dive*,double*,double*,double*);
     void dryside(lexer*,dive*);
     void coarsen(lexer*,dive*);
     void prolong(lexer*,dive*);
@@ -48,9 +49,6 @@ private:
     double ccipol(lexer*, double**, double, double);
     double lint(lexer*, double**, int&,int&, double, double);
     
-    int posc_i(double);
-    int posc_j(double);
-    int ihalf(int,int);
     
     interpolation *pipol;
     

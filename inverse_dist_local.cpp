@@ -36,7 +36,7 @@ void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double 
     Np = numpt; 
     
     pointcheck(p,a,Fx,Fy,Fz);
-    setup(p,a,Fx,Fy,Fz);
+    setup(p,a,Fx,Fy,Fz,XC,YC,kx,ky);
     
     counter=0;
     for(i=0;i<kx;++i)
@@ -98,7 +98,7 @@ double inverse_dist_local::gxy(lexer *p, dive *a, double *Fx, double *Fy, double
     //if(s>330)
     //cout<<i<<"  "<<j<<"  IDW   cp:"<<cp<<" count: "<<count<<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" zmean: "<<zmean<<" wsum: "<<wsum<<" g: "<<g<<" z: "<<g/(wsum>1.0e-15?wsum:1.0e15)<<endl;      
         
-    cp+=10;
+    cp+=2;
     }while(count<MIN(19,Np));
     
     if(wsum>0.0)

@@ -525,3 +525,147 @@ int lexer::posc_k(double zs)
     
     return kk;
 }
+
+
+int lexer::poscgen_i(double xs, double *XC, int kx)
+{
+    int is,ie,iloc;
+    int stop=0;
+    int count=0;
+    is = -marge;
+    ie = kx+marge;
+    
+    
+    
+    xs-=XC[marge];
+    
+    count=0;
+    do{
+    iloc = ihalf(is,ie);
+    
+    if(count%3==0)
+    iloc+=1;
+    
+    
+        // matching criterion
+        if(xs<XC[iloc+marge] && xs>=XC[iloc-1+marge])
+        {
+            ii = iloc;
+            
+         stop=1;
+         break;   
+        }
+        
+        if(xs>=XC[iloc+marge] && xs<XC[iloc+1+marge])
+        {
+            ii = iloc+1;
+
+         stop=1;
+         break;   
+        }
+        
+        // out of bounds
+        if(xs<XC[0])
+        {
+            ii = -1;
+             
+         stop=1;
+         break;   
+        }
+        
+        // out of bounds
+        if(xs>XC[kx-1+marge])
+        {
+            ii = kx+marge;
+            
+         stop=1;
+         break;   
+        }
+        
+        // further division
+        if(xs<XC[iloc+marge] && xs<XC[iloc-1+marge])
+        ie=iloc;
+        
+        if(xs>XC[iloc+marge] && xs>XC[iloc+1+marge])
+        is=iloc;
+        
+        
+        ++count;
+    }while(stop==0 && count<1000);
+    
+    ii=MAX(ii,0);
+    ii=MIN(ii,kx-1);
+    
+    
+    return ii;
+}
+
+int lexer::poscgen_j(double ys, double *YC, int ky)
+{
+    int js,je,jloc;
+    int stop=0;
+    int count=0;
+    js = -marge;
+    je = ky+marge;
+    
+    ys-=YC[marge];
+    
+    count=0;
+    do{
+    jloc = ihalf(js,je);
+    
+    if(count%3==0)
+    jloc+=1;
+    
+        // matching criterion
+        if(ys<YC[jloc+marge] && ys>=YC[jloc-1+marge])
+        {
+            jj = jloc;
+                     
+         stop=1;
+         break;   
+        }
+        
+        if(ys>=YC[jloc+marge] && ys<YC[jloc+1+marge])
+        {
+            jj = jloc+1;
+            
+         stop=1;
+         break;   
+        }
+        
+        // out of bounds
+        if(ys<YC[0])
+        {
+            jj = -1;
+            
+         stop=1;
+         break;   
+        }
+        
+        // out of bounds
+        if(ys>YC[ky-1+marge])
+        {
+            jj = ky+marge;
+            
+         stop=1;
+         break;   
+        }
+        
+        // further divjsion
+        if(ys<YC[jloc+marge] && ys<YC[jloc-1+marge])
+        je=jloc;
+        
+        if(ys>YC[jloc+marge] && ys>YC[jloc+1+marge])
+        js=jloc;
+        
+        
+        ++count;
+    }while(stop==0 && count<1000);
+    
+    jj=MAX(jj,0);
+    jj=MIN(jj,ky-1);
+    
+    
+    return jj;
+}
