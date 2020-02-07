@@ -266,7 +266,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	}
 	
 	for(aa=0;aa<=a->mx;++aa)
-    a->xorig[aa] = p->XN[a->xnode[aa]+marge];
+    a->xorig[aa] = p->XN[a->xnode[aa]+marge]+p->xmin;
 	
 	xcount_sum=0;
 	for(aa=1;aa<=a->mx;++aa)
@@ -547,7 +547,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
     
 
 	for(bb=0;bb<=a->my;++bb)
-	a->yorig[bb] = p->YN[a->ynode[bb]+marge];
+	a->yorig[bb] = p->YN[a->ynode[bb]+marge]+p->ymin;
 	
 
 	ycount_sum=0;
@@ -819,7 +819,7 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	}
 	
 	for(cc=0;cc<=a->mz;++cc)
-	a->zorig[cc] = p->ZN[a->znode[cc]+marge];
+	a->zorig[cc] = p->ZN[a->znode[cc]+marge]+p->zmin;
 	
 	zcount_sum=0;
 	for(cc=1;cc<=a->mz;++cc)

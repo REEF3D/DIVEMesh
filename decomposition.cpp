@@ -90,6 +90,10 @@ void decomp::start(lexer* p, dive* a)
     slicecornercount(p,a);
 	
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
+    
+    
+    for(n=0;n<=a->mx;n++)
+	cout<<"XORIG: "<<a->xorig[n]<<endl;
 }
 
 int decomp::partition_check(lexer* p, dive* a)
@@ -115,6 +119,7 @@ int decomp::partition_check(lexer* p, dive* a)
     if(partcount[n]>int(maxel*alpha))
     count++;
     }
+    
 
     if(count==p->M10)
     checker=1;

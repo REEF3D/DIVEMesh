@@ -58,9 +58,9 @@ void decomp::partition(lexer* p, dive* a)
 	 ddout<<endl<<"xdiff: "<<xdiff<<"  ydiff: "<<ydiff<<"  zdiff: "<<zdiff<<endl;
 	 
 
-    a->xorig[0]=0.0;
-    a->yorig[0]=0.0;
-    a->zorig[0]=0.0;
+    a->xorig[0]=p->xmin;
+    a->yorig[0]=p->ymin;
+    a->zorig[0]=p->zmin;
     a->xnode[0]=0;
     a->ynode[0]=0;
     a->znode[0]=0;
@@ -82,6 +82,8 @@ void decomp::partition(lexer* p, dive* a)
     a->xorig[n]=a->xorig[n-1] + p->XN[posx+xid+marge];
     a->xnode[n]=a->xnode[n-1] + (posx+xid);
 	}
+    
+    
 	
 	
 
