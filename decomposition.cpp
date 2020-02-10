@@ -92,8 +92,8 @@ void decomp::start(lexer* p, dive* a)
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
     
     
-    for(n=0;n<=a->mx;n++)
-	cout<<"XORIG: "<<a->xorig[n]<<endl;
+    //for(n=0;n<=a->mx;n++)
+	//cout<<"XORIG: "<<a->xorig[n]<<endl;
 }
 
 int decomp::partition_check(lexer* p, dive* a)
