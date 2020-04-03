@@ -27,7 +27,7 @@ void solid::rotate_triangle(lexer* p, dive* a, int ts, int te)
 {
     double beta,xval,yval;
     
-    if(fabs(p->S5_phi)>0.0 || fabs(p->S5_psi)>0.0 || fabs(p->S5_theta)>0.0)
+    //if(fabs(p->S5_phi)>0.0 || fabs(p->S5_psi)>0.0 || fabs(p->S5_theta)>0.0)
 	for(int qr=ts;qr<te;++qr)
 	{
 		rotation(p->tri_x[qr][0],p->tri_y[qr][0],p->tri_z[qr][0],phi,theta,psi);
