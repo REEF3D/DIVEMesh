@@ -72,7 +72,7 @@ geodat::~geodat()
 
 void geodat::start(lexer* p, dive* a)
 {
-    cout<<"geodat"<<endl;
+    cout<<"geodat  Np_0: "<<p->G10<<endl;
     
     
     coarsen(p,a);
