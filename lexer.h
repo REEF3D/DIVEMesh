@@ -325,6 +325,9 @@ public:
     double *DXP,*DYP,*DZP;
     double DXM,DXYM;
     
+    double *SN,*RN,*TN;
+    double *SP,*RP,*TP;
+    
     
 
 private:

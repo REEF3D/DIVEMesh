@@ -276,7 +276,7 @@ NLOOP
     }
     
 // ---------------------------------------------------------------------------------------------------------------------
-// Nodes
+// Nodes XYZ
     SNODEILOOP
     {
     ddn = p->XN[IP]+p->xmin;
@@ -292,6 +292,26 @@ NLOOP
     SNODEKLOOP
     {
     ddn = p->ZN[KP]+p->zmin;
+    result.write((char*)&ddn, sizeof (double));
+    }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Nodes RST
+    SNODEILOOP
+    {
+    ddn = p->RN[IP]+p->xmin;
+    result.write((char*)&ddn, sizeof (double));
+    }
+    
+    SNODEJLOOP
+    {
+    ddn = p->SN[JP]+p->ymin;
+    result.write((char*)&ddn, sizeof (double));
+    }
+    
+    SNODEKLOOP
+    {
+    ddn = p->TN[KP]+p->zmin;
     result.write((char*)&ddn, sizeof (double));
     }
 

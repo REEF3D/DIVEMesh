@@ -63,6 +63,14 @@ void lexer::gridspacing()
     Darray(DYP,knoy+14);
     Darray(DZP,knoz+14);
     
+    Darray(SN,knox+14);
+    Darray(SN,knoy+14);
+    Darray(SN,knoz+14);
+    
+    Darray(SP,knox+14);
+    Darray(SP,knoy+14);
+    Darray(SP,knoz+14);
+    
     double ddx,ddy,ddz;
     
     ddx=ddy=ddz=dx;
@@ -75,13 +83,13 @@ void lexer::gridspacing()
     }
     
     for(i=0;i<knox+1;++i)
-    XN[IP] = double(i)*ddx;
+    XN[IP] = RN[IP] = double(i)*ddx;
     
     for(j=0;j<knoy+1;++j)
-    YN[JP] = double(j)*ddy;
+    YN[JP] = SN[JP] = double(j)*ddy;
     
     for(k=0;k<knoz+1;++k)
-    ZN[KP] = double(k)*ddz;
+    ZN[KP] = TN[KP] = double(k)*ddz;
     
     cout<<".";
     
@@ -92,7 +100,7 @@ void lexer::gridspacing()
     
     
     
-    // margins
+    // margins XYZ
     i=0;
     XN[IM1] = XN[IP] - 1.0*(XN[IP1]-XN[IP]);
     XN[IM2] = XN[IP] - 2.0*(XN[IP1]-XN[IP]);
@@ -134,8 +142,53 @@ void lexer::gridspacing()
     ZN[KP3] = ZN[KP] + 3.0*(ZN[KP]-ZN[KM1]);
     ZN[KP4] = ZN[KP] + 4.0*(ZN[KP]-ZN[KM1]);
     ZN[KP5] = ZN[KP] + 5.0*(ZN[KP]-ZN[KM1]);
+    
+    // margins RST
+    i=0;
+    RN[IM1] = RN[IP] - 1.0*(RN[IP1]-RN[IP]);
+    RN[IM2] = RN[IP] - 2.0*(RN[IP1]-RN[IP]);
+    RN[IM3] = RN[IP] - 3.0*(RN[IP1]-RN[IP]);
+    RN[IM4] = RN[IP] - 4.0*(RN[IP1]-RN[IP]);
+    RN[IM5] = RN[IP] - 5.0*(RN[IP1]-RN[IP]);
+    
+    j=0;
+    SN[JM1] = SN[IP] - 1.0*(SN[JP1]-SN[JP]);
+    SN[JM2] = SN[IP] - 2.0*(SN[JP1]-SN[JP]);
+    SN[JM3] = SN[IP] - 3.0*(SN[JP1]-SN[JP]);
+    SN[JM4] = SN[IP] - 4.0*(SN[JP1]-SN[JP]);
+    SN[JM5] = SN[IP] - 5.0*(SN[JP1]-SN[JP]);
+    
+    k=0;
+    TN[KM1] = TN[KP] - 1.0*(TN[KP1]-TN[KP]);
+    TN[KM2] = TN[KP] - 2.0*(TN[KP1]-TN[KP]);
+    TN[KM3] = TN[KP] - 3.0*(TN[KP1]-TN[KP]);
+    TN[KM4] = TN[KP] - 4.0*(TN[KP1]-TN[KP]);
+    TN[KM5] = TN[KP] - 5.0*(TN[KP1]-TN[KP]);
+    
+    i=knox;
+    RN[IP1] = RN[IP] + 1.0*(RN[IP]-RN[IM1]);
+    RN[IP2] = RN[IP] + 2.0*(RN[IP]-RN[IM1]);
+    RN[IP3] = RN[IP] + 3.0*(RN[IP]-RN[IM1]);
+    RN[IP4] = RN[IP] + 4.0*(RN[IP]-RN[IM1]);
+    RN[IP5] = RN[IP] + 5.0*(RN[IP]-RN[IM1]);
+    
+    j=knoy;
+    SN[JP1] = SN[JP] + 1.0*(SN[JP]-SN[JM1]);
+    SN[JP2] = SN[JP] + 2.0*(SN[JP]-SN[JM1]);
+    SN[JP3] = SN[JP] + 3.0*(SN[JP]-SN[JM1]);
+    SN[JP4] = SN[JP] + 4.0*(SN[JP]-SN[JM1]);
+    SN[JP5] = SN[JP] + 5.0*(SN[JP]-SN[JM1]);
+    
+    k=knoz;
+    TN[KP1] = TN[KP] + 1.0*(TN[KP]-TN[KM1]);
+    TN[KP2] = TN[KP] + 2.0*(TN[KP]-TN[KM1]);
+    TN[KP3] = TN[KP] + 3.0*(TN[KP]-TN[KM1]);
+    TN[KP4] = TN[KP] + 4.0*(TN[KP]-TN[KM1]);
+    TN[KP5] = TN[KP] + 5.0*(TN[KP]-TN[KM1]);
 
     cout<<".";
+    
+    // XYZ
     for(i=-marge;i<knox+marge;++i)
     XP[IP] = 0.5*(XN[IP]+XN[IP1]);
     
@@ -144,6 +197,16 @@ void lexer::gridspacing()
     
     for(k=-marge;k<knoz+marge;++k)
     ZP[KP] = 0.5*(ZN[KP]+ZN[KP1]);
+    
+    // RST
+    for(i=-marge;i<knox+marge;++i)
+    RP[IP] = 0.5*(RN[IP]+RN[IP1]);
+    
+    for(j=-marge;j<knoy+marge;++j)
+    SP[JP] = 0.5*(SN[JP]+SN[JP1]);
+    
+    for(k=-marge;k<knoz+marge;++k)
+    TP[KP] = 0.5*(TN[KP]+TN[KP1]);
     
     //dx
     for(i=-marge;i<knox+marge;++i)
