@@ -94,6 +94,13 @@ NLOOP
     ddn = p->DXM;
     result.write((char*)&ddn, sizeof (double));
     
+    ddn = p->DR;
+    result.write((char*)&ddn, sizeof (double));
+    ddn = p->DS;
+    result.write((char*)&ddn, sizeof (double));
+    ddn = p->DT;
+    result.write((char*)&ddn, sizeof (double));
+    
     
     ddn = a->xorig[aa-1];
     result.write((char*)&ddn, sizeof (double));

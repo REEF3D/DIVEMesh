@@ -26,7 +26,7 @@ void lexer::gridspacing()
     cout<<"grid_spacing: ";
     
     if(B2==0)
-    DXM = DXYM = dx;
+    DXM = DXYM = DR=DS=DT = dx;
     
     if(knoy==1)
     {
@@ -63,13 +63,13 @@ void lexer::gridspacing()
     Darray(DYP,knoy+14);
     Darray(DZP,knoz+14);
     
-    Darray(SN,knox+14);
+    Darray(RN,knox+14);
     Darray(SN,knoy+14);
-    Darray(SN,knoz+14);
+    Darray(TN,knoz+14);
     
-    Darray(SP,knox+14);
+    Darray(RP,knox+14);
     Darray(SP,knoy+14);
-    Darray(SP,knoz+14);
+    Darray(TP,knoz+14);
     
     double ddx,ddy,ddz;
     
@@ -77,9 +77,9 @@ void lexer::gridspacing()
     
     if(B2==1)
     {
-    ddx = (xmax-xmin)/double(knox);
-    ddy = (ymax-ymin)/double(knoy);
-    ddz = (zmax-zmin)/double(knoz);
+    ddx = DR =  (xmax-xmin)/double(knox);
+    ddy = DS = (ymax-ymin)/double(knoy);
+    ddz = DT = (zmax-zmin)/double(knoz);
     }
     
     for(i=0;i<knox+1;++i)
