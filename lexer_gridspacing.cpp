@@ -75,12 +75,13 @@ void lexer::gridspacing()
     
     ddx=ddy=ddz=dx;
     
-    if(B2==1)
-    {
-    ddx = DR =  (xmax-xmin)/double(knox);
+
+    ddx = DR = (xmax-xmin)/double(knox);
     ddy = DS = (ymax-ymin)/double(knoy);
     ddz = DT = (zmax-zmin)/double(knoz);
-    }
+    
+    cout<<"DR: "<<DR<<" DS: "<<DS<<" DT: "<<DT<<endl;
+
     
     for(i=0;i<knox+1;++i)
     XN[IP] = RN[IP] = double(i)*ddx;
