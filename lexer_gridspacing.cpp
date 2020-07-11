@@ -94,7 +94,7 @@ void lexer::gridspacing()
     
     cout<<".";
     
-    
+    // GRIDSPACING_FSF
     if(B101>0 || B102>0 || B103>0)
     gridspacing_fsf();
     cout<<".";
