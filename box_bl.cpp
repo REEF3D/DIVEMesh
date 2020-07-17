@@ -29,27 +29,26 @@ box_bl::box_bl(lexer *p, int rank, int side) : eps(1.0e-5*p->dx), psi(1.0e-9*p->
     box_bl_side = side;
     box_bl_type = 10;
 
-    xs = p->B10_xs[rank]-p->xmin;
-    xe = p->B10_xe[rank]-p->xmin;
+    xs = p->B10_xs[rank];
+    xe = p->B10_xe[rank];
 
-    ys = p->B10_ys[rank]-p->ymin;
-    ye = p->B10_ye[rank]-p->ymin;
+    ys = p->B10_ys[rank];
+    ye = p->B10_ye[rank];
 
-    zs = p->B10_zs[rank]-p->zmin;
-    ze = p->B10_ze[rank]-p->zmin;
+    zs = p->B10_zs[rank];
+    ze = p->B10_ze[rank];
     
     
-    istart = p->posc_i(xs+p->xmin);
-    iend   = p->posc_i(xe+p->xmin);
+    istart = p->posc_i(xs);
+    iend   = p->posc_i(xe);
     
-    jstart = p->posc_j(ys+p->ymin);
-    jend   = p->posc_j(ye+p->ymin);
+    jstart = p->posc_j(ys);
+    jend   = p->posc_j(ye);
 
-    kstart = p->posc_k(zs+p->zmin);
-    kend   = p->posc_k(ze+p->zmin);
+    kstart = p->posc_k(zs);
+    kend   = p->posc_k(ze);
     
-    //cout<<"is: "<<istart<<" ie: "<<iend<<" js: "<<jstart<<" je: "<<jend<<" ks: "<<kstart<<" ke: "<<kend<<endl;
-    
+
     if(xe>=xs)
     {
     xsmall=xs;

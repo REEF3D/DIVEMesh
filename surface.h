@@ -46,6 +46,11 @@ public:
 	void mem_alloc(lexer*,dive*);
     void make_solidsurf(lexer*,dive*);
     void makesurfsolid(lexer*,dive*);
+    
+    
+    void mem_alloc_plate(lexer*,dive*);
+    
+    
 
 private:
     void normalvec(lexer*,dive*);

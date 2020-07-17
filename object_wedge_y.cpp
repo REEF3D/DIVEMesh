@@ -31,14 +31,14 @@ wedge_y::wedge_y(lexer *pp, int rank, int side) : eps(1.0e-5*pp->dx)
     wedge_y_side = side;
     wedge_y_type = 62;
 
-    xs = p->O62_xs[rank]-p->xmin;
-    xe = p->O62_xe[rank]-p->xmin;
+    xs = p->O62_xs[rank];
+    xe = p->O62_xe[rank];
 
-    ys = p->O62_ys[rank]-p->ymin;
-    ye = p->O62_ye[rank]-p->ymin;
+    ys = p->O62_ys[rank];
+    ye = p->O62_ye[rank];
 
-    zs = p->O62_zs[rank]-p->zmin;
-    ze = p->O62_ze[rank]-p->zmin;
+    zs = p->O62_zs[rank];
+    ze = p->O62_ze[rank];
 
     slope=(ze-zs)/(ye-ys);
 

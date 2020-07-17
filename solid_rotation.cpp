@@ -38,8 +38,8 @@ void solid::rotate_triangle(lexer* p, dive* a, int ts, int te)
     if(fabs(p->S8)>0.0)
     {
  
-            double x0 = p->xmin + 0.5*(p->xmax-p->xmin);
-            double y0 = p->ymin + 0.5*(p->ymax-p->ymin);
+            double x0 = 0.5*(p->xmax-p->xmin);
+            double y0 = 0.5*(p->ymax-p->ymin);
             
             
         for(int qr=ts;qr<te;++qr)

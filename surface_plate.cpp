@@ -19,28 +19,38 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-#include<iostream>
-#include"increment.h"
+#include"surface.h"
+#include"lexer.h"
+#include"dive.h"
 
-class lexer;
-
-#ifndef FIELD_H_
-#define FIELD_H_
-
-using namespace std;
-
-class field : public increment
+void surface::mem_alloc_plate(lexer* p, dive* a)
 {
-public:
-
-	field(lexer*);
-	double& operator()(int, int, int);
-
-
-private:
-	double ***feld;
-	int dx,dy,dz;
-
-};
-
-#endif
+    
+    double locx;
+ 
+   /* for(qn=0;qn<p->S201;++qn)
+    {
+        //left
+        ILOOP
+        if(XP[IP])
+        {
+            
+            
+        }
+        
+        i = p->posc_i(p->S201_x[qn]);
+        
+        locx = p->posc_x();
+        
+        if(locx>p->S201_x[qn])
+        i--;
+        
+        
+    }
+    */
+    
+    
+    
+    
+    
+}

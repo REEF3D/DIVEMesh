@@ -42,7 +42,6 @@ public:
 
 private:
     void pointcheck(lexer*,dive*,double*,double*,double*);
-    
     double xmin,xmax,ymin,ymax,zmin,zmax;
     
     int Np;

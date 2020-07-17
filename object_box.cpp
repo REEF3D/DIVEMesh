@@ -30,26 +30,24 @@ box::box(lexer *p, int rank, int side) : eps(1.0e-5*p->dx)
     box_side = side;
     box_type = 10;
 
-    xs = p->O10_xs[rank]-p->xmin;
-    xe = p->O10_xe[rank]-p->xmin;
+    xs = p->O10_xs[rank];
+    xe = p->O10_xe[rank];
 
-    ys = p->O10_ys[rank]-p->ymin;
-    ye = p->O10_ye[rank]-p->ymin;
+    ys = p->O10_ys[rank];
+    ye = p->O10_ye[rank];
 
-    zs = p->O10_zs[rank]-p->zmin;
-    ze = p->O10_ze[rank]-p->zmin;	
+    zs = p->O10_zs[rank];
+    ze = p->O10_ze[rank];	
     
 
-    istart = p->posc_i(xs+p->xmin);
-    iend = p->posc_i(xe+p->xmin);
+    istart = p->posc_i(xs);
+    iend = p->posc_i(xe);
     
-    jstart = p->posc_j(ys+p->ymin);
-    jend = p->posc_j(ye+p->ymin);
+    jstart = p->posc_j(ys);
+    jend = p->posc_j(ye);
     
-    //cout<<"box: "<<jstart<<" "<<jend<<endl;
-    
-    kstart = p->posc_k(zs+p->zmin);
-    kend = p->posc_k(ze+p->zmin);
+    kstart = p->posc_k(zs);
+    kend = p->posc_k(ze);
 
 
     if(xe>=xs)

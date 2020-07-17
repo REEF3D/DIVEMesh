@@ -23,21 +23,21 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 double lexer::posc_x()
 {
-    double pos=XP[IP]+xmin;
+    double pos=XP[IP];
 
     return pos;
 }
 
 double lexer::posc_y()
 {
-    double pos=YP[JP]+ymin;
+    double pos=YP[JP];
 
     return pos;
 }
 
 double lexer::posc_z()
 {
-    double pos=ZP[KP]+zmin;
+    double pos=ZP[KP];
 
     return pos;
 }
@@ -50,7 +50,6 @@ int lexer::posf_i(double xs)
     is = -marge;
     ie = knox+marge+1;
     
-    xs-=xmin;
     
     count=0;
     do{
@@ -128,8 +127,7 @@ int lexer::posf_j(double ys)
     int count=0;
     js = -marge;
     je = knoy+marge+1;
-    
-    ys-=ymin;
+
     
     count=0;
     do{
@@ -208,8 +206,7 @@ int lexer::posf_k(double zs)
     int count=0;
     ks = -marge;
     ke = knoz+marge+1;
-    
-    zs-=zmin;
+
     
     count=0;
     do{
@@ -301,8 +298,6 @@ int lexer::posc_i(double xs)
     is = -marge;
     ie = knox+marge;
     
-    xs-=xmin;
-    
     count=0;
     do{
     iloc = ihalf(is,ie);
@@ -377,8 +372,6 @@ int lexer::posc_j(double ys)
     int count=0;
     js = -marge;
     je = knoy+marge;
-    
-    ys-=ymin;
     
     count=0;
     do{
@@ -456,9 +449,8 @@ int lexer::posc_k(double zs)
     int count=0;
     ks = -marge;
     ke = knoz+marge;
-    
-    zs-=zmin;
-    
+
+
     count=0;
     do{
     kloc = ihalf(ks,ke);

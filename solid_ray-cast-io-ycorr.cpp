@@ -100,13 +100,13 @@ void solid::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
 		{
 			
 		
-		Px = p->XP[IP]+psi + p->xmin;
+		Px = p->XP[IP]+psi;
 		Py = p->ymin-10.0*p->DXM ;
-		Pz = p->ZP[KP]+psi + p->zmin;
+		Pz = p->ZP[KP]+psi;
 		
-		Qx = p->XP[IP]+psi + p->xmin;
+		Qx = p->XP[IP]+psi;
 		Qy = p->ymax+10.0*p->DXM ;
-		Qz = p->ZP[KP]+psi + p->zmin;
+		Qz = p->ZP[KP]+psi;
 		
 		
 		PQx = Qx-Px;
@@ -159,10 +159,10 @@ void solid::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
 
 				for(j=0;j<=a->knoy;++j)
 				{
-				if(p->YP[JP]<Ry-p->ymin)
+				if(p->YP[JP]<Ry)
 				cutr(i,j,k) += 1;
 				
-				if(p->YP[JP]>=Ry-p->ymin)
+				if(p->YP[JP]>=Ry)
 				cutl(i,j,k) += 1;
 				}
 			}

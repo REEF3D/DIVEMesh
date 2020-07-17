@@ -159,10 +159,10 @@ void solid::ray_cast_io_x(lexer* p, dive* a, int ts, int te)
 
 				for(i=0;i<=a->knox;++i)
 				{
-				if(p->XP[IP]<Rx-p->xmin)
+				if(p->XP[IP]<Rx)
 				cutr(i,j,k) += 1;
 				
-				if(p->XP[IP]>=Rx-p->xmin)
+				if(p->XP[IP]>=Rx)
 				cutl(i,j,k) += 1;
 				}
 			}

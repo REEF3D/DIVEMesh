@@ -144,8 +144,8 @@ void solid::ray_cast_stl(lexer* p, dive* a)
 			Ry = u*Ay + v*By + w*Cy;
 			Rz = u*Az + v*Bz + w*Cz;
 			
-			//ir = int((Rx-p->xmin)/p->DXM - 0.5);
-           ir = p->posc_i(Rx-p->xmin);
+			//ir = int((Rx)/p->DXM - 0.5);
+           ir = p->posc_i(Rx);
 			
 			
 				for(i=0;i<=a->knox;++i)

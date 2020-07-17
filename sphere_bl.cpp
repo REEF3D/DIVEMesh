@@ -31,9 +31,9 @@ sphere_bl::sphere_bl(lexer *pp, int rank, int side) : eps(1.0e-9), psi(1.0e-9*pp
     sphere_bl_side = side;
     sphere_bl_type = 21;
 
-    xm=p->B22_xm[rank]-p->xmin;
-    ym=p->B22_ym[rank]-p->ymin;
-    zm=p->B22_zm[rank]-p->zmin;
+    xm=p->B22_xm[rank];
+    ym=p->B22_ym[rank];
+    zm=p->B22_zm[rank];
     r=p->B22_r[rank];
 
     xs = xm-r;

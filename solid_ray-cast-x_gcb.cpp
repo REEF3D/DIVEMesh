@@ -108,12 +108,12 @@ void solid::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te)
 			
 		
 		Px = p->xmin-10.0*p->dx ;
-		Py = p->YP[JP] + p->ymin;
-		Pz = p->ZP[KP] + p->zmin;
+		Py = p->YP[JP];
+		Pz = p->ZP[KP];
 		
 		Qx = p->xmax+10.0*p->dx ;
-		Qy = p->YP[JP] + p->ymin;
-		Qz = p->ZP[KP] + p->zmin;
+		Qy = p->YP[JP];
+		Qz = p->ZP[KP];
 		
 		
 		PQx = Qx-Px;

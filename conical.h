@@ -70,7 +70,6 @@ public:
     virtual int neighbor2();
 
 private:
-	double xmin,ymin,zmin;
     double xs,xe,ys,ye,zs,ze;
     double xsmall,xlarge,ysmall,ylarge,zsmall,zlarge;
     double xm,ym,r,d;

@@ -286,19 +286,19 @@ NLOOP
 // Nodes XYZ
     SNODEILOOP
     {
-    ddn = p->XN[IP]+p->xmin;
+    ddn = p->XN[IP];
     result.write((char*)&ddn, sizeof (double));
     }
     
     SNODEJLOOP
     {
-    ddn = p->YN[JP]+p->ymin;
+    ddn = p->YN[JP];
     result.write((char*)&ddn, sizeof (double));
     }
     
     SNODEKLOOP
     {
-    ddn = p->ZN[KP]+p->zmin;
+    ddn = p->ZN[KP];
     result.write((char*)&ddn, sizeof (double));
     }
 
@@ -306,19 +306,19 @@ NLOOP
 // Nodes RST
     SNODEILOOP
     {
-    ddn = p->RN[IP]+p->xmin;
+    ddn = p->RN[IP];
     result.write((char*)&ddn, sizeof (double));
     }
     
     SNODEJLOOP
     {
-    ddn = p->SN[JP]+p->ymin;
+    ddn = p->SN[JP];
     result.write((char*)&ddn, sizeof (double));
     }
     
     SNODEKLOOP
     {
-    ddn = p->TN[KP]+p->zmin;
+    ddn = p->TN[KP];
     result.write((char*)&ddn, sizeof (double));
     }
 
@@ -389,11 +389,11 @@ NLOOP
 // CC POINTS
     for(q=0;q<a->ccptnum[count];q++)
     {
-    ddn = a->ccloc[count][q][0]+p->xmin;
+    ddn = a->ccloc[count][q][0];
     result.write((char*)&ddn, sizeof (double));
-    ddn = a->ccloc[count][q][1]+p->ymin;
+    ddn = a->ccloc[count][q][1];
     result.write((char*)&ddn, sizeof (double));
-    ddn = a->ccloc[count][q][2]+p->zmin;
+    ddn = a->ccloc[count][q][2];
     result.write((char*)&ddn, sizeof (double));
     }
 

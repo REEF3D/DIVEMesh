@@ -25,8 +25,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 double data::inverse_dist_2D(lexer *p, dive *a)
 {	
-    xc = p->XP[IP]+p->xmin;
-    yc = p->YP[JP]+p->ymin;
+    xc = p->XP[IP];
+    yc = p->YP[JP];
 
     g=0.0;
     wsum=0.0;
@@ -38,7 +38,6 @@ double data::inverse_dist_2D(lexer *p, dive *a)
     g += (inverse_dist_w(p)*p->D10_data[n]);
 	
 	g/=wsum;
-	
 	
 
     return g;

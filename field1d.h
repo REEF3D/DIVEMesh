@@ -38,7 +38,6 @@ public:
 
 private:
 	double *feld;
-	int xmin;
 	int dx;
 
 };

@@ -99,12 +99,12 @@ void solid::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 		for(i=is;i<ie;i++)
 		for(j=js;j<je;j++)
 		{
-		Px = p->XP[IP]+psi + p->xmin;
-		Py = p->YP[JP]+psi + p->ymin;
+		Px = p->XP[IP]+psi;
+		Py = p->YP[JP]+psi;
 		Pz = p->zmin-10.0*p->DXM ;
 		
-		Qx = p->XP[IP]+psi + p->xmin;
-		Qy = p->YP[JP]+psi + p->ymin;
+		Qx = p->XP[IP]+psi;
+		Qy = p->YP[JP]+psi;
 		Qz = p->zmax+10.0*p->DXM ;
 		
 		
@@ -158,10 +158,10 @@ void solid::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 
 				for(k=0;k<=a->knoz;++k)
 				{
-				if(p->ZP[KP]<Rz-p->zmin)
+				if(p->ZP[KP]<Rz)
 				cutr(i,j,k) += 1;
 				
-				if(p->ZP[KP]>=Rz-p->zmin)
+				if(p->ZP[KP]>=Rz)
 				cutl(i,j,k) += 1;
 				}
 			}

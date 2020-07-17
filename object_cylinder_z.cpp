@@ -31,8 +31,8 @@ cylinder_z::cylinder_z(lexer *pp, int rank, int side) : eps(1.0e-5*pp->dx), psi(
     cylinder_z_side = side;
     cylinder_z_type = 33;
 
-    xm=p->O33_xm[rank]-p->xmin;
-    ym=p->O33_ym[rank]-p->ymin;
+    xm=p->O33_xm[rank];
+    ym=p->O33_ym[rank];
     r=p->O33_r[rank];
 
     xs = xm-r;

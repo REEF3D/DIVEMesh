@@ -168,7 +168,7 @@ int& index
         {
             for (int i = 0; i < knotp_1; i++)
             {
-                XN[i + marge] = p1 + dp_1*double(i);
+                XN[i + marge] = p1 + dp_1*double(i)  + xmin;
             }
 
             lp = p3 - p2;
@@ -176,19 +176,19 @@ int& index
             
             for (int i = 0; i <= knotp_2; i++)
             {
-                XN[knotp_1 + i + marge] = p2 + lp * (sinh(sf*(1.0/double(knotp_2)*double(i)-c)) - sinh(-sf*c)) / (sinh(sf*(1.0-c))-sinh(-sf*c));      
+                XN[knotp_1 + i + marge] = p2 + lp * (sinh(sf*(1.0/double(knotp_2)*double(i)-c)) - sinh(-sf*c)) / (sinh(sf*(1.0-c))-sinh(-sf*c)) + xmin;      
             }
 
             for (int i = 1; i <= knotp_3; i++)
             {
-                XN[knotp_1 + knotp_2 + i + marge] = p3 + dp_3*double(i);     
+                XN[knotp_1 + knotp_2 + i + marge] = p3 + dp_3*double(i) + xmin;    
             }             
         }
         else if (index == 2) // y-field
         {
             for (int i = 0; i < knotp_1; i++)
             {
-                YN[i + marge] = p1 + dp_1*double(i);
+                YN[i + marge] = p1 + dp_1*double(i) + ymin;
             }
 
             lp = p3 - p2;
@@ -196,19 +196,19 @@ int& index
             
             for (int i = 0; i <= knotp_2; i++)
             {
-                YN[knotp_1 + i + marge] = p2 + lp * (sinh(sf*(1.0/double(knotp_2)*double(i)-c)) - sinh(-sf*c)) / (sinh(sf*(1.0-c))-sinh(-sf*c));      
+                YN[knotp_1 + i + marge] = p2 + lp * (sinh(sf*(1.0/double(knotp_2)*double(i)-c)) - sinh(-sf*c)) / (sinh(sf*(1.0-c))-sinh(-sf*c)) + ymin;      
             }
 
             for (int i = 1; i <= knotp_3; i++)
             {
-                YN[knotp_1 + knotp_2 + i + marge] = p3 + dp_3*double(i);    
+                YN[knotp_1 + knotp_2 + i + marge] = p3 + dp_3*double(i) + ymin;    
             }               
         }
         else    // z-field
         {
             for (int i = 0; i < knotp_1; i++)
             {
-                ZN[i + marge] = p1 + dp_1*double(i);
+                ZN[i + marge] = p1 + dp_1*double(i) + zmin;
             }
 
             lp = p3 - p2;
@@ -216,12 +216,12 @@ int& index
             
             for (int i = 0; i <= knotp_2; i++)
             {
-                ZN[knotp_1 + i + marge] = p2 + lp * (sinh(sf*(1.0/double(knotp_2)*double(i)-c)) - sinh(-sf*c)) / (sinh(sf*(1.0-c))-sinh(-sf*c));      
+                ZN[knotp_1 + i + marge] = p2 + lp * (sinh(sf*(1.0/double(knotp_2)*double(i)-c)) - sinh(-sf*c)) / (sinh(sf*(1.0-c))-sinh(-sf*c)) + zmin;      
             }
 
             for (int i = 1; i <= knotp_3; i++)
             {
-                ZN[knotp_1 + knotp_2 + i + marge] = p3 + dp_3*double(i);    
+                ZN[knotp_1 + knotp_2 + i + marge] = p3 + dp_3*double(i) + zmin;    
             } 
         }
     }

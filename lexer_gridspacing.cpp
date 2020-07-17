@@ -84,13 +84,13 @@ void lexer::gridspacing()
 
     
     for(i=0;i<knox+1;++i)
-    XN[IP] = RN[IP] = double(i)*ddx;
+    XN[IP] = RN[IP] = double(i)*ddx + xmin;
     
     for(j=0;j<knoy+1;++j)
-    YN[JP] = SN[JP] = double(j)*ddy;
+    YN[JP] = SN[JP] = double(j)*ddy + ymin;
     
     for(k=0;k<knoz+1;++k)
-    ZN[KP] = TN[KP] = double(k)*ddz;
+    ZN[KP] = TN[KP] = double(k)*ddz + zmin;
     
     cout<<".";
     

@@ -39,11 +39,7 @@ public:
 
 private:
 	double **feld;
-	int xmin,ymin;
 	int dx,dy;
-
-
-
 
 };
 

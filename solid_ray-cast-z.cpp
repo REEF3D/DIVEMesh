@@ -93,12 +93,12 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 		for(i=is;i<ie;i++)
 		for(j=js;j<je;j++)
 		{
-		Px = p->XP[IP]+psi + p->xmin;
-		Py = p->YP[JP]+psi + p->ymin;
+		Px = p->XP[IP]+psi;
+		Py = p->YP[JP]+psi;
 		Pz = p->zmin-10.0*p->DXM ;
 		
-		Qx = p->XP[IP]+psi + p->xmin;
-		Qy = p->YP[JP]+psi + p->ymin;
+		Qx = p->XP[IP]+psi;
+		Qy = p->YP[JP]+psi;
 		Qz = p->zmax+10.0*p->DXM ;
 		
 		
@@ -160,7 +160,7 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 
             if(distcheck==1)
 			for(k=0;k<p->knoz;++k)
-			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]-p->zmin),a->solid_dist(i,j,k));
+			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]),a->solid_dist(i,j,k));
             
             if(Rz>p->zmin && Rz<p->zmax)
             {

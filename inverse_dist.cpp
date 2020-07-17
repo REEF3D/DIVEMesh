@@ -54,8 +54,8 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
 double inverse_dist::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {    
 
-    xc = XC[IP]+p->xmin;
-    yc = YC[JP]+p->ymin;
+    xc = XC[IP];
+    yc = YC[JP];
 
     g=0.0;
     wsum=0.0;

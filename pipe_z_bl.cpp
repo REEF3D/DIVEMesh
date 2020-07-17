@@ -31,8 +31,8 @@ pipe_z_bl::pipe_z_bl(lexer *pp, int rank, int side) : eps(1.0e-5*pp->dx), psi(1.
     pipe_z_bl_side = side;
     pipe_z_bl_type = 31;
 
-    ym=p->B33_ym[rank]-p->ymin;
-    xm=p->B33_xm[rank]-p->xmin;
+    ym=p->B33_ym[rank];
+    xm=p->B33_xm[rank];
     r=p->B33_r[rank];
 
     xs = xm-r;

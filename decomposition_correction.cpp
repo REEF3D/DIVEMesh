@@ -266,7 +266,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	}
 	
 	for(aa=0;aa<=a->mx;++aa)
-    a->xorig[aa] = p->XN[a->xnode[aa]+marge]+p->xmin;
+    a->xorig[aa] = p->XN[a->xnode[aa]+marge];
 	
 	xcount_sum=0;
 	for(aa=1;aa<=a->mx;++aa)

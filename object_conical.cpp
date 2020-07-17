@@ -32,15 +32,12 @@ conical::conical(lexer *pp, int rank, int side) : eps(1.0e-3*pp->dx), psi(1.0e-9
     conical_side = side;
     conical_type = 43;
 	
-	xmin = p->xmin;
-	ymin = p->ymin;
-	zmin = p->zmin;
 
-    xm=p->O43_xm[rank]-p->xmin;
-    ym=p->O43_ym[rank]-p->ymin;
+    xm=p->O43_xm[rank];
+    ym=p->O43_ym[rank];
 	
-	z1=p->O43_z1[rank]-p->zmin;
-	z2=p->O43_z2[rank]-p->zmin;
+	z1=p->O43_z1[rank];
+	z2=p->O43_z2[rank];
 	
     r1=p->O43_r1[rank];
 	r2=p->O43_r2[rank];
@@ -110,7 +107,7 @@ double conical::fx(lexer *p, dive *a, int ii, int jj, int kk)
 
     xn = p->XN[II]-xm;
     yn = p->YN[JJ]-ym;
-	zn = p->ZN[KK]-p->zmin;
+	zn = p->ZN[KK];
 	
 	r = ((r2-r1)/(z2-z1))*zn + r1; 
 
@@ -134,7 +131,7 @@ double conical::fy(lexer *p, dive *a, int ii, int jj, int kk)
 {
     xn = p->XN[II]-xm;
     yn = p->YN[JJ]-ym;
-	zn = p->ZN[KK]-p->zmin;
+	zn = p->ZN[KK];
 	
 	r = ((r2-r1)/(z2-z1))*zn + r1; 
 
@@ -173,7 +170,7 @@ double conical::cfx(lexer *p, dive *a, int ii, int jj, int kk)
 {
     xc = p->XP[II]-xm;
     yc = p->YP[JJ]-ym;
-	zc = p->ZP[KK]-p->zmin;
+	zc = p->ZP[KK];
 	
 	r = ((r2-r1)/(z2-z1))*zn + r1; 
 
@@ -198,7 +195,7 @@ double conical::cfy(lexer *p, dive *a, int ii, int jj, int kk)
 {
     xc = p->XP[II]-xm;
     yc = p->YP[JJ]-ym;
-	zc = p->ZP[KK]-p->zmin;
+	zc = p->ZP[KK];
 	
 	r = ((r2-r1)/(z2-z1))*zn + r1; 
 
@@ -290,7 +287,7 @@ int conical::neighbor2()
 
 int conical::xdir(int ii, int jj, int kk)
 {
-    xn = p->XP[II]-xmin;
+    xn = p->XP[II];
 
     if(xn>=xm)
     conical_xdir=1;
@@ -303,7 +300,7 @@ int conical::xdir(int ii, int jj, int kk)
 
 int conical::ydir(int ii, int jj, int kk)
 {
-    yn = p->YP[JJ]-ymin;
+    yn = p->YP[JJ];
 
     if(yn>=ym)
     conical_ydir=3;
@@ -353,36 +350,36 @@ int conical::inbound_onnode(int ii,int jj, int kk)
 
     x[0] = p->XN[II]-xm;
     y[0] = p->YN[JJ]-ym;
-    z[0] = p->ZN[KK]-zmin;
+    z[0] = p->ZN[KK];
 
     x[1] = p->XN[IIP1]-xm;
     y[1] = p->YN[JJ]-ym;
-    z[1] = p->ZN[KK]-zmin;
+    z[1] = p->ZN[KK];
 
     x[2] = p->XN[IIP1]-xm;
     y[2] = p->YN[JJ]-ym;
-    z[2] = p->ZN[KK]-zmin;
+    z[2] = p->ZN[KK];
 
     x[3] = p->XN[II]-xm;
     y[3] = p->YN[JJP1]-ym;
-    z[3] = p->ZN[KK]-zmin;
+    z[3] = p->ZN[KK];
 
 
     x[4] = p->XN[II]-xm;
     y[4] = p->YN[JJ]-ym;
-    z[4] = p->ZN[KKP1]-zmin;
+    z[4] = p->ZN[KKP1];
 
     x[5] = p->XN[IIP1]-xm;
     y[5] = p->YN[JJ]-ym;
-    z[5] = p->ZN[KKP1]-zmin;
+    z[5] = p->ZN[KKP1];
 
     x[6] = p->XN[IIP1]-xm;
     y[6] = p->YN[JJP1]-ym;
-    z[6] = p->ZN[KKP1]-zmin;
+    z[6] = p->ZN[KKP1];
 
     x[7] = p->XN[II]-xm;
     y[7] = p->YN[JJP1]-ym;
-    z[7] = p->ZN[KKP1]-zmin;
+    z[7] = p->ZN[KKP1];
 
 
     count=0;
@@ -412,7 +409,7 @@ int conical::flag_val(int ii, int jj, int kk)
 
     xc = p->XP[II]-xm;
     yc = p->YP[JJ]-ym;
-	zc = p->ZP[KK]-zmin;
+	zc = p->ZP[KK];
 	
 	r = ((r2-r1)/(z2-z1))*zc + r1; 
 	

@@ -165,6 +165,7 @@
         <File Name="bc.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Surface">
+        <File Name="surface_plate.cpp"/>
         <File Name="surface.cpp"/>
         <File Name="surface_dir.cpp"/>
         <File Name="surface_dist.cpp"/>
@@ -305,6 +306,8 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
+      <File Name="solid_plate_z.cpp"/>
+      <File Name="solid_plate_y.cpp"/>
       <File Name="solid_fluvial_box.cpp"/>
       <File Name="solid.cpp"/>
       <File Name="solid_box.cpp"/>
