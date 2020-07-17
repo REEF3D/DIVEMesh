@@ -37,6 +37,7 @@ void surface::start(lexer* p, dive* a)
     normalvec(p,a);
     direction(p,a);
     makesurf(p,a);
+    makesurf_plate(p,a);
     makedist(p,a);
     ccactive(p,a);
     makesurfsolid(p,a);
@@ -47,7 +48,7 @@ void surface::mem_alloc(lexer* p, dive* a)
     cout<<"surface"<<endl;
     a->surfcount=0;
 	
-	int surfnum=0;
+	surfnum=0;
 
     LOOP
     if(a->flag(i,j,k)==-20)
@@ -75,7 +76,7 @@ void surface::mem_alloc(lexer* p, dive* a)
         ++surfnum;
     }
     
-    
+    mem_alloc_plate(p,a);
 	
 	cout<<"surfnum: "<<surfnum<<"  surfnum_solid: "<<a->surfcount_solid<<endl;
     

@@ -25,32 +25,73 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void surface::mem_alloc_plate(lexer* p, dive* a)
 {
+    int js,je,ks,ke;
+ 
+    for(qn=0;qn<p->S201;++qn)
+    {
+
+        js = p->posc_j(p->S201_ys[qn]);
+        je = p->posc_j(p->S201_ye[qn]);
+        
+        ks = p->posc_k(p->S201_zs[qn]);
+        ke = p->posc_k(p->S201_ze[qn]);
+        
+        for(j=js;j<=je;++j)
+        for(k=ks;k<=ke;++k)
+        ++surfnum;
+        
+        for(j=js;j<=je;++j)
+        for(k=ks;k<=ke;++k)
+        ++surfnum;
+    }
+}
+
+void surface::makesurf_plate(lexer* p, dive* a)
+{
     
     double locx;
+    int loci;
+    int js,je,ks,ke;
  
-   /* for(qn=0;qn<p->S201;++qn)
+    for(qn=0;qn<p->S201;++qn)
     {
         //left
         ILOOP
-        if(XP[IP])
+        if(p->XP[IP]<p->S201_x[qn] && p->XP[IP1]>=p->S201_x[qn])
         {
-            
-            
+        js = p->posc_j(p->S201_ys[qn]);
+        je = p->posc_j(p->S201_ye[qn]);
+        
+        ks = p->posc_k(p->S201_zs[qn]);
+        ke = p->posc_k(p->S201_ze[qn]);
+        
+        for(j=js;j<=je;++j)
+        for(k=ks;k<=ke;++k)
+        {
+        a->surf[a->surfcount][0]=i;
+        a->surf[a->surfcount][1]=j;
+        a->surf[a->surfcount][2]=k;
+        a->surf[a->surfcount][3]=4;
+        a->surf[a->surfcount][4]=21;
+        a->surfcount++;
         }
         
-        i = p->posc_i(p->S201_x[qn]);
+        for(j=js;j<=je;++j)
+        for(k=ks;k<=ke;++k)
+        {
+        a->surf[a->surfcount][0]=i+1;
+        a->surf[a->surfcount][1]=j;
+        a->surf[a->surfcount][2]=k;
+        a->surf[a->surfcount][3]=1;
+        a->surf[a->surfcount][4]=21;
+        a->surfcount++;
+        }
         
-        locx = p->posc_x();
+        }
         
-        if(locx>p->S201_x[qn])
-        i--;
-        
+
         
     }
-    */
-    
-    
-    
-    
+   
     
 }

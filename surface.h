@@ -49,12 +49,15 @@ public:
     
     
     void mem_alloc_plate(lexer*,dive*);
+    void makesurf_plate(lexer*,dive*);
     
     
 
 private:
     void normalvec(lexer*,dive*);
     double distcalc(lexer*,dive*,int,int,int,int,int,int,int);
+    
+    int surfnum;
 };
 
 #endif
