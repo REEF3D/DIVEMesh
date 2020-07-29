@@ -21,7 +21,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 #include"interpolation.h"
 #include"increment.h"
-#define ICFLAG if(ic>=-3&&ic<kx-3&&jc>=-3&&jc<ky-3)
+#define ICFLAG if(ic>=-3 && ic<kx+3 && jc>=-3 && jc<ky+3)
 class lexer;
 class dive;
 

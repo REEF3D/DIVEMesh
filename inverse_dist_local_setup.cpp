@@ -86,6 +86,7 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     ic = p->poscgen_i(Fx[n],XC,kx);
     jc = p->poscgen_j(Fy[n],YC,ky);
     
+    cout<<"ic: "<<ic<<"  jc: "<<jc<<endl;
     ICFLAG
     {
     ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
@@ -102,7 +103,6 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     
     cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" R: "<<R<<" dij: "<<dij<<endl;
 }
-
 
 void inverse_dist_local::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
 {
@@ -127,11 +127,9 @@ void inverse_dist_local::pointcheck(lexer *p, dive *a, double *X, double *Y, dou
 			X[q] = X[Np-1];
 			Y[q] = Y[Np-1];
 			F[q] = F[Np-1];
-			-- Np;
+			--Np;
 			--q;
 			++count;
-			
-			
 			}
 		}
 	}
