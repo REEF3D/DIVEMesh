@@ -67,7 +67,7 @@ double inverse_dist_local::gxy(lexer *p, dive *a, double *Fx, double *Fy, double
         js=MAX(j-dij-cp,-3);
         je=MIN(j+dij+cp,Ny-3);
         
-        cout<<counter<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
+        //cout<<counter<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
         
         zmean=0.0;
         count=0;
