@@ -101,12 +101,12 @@ void solid::ray_cast_io_x(lexer* p, dive* a, int ts, int te)
 		for(k=ks;k<ke;k++)
 		{
 		Px = p->xmin-10.0*p->DXM;
-		Py = p->YP[JP]+psi + p->ymin;
-		Pz = p->ZP[KP]+psi + p->zmin;
+		Py = p->YP[JP]+psi;
+		Pz = p->ZP[KP]+psi;
 		
 		Qx = p->xmax+10.0*p->DXM;
-		Qy = p->YP[JP]+psi + p->ymin;
-		Qz = p->ZP[KP]+psi + p->zmin;
+		Qy = p->YP[JP]+psi;
+		Qz = p->ZP[KP]+psi;
 		
 		
 		PQx = Qx-Px;
