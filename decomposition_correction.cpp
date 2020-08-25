@@ -860,5 +860,9 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	for(q=0;q<p->M10;++q)
 	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 	
-
+    
+    for(bb=0;bb<=a->my;++bb)
+	ddout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  xnode: "<<a->ynode[bb]<<"  xorig: "<<a->yorig[bb]<<endl;
+	
+	ddout<<"ycount_sum: "<<ycount_sum<<endl;
 }

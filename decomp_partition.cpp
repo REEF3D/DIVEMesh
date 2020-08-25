@@ -79,7 +79,7 @@ void decomp::partition(lexer* p, dive* a)
 		xid=0;
 	//cout<<"XORIG: "<<p->XN[posx+xid+marge]<<" XORIG*: "<<double((posx+xid)*p->dx)<<endl;
     
-    a->xorig[n]=a->xorig[n-1] + p->XN[posx+xid+marge];
+    a->xorig[n]=p->XN[posx+xid+marge];
     a->xnode[n]=a->xnode[n-1] + (posx+xid);
 	}
     
@@ -91,24 +91,27 @@ void decomp::partition(lexer* p, dive* a)
     {
 		if(n>=ydiff)
 		yid=0;
-    //cout<<"YORIG: "<<p->YN[posy+yid]<<" YORIG*: "<<double((posy+yid)*p->dx)<<endl;
+    cout<<"YORIG: "<<p->YN[posy+yid+marge]<<" YORIG*: "<<double((posy+yid)*p->dx)<<endl;
     
-    a->yorig[n]=a->yorig[n-1] + p->YN[posy+yid+marge];
+    a->yorig[n]=p->YN[posy+yid+marge];
     a->ynode[n]=a->ynode[n-1] + (posy+yid);
     }
+    
+    for(bb=0;bb<=a->my;++bb)
+	cout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  xnode: "<<a->ynode[bb]<<"  xorig: "<<a->yorig[bb]<<endl;
 
     for(n=1;n<a->mz;n++)
     {
 		if(n>=zdiff)
 		zid=0;
 		
-    //cout<<"ZORIG: "<<p->ZN[posz+zid]<<" ZORIG*: "<<double((posz+zid)*p->dx)<<endl;
+    //cout<<"ZORIG: "<<p->ZN[posz+zid+marge]<<" ZORIG*: "<<double((posz+zid)*p->dx)<<endl;
     
-    a->zorig[n]=a->zorig[n-1] + p->ZN[posz+zid+marge];
+    a->zorig[n]=p->ZN[posz+zid+marge];
     a->znode[n]=a->znode[n-1] + (posz+zid);
     }
-
-
+    
+    
 
     MALOOP
     {

@@ -324,7 +324,11 @@ void lexer::read_control()
                          clear(c,numint);
 						 break;
                 case 37: control>>G37;
+                        if(G37>0)
                         G37_select=1;
+                        
+                        if(G37<0)
+                        G37_select=-1;
                          clear(c,numint);
 						 break;
                 case 38: control>>G38;

@@ -86,7 +86,7 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     ic = p->poscgen_i(Fx[n],XC,kx);
     jc = p->poscgen_j(Fy[n],YC,ky);
     
-    cout<<"ic: "<<ic<<"  jc: "<<jc<<endl;
+    //cout<<"ic: "<<ic<<"  jc: "<<jc<<endl;
     ICFLAG
     {
     ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
@@ -112,7 +112,7 @@ void inverse_dist_local::pointcheck(lexer *p, dive *a, double *X, double *Y, dou
     double fac=0.1;
     
     
-    if(p->G37_select==0)
+    if(p->G37==0)
 	for(n=0; n< Np; ++n)
 	{
 		for(q=0; q< Np; ++q)
@@ -135,7 +135,7 @@ void inverse_dist_local::pointcheck(lexer *p, dive *a, double *X, double *Y, dou
 	}
     
     
-    if(p->G37_select==1)
+    if(p->G37>0)
     do{
     epsi=fac*p->DXYM;
     
