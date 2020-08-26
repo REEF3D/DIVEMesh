@@ -71,7 +71,9 @@ void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
         ie=MIN(i+dij,p->knox+dd);
         
         js=MAX(j-dij,-dd);
-        je=MIN(j+dij,p->knoy+dd);  
+        je=MIN(j+dij,p->knoy+dd); 
+
+//cout<<"is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<endl; 
 
         for(r=is;r<ie;++r)
         {
