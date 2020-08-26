@@ -27,16 +27,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 // source:
 
 kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
-{
-	Np = numpt;
-    
-	
+{    	
 	xmin=ymin=1.0e15;
 	xmax=ymax=-1.0e15;
 	mean=0.0;
 	
 	
-	for(n=0; n<Np; ++n)
+	for(n=0; n<p->Np; ++n)
 	{
 	xmin = MIN(xmin,X[n]);
 	xmax = MAX(xmax,X[n]);
@@ -49,13 +46,13 @@ kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 	
 	range = p->D18*sqrt(pow(xmax-xmin,2.0) + pow(ymax-ymin,2.0));
 	
-	mean/=double(Np);
+	mean/=double(p->Np);
 	
 	variance=0.0;
-	for(n=0; n<Np; ++n)
+	for(n=0; n<p->Np; ++n)
 	variance += pow(F[n] - mean, 2.0);
 	
-	variance/=double(Np);
+	variance/=double(p->Np);
 	
 	cout<<"mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
 }
@@ -66,16 +63,16 @@ kriging::~kriging()
 
 void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *F, double *XC, double *YC, int kx, int ky, double **f)
 {
-    //Np=numpt;
-	cout<<"kriging  Np: "<<Np<<endl;
+    //p->Np=numpt;
+	cout<<"kriging  p->Np: "<<p->Np<<endl;
 	
-	p->Darray(A,Np+1,Np+1);
-	p->Darray(B,Np+1,Np+1);
+	p->Darray(A,p->Np+1,p->Np+1);
+	p->Darray(B,p->Np+1,p->Np+1);
 
-	p->Darray(b,Np+1);
-	p->Darray(x,Np+1);
-	p->Darray(s,Np+1);
-	p->Darray(row,Np+1);
+	p->Darray(b,p->Np+1);
+	p->Darray(x,p->Np+1);
+	p->Darray(s,p->Np+1);
+	p->Darray(row,p->Np+1);
 
     
     
@@ -83,23 +80,23 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 	
 	
 	cout<<"fill Aij"<<endl;
-	for(n=0; n<Np; ++n)
-	for(q=0; q<Np; ++q)
+	for(n=0; n<p->Np; ++n)
+	for(q=0; q<p->Np; ++q)
 	{
 		dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
         	
 		A[n][q] = semivariogram(dist); 
 	}
 
-	n=Np;
-	for(q=0; q<Np; ++q)
+	n=p->Np;
+	for(q=0; q<p->Np; ++q)
 	A[n][q] = 1.0; 
 	
-	q=Np;
-	for(n=0; n<Np; ++n)
+	q=p->Np;
+	for(n=0; n<p->Np; ++n)
 	A[n][q] = 1.0; 
 	
-	A[Np][Np] = 0.0; 	
+	A[p->Np][p->Np] = 0.0; 	
 	
 	rearrange(p);
 	
@@ -120,7 +117,7 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 	xc = XC[IP];
     yc = YC[JP];
 	
-		for(n=0; n<Np; ++n)
+		for(n=0; n<p->Np; ++n)
 		{
 			dist = sqrt(pow(xc-X[n],2.0) + pow(yc-Y[n],2.0));
 		
@@ -128,7 +125,7 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
             
 		}
 		
-		b[Np]=1.0;
+		b[p->Np]=1.0;
 		
 		rearrange_b(p);
 
@@ -136,14 +133,14 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 	matvec(p,B,b,x);
 	
 		val=0.0;
-		for(n=0; n<Np; ++n)
+		for(n=0; n<p->Np; ++n)
         {
 		val += x[n];
 		}
         if(count%1000==0)
 		cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
 		
-	for(n=0; n<Np; ++n)
+	for(n=0; n<p->Np; ++n)
 	f[i][j] += x[n] * F[n];
 	
 	++count;

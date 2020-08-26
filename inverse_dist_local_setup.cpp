@@ -47,9 +47,6 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     // Grid
     dd = 3;
     
-    //Nx = MAX(p->knox+2*dd+1,int((xmax-xmin)/p->DXM)+2*dd+1);
-    //Ny = MAX(p->knoy+2*dd+1,int((ymax-ymin)/p->DXM)+2*dd+1);
-    
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 

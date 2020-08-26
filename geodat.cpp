@@ -81,10 +81,10 @@ void geodat::start(lexer* p, dive* a)
     pointcheck(p,a,p->G10_x,p->G10_y,p->G10_z);
     
     print(p,a);
-    
+
     coarsen(p,a);
 
-    pipol->start(p,a,Np,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);
+    pipol->start(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);
     
     prolong(p,a);
     
@@ -125,11 +125,7 @@ void geodat::gcb_estimate(lexer *p, dive *a)
 
 		}
 	++n;
-	}
-    
-    //for(qn=0; qn<p->M10;qn++)
-	//cout<<qn<<" gcb_estimate: "<<a->geodat_gcb[qn]<<endl;
-	
+	}	
 }
 
 void geodat::dryside(lexer *p, dive *a)

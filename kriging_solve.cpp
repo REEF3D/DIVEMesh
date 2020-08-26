@@ -26,31 +26,31 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void kriging::solve(lexer *p,double **A, double *x, double *b)
 {
 	// LU decomp
-	for (r=0; r<Np; r++) 
+	for (r=0; r<p->Np; r++) 
 	{
 	
 	aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
 	
-		for (n=r+1; n<Np; n++) 	
+		for (n=r+1; n<p->Np; n++) 	
 		{
 		A[n][r]=A[n][r]*aii;
 		
-			for (q=r+1; q<Np; q++) 
+			for (q=r+1; q<p->Np; q++) 
 			A[n][q]-=A[r][q]*A[n][r];
 		}
 	}
 	
 	// forward substitution
-	for (q=0;q<Np;++q) 
+	for (q=0;q<p->Np;++q) 
 	{
 		for (n=0;n<q;++n) 
 		b[q]-=A[q][n]*b[n];
 	}
 	
 	// backward substitution
-	for (q=Np-1;q>=0;q--) 
+	for (q=p->Np-1;q>=0;q--) 
 	{ 
-		for (n=1+q; n < Np; n++) 
+		for (n=1+q; n < p->Np; n++) 
 		b[q]-=A[q][n]*b[n];
 	
 	b[q]=b[q]/(fabs(A[q][q])>1.0e-19?A[q][q]:1.0e-19);
@@ -69,19 +69,19 @@ void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
 	cout<<"    invert"<<endl;
     
 	// invert
-	for(q=0;q<Np;++q) 
+	for(q=0;q<p->Np;++q) 
 	{	
         if(q%1000==0)
 		cout<<"column: "<<q<<endl;
 		
-		for(n=0;n<Np;++n)
+		for(n=0;n<p->Np;++n)
 		s[n]=0.0;
 		
 		s[q]=1.0;
 		
 		backsubstitution(p,A,s);
 		
-		for(n=0;n<Np;++n)
+		for(n=0;n<p->Np;++n)
 		B[n][q] = s[n];
 	}
 	
@@ -90,18 +90,18 @@ void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
 void kriging::decomp(lexer *p,double **A,double **B)
 {
 	// LU decomp
-	for(r=0; r<Np; ++r) 
+	for(r=0; r<p->Np; ++r) 
 	{
     if(r%1000==0)
     cout<<"decomp: "<<r<<endl;
 	
 	aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
 	
-		for(n=r+1; n<Np; ++n) 	
+		for(n=r+1; n<p->Np; ++n) 	
 		{
 		A[n][r]=A[n][r]*aii;
 		
-			for(q=r+1; q<Np; q++) 
+			for(q=r+1; q<p->Np; q++) 
 			A[n][q]-=A[r][q]*A[n][r];
 		}
 	}
@@ -112,16 +112,16 @@ void kriging::backsubstitution(lexer *p,double **A, double *b)
 	int qq,nn;
 	
 	// forward substitution
-	for(qq=0;qq<Np;++qq) 
+	for(qq=0;qq<p->Np;++qq) 
 	{	
 		for (nn=0;nn<qq;++nn) 
 		b[qq]-=A[qq][nn]*b[nn]; 
 	}
 	
 	// backward substitution
-	for (qq=Np-1;qq>=0;qq--) 
+	for (qq=p->Np-1;qq>=0;qq--) 
 	{ 
-		for (nn=1+qq; nn < Np; nn++) 
+		for (nn=1+qq; nn < p->Np; nn++) 
 		b[qq]-=A[qq][nn]*b[nn];
 	
 	b[qq]=b[qq]/(fabs(A[qq][qq])>1.0e-19?A[qq][qq]:1.0e-19);
@@ -133,11 +133,11 @@ void kriging::matvec(lexer *p,double **A, double *b, double *x)
 {
 	int qq,nn;
 	
-	for(nn=0;nn<Np;++nn) 
+	for(nn=0;nn<p->Np;++nn) 
 	{	
 		x[nn]=0.0;
 		
-		for(qq=0;qq<Np;++qq)
+		for(qq=0;qq<p->Np;++qq)
 		x[nn]+=A[nn][qq]*b[qq];
 	}
 }
