@@ -21,7 +21,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 #include"interpolation.h"
 #include"increment.h"
-#define ICFLAG if(ic>=-3 && ic<kx+3 && jc>=-3 && jc<ky+3)
+
 class lexer;
 class dive;
 
@@ -41,10 +41,8 @@ public:
     virtual void setup(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
 
 private:
-    void pointcheck(lexer*,dive*,double*,double*,double*);
     double xmin,xmax,ymin,ymax,zmin,zmax;
     
-    int Np;
     int Nx,Ny;
     int count,cp;
     int counter;

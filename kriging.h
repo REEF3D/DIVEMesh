@@ -47,7 +47,6 @@ public:
 	virtual void backsubstitution(lexer*,double**, double*);
 	virtual void matvec(lexer*,double**, double*, double*);
 	virtual void solve(lexer*,double**, double*, double*);
-	virtual void pointcheck(lexer*,dive*,double*,double*,double*);
 
 
 private:

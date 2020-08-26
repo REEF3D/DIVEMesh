@@ -559,7 +559,7 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
         // out of bounds
         if(xs<XC[0])
         {
-            ii = -1;
+            ii = -3;
              
          stop=1;
          break;   
@@ -585,8 +585,8 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
         ++count;
     }while(stop==0 && count<1000);
     
-    ii=MAX(ii,0);
-    ii=MIN(ii,kx-1);
+    ii=MAX(ii,-3);
+    ii=MIN(ii,kx+2);
     
     
     return ii;
@@ -629,7 +629,7 @@ int lexer::poscgen_j(double ys, double *YC, int ky)
         // out of bounds
         if(ys<YC[0])
         {
-            jj = -1;
+            jj = -3;
             
          stop=1;
          break;   
@@ -655,8 +655,8 @@ int lexer::poscgen_j(double ys, double *YC, int ky)
         ++count;
     }while(stop==0 && count<1000);
     
-    jj=MAX(jj,0);
-    jj=MIN(jj,ky-1);
+    jj=MAX(jj,-3);
+    jj=MIN(jj,ky+2);
     
     
     return jj;

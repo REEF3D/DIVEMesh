@@ -42,14 +42,12 @@
       <File Name="decomposition.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="DIVE">
+      <VirtualDirectory Name="Data">
+        <File Name="data.h"/>
+      </VirtualDirectory>
       <File Name="dive.h"/>
       <VirtualDirectory Name="Initialize">
         <File Name="initialize.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Interpolation">
-        <File Name="interpolation.h"/>
-        <File Name="inverse_dist.h"/>
-        <File Name="inverse_dist_local.h"/>
       </VirtualDirectory>
       <File Name="module.h"/>
       <File Name="module_void.h"/>
@@ -86,6 +84,12 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Topography">
+      <VirtualDirectory Name="Interpolation">
+        <File Name="kriging.h"/>
+        <File Name="inverse_dist_local.h"/>
+        <File Name="inverse_dist.h"/>
+        <File Name="interpolation.h"/>
+      </VirtualDirectory>
       <File Name="geodat.h"/>
       <File Name="bedlevel.h"/>
     </VirtualDirectory>
@@ -120,12 +124,6 @@
       <File Name="main.h"/>
       <File Name="lexer.h"/>
       <File Name="template.h"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Data">
-      <File Name="data.h"/>
-      <VirtualDirectory Name="Kriging">
-        <File Name="kriging.h"/>
-      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
       <File Name="solid.h"/>
@@ -196,10 +194,9 @@
       <VirtualDirectory Name="Initialize">
         <File Name="initialize.cpp"/>
       </VirtualDirectory>
-      <VirtualDirectory Name="Interpolation">
-        <File Name="inverse_dist.cpp"/>
-        <File Name="inverse_dist_local_setup.cpp"/>
-        <File Name="inverse_dist_local.cpp"/>
+      <VirtualDirectory Name="Data">
+        <File Name="data_inversedist.cpp"/>
+        <File Name="data.cpp"/>
       </VirtualDirectory>
       <File Name="module_void.cpp"/>
     </VirtualDirectory>
@@ -289,21 +286,25 @@
       <File Name="object_wedge_y.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Topography">
+      <File Name="geodat_setup_ijk.cpp"/>
+      <File Name="geodat_pointcheck.cpp"/>
+      <VirtualDirectory Name="Inverse Distance Local">
+        <File Name="inverse_dist_local_setup.cpp"/>
+        <File Name="inverse_dist_local.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Inverse Distance">
+        <File Name="inverse_dist.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Kriging">
+        <File Name="kriging_solve.cpp"/>
+        <File Name="kriging_semivariogram.cpp"/>
+        <File Name="kriging_rearrange.cpp"/>
+        <File Name="kriging.cpp"/>
+      </VirtualDirectory>
       <File Name="geodat_multigrid.cpp"/>
       <File Name="geodat_print.cpp"/>
       <File Name="geodat.cpp"/>
       <File Name="bedlevel.cpp"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Data">
-      <File Name="data.cpp"/>
-      <File Name="data_inversedist.cpp"/>
-      <VirtualDirectory Name="Kriging">
-        <File Name="kriging.cpp"/>
-        <File Name="kriging_rearrange.cpp"/>
-        <File Name="kriging_semivariogram.cpp"/>
-        <File Name="kriging_solve.cpp"/>
-        <File Name="kriging_pointcheck.cpp"/>
-      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
       <File Name="solid_plate_z.cpp"/>

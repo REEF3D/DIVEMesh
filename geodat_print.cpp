@@ -35,7 +35,9 @@ void geodat::print(lexer* p, dive* a)
     int count;
     
 	
-    sprintf(name,"REEF3D_geodat.vtu");
+    sprintf(name,"REEF3D_geodat-%d.vtu",printcount);
+    
+    ++printcount;
 
 
 
@@ -47,23 +49,23 @@ void geodat::print(lexer* p, dive* a)
 	offset[n]=0;
 	++n;
 	
-	offset[n]=offset[n-1]+4*(p->G10)+4;
+	offset[n]=offset[n-1]+4*(p->Np)+4;
 	++n;
-	offset[n]=offset[n-1]+4*(p->G10)+4;
+	offset[n]=offset[n-1]+4*(p->Np)+4;
 	++n;	
-	offset[n]=offset[n-1]+4*(p->G10)+4;
+	offset[n]=offset[n-1]+4*(p->Np)+4;
 	++n;	
-    offset[n]=offset[n-1]+4*(p->G10)+4;
+    offset[n]=offset[n-1]+4*(p->Np)+4;
 	++n;	
 	
 	// end scalars
-    offset[n]=offset[n-1]+4*(p->G10)*3+4;
+    offset[n]=offset[n-1]+4*(p->Np)*3+4;
     ++n;
-    offset[n]=offset[n-1]+4*(p->G10)*2+4;
+    offset[n]=offset[n-1]+4*(p->Np)*2+4;
     ++n;
-	offset[n]=offset[n-1]+4*(p->G10)+4;
+	offset[n]=offset[n-1]+4*(p->Np)+4;
     ++n;
-	offset[n]=offset[n-1]+4*(p->G10)+4;
+	offset[n]=offset[n-1]+4*(p->Np)+4;
     ++n;
 
 	//---------------------------------------------
@@ -71,7 +73,7 @@ void geodat::print(lexer* p, dive* a)
 	result<<"<?xml version=\"1.0\"?>"<<endl;
 	result<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">"<<endl;
 	result<<"<UnstructuredGrid>"<<endl;
-	result<<"<Piece NumberOfPoints=\""<<p->G10<<"\" NumberOfCells=\""<<p->G10<<"\">"<<endl;
+	result<<"<Piece NumberOfPoints=\""<<p->Np<<"\" NumberOfCells=\""<<p->Np<<"\">"<<endl;
 	
 	
 	result<<"<PointData >"<<endl;
@@ -112,36 +114,36 @@ void geodat::print(lexer* p, dive* a)
 	
 
 //  radius
-    iin=4*(p->G10);
+    iin=4*(p->Np);
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->G10;++n)
+	for(n=0;n<p->Np;++n)
 	{
 	ffn=0.1*p->DXM;
 	result.write((char*)&ffn, sizeof (float));
 	}
 	
 //  X_coord
-    iin=4*(p->G10);
+    iin=4*(p->Np);
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->G10;++n)
+	for(n=0;n<p->Np;++n)
 	{
 	ffn=float(p->G10_x[n]);
 	result.write((char*)&ffn, sizeof (float));
 	}
     
 //  Y_Coord
-    iin=4*(p->G10);
+    iin=4*(p->Np);
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->G10;++n)
+	for(n=0;n<p->Np;++n)
 	{
 	ffn=float(p->G10_y[n]);
 	result.write((char*)&ffn, sizeof (float));
 	}
     
 //  Z_Coord
-    iin=4*(p->G10);
+    iin=4*(p->Np);
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->G10;++n)
+	for(n=0;n<p->Np;++n)
 	{
 	ffn=float(p->G10_z[n]);
 	result.write((char*)&ffn, sizeof (float));
@@ -149,9 +151,9 @@ void geodat::print(lexer* p, dive* a)
 
 
 //  XYZ
-	iin=4*(p->G10)*3;
+	iin=4*(p->Np)*3;
 	result.write((char*)&iin, sizeof (int));
-    for(n=0;n<p->G10;++n)
+    for(n=0;n<p->Np;++n)
 	{
 	ffn=float(p->G10_x[n]);
 	result.write((char*)&ffn, sizeof (float));
@@ -165,9 +167,9 @@ void geodat::print(lexer* p, dive* a)
 	
 //  Connectivity
 	count=0;
-    iin=4*(p->G10)*2;
+    iin=4*(p->Np)*2;
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->G10;++n)
+	for(n=0;n<p->Np;++n)
 	{
 	iin=int(0);
 	result.write((char*)&iin, sizeof (int));
@@ -179,9 +181,9 @@ void geodat::print(lexer* p, dive* a)
 
 //  Offset of Connectivity
 	count=0;
-    iin=4*(p->G10);
+    iin=4*(p->Np);
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->G10;++n)
+	for(n=0;n<p->Np;++n)
 	{
 	iin=(count+1)*2;
 	result.write((char*)&iin, sizeof (int));
@@ -190,9 +192,9 @@ void geodat::print(lexer* p, dive* a)
 
 
 //  Cell types
-    iin=4*(p->G10);
+    iin=4*(p->Np);
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->G10;++n)
+	for(n=0;n<p->Np;++n)
 	{
 	iin=1;
 	result.write((char*)&iin, sizeof (int));

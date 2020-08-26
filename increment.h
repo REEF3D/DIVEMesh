@@ -57,6 +57,14 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #define XYLOOP ILOOP JLOOP
 #define YXLOOP JLOOP ILOOP
 
+#define IBCLOOP for(i=-3;i<a->knox+3;++i)
+#define JBCLOOP for(j=-3;j<a->knoy+3;++j)
+#define XYBCLOOP IBCLOOP JBCLOOP
+
+#define IREVLOOP for(i=p->knox-1;i>=0;--i)
+#define JREVLOOP for(j=p->knoy-1;j>=0;--j)
+#define XYREVLOOP ILOOP JLOOP 
+
 #define XYMALOOP IMALOOP JMALOOP
 #define YXMALOOP JMALOOP IMALOOP
 
@@ -95,6 +103,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 #define MAX(aAa,bBb) ((aAa)>(bBb)?(aAa):(bBb))
 #define MIN(aAa,bBb) ((aAa)<(bBb)?(aAa):(bBb))
+
+#define ICFLAG if(ic>=-3 && ic<kx+3 && jc>=-3 && jc<ky+3)
+#define ICBOUNDS if(ic<-3 || ic>=kx+3 || jc<-3 || jc>=ky+3)
+
+
+
 
 #ifndef INCREMENT_H_
 #define INCREMENT_H_

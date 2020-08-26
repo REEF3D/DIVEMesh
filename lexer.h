@@ -81,6 +81,8 @@ public:
     double xmax,ymax,zmax;
     double xmin,ymin,zmin;
     double dx;
+    
+    int Np;
 
     double B1;
     int B2;

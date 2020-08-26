@@ -30,8 +30,6 @@ kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
 	Np = numpt;
     
-	pointcheck(p,a,X,Y,F);
-	
 	
 	xmin=ymin=1.0e15;
 	xmax=ymax=-1.0e15;

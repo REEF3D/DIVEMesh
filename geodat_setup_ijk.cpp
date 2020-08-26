@@ -19,11 +19,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-#include"inverse_dist_local.h"
+#include"geodat.h"
 #include"dive.h"
 #include"lexer.h"
 
-void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
+void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
      
     xmin=+1.0e19;
@@ -45,11 +45,6 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     }
             
     // Grid
-    dd = 3;
-    
-    //Nx = MAX(p->knox+2*dd+1,int((xmax-xmin)/p->DXM)+2*dd+1);
-    //Ny = MAX(p->knoy+2*dd+1,int((ymax-ymin)/p->DXM)+2*dd+1);
-    
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 
@@ -73,34 +68,27 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
-    ptnum[r][s]=0;
+    for(t=0;t<ptnum[r][s];++t)
+    ptid[r][s][t]=-1;
     
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
-    for(t=0;t<ptnum[r][s];++t)
-    ptid[r][s][t]=-1;
+    ptnum[r][s]=0;
+    
+    
 
     
     for(n=0;n<p->Np;++n)
     {
-    ic = p->poscgen_i(Fx[n],XC,kx);
-    jc = p->poscgen_j(Fy[n],YC,ky);
+        ic = p->poscgen_i(Fx[n],XC,kx);
+        jc = p->poscgen_j(Fy[n],YC,ky);
 
-    ICFLAG
-    {
-    ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
-    ++ptnum[ic+dd][jc+dd];
+        ICFLAG
+        {
+        ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
+        ++ptnum[ic+dd][jc+dd];
+        }
     }
-    }
     
-    
-    // Radius
-    Dmax=sqrt(pow(p->xmax-p->xmin,2.0)+pow(p->ymax-p->ymin,2.0));
-    R = 0.25*Dmax*sqrt(19.0/p->Np);
-    
-    dij = MAX(int(R/(p->DXM)),p->G17);
-    
-    cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" R: "<<R<<" dij: "<<dij<<endl;
 }
-
 

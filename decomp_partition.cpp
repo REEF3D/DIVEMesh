@@ -77,8 +77,7 @@ void decomp::partition(lexer* p, dive* a)
     {
 		if(n>=xdiff)
 		xid=0;
-	//cout<<"XORIG: "<<p->XN[posx+xid+marge]<<" XORIG*: "<<double((posx+xid)*p->dx)<<endl;
-    
+
     a->xorig[n]=p->XN[posx+xid+marge];
     a->xnode[n]=a->xnode[n-1] + (posx+xid);
 	}
@@ -91,14 +90,12 @@ void decomp::partition(lexer* p, dive* a)
     {
 		if(n>=ydiff)
 		yid=0;
-    cout<<"YORIG: "<<p->YN[posy+yid+marge]<<" YORIG*: "<<double((posy+yid)*p->dx)<<endl;
+    //cout<<"YORIG: "<<p->YN[posy+yid+marge]<<" YORIG*: "<<double((posy+yid)*p->dx)<<endl;
     
     a->yorig[n]=p->YN[posy+yid+marge];
     a->ynode[n]=a->ynode[n-1] + (posy+yid);
     }
     
-    for(bb=0;bb<=a->my;++bb)
-	cout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  xnode: "<<a->ynode[bb]<<"  xorig: "<<a->yorig[bb]<<endl;
 
     for(n=1;n<a->mz;n++)
     {

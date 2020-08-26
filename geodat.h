@@ -42,6 +42,8 @@ public:
 
 private:
     void pointcheck(lexer*,dive*,double*,double*,double*);
+    void setup_ijk(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
+    
     void dryside(lexer*,dive*);
     void coarsen(lexer*,dive*);
     void prolong(lexer*,dive*);
@@ -52,6 +54,8 @@ private:
     
     interpolation *pipol;
     
+    int printcount;
+    
     double *XC,*YC;
     double **topof;
     
@@ -61,6 +65,13 @@ private:
     double wa,wb,value;
     double v1,v2,v3,v4,c1,c2,c3,c4;
     double x1,x2;
+    
+    int Np;
+    int Nx,Ny;
+    int r,s,t,ic,jc,kp,dd;
+    int is,ie,js,je;
+    int **ptnum,***ptid;
+    double xmin,ymin,zmin,xmax,ymax,zmax;
     
 
 };

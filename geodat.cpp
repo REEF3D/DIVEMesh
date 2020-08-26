@@ -28,7 +28,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 geodat::geodat(lexer *p, dive *a)
 {
+    dd=3;
     
+    printcount=0;
 
     for(n=0; n<p->G10; ++n)
     {
@@ -58,7 +60,7 @@ geodat::geodat(lexer *p, dive *a)
     if(p->G15==3)
     pipol = new kriging(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z);
     
-    
+    p->Np=p->G10;
      print(p,a);
      
      p->Darray(XC,p->knox+14);
@@ -73,11 +75,16 @@ geodat::~geodat()
 void geodat::start(lexer* p, dive* a)
 {
     cout<<"geodat  Np_0: "<<p->G10<<endl;
+    p->Np=p->G10;
     
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+    pointcheck(p,a,p->G10_x,p->G10_y,p->G10_z);
+    
+    print(p,a);
     
     coarsen(p,a);
 
-    pipol->start(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);
+    pipol->start(p,a,Np,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);
     
     prolong(p,a);
     
