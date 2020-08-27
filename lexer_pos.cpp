@@ -585,9 +585,9 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
         ++count;
     }while(stop==0 && count<1000);
     
-    /*
+    
     ii=MAX(ii,-3);
-    ii=MIN(ii,kx+2);*/
+    ii=MIN(ii,kx+2);
     
     
     return ii;
@@ -656,10 +656,10 @@ int lexer::poscgen_j(double ys, double *YC, int ky)
         ++count;
     }while(stop==0 && count<1000);
     
-    /*
+    
     jj=MAX(jj,-3);
     jj=MIN(jj,ky+2);
-    */
+    
     
     return jj;
 }
