@@ -61,6 +61,7 @@ private:
     int printcount;
     
     double *XC,*YC;
+    int *Xtemp,*Ytemp,*Ftemp;
     double **topof;
     
     int kx,ky;

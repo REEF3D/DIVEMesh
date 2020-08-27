@@ -83,9 +83,6 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
         js=MAX(j-dij,-dd);
         je=MIN(j+dij,p->knoy+dd); 
 
-
-//cout<<"i: "<<i<<" j: "<<j<<" | is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<endl; 
-
         for(r=is;r<ie;++r)
         {
             for(s=js;s<je;++s)
@@ -102,17 +99,13 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
                     zdiff = fabs(F[n]-F[q]);
                     
                     
-                        if(xdiff<epsi && ydiff<epsi)
+                        if(xdiff<epsi && ydiff<epsi && zdiff<epsi)
                         {
                         --numpt;
                         
                         ptid[r+dd][s+dd][t]=-1;
                         }
-                /*        
-                if(i>=p->knox || j>=p->knoy)
-                if(xdiff<epsi && ydiff<epsi)
-                cout<<"i: "<<i<<" j: "<<j<<" | is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" | q: "<<q<<" n: "<<n<<" xdiff: "<<xdiff<<" ydiff: "<<ydiff<<" ptid: "<<ptid[r+dd][s+dd][t]<<endl; 
-                 */   
+
                     }
                     
                 }
@@ -124,7 +117,7 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
     
     }
     
-    int *Xtemp,*Ytemp,*Ftemp;
+    
     
     p->Iarray(Xtemp,numpt);
     p->Iarray(Ytemp,numpt);
@@ -142,18 +135,24 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
             Xtemp[qn] = X[n];
             Ytemp[qn] = Y[n];
             Ftemp[qn] = F[n];
-                
+            
+            cout<<n<<" X[n]: "<<X[n]<<" Y[n]: "<<Y[n]<<" F[n]: "<<F[n]<<endl;
+            cout<<qn<<" Xtemp[qn]: "<<Xtemp[qn]<<" Ytemp[qn]: "<<Ytemp[qn]<<" Ftemp[qn]: "<<Ftemp[qn]<<endl;
             ++qn;
             }
         }
+        
+        cout<<"numpt: "<<numpt<<" qn: "<<qn<<endl;
         
         p->Np=qn;
         
         for(n=0;n<p->Np;++n)
         {
+         
         X[n] = Xtemp[n];
         Y[n] = Ytemp[n];
         F[n] = Ftemp[n];
+        //cout<<n<<" X[n]: "<<X[n]<<" Y[n]: "<<Y[n]<<" F[n]: "<<F[n]<<endl;
         }
 
     p->del_Iarray(Xtemp,numpt);
