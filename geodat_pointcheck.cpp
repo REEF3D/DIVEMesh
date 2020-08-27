@@ -41,14 +41,21 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
 
     int dij = int(p->G36);
     
+    int qq;
+    
     dij += 2;
     
 
     XYBCLOOP
     if(ptnum[i+dd][j+dd]>0)
     {
-
-        n = ptid[i+dd][j+dd][0];
+    
+        qq = (rand() % ptnum[i+dd][j+dd]);
+        
+        
+        n = ptid[i+dd][j+dd][qq];
+        
+        
         
         
         if(n==-1 && ptnum[i+dd][j+dd]>1)
