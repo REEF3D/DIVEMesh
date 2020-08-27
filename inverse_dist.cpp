@@ -38,14 +38,12 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-    f[i][j] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
-    
-    cout<<f[i][j]<<endl;
+    f[i+3][j+3] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
     
     ++counter;
     
     if(counter%1000==0)
-    cout<<counter<<endl;
+    cout<<"> processed cells: "<<counter<<endl;
     }
 }
 

@@ -23,22 +23,25 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"dive.h"
 #include"lexer.h"
 
-void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
+void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *F)
 {
 	double epsi=p->G36*p->DXYM;
 	double xdiff,ydiff,zdiff;
 	int count=0;
+    
+    
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
 
     //-----
     int numpt = p->Np;
-    if(p->G37_select==0)
+    if(p->G36_select==1 && p->G37_select==0)
     {
     dd=3;
     Nx = p->knox; + 2*dd+1;
 
     int dij = int(p->G36);
     
-    dij += 1;
+    dij += 2;
     
 
     XYBCLOOP
@@ -73,7 +76,8 @@ void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
         js=MAX(j-dij,-dd);
         je=MIN(j+dij,p->knoy+dd); 
 
-//cout<<"is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<endl; 
+
+//cout<<"i: "<<i<<" j: "<<j<<" | is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<endl; 
 
         for(r=is;r<ie;++r)
         {
@@ -81,6 +85,7 @@ void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
             {
                 for(t=0;t<ptnum[r+dd][s+dd];++t)
                 {
+                    
                     q = ptid[r+dd][s+dd][t];
                 
                     if(n!=q && q>-1)
@@ -89,12 +94,18 @@ void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
                     ydiff = fabs(Y[n]-Y[q]);
                     zdiff = fabs(F[n]-F[q]);
                     
+                    
                         if(xdiff<epsi && ydiff<epsi)
                         {
                         --numpt;
                         
                         ptid[r+dd][s+dd][t]=-1;
                         }
+                /*        
+                if(i>=p->knox || j>=p->knoy)
+                if(xdiff<epsi && ydiff<epsi)
+                cout<<"i: "<<i<<" j: "<<j<<" | is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" | q: "<<q<<" n: "<<n<<" xdiff: "<<xdiff<<" ydiff: "<<ydiff<<" ptid: "<<ptid[r+dd][s+dd][t]<<endl; 
+                 */   
                     }
                     
                 }
@@ -129,7 +140,7 @@ void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
             }
         }
         
-        p->Np=numpt;
+        p->Np=qn;
         
         for(n=0;n<p->Np;++n)
         {
@@ -141,14 +152,16 @@ void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
     p->del_Iarray(Xtemp,numpt);
     p->del_Iarray(Ytemp,numpt);
     p->del_Iarray(Ftemp,numpt);
-    
-    
-
-        
     }
     
     
-    //---- 
+    print_sampled(p,a);
+    
+    cout<<"p->Np after pointcheck: "<<p->Np<<endl;
+}
+    
+void geodat::pointcheck_random(lexer *p, dive *a, double *X, double *Y, double *F)
+{
     if(p->G37_select==1)
     do{
 
@@ -165,37 +178,7 @@ void geodat::pointcheck(lexer *p, dive *a, double *X, double *Y, double *F)
 
     }while(p->Np>p->G37);
     
-    
-    // remove out of bounds points
-    int xs,xe,ys,ye;
-    
-        i=-3;
-        xs=p->XN[IP];
-        
-        i=p->knox+3;
-        xe=p->XN[IP];
-        
-        
-        j=-3;
-        ys=p->YN[JP];
-        
-        j=p->knoy+3;
-        ye=p->YN[JP];
-        
-    for(n=0;n<p->Np;++n)
-    {   
-        
-        
-        if(X[n]<xs || X[n]>xe || Y[n]<ys || Y[n]>ye)
-        {
-        X[n] = X[p->Np-1];
-        Y[n] = Y[p->Np-1];
-        F[n] = F[p->Np-1];
-        -- p->Np;
-        --n;
-        }       
-
-    }
+    print_sampled(p,a);
     
     cout<<"p->Np after pointcheck: "<<p->Np<<endl;
 }

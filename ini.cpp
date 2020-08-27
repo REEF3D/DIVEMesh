@@ -117,10 +117,12 @@ void lexer::ini_default()
     G32=0.5;        // double smoothing factor
 	G35=16.0;		// double inverse distance factor
     G36=1.0;        // doulble duplicate points factor times DXM
+    G36_select=0;
     G37_select=0;
     G37=1e8;        // int maximum number of geaodat after duplicate removal
     G38=1;          // int skip horizontal cells for geodat interpolation algorithm
     G38_select=0;
+    G39=1;          // int remove out of bounds geodat points
     G41=0;          // print SWAN bottom file
     
     H10=0;          // int turn on hydrodynamic coupling procedures

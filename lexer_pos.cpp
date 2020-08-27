@@ -528,9 +528,6 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
     ie = kx+marge;
     
     
-    
-    xs-=XC[marge];
-    
     count=0;
     do{
     iloc = ihalf(is,ie);
@@ -556,10 +553,13 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
          break;   
         }
         
+        /*
         // out of bounds
         if(xs<XC[0])
         {
             ii = -3;
+            
+            cout<<" xs: "<<xs<<" XC[0]: "<<XC[0]<<endl;
              
          stop=1;
          break;   
@@ -568,11 +568,11 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
         // out of bounds
         if(xs>XC[kx-1+marge])
         {
-            ii = kx+marge;
-            
+            ii = kx+marge+3;
+            cout<<" xs: "<<xs<<" XC[kx-1+marge]: "<<XC[kx-1+marge]<<endl;
          stop=1;
          break;   
-        }
+        }*/
         
         // further division
         if(xs<XC[iloc+marge] && xs<XC[iloc-1+marge])
@@ -585,8 +585,9 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
         ++count;
     }while(stop==0 && count<1000);
     
+    /*
     ii=MAX(ii,-3);
-    ii=MIN(ii,kx+2);
+    ii=MIN(ii,kx+2);*/
     
     
     return ii;
@@ -600,8 +601,7 @@ int lexer::poscgen_j(double ys, double *YC, int ky)
     js = -marge;
     je = ky+marge;
     
-    ys-=YC[marge];
-    
+
     count=0;
     do{
     jloc = ihalf(js,je);
@@ -626,6 +626,7 @@ int lexer::poscgen_j(double ys, double *YC, int ky)
          break;   
         }
         
+        /*
         // out of bounds
         if(ys<YC[0])
         {
@@ -638,11 +639,11 @@ int lexer::poscgen_j(double ys, double *YC, int ky)
         // out of bounds
         if(ys>YC[ky-1+marge])
         {
-            jj = ky+marge;
+            jj = ky+marge+3;
             
          stop=1;
          break;   
-        }
+        }*/
         
         // further divjsion
         if(ys<YC[jloc+marge] && ys<YC[jloc-1+marge])
@@ -655,9 +656,10 @@ int lexer::poscgen_j(double ys, double *YC, int ky)
         ++count;
     }while(stop==0 && count<1000);
     
+    /*
     jj=MAX(jj,-3);
     jj=MIN(jj,ky+2);
-    
+    */
     
     return jj;
 }

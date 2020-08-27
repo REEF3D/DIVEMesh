@@ -28,6 +28,7 @@ void lexer::read_geodat()
 // read geodat
 	if(G10>0)
 	{
+        cout<<"open geo.dat and count entries"<<endl;
         double val;
         char cval;
         ifstream geo("geo.dat", ios_base::in);
@@ -43,14 +44,16 @@ void lexer::read_geodat()
         ++countG10;
         }
         G10=countG10-1;
-        cout<<"GEODAT  "<<G10<<endl;
+        cout<<"> geodat entries: "<<G10<<endl;
         geo.close();
 
         G10_x = new double[countG10];
         G10_y = new double[countG10];
         G10_z = new double[countG10];
 
-
+        
+        cout<<"read geo.dat"<<endl;
+        
         geo.open("geo.dat", ios_base::in);
 
         countG10=0;

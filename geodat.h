@@ -41,8 +41,10 @@ public:
     virtual void print(lexer*,dive*);
 
 private:
-    void pointcheck(lexer*,dive*,double*,double*,double*);
+    void pointcheck_radius(lexer*,dive*,double*,double*,double*);
+    void pointcheck_random(lexer*,dive*,double*,double*,double*);
     void setup_ijk(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
+    void remove_bounds(lexer*,dive*);
     
     void dryside(lexer*,dive*);
     void coarsen(lexer*,dive*);
@@ -50,6 +52,8 @@ private:
     
     double ccipol(lexer*, double**, double, double);
     double lint(lexer*, double**, int&,int&, double, double);
+    
+    void print_sampled(lexer*,dive*);
     
     
     interpolation *pipol;

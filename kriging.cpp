@@ -108,7 +108,7 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 	
 	for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
-	f[i][j] = 0.0;
+	f[i+3][j+3] = 0.0;
 	
 	count=0;
 	for(i=0;i<kx;++i)
@@ -141,12 +141,12 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 		cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
 		
 	for(n=0; n<p->Np; ++n)
-	f[i][j] += x[n] * F[n];
+	f[i+3][j+3] += x[n] * F[n];
 	
 	++count;
     
     if(count%1000==0)
-    cout<<count<<endl;
+    cout<<"> processed cells: "<<count<<endl;
 	}
 
 }

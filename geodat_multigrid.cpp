@@ -49,21 +49,40 @@ void geodat::coarsen(lexer *p, dive *a)
     
     ky=count;
     
-    p->Darray(topof,kx,ky);
+    p->Darray(topof,kx+2*dd+1,ky+2*dd+1);
     
     cout<<"coarsen knox:"<<p->knox<<" kx: "<<kx<<" | knoy:"<<p->knoy<<" ky: "<<ky<<endl;
     
     
     // bc
-    XC[marge-1] = XC[marge+1]-XC[marge];
-    XC[marge-2] = XC[marge+1]-XC[marge];
-    XC[marge+kx+1] = XC[marge+kx-1]-XC[marge+kx-2];
-    XC[marge+kx+2] = XC[marge+kx-1]-XC[marge+kx-2];
+    XC[marge-1] = XC[marge] - 1.0*(XC[marge+1]-XC[marge]);
+    XC[marge-2] = XC[marge] - 2.0*(XC[marge+1]-XC[marge]);
+    XC[marge-3] = XC[marge] - 3.0*(XC[marge+1]-XC[marge]);
+    XC[marge-4] = XC[marge] - 4.0*(XC[marge+1]-XC[marge]);
+    XC[marge-5] = XC[marge] - 5.0*(XC[marge+1]-XC[marge]);
     
-    YC[marge-1] = YC[marge+1]-YC[marge];
-    YC[marge-2] = YC[marge+1]-YC[marge];
-    YC[marge+ky+1] = YC[marge+ky-1]-YC[marge+ky-2];
-    YC[marge+ky+2] = YC[marge+ky-1]-YC[marge+ky-2];
+    
+    XC[marge+kx]   = XC[marge+kx-1] + 1.0*(XC[marge+kx-1]-XC[marge+kx-2]);
+    XC[marge+kx+1] = XC[marge+kx-1] + 2.0*(XC[marge+kx-1]-XC[marge+kx-2]);
+    XC[marge+kx+2] = XC[marge+kx-1] + 3.0*(XC[marge+kx-1]-XC[marge+kx-2]);
+    XC[marge+kx+3] = XC[marge+kx-1] + 4.0*(XC[marge+kx-1]-XC[marge+kx-2]);
+    XC[marge+kx+4] = XC[marge+kx-1] + 5.0*(XC[marge+kx-1]-XC[marge+kx-2]);
+    
+    //cout<<" XC[marge+kx-1]: "<<XC[marge+kx-1]<<" XC[marge+kx+4]: "<<XC[marge+kx+4]<<endl;
+    
+    
+    YC[marge-1] = YC[marge] - 1.0*(YC[marge+1]-YC[marge]);
+    YC[marge-2] = YC[marge] - 2.0*(YC[marge+1]-YC[marge]);
+    YC[marge-3] = YC[marge] - 3.0*(YC[marge+1]-YC[marge]);
+    YC[marge-4] = YC[marge] - 4.0*(YC[marge+1]-YC[marge]);
+    YC[marge-5] = YC[marge] - 5.0*(YC[marge+1]-YC[marge]);
+    
+    
+    YC[marge+ky]   = YC[marge+ky-1] + 1.0*(YC[marge+ky-1]-YC[marge+ky-2]);
+    YC[marge+ky+1] = YC[marge+ky-1] + 2.0*(YC[marge+ky-1]-YC[marge+ky-2]);
+    YC[marge+ky+2] = YC[marge+ky-1] + 3.0*(YC[marge+ky-1]-YC[marge+ky-2]);
+    YC[marge+ky+3] = YC[marge+ky-1] + 4.0*(YC[marge+ky-1]-YC[marge+ky-2]);
+    YC[marge+ky+4] = YC[marge+ky-1] + 5.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     
 }
 
@@ -84,134 +103,4 @@ void geodat::prolong(lexer *p, dive *a)
     }
 }
 
-
-double geodat::ccipol(lexer *p, double **f, double xp, double yp)
-{
-    iii=i;
-    jjj=j;
-    
-    
-    
-    i = p->poscgen_i(xp,XC,kx);
-    j = p->poscgen_j(yp,YC,ky);
-    
-    //cout<<"pos_ij: "<<i<<" "<<j<<" | "<<xp<<" "<<yp<<endl;
-		
-    // wa
-    wa = (XC[IP1]-xp)/(XC[IP1]-XC[IP]);
-    
-    if(wa<0.0)
-    {
-    wa = (XC[IP2]-xp)/(XC[IP1]-XC[IP]);
-    ++i;
-    }
-    
-    if(wa>1.0)
-    {
-    wa = (XC[IP]-xp)/(XC[IP1]-XC[IP]);
-    --i;
-    }
-    
-
-    // wb
-    wb = (YC[JP1]-yp)/(YC[JP1]-YC[JP]);
-    
-    if(wb<0.0)
-    {
-    wb = (YC[JP2]-yp)/(YC[JP1]-YC[JP]);
-    ++j;
-    }
-    
-    if(wb>1.0)
-    {
-    wb = (YC[JP]-yp)/(YC[JP1]-YC[JP]);
-    --j;
-    }
-    
-    
-    value =  lint(p,f,i,j,wa,wb);
-    
-    
-
-    i=iii;
-    j=jjj;
-    
-    return value;
-}
-
-
-double geodat::lint(lexer *p, double **f, int& i,int& j, double wa, double wb)
-{
-    v1=v2=v3=v4=0.0;
-    c1=c2=c3=c4=0;
-    
-    i = MAX(i,0);
-    i = MIN(i,kx-1);
-    
-    j = MAX(j,0);
-    j = MIN(j,ky-1);
-
-
-    if(i>=0 && i<kx && j>=0 && j<ky)
-    {
-    v1=f[i][j];
-    c1=1;
-    }
-    
-    if(i>=0 && i<kx && j+1>=0 && j+1<ky)
-    {
-    v2=f[i][j+1];
-    c2=1;
-    }
-    
-    if(i+1>=0 && i+1<kx && j>=0 && j<ky)
-    {
-    v3=f[i+1][j];
-    c3=1;
-    }
-    
-    if(i+1>=0 && i+1<kx && j+1>=0 && j+1<ky)
-    {
-    v4=f[i+1][j+1];
-    c4=1;
-    }
-
-    
-    // x1
-    if(c1==1 && c3==1)
-    x1 = wa*v1 + (1.0-wa)*v3;
-    
-    if(c1==1 && c3==0)
-    x1 = v1;
-    
-    if(c1==0 && c3==1)
-    x1 = v3;
-    
-    
-    // x2
-    if(c2==1 && c4==1)
-    x2 = wa*v2 + (1.0-wa)*v4;
-    
-    if(c2==1 && c4==0)
-    x2 = v2;
-    
-    if(c2==0 && c4==1)
-    x2 = v4;
-    
-    if((c1==0 && c3==0) && (c2==1 || c4==1))
-    wb=0.0;
-    
-    if((c2==0 && c4==0) && (c1==1 || c3==1))
-    wb=1.0;
-    
-    /*if(c2==0 && c4==0 && c1==1 && c3==1)
-    {
-    x1=x2=0.0;
-    }*/
-
-    value = wb*x1 + (1.0-wb)*x2;
-    
- return value;
-
-}
 

@@ -23,51 +23,36 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"dive.h"
 #include"lexer.h"
 
-void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
-{            
-    // Grid
-    Nx = kx + 2*dd+1;
-    Ny = ky + 2*dd+1;
+void geodat::remove_bounds(lexer *p, dive *a)
+{
+     // remove out of bounds points
+        int xs,xe,ys,ye;
+        
+            i=-3;
+            xs=p->XN[IP];
+            
+            i=p->knox+3;
+            xe=p->XN[IP];
+            
+            
+            j=-3;
+            ys=p->YN[JP];
+            
+            j=p->knoy+3;
+            ye=p->YN[JP];
+            
+        for(n=0;n<p->Np;++n)
+        {   
+            
+            
+            if(p->G10_x[n]<xs || p->G10_x[n]>xe || p->G10_y[n]<ys || p->G10_y[n]>ye)
+            {
+            p->G10_x[n] = p->G10_x[p->Np-1];
+            p->G10_y[n] = p->G10_y[p->Np-1];
+            p->G10_z[n] = p->G10_z[p->Np-1];
+            -- p->Np;
+            --n;
+            }       
 
-    p->Iarray(ptnum,Nx,Ny);
-    
-    for(r=0;r<Nx;++r)
-    for(s=0;s<Ny;++s)
-    ptnum[r][s]=0;
-
-    for(n=0;n<p->Np;++n)
-    {
-    ic = p->poscgen_i(Fx[n],XC,kx);
-    jc = p->poscgen_j(Fy[n],YC,ky);
-    
-    //ICFLAG
-    ++ptnum[ic+dd][jc+dd];
-    }
-    
-    
-    p->Iarray(ptid,Nx,Ny, ptnum);
-    
-    for(r=0;r<Nx;++r)
-    for(s=0;s<Ny;++s)
-    for(t=0;t<ptnum[r][s];++t)
-    ptid[r][s][t]=-1;
-    
-    for(r=0;r<Nx;++r)
-    for(s=0;s<Ny;++s)
-    ptnum[r][s]=0;
-    
-    
-    for(n=0;n<p->Np;++n)
-    {
-        ic = p->poscgen_i(Fx[n],XC,kx);
-        jc = p->poscgen_j(Fy[n],YC,ky);
-
-        //ICFLAG
-        {
-        ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
-        ++ptnum[ic+dd][jc+dd];
         }
-    }
-    
 }
-

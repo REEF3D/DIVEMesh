@@ -286,6 +286,10 @@
       <File Name="object_wedge_y.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Topography">
+      <File Name="geodat_remove_bounds.cpp"/>
+      <File Name="geodat_multigrid_ccipol.cpp"/>
+      <File Name="geodat_print-sampled.cpp"/>
+      <File Name="geodat_print-vtp.cpp"/>
       <File Name="geodat_setup_ijk.cpp"/>
       <File Name="geodat_pointcheck.cpp"/>
       <VirtualDirectory Name="Inverse Distance Local">
@@ -302,7 +306,6 @@
         <File Name="kriging.cpp"/>
       </VirtualDirectory>
       <File Name="geodat_multigrid.cpp"/>
-      <File Name="geodat_print.cpp"/>
       <File Name="geodat.cpp"/>
       <File Name="bedlevel.cpp"/>
     </VirtualDirectory>
