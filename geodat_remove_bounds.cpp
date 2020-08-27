@@ -26,7 +26,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void geodat::remove_bounds(lexer *p, dive *a)
 {
      // remove out of bounds points
-        int xs,xe,ys,ye;
+        double xs,xe,ys,ye;
         
             i=-3;
             xs=p->XN[IP];
@@ -40,6 +40,8 @@ void geodat::remove_bounds(lexer *p, dive *a)
             
             j=p->knoy+3;
             ye=p->YN[JP];
+            
+            cout<<" xs: "<<xs<<" xe: "<<xe<<" ys: "<<ys<<" ye: "<<ye<<endl;
             
         for(n=0;n<p->Np;++n)
         {   

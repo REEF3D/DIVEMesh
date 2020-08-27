@@ -52,7 +52,7 @@ void geodat::coarsen(lexer *p, dive *a)
     p->Darray(topof,kx+2*dd+1,ky+2*dd+1);
     
     cout<<"coarsen knox:"<<p->knox<<" kx: "<<kx<<" | knoy:"<<p->knoy<<" ky: "<<ky<<endl;
-    
+
     
     // bc
     XC[marge-1] = XC[marge] - 1.0*(XC[marge+1]-XC[marge]);
@@ -68,7 +68,7 @@ void geodat::coarsen(lexer *p, dive *a)
     XC[marge+kx+3] = XC[marge+kx-1] + 4.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+4] = XC[marge+kx-1] + 5.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     
-    //cout<<" XC[marge+kx-1]: "<<XC[marge+kx-1]<<" XC[marge+kx+4]: "<<XC[marge+kx+4]<<endl;
+    cout<<" XC[marge+kx-1]: "<<XC[marge+kx-1]<<" XC[marge+kx]: "<<XC[marge+kx]<<endl;
     
     
     YC[marge-1] = YC[marge] - 1.0*(YC[marge+1]-YC[marge]);

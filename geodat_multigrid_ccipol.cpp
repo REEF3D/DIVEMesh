@@ -102,25 +102,25 @@ double geodat::lint(lexer *p, double **f, int& i,int& j, double wa, double wb)
     j = MIN(j,ky-1);*/
 
 
-   // if(i>=0 && i<kx && j>=0 && j<ky)
+    if(i>=0 && i<kx && j>=0 && j<ky)
     {
     v1=f[i+3][j+3];
     c1=1;
     }
     
-   // if(i>=0 && i<kx && j+1>=0 && j+1<ky)
+    if(i>=0 && i<kx && j+1>=0 && j+1<ky)
     {
     v2=f[i+3][j+1+3];
     c2=1;
     }
     
-    //if(i+1>=0 && i+1<kx && j>=0 && j<ky)
+    if(i+1>=0 && i+1<kx && j>=0 && j<ky)
     {
     v3=f[i+1+3][j+3];
     c3=1;
     }
     
-   // if(i+1>=0 && i+1<kx && j+1>=0 && j+1<ky)
+    if(i+1>=0 && i+1<kx && j+1>=0 && j+1<ky)
     {
     v4=f[i+1+3][j+1+3];
     c4=1;

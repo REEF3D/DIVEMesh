@@ -119,9 +119,9 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
     
     
     
-    p->Iarray(Xtemp,numpt);
-    p->Iarray(Ytemp,numpt);
-    p->Iarray(Ftemp,numpt);
+    p->Darray(Xtemp,numpt);
+    p->Darray(Ytemp,numpt);
+    p->Darray(Ftemp,numpt);
        
     qn=0;
         // put back
@@ -135,9 +135,6 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
             Xtemp[qn] = X[n];
             Ytemp[qn] = Y[n];
             Ftemp[qn] = F[n];
-            
-            cout<<n<<" X[n]: "<<X[n]<<" Y[n]: "<<Y[n]<<" F[n]: "<<F[n]<<endl;
-            cout<<qn<<" Xtemp[qn]: "<<Xtemp[qn]<<" Ytemp[qn]: "<<Ytemp[qn]<<" Ftemp[qn]: "<<Ftemp[qn]<<endl;
             ++qn;
             }
         }
@@ -155,9 +152,9 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
         //cout<<n<<" X[n]: "<<X[n]<<" Y[n]: "<<Y[n]<<" F[n]: "<<F[n]<<endl;
         }
 
-    p->del_Iarray(Xtemp,numpt);
-    p->del_Iarray(Ytemp,numpt);
-    p->del_Iarray(Ftemp,numpt);
+    p->del_Darray(Xtemp,numpt);
+    p->del_Darray(Ytemp,numpt);
+    p->del_Darray(Ftemp,numpt);
     }
     
     
