@@ -46,9 +46,6 @@ void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
     double psi = 1.0e-8*p->DXM;
     
     
-    //cout<<"XN[0]: "<<p->XN[0+marge]<<" XP[0]: "<<p->XP[0+marge]<<"  XN[1]: "<<p->XN[1+marge]<<" XP[1]: "<<p->XP[1+marge]<<endl;
-
-    
 	for(n=ts; n<te; ++n)
 	{
 	Ax = p->tri_x[n][0];

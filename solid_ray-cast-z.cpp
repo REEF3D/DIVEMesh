@@ -100,8 +100,7 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 		Qx = p->XP[IP]+psi;
 		Qy = p->YP[JP]+psi;
 		Qz = p->zmax+10.0*p->DXM ;
-		
-		
+        
 		PQx = Qx-Px;
 		PQy = Qy-Py;
 		PQz = Qz-Pz;
@@ -132,11 +131,16 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 		  
 		w = PQx*(By*Az - Bz*Ay) + PQy*(Bz*Ax - Bx*Az) + PQz*(Bx*Ay - By*Ax)
 		  + Mx*(Bx-Ax) + My*(By-Ay) + Mz*(Bz-Az);
-
+          
+        int check=1;
+		if(fabs(u)<=1.0e-20 && fabs(v)<=1.0e-20 && fabs(w)<=1.0e-20)
+		check = 0;
 		
-			if((u>0.0 && v>0.0 && w>0.0) || (u<0.0 && v<0.0 && w<0.0))
+			if(((u>1.0e-20 && v>1.0e-20 && w>1.0e-20) || (u<-1.0e-20 && v<-1.0e-20 && w<-1.0e-20)) && check==1)
 			{
 			denom = 1.0/(u+v+w);
+            
+            //cout<<"u: "<<u<<" v: "<<v<<" w: "<<w<<" denom: "<<denom<<endl;
 			u *= denom;
 			v *= denom;
 			w *= denom;
@@ -146,6 +150,7 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 			
 			k = p->posf_k(Rz);
             
+            cout<<"k: "<<k<<" Rz: "<<Rz<<endl;
             int distcheck=1;
             
             if(Rz<p->ZP[KP])

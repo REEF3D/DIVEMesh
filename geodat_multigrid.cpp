@@ -68,8 +68,6 @@ void geodat::coarsen(lexer *p, dive *a)
     XC[marge+kx+3] = XC[marge+kx-1] + 4.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+4] = XC[marge+kx-1] + 5.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     
-    cout<<" XC[marge+kx-1]: "<<XC[marge+kx-1]<<" XC[marge+kx]: "<<XC[marge+kx]<<endl;
-    
     
     YC[marge-1] = YC[marge] - 1.0*(YC[marge+1]-YC[marge]);
     YC[marge-2] = YC[marge] - 2.0*(YC[marge+1]-YC[marge]);

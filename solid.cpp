@@ -355,6 +355,10 @@ void solid::start(lexer* p, dive* a)
 		if(a->solid_dist(i,j,k)<-10.0*p->DXM)
 		a->solid_dist(i,j,k)=-10.0*p->DXM;
 	}
+    
+    LOOP
+    cout<<a->solid_dist(i,j,k)<<endl;
+    
 	
 
 	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
