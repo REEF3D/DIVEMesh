@@ -357,7 +357,8 @@ void solid::start(lexer* p, dive* a)
 	}
     
     LOOP
-    cout<<a->solid_dist(i,j,k)<<endl;
+    if(a->solid_dist(i,j,k)!=a->solid_dist(i,j,k))
+    cout<<"SOLID NAN: "<<a->solid_dist(i,j,k)<<endl;
     
 	
 

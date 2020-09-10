@@ -150,7 +150,7 @@ void solid::ray_cast_z(lexer* p, dive* a, int ts, int te)
 			
 			k = p->posf_k(Rz);
             
-            cout<<"k: "<<k<<" Rz: "<<Rz<<endl;
+            //cout<<"k: "<<k<<" Rz: "<<Rz<<endl;
             int distcheck=1;
             
             if(Rz<p->ZP[KP])
