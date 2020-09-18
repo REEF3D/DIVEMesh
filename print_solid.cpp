@@ -51,7 +51,7 @@ void print_stl::start_stl(lexer* p, dive* a)
 	result<<"   vertex "<<p->tri_x[n][1]<<" "<<p->tri_y[n][1]<<" "<<p->tri_z[n][1]<<endl;
 	result<<"   vertex "<<p->tri_x[n][2]<<" "<<p->tri_y[n][2]<<" "<<p->tri_z[n][2]<<endl;
 	result<<"  endloop"<<endl;
-	result<<" endfact"<<endl;
+	result<<" endfacet"<<endl;
 	}
 	
 	result<<"endsolid"<<endl;

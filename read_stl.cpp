@@ -69,7 +69,7 @@ void lexer::read_stl()
 	{
 		stl>>word;
 		
-		if(word=="ascii")
+		if(word=="ascii" || word=="solid")
 		chk=1;
 
 	}
@@ -243,7 +243,7 @@ void lexer::pre_read_stl()
 	{
 		stl>>word;
 		
-		if(word=="ascii")
+		if(word=="ascii" || word=="solid")
 		chk=1;
 
 	}
