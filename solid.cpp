@@ -363,6 +363,10 @@ void solid::start(lexer* p, dive* a)
 	
 
 	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
+    
+    
+    if(p->S18==1)
+    solid_object_conv(p,a);
 
 }
 

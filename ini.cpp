@@ -166,6 +166,7 @@ void lexer::ini_default()
 	S10 = 0;		// int solid box
 	S11 = 0;		// int solid box array
     S15 = 0;        // int rotate solids with geodat
+    S18 = 0;        // int convert solid to object
     S19 = 0.1;       // double factor solid resolution
     S31 = 0;			// int jacket rotation
     S31_x=S31_y=S31_z=S31_phi=S31_theta=S31_psi=0.0;

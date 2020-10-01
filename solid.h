@@ -95,6 +95,8 @@ public:
 	void rotate_triangle_ellipsoid(lexer*,dive*,int,int,int);
     
     void angle_calc(double,double,double,double&,double&,double&);
+    
+    void solid_object_conv(lexer*,dive*);
 
 	
 private:

@@ -28,7 +28,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2020 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_200918" <<endl<<endl;
+    cout<<endl<<"v_201001" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -83,7 +83,6 @@ void driver::mainloop()
 
 	if(p->D10>0)
     pdata->start(p,a);
-
 
 // Slice
     pslice->start(p,a);

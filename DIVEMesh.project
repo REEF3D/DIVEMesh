@@ -310,6 +310,7 @@
       <File Name="bedlevel.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
+      <File Name="solid_object_conv.cpp"/>
       <File Name="solid_plate_z.cpp"/>
       <File Name="solid_plate_y.cpp"/>
       <File Name="solid_fluvial_box.cpp"/>
