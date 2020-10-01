@@ -195,6 +195,9 @@ void decomp::paravoidsurface(lexer* p, dive* a)
 
     }
 	
+    
+    cout<<"paravoid1count: "<<a->paravoid1count<<"  paravoid4count: "<<a->paravoid4count<<endl;
+    cout<<"paravoid3count: "<<a->paravoid3count<<"  paravoid2count: "<<a->paravoid2count<<endl;
 	
 }
 
