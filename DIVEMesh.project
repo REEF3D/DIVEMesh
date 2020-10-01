@@ -178,9 +178,9 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
+      <File Name="decomp_surface.cpp"/>
       <File Name="decomp_partition.cpp"/>
       <File Name="decomposition.cpp"/>
-      <File Name="decomp_surf.cpp"/>
       <File Name="decomp_cosurf.cpp"/>
       <File Name="decomp_analyse.cpp"/>
       <File Name="decomp_costfunc.cpp"/>
