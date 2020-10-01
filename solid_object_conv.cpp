@@ -33,7 +33,12 @@ void solid::solid_object_conv(lexer* p, dive* a)
     LOOP
     {
 		if(a->solid(i,j,k)==-1)
+        {
 		a->flag(i,j,k)=-21;
+        a->solid(i,j,k)=1;
+        }
+        
+        
     }
     
     
