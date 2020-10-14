@@ -23,7 +23,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void lexer::gridspacing_fsf()
 {
-    int maxiter =200000;
+    int maxiter = 500000;
     double lx,ly,lz;
     double ex,ey,ez;
     double fac;
@@ -315,9 +315,9 @@ void lexer::gridspacing_fsf()
         
         for(i=1;i<B124_N3+1;++i)
         {
-        XN[IP+B124_N2+B124_N1] = XN[IM1+B124_N2+B124_N1] +  dx1*pow(double(i),B124_f3);
+        XN[IP+B124_N2+B124_N1] = XN[IM1+B124_N2+B124_N1] +  dx1*pow(double(B124_N3+1-i),-B124_f3);
         }
-        
+
         
             if(XN[marge+knox]>xmax+epsi)
             dx1-=1.0e-3*DXM;
@@ -646,9 +646,9 @@ void lexer::gridspacing_fsf()
         
         for(j=1;j<B125_N3+1;++j)
         {
-        YN[JP+B125_N2+B125_N1] = YN[JM1+B125_N2+B125_N1] +  dx1*pow(double(j),B125_f3);
+        YN[JP+B125_N2+B125_N1] = YN[JM1+B125_N2+B125_N1] +  dx1*pow(double(B125_N3+1-j),-B125_f3);
         }
-        
+
         
             if(YN[marge+knoy]>ymax+epsi)
             dx1-=1.0e-3*DXM;
@@ -1008,7 +1008,7 @@ void lexer::gridspacing_fsf()
         
         for(k=1;k<B126_N3+1;++k)
         {
-        ZN[KP+B126_N2+B126_N1] = ZN[KM1+B126_N2+B126_N1] +  dx1*pow(double(k),B126_f3);// + dx0;
+        ZN[KP+B126_N2+B126_N1] = ZN[KM1+B126_N2+B126_N1] +  dx1*pow(double(B126_N3+1-k),-B126_f3);// + dx0;
         }
         
         
