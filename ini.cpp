@@ -53,6 +53,10 @@ void lexer::ini_default()
     C14=21;          // C12
     C15=21;          // C12
     C16=21;          // C12
+    
+    C21=0;          // Periodic BC in x-dir
+    C22=0;          // Periodic BC in y-dir
+    C23=0;          // Periodic BC in z-dir
 	
 	D10=0;            // int data off/on
     D11_x=0.0;       // double dx

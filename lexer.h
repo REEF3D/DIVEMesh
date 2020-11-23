@@ -129,6 +129,7 @@ public:
     int B130;
     
     int C11,C12,C13,C14,C15,C16;
+    int C21,C22,C23;
 	
 	int D10,D13,D14,D15,D19;
     int D20,D23;
