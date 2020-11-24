@@ -252,6 +252,13 @@ NLOOP
     result.write((char*)&iin, sizeof (int));
     iin = p->C16;
     result.write((char*)&iin, sizeof (int));
+    
+    iin = p->C21;
+    result.write((char*)&iin, sizeof (int));
+    iin = p->C22;
+    result.write((char*)&iin, sizeof (int));
+    iin = p->C23;
+    result.write((char*)&iin, sizeof (int));
 	
 
     iin = p->G10;
