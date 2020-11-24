@@ -55,10 +55,6 @@ public:
     
     double cellBasedSpacing(const double&, const double&, const double&, const double&, const double&, const double&, const double&);
     void cellBasedSpacing(const double&, const double&, const double&, const double&, const double&, const double&, const double&, int&);
-    void fitFocusPoint(double&, const double&, const double&, const double&, const int&, const double&, const double&, const double&);
-    double fitStretching(const double&, const double&, const double&, const double&, const int&, const double&, double&, const double&);
-    double fitMinSize(bool&, const double&, const double&, const double&, const double&, int&, const double&, double&, const double&);
-    double fitMaxSize(bool&, double&, const double&, const double&, const double&, const double&, const int&, const double&, double&, const double&);
     
     void gridspacing_print();
     
