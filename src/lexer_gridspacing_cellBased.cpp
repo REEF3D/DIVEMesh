@@ -20,7 +20,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------*/
 
 #include "lexer.h"
-#include<vector>
+#include <vector>
+#include <algorithm>
 
 double lexer::cellBasedSpacing
 (
