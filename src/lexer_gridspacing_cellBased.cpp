@@ -126,7 +126,7 @@ int& cellIndex
 
     if ((CN[size-2] - CN[size-3])/(CN[size-1] - CN[size-2]) > cellRatio)
     {
-        z_3 = focus_point + delta_focus/2 + abs(CN.back() - CN[size-2])/2.0;
+        z_3 = focus_point + delta_focus/2 + fabs(CN.back() - CN[size-2])/2.0;
     }
 
 
