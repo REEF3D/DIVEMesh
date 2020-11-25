@@ -67,6 +67,10 @@ private:
     void knoxcalc(lexer*,dive*);
 	void mem_alloc(lexer*,dive*);
     int partition_check(lexer*,dive*);
+    
+    void periodic_ini(lexer*,dive*);
+    void periodic_surf(lexer*,dive*);
+    void periodic_nb(lexer*,dive*);
 
 
     int numfactor;
@@ -92,6 +96,7 @@ private:
 	int *xcount,*ycount,*zcount;
 	int xaverage,yaverage,zaverage;
 	int xcount_sum,ycount_sum,zcount_sum,cellnum,paverage;
+    int xper,yper,zper;
 	
 	ofstream ddout;
 

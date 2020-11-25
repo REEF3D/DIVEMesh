@@ -178,6 +178,7 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
+      <File Name="decomp_periodic.cpp"/>
       <File Name="decomp_surface.cpp"/>
       <File Name="decomp_partition.cpp"/>
       <File Name="decomposition.cpp"/>

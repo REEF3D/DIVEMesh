@@ -73,6 +73,7 @@ void decomp::start(lexer* p, dive* a)
 	
 	neighbors(p,a);
 	knoxcalc(p,a);
+    periodic_ini(p,a);
 	mem_alloc(p,a);
     parasurface(p,a);	
 	paravoidsurface(p,a);
@@ -226,18 +227,19 @@ void decomp::mem_alloc(lexer *p, dive *a)
 {
 	int xsurf,ysurf,zsurf;
 	int xco,yco,zco;
+    
 	
-	xsurf = 3*p->knoy*p->knoz*(a->mx);
-	ysurf = 3*p->knox*p->knoz*(a->my);
-	zsurf = 3*p->knox*p->knoy*(a->mz);
+	xsurf = 3*p->knoy*p->knoz*(a->mx+xper);
+	ysurf = 3*p->knox*p->knoz*(a->my+yper);
+	zsurf = 3*p->knox*p->knoy*(a->mz+zper);
 	
 	xco = yco = zco = 0;
 	
 	for(n=1;n<=p->M10;++n)
     {
-	xco += 3*(a->subknoy[n]+a->subknoz[n] + 4);
-	yco += 3*(a->subknox[n]+a->subknoz[n] + 4);
-	zco += 3*(a->subknox[n]+a->subknoy[n] + 4);
+	xco += 3*(a->subknoy[n]+a->subknoz[n] + 4 +xper+yper+zper);
+	yco += 3*(a->subknox[n]+a->subknoz[n] + 4 +xper+yper+zper);
+	zco += 3*(a->subknox[n]+a->subknoy[n] + 4 +xper+yper+zper);
     }
 	
 	ddout<<endl;
