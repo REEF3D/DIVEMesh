@@ -619,8 +619,8 @@ void lexer::read_control()
         if(count>1e7)
         {
         cout<<endl;
-        cout<<"!!! missing input parameter in ctrl.txt !!!"<<endl<<endl;
-        cout<<"!!! please check the REEF3D User Guide !!!"<<endl<<endl<<endl<<endl;
+        cout<<"!!! missing input parameter in control.txt !!!"<<endl<<endl;
+        cout<<"!!! please check the DIVEMesh User Guide !!!"<<endl<<endl<<endl<<endl;
         
         exit(0);
         }
