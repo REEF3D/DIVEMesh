@@ -147,11 +147,11 @@ void decomp::neighbors(lexer* p,dive* a)
     count++;
 
     a->nbpara1[count]=a->sgfield[aa-1][bb][cc]-1;
-     a->nbpara2[count]=a->sgfield[aa][bb+1][cc]-1;
-      a->nbpara3[count]=a->sgfield[aa][bb-1][cc]-1;
-       a->nbpara4[count]=a->sgfield[aa+1][bb][cc]-1;
-        a->nbpara5[count]=a->sgfield[aa][bb][cc-1]-1;
-         a->nbpara6[count]=a->sgfield[aa][bb][cc+1]-1;
+    a->nbpara2[count]=a->sgfield[aa][bb+1][cc]-1;
+    a->nbpara3[count]=a->sgfield[aa][bb-1][cc]-1;
+    a->nbpara4[count]=a->sgfield[aa+1][bb][cc]-1;
+    a->nbpara5[count]=a->sgfield[aa][bb][cc-1]-1;
+    a->nbpara6[count]=a->sgfield[aa][bb][cc+1]-1;
 
     }
 	
