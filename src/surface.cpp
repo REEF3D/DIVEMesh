@@ -90,6 +90,8 @@ void surface::mem_alloc(lexer* p, dive* a)
 void surface::makesurf(lexer* p, dive* a)
 {
 //-------
+    int xsurf=0;
+    
     LOOP
     if(a->flag(i,j,k)>0)
     {
@@ -101,6 +103,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surf[a->surfcount][3]=1;
         a->surf[a->surfcount][4]=fabs(a->flag(i-1,j,k));
         a->surfcount++;
+        ++xsurf;
         }
 		
         if(a->flag(i+1,j,k)<0)
@@ -111,6 +114,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surf[a->surfcount][3]=4;
         a->surf[a->surfcount][4]=fabs(a->flag(i+1,j,k));
         a->surfcount++;
+        ++xsurf;
         }
 		
         if(a->flag(i,j-1,k)<0)
@@ -154,7 +158,7 @@ void surface::makesurf(lexer* p, dive* a)
         }
     }
 
-	
+	cout<<"xsurf: "<<xsurf<<endl;
     
 }
 

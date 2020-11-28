@@ -86,6 +86,8 @@ class dive : public increment, public resize_class
     int *nbpara1,*nbpara2,*nbpara3,*nbpara4,*nbpara5,*nbpara6;  // neigbours for each subgrid
 
     int*** sgfield;
+    
+    int *periodicXcount,***periodicX;
 
     //ibm
     int **facet,**dirfac;

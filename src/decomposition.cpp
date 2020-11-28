@@ -70,6 +70,7 @@ void decomp::start(lexer* p, dive* a)
 	partition_correction(p,a);
 	partition_voidcheck(p,a);
 	}
+    
 	
 	neighbors(p,a);
 	knoxcalc(p,a);
@@ -79,6 +80,10 @@ void decomp::start(lexer* p, dive* a)
 	paravoidsurface(p,a);
     paracosurface(p,a);
     cornersurface(p,a);
+    
+    periodic_nb(p,a);
+    periodic_surf(p,a);
+    
     surfcount(p,a);
 	voidsurfcount(p,a);
     ccsurf(p,a);
@@ -92,9 +97,6 @@ void decomp::start(lexer* p, dive* a)
 	
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
     
-    
-    //for(n=0;n<=a->mx;n++)
-	//cout<<"XORIG: "<<a->xorig[n]<<endl;
 }
 
 int decomp::partition_check(lexer* p, dive* a)
@@ -225,21 +227,25 @@ void decomp::knoxcalc(lexer* p, dive*a)
 
 void decomp::mem_alloc(lexer *p, dive *a)
 {
-	int xsurf,ysurf,zsurf;
+	int xsurf,ysurf,zsurf,maxsurf;
 	int xco,yco,zco;
     
 	
-	xsurf = 3*p->knoy*p->knoz*(a->mx+xper);
-	ysurf = 3*p->knox*p->knoz*(a->my+yper);
-	zsurf = 3*p->knox*p->knoy*(a->mz+zper);
+	xsurf = 3*p->knoy*p->knoz*(a->mx);
+	ysurf = 3*p->knox*p->knoz*(a->my);
+	zsurf = 3*p->knox*p->knoy*(a->mz);
+    
+    maxsurf=0;
+    maxsurf=MAX(xsurf,ysurf);
+    maxsurf=MAX(maxsurf,zsurf);
 	
 	xco = yco = zco = 0;
 	
 	for(n=1;n<=p->M10;++n)
     {
-	xco += 3*(a->subknoy[n]+a->subknoz[n] + 4 +xper+yper+zper);
-	yco += 3*(a->subknox[n]+a->subknoz[n] + 4 +xper+yper+zper);
-	zco += 3*(a->subknox[n]+a->subknoy[n] + 4 +xper+yper+zper);
+	xco += 3*(a->subknoy[n]+a->subknoz[n] + 4);
+	yco += 3*(a->subknox[n]+a->subknoz[n] + 4);
+	zco += 3*(a->subknox[n]+a->subknoy[n] + 4);
     }
 	
 	ddout<<endl;
@@ -267,6 +273,9 @@ void decomp::mem_alloc(lexer *p, dive *a)
 	a->Iarray(a->para4co,xco,7);
 	a->Iarray(a->para5co,zco,7);
 	a->Iarray(a->para6co,zco,7);
+    
+    a->Iarray(a->periodicXcount,6);
+    a->Iarray(a->periodicX,6,maxsurf,3);
     
     // Slice
     

@@ -24,10 +24,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void decomp::periodic_ini(lexer* p, dive* a)
 {
     xper=yper=zper=0;
-    
+    cout<<"C21: "<<p->C21<<endl;
     // serial or parallel periodic BC
-    if(p->C21>1)
+    if(p->C21>=1)
     {
+        
         if(a->mx==1)
         p->C21=1;
         
@@ -38,7 +39,7 @@ void decomp::periodic_ini(lexer* p, dive* a)
         }
     }
     
-    if(p->C22>1)
+    if(p->C22>=1)
     {
         if(a->my==1)
         p->C22=1;
@@ -50,7 +51,7 @@ void decomp::periodic_ini(lexer* p, dive* a)
         }
     }
     
-    if(p->C23>1)
+    if(p->C23>=1)
     {
         if(a->mz==1)
         p->C23=1;
@@ -102,7 +103,7 @@ void decomp::periodic_nb(lexer* p, dive* a)
     }
     
     // z-dir parallel periodic BC
-    if(p->C21==3)
+    if(p->C23==2)
     {
         count=0;
         NLOOP
@@ -122,7 +123,7 @@ void decomp::periodic_nb(lexer* p, dive* a)
 
 void decomp::periodic_surf(lexer* p, dive* a)
 {
-
+    int periodic_count=0;
     // parasurf parallel periodic BC
     if(p->C21==2)
     {
@@ -134,6 +135,7 @@ void decomp::periodic_surf(lexer* p, dive* a)
         a->para1sf[a->para1count][1]=j;
         a->para1sf[a->para1count][2]=k;
         a->para1count++;
+        ++periodic_count;
         }
 
         i=p->knox-1;
@@ -144,6 +146,7 @@ void decomp::periodic_surf(lexer* p, dive* a)
         a->para4sf[a->para4count][1]=j;
         a->para4sf[a->para4count][2]=k;
         a->para4count++;
+        ++periodic_count;
         }
     }
     
@@ -158,6 +161,7 @@ void decomp::periodic_surf(lexer* p, dive* a)
         a->para3sf[a->para3count][1]=j;
         a->para3sf[a->para3count][2]=k;
         a->para3count++;
+        ++periodic_count;
         }
 
         j=p->knoy-1;
@@ -168,6 +172,7 @@ void decomp::periodic_surf(lexer* p, dive* a)
         a->para2sf[a->para2count][1]=j;
         a->para2sf[a->para2count][2]=k;
         a->para2count++;
+        ++periodic_count;
         }
     }
     
@@ -182,6 +187,7 @@ void decomp::periodic_surf(lexer* p, dive* a)
         a->para5sf[a->para5count][1]=j;
         a->para5sf[a->para5count][2]=k;
         a->para5count++;
+        ++periodic_count;
         }
 
         k=p->knoz-1;
@@ -192,6 +198,10 @@ void decomp::periodic_surf(lexer* p, dive* a)
         a->para6sf[a->para6count][1]=j;
         a->para6sf[a->para6count][2]=k;
         a->para6count++;
+        ++periodic_count;
         }
     }
+    
+    if(p->C21>0||p->C22>0||p->C23>0)
+    cout<<"periodic parasf: "<<periodic_count<<endl;
 }
