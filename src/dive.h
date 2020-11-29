@@ -87,7 +87,7 @@ class dive : public increment, public resize_class
 
     int*** sgfield;
     
-    int *periodicXcount,***periodicX;
+    int **periodicX,*periodicXall;
 
     //ibm
     int **facet,**dirfac;

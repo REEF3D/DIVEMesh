@@ -123,6 +123,13 @@ void decomp::periodic_nb(lexer* p, dive* a)
 
 void decomp::periodic_surf(lexer* p, dive* a)
 {
+    a->periodicXall[0]=a->para1count;
+    a->periodicXall[1]=a->para2count;
+    a->periodicXall[2]=a->para3count;
+    a->periodicXall[3]=a->para4count;
+    a->periodicXall[4]=a->para5count;
+    a->periodicXall[5]=a->para6count;
+    
     int periodic_count=0;
     // parasurf parallel periodic BC
     if(p->C21==2)
@@ -204,4 +211,47 @@ void decomp::periodic_surf(lexer* p, dive* a)
     
     if(p->C21>0||p->C22>0||p->C23>0)
     cout<<"periodic parasf: "<<periodic_count<<endl;
+}
+
+
+void decomp::periodic_count(lexer* p, dive* a)
+{
+    for(i=0;i<a->periodicXall[0];i++)
+    {
+    n=a->subgrid(a->para1sf[i][0],a->para1sf[i][1],a->para1sf[i][2]);
+    a->periodicX[n][0]++;
+    }
+
+    for(i=0;i<a->periodicXall[1];i++)
+    {
+    n=a->subgrid(a->para2sf[i][0],a->para2sf[i][1],a->para2sf[i][2]);
+    a->periodicX[n][1]++;
+    }
+
+    for(i=0;i<a->periodicXall[2];i++)
+    {
+    n=a->subgrid(a->para3sf[i][0],a->para3sf[i][1],a->para3sf[i][2]);
+    a->periodicX[n][2]++;
+    }
+
+    for(i=0;i<a->periodicXall[3];i++)
+    {
+    n=a->subgrid(a->para4sf[i][0],a->para4sf[i][1],a->para4sf[i][2]);
+    a->periodicX[n][3]++;
+    }
+
+    for(i=0;i<a->periodicXall[4];i++)
+    {
+    n=a->subgrid(a->para5sf[i][0],a->para5sf[i][1],a->para5sf[i][2]);
+    a->periodicX[n][4]++;
+    }
+
+    for(i=0;i<a->periodicXall[5];i++)
+    {
+    n=a->subgrid(a->para6sf[i][0],a->para6sf[i][1],a->para6sf[i][2]);
+    a->periodicX[n][5]++;
+    }
+    
+    
+    
 }

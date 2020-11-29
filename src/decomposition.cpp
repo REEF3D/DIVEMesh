@@ -83,6 +83,7 @@ void decomp::start(lexer* p, dive* a)
     
     periodic_nb(p,a);
     periodic_surf(p,a);
+    periodic_count(p,a);
     
     surfcount(p,a);
 	voidsurfcount(p,a);
@@ -96,6 +97,13 @@ void decomp::start(lexer* p, dive* a)
     slicecornercount(p,a);
 	
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
+    
+    
+    
+    
+    
+    for(n=1;n<=p->M10;++n)
+    cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
     
 }
 
@@ -274,8 +282,9 @@ void decomp::mem_alloc(lexer *p, dive *a)
 	a->Iarray(a->para5co,zco,7);
 	a->Iarray(a->para6co,zco,7);
     
-    a->Iarray(a->periodicXcount,6);
-    a->Iarray(a->periodicX,6,maxsurf,3);
+    a->Iarray(a->periodicXall,6);
+    a->Iarray(a->periodicX,p->M10+1,6);
+
     
     // Slice
     
