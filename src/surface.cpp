@@ -96,8 +96,6 @@ void surface::makesurf(lexer* p, dive* a)
     {
         if(a->flag(i-1,j,k)<0 && (p->C21==0||i>0))
         {
-            
-        cout<<" i: "<<i<<" p->C21: "<<p->C21<<endl;
         a->surf[a->surfcount][0]=i;
         a->surf[a->surfcount][1]=j;
         a->surf[a->surfcount][2]=k;
@@ -116,7 +114,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surfcount++;
         }
 		
-        if(a->flag(i,j-1,k)<0)
+        if(a->flag(i,j-1,k)<0 && (p->C22==0||j>0))
         {
         a->surf[a->surfcount][0]=i;
         a->surf[a->surfcount][1]=j;
@@ -126,7 +124,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surfcount++;
         }
 		
-		if(a->flag(i,j+1,k)<0)
+		if(a->flag(i,j+1,k)<0 && (p->C22==0||j<p->knoy-1))
         {
         a->surf[a->surfcount][0]=i;
         a->surf[a->surfcount][1]=j;
@@ -136,7 +134,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surfcount++;
         }
 		
-        if(a->flag(i,j,k-1)<0)
+        if(a->flag(i,j,k-1)<0 && (p->C23==0||k>0))
         {
         a->surf[a->surfcount][0]=i;
         a->surf[a->surfcount][1]=j;
@@ -146,7 +144,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surfcount++;
         }
 		
-        if(a->flag(i,j,k+1)<0)
+        if(a->flag(i,j,k+1)<0 && (p->C23==0||k<p->knoz-1))
         {
         a->surf[a->surfcount][0]=i;
         a->surf[a->surfcount][1]=j;
