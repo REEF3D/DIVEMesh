@@ -70,6 +70,7 @@ private:
     
     void periodic_ini(lexer*,dive*);
     void periodic_surf(lexer*,dive*);
+    void periodic_surfco(lexer*,dive*);
     void periodic_nb(lexer*,dive*);
     void periodic_count(lexer*,dive*);
 
