@@ -102,8 +102,8 @@ void decomp::start(lexer* p, dive* a)
     
     
     
-    for(n=1;n<=p->M10;++n)
-    cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
+    //for(n=1;n<=p->M10;++n)
+    //cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
     
 }
 
