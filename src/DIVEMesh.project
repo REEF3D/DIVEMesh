@@ -105,6 +105,7 @@
         <File Name="print_stl.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Grid">
+        <File Name="looping.h"/>
         <File Name="iterators.h"/>
         <File Name="increment.h"/>
         <VirtualDirectory Name="Field">

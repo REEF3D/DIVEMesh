@@ -31,6 +31,7 @@ void decomp::periodic_surf(lexer* p, dive* a)
     a->periodicXall[5]=a->para6count;
     
     int periodic_count=0;
+    
     // parasurf parallel periodic BC
     if(p->C21==2)
     {

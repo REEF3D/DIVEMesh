@@ -739,13 +739,7 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para1co[q][4];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para1co[q][5];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para1co[q][6];
+        iin = a->para1co[q][3];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -768,13 +762,7 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para2co[q][4];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para2co[q][5];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para2co[q][6];
+        iin = a->para2co[q][3];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -797,13 +785,7 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para3co[q][4];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para3co[q][5];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para3co[q][6];
+        iin = a->para3co[q][3];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -826,13 +808,7 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para4co[q][4];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para4co[q][5];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para4co[q][6];
+        iin = a->para4co[q][3];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -855,13 +831,7 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para5co[q][4];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para5co[q][5];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para5co[q][6];
+        iin = a->para5co[q][3];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -884,13 +854,7 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para6co[q][4];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para6co[q][5];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para6co[q][6];
+        iin = a->para6co[q][3];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
