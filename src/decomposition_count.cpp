@@ -67,46 +67,6 @@ void decomp::surfcount(lexer* p,dive* a)
     }
 }
 
-void decomp::voidsurfcount(lexer* p,dive* a)
-{
-    for(i=0;i<a->paravoid1count;i++)
-    {
-    n=a->subgrid(a->para1void[i][0],a->para1void[i][1],a->para1void[i][2]);
-    a->paravoid1[n]++;
-    }
-
-    for(i=0;i<a->paravoid2count;i++)
-    {
-    n=a->subgrid(a->para2void[i][0],a->para2void[i][1],a->para2void[i][2]);
-    a->paravoid2[n]++;
-    }
-
-    for(i=0;i<a->paravoid3count;i++)
-    {
-    n=a->subgrid(a->para3void[i][0],a->para3void[i][1],a->para3void[i][2]);
-    a->paravoid3[n]++;
-    }
-
-    for(i=0;i<a->paravoid4count;i++)
-    {
-    n=a->subgrid(a->para4void[i][0],a->para4void[i][1],a->para4void[i][2]);
-    a->paravoid4[n]++;
-    }
-
-    for(i=0;i<a->paravoid5count;i++)
-    {
-    n=a->subgrid(a->para5void[i][0],a->para5void[i][1],a->para5void[i][2]);
-    a->paravoid5[n]++;
-    }
-
-    for(i=0;i<a->paravoid6count;i++)
-    {
-    n=a->subgrid(a->para6void[i][0],a->para6void[i][1],a->para6void[i][2]);
-    a->paravoid6[n]++;
-    }
-}
-
-
 void decomp::slicesurfcount(lexer* p,dive* a)
 {	
 
@@ -272,37 +232,37 @@ void decomp::cornercount(lexer* p,dive* a)
 
     for(i=0;i<a->paraco1count;i++)
     {
-    n=a->para1co[i][3];
+    n=a->para1co[i][4];
     a->paraco1[n]++;
     }
 
     for(i=0;i<a->paraco2count;i++)
     {
-    n=a->para2co[i][3];
+    n=a->para2co[i][4];
     a->paraco2[n]++;
     }
 
     for(i=0;i<a->paraco3count;i++)
     {
-    n=a->para3co[i][3];
+    n=a->para3co[i][4];
     a->paraco3[n]++;
     }
 
     for(i=0;i<a->paraco4count;i++)
     {
-    n=a->para4co[i][3];
+    n=a->para4co[i][4];
     a->paraco4[n]++;
     }
 
     for(i=0;i<a->paraco5count;i++)
     {
-    n=a->para5co[i][3];
+    n=a->para5co[i][4];
     a->paraco5[n]++;
     }
 
     for(i=0;i<a->paraco6count;i++)
     {
-    n=a->para6co[i][3];
+    n=a->para6co[i][4];
     a->paraco6[n]++;
     }
 }

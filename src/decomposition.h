@@ -52,14 +52,12 @@ private:
     void rank(lexer*,dive*,int&,int&,int&,int&,int&,int&);
 
     void parasurface(lexer*,dive*);
-	void paravoidsurface(lexer*,dive*);
     void paracosurface(lexer*,dive*);
     void cornersurface(lexer*,dive*);
     void paraslicesurface(lexer*,dive*);
     void paraslicecosurface(lexer*,dive*);
     void neighbors(lexer*,dive*);
     void surfcount(lexer*,dive*);
-	void voidsurfcount(lexer*,dive*);
     void ccsurf(lexer*,dive*);
     void cornercount(lexer*,dive*);
     void slicesurfcount(lexer*,dive*);

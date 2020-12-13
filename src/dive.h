@@ -70,7 +70,6 @@ class dive : public increment, public resize_class
 
     int para1count,para2count,para3count,para4count,para5count,para6count;
     int paraslice1count,paraslice2count,paraslice3count,paraslice4count;
-	int paravoid1count,paravoid2count,paravoid3count,paravoid4count,paravoid5count,paravoid6count;
     int paracoslice1count,paracoslice2count,paracoslice3count,paracoslice4count;
     int paraco1count,paraco2count,paraco3count,paraco4count,paraco5count,paraco6count;
     int **para1sf,**para2sf,**para3sf,**para4sf,**para5sf,**para6sf;
@@ -79,7 +78,6 @@ class dive : public increment, public resize_class
     int **para1co,**para2co,**para3co,**para4co,**para5co,**para6co;
     int **paracoslice1sf,**paracoslice2sf,**paracoslice3sf,**paracoslice4sf;
     int *para1,*para2,*para3,*para4,*para5,*para6;              // para surface counter
-	int *paravoid1,*paravoid2,*paravoid3,*paravoid4,*paravoid5,*paravoid6;
     int *paraco1,*paraco2,*paraco3,*paraco4,*paraco5,*paraco6;
     int *paraslice1,*paraslice2,*paraslice3,*paraslice4;              // paraslice surface counter
     int *paracoslice1,*paracoslice2,*paracoslice3,*paracoslice4; 

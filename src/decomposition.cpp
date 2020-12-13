@@ -77,7 +77,6 @@ void decomp::start(lexer* p, dive* a)
     periodic_ini(p,a);
 	mem_alloc(p,a);
     parasurface(p,a);	
-	paravoidsurface(p,a);
     paracosurface(p,a);
     cornersurface(p,a);
     
@@ -86,7 +85,6 @@ void decomp::start(lexer* p, dive* a)
     periodic_count(p,a);
     
     surfcount(p,a);
-	voidsurfcount(p,a);
     ccsurf(p,a);
     cornercount(p,a);
 
@@ -272,12 +270,12 @@ void decomp::mem_alloc(lexer *p, dive *a)
 	a->Iarray(a->para5void,zsurf,4);
 	a->Iarray(a->para6void,zsurf,4);
 
-	a->Iarray(a->para1co,xco,7);
-	a->Iarray(a->para2co,yco,7);
-	a->Iarray(a->para3co,yco,7);
-	a->Iarray(a->para4co,xco,7);
-	a->Iarray(a->para5co,zco,7);
-	a->Iarray(a->para6co,zco,7);
+	a->Iarray(a->para1co,xco,5);
+	a->Iarray(a->para2co,yco,5);
+	a->Iarray(a->para3co,yco,5);
+	a->Iarray(a->para4co,xco,5);
+	a->Iarray(a->para5co,zco,5);
+	a->Iarray(a->para6co,zco,5);
     
     a->Iarray(a->periodicXall,6);
     a->Iarray(a->periodicX,p->M10+1,6);

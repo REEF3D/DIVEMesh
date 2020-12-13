@@ -167,19 +167,6 @@ NLOOP
     iin = a->para6[count];
     result.write((char*)&iin, sizeof (int));
     
-    iin = a->paravoid1[count];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->paravoid2[count];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->paravoid3[count];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->paravoid4[count];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->paravoid5[count];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->paravoid6[count];
-    result.write((char*)&iin, sizeof (int));
-    
     iin = a->paraco1[count];
     result.write((char*)&iin, sizeof (int));
     iin = a->paraco2[count];
@@ -579,154 +566,13 @@ NLOOP
     }
 
 // -----------------------------------------------------------------------------
-// ParaVOIDsurface
-	
-    for(q=0;q<a->paravoid1count;q++)
-    {
-    i=a->para1void[q][0];
-    j=a->para1void[q][1];
-    k=a->para1void[q][2];
-    n=a->subgrid(i,j,k);
-
-        if(n==count)
-        {
-        iin = i-a->xnode[aa-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = j-a->ynode[bb-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = k-a->znode[cc-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para1void[q][3];
-        result.write((char*)&iin, sizeof (int)); 
-        }
-    }
-
-    for(q=0;q<a->paravoid2count;q++)
-    {
-    i=a->para2void[q][0];
-    j=a->para2void[q][1];
-    k=a->para2void[q][2];
-    n=a->subgrid(i,j,k);
-        
-        if(n==count)
-        {
-        iin = i-a->xnode[aa-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = j-a->ynode[bb-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = k-a->znode[cc-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para2void[q][3];
-        result.write((char*)&iin, sizeof (int)); 
-        }
-    }
-
-    for(q=0;q<a->paravoid3count;q++)
-    {
-    i=a->para3void[q][0];
-    j=a->para3void[q][1];
-    k=a->para3void[q][2];
-    n=a->subgrid(i,j,k);
-        
-        if(n==count)
-        {
-        iin = i-a->xnode[aa-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = j-a->ynode[bb-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = k-a->znode[cc-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para3void[q][3];
-        result.write((char*)&iin, sizeof (int)); 
-        }
-    }
-
-    for(q=0;q<a->paravoid4count;q++)
-    {
-    i=a->para4void[q][0];
-    j=a->para4void[q][1];
-    k=a->para4void[q][2];
-    n=a->subgrid(i,j,k);
-    
-        if(n==count)
-        {
-        iin = i-a->xnode[aa-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = j-a->ynode[bb-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = k-a->znode[cc-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para4void[q][3];
-        result.write((char*)&iin, sizeof (int)); 
-        }
-    }
-
-    for(q=0;q<a->paravoid5count;q++)
-    {
-    i=a->para5void[q][0];
-    j=a->para5void[q][1];
-    k=a->para5void[q][2];
-    n=a->subgrid(i,j,k);
-    
-        if(n==count)
-        {
-        iin = i-a->xnode[aa-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = j-a->ynode[bb-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = k-a->znode[cc-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para5void[q][3];
-        result.write((char*)&iin, sizeof (int)); 
-        }
-    }
-
-    for(q=0;q<a->paravoid6count;q++)
-    {
-    i=a->para6void[q][0];
-    j=a->para6void[q][1];
-    k=a->para6void[q][2];
-    n=a->subgrid(i,j,k);
-        
-        if(n==count)
-        {
-        iin = i-a->xnode[aa-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = j-a->ynode[bb-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = k-a->znode[cc-1];
-        result.write((char*)&iin, sizeof (int)); 
-        
-        iin = a->para6void[q][3];
-        result.write((char*)&iin, sizeof (int)); 
-        }
-    }
-
-// -----------------------------------------------------------------------------
     // Para Corners
     for(q=0;q<a->paraco1count;q++)
     {
     i=a->para1co[q][0];
     j=a->para1co[q][1];
     k=a->para1co[q][2];
-    n=a->para1co[q][3];
+    n=a->para1co[q][4];
 
         if(n==count)
         {
@@ -749,7 +595,7 @@ NLOOP
     i=a->para2co[q][0];
     j=a->para2co[q][1];
     k=a->para2co[q][2];
-    n=a->para2co[q][3];
+    n=a->para2co[q][4];
         
         if(n==count)
         {
@@ -772,7 +618,7 @@ NLOOP
     i=a->para3co[q][0];
     j=a->para3co[q][1];
     k=a->para3co[q][2];
-    n=a->para3co[q][3];
+    n=a->para3co[q][4];
         
         if(n==count)
         {
@@ -795,7 +641,7 @@ NLOOP
     i=a->para4co[q][0];
     j=a->para4co[q][1];
     k=a->para4co[q][2];
-    n=a->para4co[q][3];
+    n=a->para4co[q][4];
         
         if(n==count)
         {
@@ -818,7 +664,7 @@ NLOOP
     i=a->para5co[q][0];
     j=a->para5co[q][1];
     k=a->para5co[q][2];
-    n=a->para5co[q][3];
+    n=a->para5co[q][4];
         
         if(n==count)
         {
@@ -841,7 +687,7 @@ NLOOP
     i=a->para6co[q][0];
     j=a->para6co[q][1];
     k=a->para6co[q][2];
-    n=a->para6co[q][3];
+    n=a->para6co[q][4];
 
         if(n==count)
         {

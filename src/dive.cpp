@@ -89,12 +89,6 @@ ccpointcount=0;
 	Iarray(para4,p->M10+1);
 	Iarray(para5,p->M10+1);
 	Iarray(para6,p->M10+1);
-	Iarray(paravoid1,p->M10+1);
-	Iarray(paravoid2,p->M10+1);
-	Iarray(paravoid3,p->M10+1);
-	Iarray(paravoid4,p->M10+1);
-	Iarray(paravoid5,p->M10+1);
-	Iarray(paravoid6,p->M10+1);
 	Iarray(paraco1,p->M10+1);
 	Iarray(paraco2,p->M10+1);
 	Iarray(paraco3,p->M10+1);
@@ -134,13 +128,6 @@ ccpointcount=0;
         para4[n]=0;
         para5[n]=0;
         para6[n]=0;
-		
-		paravoid1[n]=0;
-        paravoid2[n]=0;
-        paravoid3[n]=0;
-        paravoid4[n]=0;
-        paravoid5[n]=0;
-        paravoid6[n]=0;
 
         paraco1[n]=0;
         paraco2[n]=0;
