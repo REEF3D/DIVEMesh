@@ -232,37 +232,37 @@ void decomp::cornercount(lexer* p,dive* a)
 
     for(i=0;i<a->paraco1count;i++)
     {
-    n=a->para1co[i][4];
+    n=a->para1co[i][3];
     a->paraco1[n]++;
     }
 
     for(i=0;i<a->paraco2count;i++)
     {
-    n=a->para2co[i][4];
+    n=a->para2co[i][3];
     a->paraco2[n]++;
     }
 
     for(i=0;i<a->paraco3count;i++)
     {
-    n=a->para3co[i][4];
+    n=a->para3co[i][3];
     a->paraco3[n]++;
     }
 
     for(i=0;i<a->paraco4count;i++)
     {
-    n=a->para4co[i][4];
+    n=a->para4co[i][3];
     a->paraco4[n]++;
     }
 
     for(i=0;i<a->paraco5count;i++)
     {
-    n=a->para5co[i][4];
+    n=a->para5co[i][3];
     a->paraco5[n]++;
     }
 
     for(i=0;i<a->paraco6count;i++)
     {
-    n=a->para6co[i][4];
+    n=a->para6co[i][3];
     a->paraco6[n]++;
     }
 }

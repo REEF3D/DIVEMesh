@@ -572,7 +572,7 @@ NLOOP
     i=a->para1co[q][0];
     j=a->para1co[q][1];
     k=a->para1co[q][2];
-    n=a->para1co[q][4];
+    n=a->para1co[q][3];
 
         if(n==count)
         {
@@ -585,7 +585,13 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para1co[q][3];
+        iin = a->para1co[q][4];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para1co[q][5];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para1co[q][6];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -595,7 +601,7 @@ NLOOP
     i=a->para2co[q][0];
     j=a->para2co[q][1];
     k=a->para2co[q][2];
-    n=a->para2co[q][4];
+    n=a->para2co[q][3];
         
         if(n==count)
         {
@@ -608,7 +614,13 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para2co[q][3];
+        iin = a->para2co[q][4];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para2co[q][5];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para2co[q][6];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -618,7 +630,7 @@ NLOOP
     i=a->para3co[q][0];
     j=a->para3co[q][1];
     k=a->para3co[q][2];
-    n=a->para3co[q][4];
+    n=a->para3co[q][3];
         
         if(n==count)
         {
@@ -631,7 +643,13 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para3co[q][3];
+        iin = a->para3co[q][4];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para3co[q][5];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para3co[q][6];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -641,7 +659,7 @@ NLOOP
     i=a->para4co[q][0];
     j=a->para4co[q][1];
     k=a->para4co[q][2];
-    n=a->para4co[q][4];
+    n=a->para4co[q][3];
         
         if(n==count)
         {
@@ -654,7 +672,13 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para4co[q][3];
+        iin = a->para4co[q][4];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para4co[q][5];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para4co[q][6];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -664,7 +688,7 @@ NLOOP
     i=a->para5co[q][0];
     j=a->para5co[q][1];
     k=a->para5co[q][2];
-    n=a->para5co[q][4];
+    n=a->para5co[q][3];
         
         if(n==count)
         {
@@ -677,7 +701,13 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para5co[q][3];
+        iin = a->para5co[q][4];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para5co[q][5];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para5co[q][6];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
@@ -687,7 +717,7 @@ NLOOP
     i=a->para6co[q][0];
     j=a->para6co[q][1];
     k=a->para6co[q][2];
-    n=a->para6co[q][4];
+    n=a->para6co[q][3];
 
         if(n==count)
         {
@@ -700,7 +730,13 @@ NLOOP
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
         
-        iin = a->para6co[q][3];
+        iin = a->para6co[q][4];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para6co[q][5];
+        result.write((char*)&iin, sizeof (int)); 
+        
+        iin = a->para6co[q][6];
         result.write((char*)&iin, sizeof (int)); 
         }
     }
