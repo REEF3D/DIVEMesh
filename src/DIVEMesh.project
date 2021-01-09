@@ -304,6 +304,7 @@
         <File Name="inverse_dist.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Kriging">
+        <File Name="kriging_ini.cpp"/>
         <File Name="kriging_solve.cpp"/>
         <File Name="kriging_semivariogram.cpp"/>
         <File Name="kriging_rearrange.cpp"/>

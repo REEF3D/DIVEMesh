@@ -22,29 +22,40 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"kriging.h"
 #include"dive.h"
 #include"lexer.h"
+#include"field2d.h"
 
-void kriging::rearrange(lexer *p)
-{
-	// A
-	for(q=0;q<p->Np;++q)
-	row[q] = A[0][q];
+// source:
+
+void kriging::ini(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
+{    	
+	xmin=ymin=1.0e15;
+	xmax=ymax=-1.0e15;
+	mean=0.0;
 	
-	for(n=0;n<p->Np-1;++n)
-	for(q=0;q<p->Np;++q)
-	A[n][q] = A[n+1][q];
 	
-	for(q=0;q<p->Np;++q)
-	A[p->Np-1][q]=row[q];
+	for(n=0; n<numpt; ++n)
+	{
+	xmin = MIN(xmin,X[n]);
+	xmax = MAX(xmax,X[n]);
+	
+	ymin = MIN(ymin,Y[n]);
+	ymax = MAX(ymax,Y[n]);
+	
+	mean += F[n];
+	}
+	
+	range = p->D18*sqrt(pow(xmax-xmin,2.0) + pow(ymax-ymin,2.0));
+	
+	mean/=double(numpt);
+	
+	variance=0.0;
+	for(n=0; n<numpt; ++n)
+	variance += pow(F[n] - mean, 2.0);
+	
+	variance/=double(numpt);
+	
+	cout<<"Np: "<<numpt<<"mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
 }
 
-void kriging::rearrange_b(lexer *p)
-{
-	// b
-	val = b[0];
-	
-	for(n=0;n<p->Np-1;++n)
-	b[n] = b[n+1];
-	
-	b[p->Np-1] = val;
-}
+
 

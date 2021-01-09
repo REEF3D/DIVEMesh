@@ -28,33 +28,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {    	
-	xmin=ymin=1.0e15;
-	xmax=ymax=-1.0e15;
-	mean=0.0;
 	
-	
-	for(n=0; n<p->Np; ++n)
-	{
-	xmin = MIN(xmin,X[n]);
-	xmax = MAX(xmax,X[n]);
-	
-	ymin = MIN(ymin,Y[n]);
-	ymax = MAX(ymax,Y[n]);
-	
-	mean += F[n];
-	}
-	
-	range = p->D18*sqrt(pow(xmax-xmin,2.0) + pow(ymax-ymin,2.0));
-	
-	mean/=double(p->Np);
-	
-	variance=0.0;
-	for(n=0; n<p->Np; ++n)
-	variance += pow(F[n] - mean, 2.0);
-	
-	variance/=double(p->Np);
-	
-	cout<<"mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
 }
 
 kriging::~kriging()
@@ -63,6 +37,8 @@ kriging::~kriging()
 
 void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *F, double *XC, double *YC, int kx, int ky, double **f)
 {
+    ini(p,a,numpt,X,F,F);
+    
     //p->Np=numpt;
 	cout<<"kriging  p->Np: "<<p->Np<<endl;
 	
@@ -75,9 +51,6 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 	p->Darray(row,p->Np+1);
 
     
-    
-
-	
 	
 	cout<<"fill Aij"<<endl;
 	for(n=0; n<p->Np; ++n)

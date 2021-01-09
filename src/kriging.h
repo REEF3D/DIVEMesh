@@ -38,6 +38,7 @@ public:
     virtual ~kriging();
 
     virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
+    
 	virtual double semivariogram(double);
 	virtual void rearrange(lexer*);
 	virtual void rearrange_b(lexer*);
@@ -51,6 +52,7 @@ public:
 
 private:
     
+    void ini(lexer*,dive*,int,double*,double*,double*);
 	
 	double **A,**B;
 	double*x,*b,*s,*row;
