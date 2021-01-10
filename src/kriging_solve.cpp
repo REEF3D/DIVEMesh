@@ -55,10 +55,7 @@ void kriging::solve(lexer *p,double **A, double *x, double *b)
 	
 	b[q]=b[q]/(fabs(A[q][q])>1.0e-19?A[q][q]:1.0e-19);
 	}
-
-
 }
-
 
 void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
 {
