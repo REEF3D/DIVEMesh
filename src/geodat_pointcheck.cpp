@@ -165,6 +165,8 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
     
 void geodat::pointcheck_random(lexer *p, dive *a, double *X, double *Y, double *F)
 {
+    srand((unsigned)time(0));
+    
     if(p->G37_select==1)
     do{
 

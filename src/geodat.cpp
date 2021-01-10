@@ -80,7 +80,7 @@ void geodat::start(lexer* p, dive* a)
     if(p->G39==1)
     remove_bounds(p,a);
     
-    if(p->G36_select==1 && p->G37_select==0)
+    if(p->G36_select==1)
     pointcheck_radius(p,a,p->G10_x,p->G10_y,p->G10_z);
     
     if(p->G37_select==1)
