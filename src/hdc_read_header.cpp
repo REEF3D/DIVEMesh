@@ -19,7 +19,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-#include"wcp.h"
+#include"hdc.h"
 #include"lexer.h"
 #include"dive.h"
 #include<iostream>
@@ -27,7 +27,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include<sys/stat.h>
 #include<sys/types.h>
 
-void wcp::read_header(lexer *p, dive *a)
+void hdc::read_header(lexer *p, dive *a)
 {
     ifstream header;
     

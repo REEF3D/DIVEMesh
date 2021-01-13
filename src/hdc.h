@@ -26,14 +26,14 @@ class dive;
 
 using namespace std;
 
-#ifndef WCP_H_
-#define WCP_H_
+#ifndef HDC_H_
+#define HDC_H_
 
-class wcp : public increment
+class hdc : public increment
 {
 public:
-    wcp(lexer*,dive*);
-    virtual ~wcp();
+    hdc(lexer*,dive*);
+    virtual ~hdc();
 
     virtual void start(lexer*,dive*);
     

@@ -19,10 +19,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-#include"wcp.h"
+#include"hdc.h"
 #include"lexer.h"
 
-void wcp::filename_out(lexer *p, dive *a,int num, int rank)
+void hdc::filename_out(lexer *p, dive *a,int num, int rank)
 {
     
 	if(rank<9)
@@ -160,7 +160,7 @@ void wcp::filename_out(lexer *p, dive *a,int num, int rank)
 	}
 }
 
-void wcp::filename_out_header(lexer *p, dive *a, int rank)
+void hdc::filename_out_header(lexer *p, dive *a, int rank)
 {
     
 	if(rank<9)

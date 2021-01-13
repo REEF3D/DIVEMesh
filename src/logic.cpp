@@ -60,7 +60,7 @@ void driver::logic(lexer* p)
     pbed = new bedlevel(p,a);
     
     if(p->H10>0)
-    pwcp = new wcp(p,a);
+    phdc = new hdc(p,a);
 	
 	if(p->D10>0)
     pdata = new data(p,a);

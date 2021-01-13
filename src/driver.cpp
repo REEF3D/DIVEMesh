@@ -105,7 +105,7 @@ void driver::mainloop()
 
 // Hydrodynamic Coupling
     if(p->H10==4)
-    pwcp->start(p,a);
+    phdc->start(p,a);
 
 
     pprint->start(p,a);

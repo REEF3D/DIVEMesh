@@ -19,23 +19,23 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-#include"wcp.h"
+#include"hdc.h"
 #include"dive.h"
 #include"lexer.h"
 #include<sys/stat.h>
 #include<sys/types.h>
 
-wcp::wcp(lexer *p, dive *a) 
+hdc::hdc(lexer *p, dive *a) 
 {
     // Create Folder
 	mkdir("./REEF3D_WCP_Input",0777);
 }
 
-wcp::~wcp()
+hdc::~hdc()
 {
 }
 
-void wcp::start(lexer* p, dive* a)
+void hdc::start(lexer* p, dive* a)
 {
     cout<<"WCP procedure "<<endl;
 

@@ -19,11 +19,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-#include"wcp.h"
+#include"hdc.h"
 #include"lexer.h"
 #include"dive.h"
 
-void wcp::allocate(lexer *p, dive *a)
+void hdc::allocate(lexer *p, dive *a)
 {
     
     // allocated arrays
