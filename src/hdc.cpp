@@ -28,7 +28,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 hdc::hdc(lexer *p, dive *a) 
 {
     // Create Folder
-	mkdir("./REEF3D_WCP_Input",0777);
+	mkdir("./REEF3D_CFD_HDC_Input",0777);
 }
 
 hdc::~hdc()
@@ -37,7 +37,7 @@ hdc::~hdc()
 
 void hdc::start(lexer* p, dive* a)
 {
-    cout<<"WCP procedure "<<endl;
+    cout<<"Hydrodynamic Coupling (HDC) procedure "<<endl;
 
     read_mainheader(p,a);
     allocate(p,a);
@@ -54,7 +54,7 @@ void hdc::start(lexer* p, dive* a)
         read(p,a);
         write(p,a);
     
-    cout<<"WCP I/O iter: "<<n<<"   simtime: "<<simtime[n]<<endl;
+    cout<<"HDC I/O iter: "<<n<<"   simtime: "<<simtime[n]<<endl;
     }
     
     
