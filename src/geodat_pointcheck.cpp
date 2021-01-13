@@ -34,7 +34,7 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
 
     //-----
     int numpt = p->Np;
-    if(p->G36_select==1 && p->G37_select==0)
+    if(p->G36_select==1)
     {
     dd=3;
     Nx = p->knox; + 2*dd+1;
