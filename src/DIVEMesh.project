@@ -19,7 +19,7 @@
   <VirtualDirectory Name="Headers">
     <VirtualDirectory Name="Hydrodynamic Coupling">
       <VirtualDirectory Name="Wave Coupling">
-        <File Name="wcp.h"/>
+        <File Name="hdc.h"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Baselayer">
@@ -133,16 +133,16 @@
   <VirtualDirectory Name="Sources">
     <VirtualDirectory Name="Hydrodynamic Coupling">
       <VirtualDirectory Name="Wave Coupling">
-        <File Name="wcp_allocate.cpp"/>
-        <File Name="wcp_write_header.cpp"/>
-        <File Name="wcp_write.cpp"/>
-        <File Name="wcp_read_mainheader.cpp"/>
-        <File Name="wcp_read_header.cpp"/>
-        <File Name="wcp_read.cpp"/>
-        <File Name="wcp_filename_out.cpp"/>
-        <File Name="wcp_filename_in.cpp"/>
-        <File Name="wcp_decomp.cpp"/>
-        <File Name="wcp.cpp"/>
+        <File Name="hdc_write_header.cpp"/>
+        <File Name="hdc_write.cpp"/>
+        <File Name="hdc_read_mainheader.cpp"/>
+        <File Name="hdc_read_header.cpp"/>
+        <File Name="hdc_read.cpp"/>
+        <File Name="hdc_filename_out.cpp"/>
+        <File Name="hdc_filename_in.cpp"/>
+        <File Name="hdc_decomp.cpp"/>
+        <File Name="hdc_allocate.cpp"/>
+        <File Name="hdc.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Baselayer">
