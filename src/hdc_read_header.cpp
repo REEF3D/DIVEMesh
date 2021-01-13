@@ -31,7 +31,7 @@ void hdc::read_header(lexer *p, dive *a)
 {
     ifstream header;
     
-    cout<<"WCP numprocs:"<<numprocs<<endl;
+    cout<<"HDC numprocs:"<<numprocs<<endl;
     
     
 
@@ -93,23 +93,23 @@ void hdc::read_header(lexer *p, dive *a)
         nb4[q]=iin;
         
         /*
-        cout<<"WCP read coords: "<<q<<endl;
+        cout<<"HDC read coords: "<<q<<endl;
         
-        cout<<"WCP NGx: "<<NGx<<endl;
-        cout<<"WCP NGy: "<<NGy<<endl;
-        cout<<"WCP NGz: "<<NGz<<endl;
+        cout<<"HDC NGx: "<<NGx<<endl;
+        cout<<"HDC NGy: "<<NGy<<endl;
+        cout<<"HDC NGz: "<<NGz<<endl;
         
-        cout<<"WCP NLx: "<<NLx[q]<<endl;
-        cout<<"WCP NLy: "<<NLy[q]<<endl;
-        cout<<"WCP NLz: "<<NLz[q]<<endl;
+        cout<<"HDC NLx: "<<NLx[q]<<endl;
+        cout<<"HDC NLy: "<<NLy[q]<<endl;
+        cout<<"HDC NLz: "<<NLz[q]<<endl;
         
-        cout<<"WCP orig_i: "<<orig_i[q]<<endl;
-        cout<<"WCP orig_j: "<<orig_j[q]<<endl;
-        cout<<"WCP orig_k: "<<orig_k[q]<<endl;
+        cout<<"HDC orig_i: "<<orig_i[q]<<endl;
+        cout<<"HDC orig_j: "<<orig_j[q]<<endl;
+        cout<<"HDC orig_k: "<<orig_k[q]<<endl;
         
-        cout<<"WCP orig_x: "<<orig_x[q]<<endl;
-        cout<<"WCP orig_y: "<<orig_y[q]<<endl;
-        cout<<"WCP orig_z: "<<orig_z[q]<<endl;*/
+        cout<<"HDC orig_x: "<<orig_x[q]<<endl;
+        cout<<"HDC orig_y: "<<orig_y[q]<<endl;
+        cout<<"HDC orig_z: "<<orig_z[q]<<endl;*/
         
         
           // read coordinates

@@ -52,11 +52,11 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&iin, sizeof (int));
 	NGz=iin;
     
-    cout<<"WCP numprocs: "<<numprocs<<endl;
-    cout<<"WCP NGx: "<<NGx<<endl;
-    cout<<"WCP NGy: "<<NGy<<endl;
-    cout<<"WCP NGz: "<<NGz<<endl;
-    cout<<"WCP jdir: "<<jdir<<endl;
+    cout<<"HDC numprocs: "<<numprocs<<endl;
+    cout<<"HDC NGx: "<<NGx<<endl;
+    cout<<"HDC NGy: "<<NGy<<endl;
+    cout<<"HDC NGz: "<<NGz<<endl;
+    cout<<"HDC jdir: "<<jdir<<endl;
     
     numiter=0;
     while(!mainhead.eof())
@@ -77,7 +77,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.close();
     
-    cout<<"WCP numiter: "<<numiter<<endl;
+    cout<<"HDC numiter: "<<numiter<<endl;
     
     
     // allocate simtime

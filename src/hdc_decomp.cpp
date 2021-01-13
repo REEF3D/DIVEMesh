@@ -59,7 +59,7 @@ void hdc::decomp(lexer *p, dive *a)
         xstart = a->xorig[aa];
         xend  = a->xorig[aa+1];
         
-        cout<<" WCP decomp x_se: "<<xstart<<" "<<xend<<endl;
+        cout<<" HDC decomp x_se: "<<xstart<<" "<<xend<<endl;
         
         for(i=0;i<NGx;++i)
         {
@@ -130,9 +130,9 @@ void hdc::decomp(lexer *p, dive *a)
     for(bb=0;bb<a->my;++bb)
     {
     cout<<"jdir: "<<jdir<<endl;
-    cout<<"WCP xorig["<<aa<<"]: "<<a->xorig[aa]<<" yorig["<<bb<<"]: "<<a->yorig[bb]<<endl;
-    cout<<"WCP is: "<<is[aa]<<" ie: "<<ie[aa]<<" js: "<<js[bb]<<" je: "<<je[bb]<<endl;
-    cout<<"WCP xs: "<<xs[aa]<<" xe: "<<xe[aa]<<" ys: "<<ys[bb]<<" ye: "<<ye[bb]<<endl<<endl;
+    cout<<"HDC xorig["<<aa<<"]: "<<a->xorig[aa]<<" yorig["<<bb<<"]: "<<a->yorig[bb]<<endl;
+    cout<<"HDC is: "<<is[aa]<<" ie: "<<ie[aa]<<" js: "<<js[bb]<<" je: "<<je[bb]<<endl;
+    cout<<"HDC xs: "<<xs[aa]<<" xe: "<<xe[aa]<<" ys: "<<ys[bb]<<" ye: "<<ye[bb]<<endl<<endl;
     }
 
     
