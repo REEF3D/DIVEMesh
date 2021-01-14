@@ -58,7 +58,10 @@ geodat::geodat(lexer *p, dive *a)
     pipol = new inverse_dist_local(p,a);
     
     if(p->G15==3)
+    {
+    p->G36_select=1;
     pipol = new kriging(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z);
+    }
     
     p->Np=p->G10;
     print(p,a);
