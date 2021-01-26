@@ -23,8 +23,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void decomp::periodic_ini(lexer* p, dive* a)
 {
-    xper=yper=zper=0;
+
     cout<<"C21: "<<p->C21<<endl;
+    
     // serial or parallel periodic BC
     if(p->C21>=1)
     {
@@ -33,10 +34,8 @@ void decomp::periodic_ini(lexer* p, dive* a)
         p->C21=1;
         
         if(a->mx>1)
-        {
         p->C21=2;
-        xper=1;
-        }
+
     }
     
     if(p->C22>=1)
@@ -45,10 +44,7 @@ void decomp::periodic_ini(lexer* p, dive* a)
         p->C22=1;
         
         if(a->my>1)
-        {
         p->C22=2;
-        yper=1;
-        }
     }
     
     if(p->C23>=1)
@@ -57,10 +53,8 @@ void decomp::periodic_ini(lexer* p, dive* a)
         p->C23=1;
         
         if(a->mz>1)
-        {
         p->C23=2;
-        zper=1;
-        }
+
     }
     
 }
@@ -116,8 +110,6 @@ void decomp::periodic_nb(lexer* p, dive* a)
         a->nbpara6[count]=a->sgfield[aa][bb][11]-1;
         }
     }
-
-    
 }
 
 

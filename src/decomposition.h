@@ -96,7 +96,7 @@ private:
 	int *xcount,*ycount,*zcount;
 	int xaverage,yaverage,zaverage;
 	int xcount_sum,ycount_sum,zcount_sum,cellnum,paverage;
-    int xper,yper,zper;
+  
     
     
 	
