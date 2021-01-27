@@ -98,8 +98,8 @@ void decomp::start(lexer* p, dive* a)
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
     
     
-    //for(n=1;n<=p->M10;++n)
-    //cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
+    for(n=1;n<=p->M10;++n)
+    cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
     
     cout<<"C21: "<<p->C21<<" C22: "<<p->C22<<" C23: "<<p->C23<<endl;
     

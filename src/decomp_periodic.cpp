@@ -23,46 +23,42 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void decomp::periodic_ini(lexer* p, dive* a)
 {
-    xper=yper=zper=0;
-    
+
+
+
     // serial or parallel periodic BC
     if(p->C21>=1)
     {
-        
+
         if(a->mx==1)
         p->C21=1;
-        
+
         if(a->mx>1)
-        {
         p->C21=2;
-        xper=1;
-        }
+
     }
-    
+
     if(p->C22>=1)
     {
         if(a->my==1)
         p->C22=1;
-        
+
         if(a->my>1)
-        {
         p->C22=2;
-        yper=1;
-        }
     }
-    
+
     if(p->C23>=1)
     {
         if(a->mz==1)
         p->C23=1;
-        
+
         if(a->mz>1)
-        {
         p->C23=2;
-        zper=1;
-        }
+
     }
-    
+
+     cout<<"C21: "<<p->C21<<" mx: "<<a->mx<<endl;
+
 }
 
 void decomp::periodic_nb(lexer* p, dive* a)
@@ -79,12 +75,12 @@ void decomp::periodic_nb(lexer* p, dive* a)
 
         if(aa==1)
         a->nbpara1[count]=a->sgfield[a->mx][bb][cc]-1;
-        
+
         if(aa==a->mx)
         a->nbpara4[count]=a->sgfield[1][bb][cc]-1;
         }
     }
-    
+
     // y-dir parallel periodic BC
     if(p->C22==2)
     {
@@ -95,12 +91,12 @@ void decomp::periodic_nb(lexer* p, dive* a)
 
         if(bb==1)
         a->nbpara3[count]=a->sgfield[aa][a->my][cc]-1;
-        
+
         if(bb==a->my)
         a->nbpara2[count]=a->sgfield[aa][1][cc]-1;
         }
     }
-    
+
     // z-dir parallel periodic BC
     if(p->C23==2)
     {
@@ -111,13 +107,11 @@ void decomp::periodic_nb(lexer* p, dive* a)
 
         if(cc==1)
         a->nbpara5[count]=a->sgfield[aa][bb][a->mz]-1;
-        
+
         if(cc==a->mz)
         a->nbpara6[count]=a->sgfield[aa][bb][1]-1;
         }
     }
-
-    
 }
 
 
@@ -158,7 +152,7 @@ void decomp::periodic_count(lexer* p, dive* a)
     n=a->subgrid(a->para6sf[i][0],a->para6sf[i][1],a->para6sf[i][2]);
     a->periodicX[n][5]++;
     }
-    
-    
-    
+
+
+
 }
