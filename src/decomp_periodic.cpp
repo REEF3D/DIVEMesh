@@ -24,7 +24,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void decomp::periodic_ini(lexer* p, dive* a)
 {
     xper=yper=zper=0;
-    cout<<"C21: "<<p->C21<<endl;
+    
     // serial or parallel periodic BC
     if(p->C21>=1)
     {
@@ -113,7 +113,7 @@ void decomp::periodic_nb(lexer* p, dive* a)
         a->nbpara5[count]=a->sgfield[aa][bb][a->mz]-1;
         
         if(cc==a->mz)
-        a->nbpara6[count]=a->sgfield[aa][bb][11]-1;
+        a->nbpara6[count]=a->sgfield[aa][bb][1]-1;
         }
     }
 
