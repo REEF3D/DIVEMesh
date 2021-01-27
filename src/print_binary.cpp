@@ -247,17 +247,17 @@ NLOOP
     iin = p->C23;
     result.write((char*)&iin, sizeof (int));
 	
-    iin = a->periodicX[count][0];
+    iin = a->para1[count]-a->periodicX[count][0];
     result.write((char*)&iin, sizeof (int));
-    iin = a->periodicX[count][1];
+    iin = a->para2[count]-a->periodicX[count][1];
     result.write((char*)&iin, sizeof (int));
-    iin = a->periodicX[count][2];
+    iin = a->para3[count]-a->periodicX[count][2];
     result.write((char*)&iin, sizeof (int));
-    iin = a->periodicX[count][3];
+    iin = a->para4[count]-a->periodicX[count][3];
     result.write((char*)&iin, sizeof (int));
-    iin = a->periodicX[count][4];
+    iin = a->para5[count]-a->periodicX[count][4];
     result.write((char*)&iin, sizeof (int));
-    iin = a->periodicX[count][5];
+    iin = a->para6[count]-a->periodicX[count][5];
     result.write((char*)&iin, sizeof (int));
 
     iin = p->G10;

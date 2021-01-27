@@ -24,7 +24,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void decomp::periodic_ini(lexer* p, dive* a)
 {
 
-    cout<<"C21: "<<p->C21<<endl;
+   
     
     // serial or parallel periodic BC
     if(p->C21>=1)
@@ -56,6 +56,8 @@ void decomp::periodic_ini(lexer* p, dive* a)
         p->C23=2;
 
     }
+    
+     cout<<"C21: "<<p->C21<<" mx: "<<a->mx<<endl;
     
 }
 
