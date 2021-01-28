@@ -96,6 +96,8 @@ void driver::mainloop()
 
 // Decomp
     pdd->start(p,a);
+    
+    //psurf->makesurf(p,a);
 
 	if(p->solid_count>0||p->S1==1)
 	psolid->gcb_estimate(p,a);
