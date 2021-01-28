@@ -85,7 +85,7 @@ void decomp::start(lexer* p, dive* a)
     periodic_surf(p,a);
     periodic_count(p,a);
     
-    surfcount(p,a);
+    //surfcount(p,a);
     ccsurf(p,a);
     cornercount(p,a);
 

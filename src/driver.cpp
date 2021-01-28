@@ -28,7 +28,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2020 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210127" <<endl<<endl;
+    cout<<endl<<"v_210128" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -97,7 +97,8 @@ void driver::mainloop()
 // Decomp
     pdd->start(p,a);
     
-    //psurf->makesurf(p,a);
+    psurf->makesurf(p,a);
+    pdd->surfcount(p,a);
 
 	if(p->solid_count>0||p->S1==1)
 	psolid->gcb_estimate(p,a);

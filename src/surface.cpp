@@ -36,7 +36,7 @@ void surface::start(lexer* p, dive* a)
 	mem_alloc(p,a);
     normalvec(p,a);
     direction(p,a);
-    makesurf(p,a);
+    //makesurf(p,a);
     makesurf_plate(p,a);
     makedist(p,a);
     ccactive(p,a);

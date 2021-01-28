@@ -57,7 +57,7 @@ void decomp::periodic_ini(lexer* p, dive* a)
 
     }
 
-     cout<<"C21: "<<p->C21<<" mx: "<<a->mx<<endl;
+     //cout<<"C21: "<<p->C21<<" mx: "<<a->mx<<endl;
 
 }
 

@@ -37,6 +37,8 @@ public:
     decomp();
     virtual ~decomp();
     virtual void start(lexer*,dive*);
+    
+    void surfcount(lexer*,dive*);
 
 private:
     void nodecalc(lexer*,dive*);
@@ -57,7 +59,6 @@ private:
     void paraslicesurface(lexer*,dive*);
     void paraslicecosurface(lexer*,dive*);
     void neighbors(lexer*,dive*);
-    void surfcount(lexer*,dive*);
     void ccsurf(lexer*,dive*);
     void cornercount(lexer*,dive*);
     void slicesurfcount(lexer*,dive*);

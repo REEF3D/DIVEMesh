@@ -247,6 +247,7 @@ NLOOP
     iin = p->C23;
     result.write((char*)&iin, sizeof (int));
 	
+    /*
     iin = a->para1[count]-a->periodicX[count][0];
     result.write((char*)&iin, sizeof (int));
     iin = a->para2[count]-a->periodicX[count][1];
@@ -258,6 +259,19 @@ NLOOP
     iin = a->para5[count]-a->periodicX[count][4];
     result.write((char*)&iin, sizeof (int));
     iin = a->para6[count]-a->periodicX[count][5];
+    result.write((char*)&iin, sizeof (int));*/
+    
+    iin = a->periodicX[count][0];
+    result.write((char*)&iin, sizeof (int));
+    iin = a->periodicX[count][1];
+    result.write((char*)&iin, sizeof (int));
+    iin = a->periodicX[count][2];
+    result.write((char*)&iin, sizeof (int));
+    iin = a->periodicX[count][3];
+    result.write((char*)&iin, sizeof (int));
+    iin = a->periodicX[count][4];
+    result.write((char*)&iin, sizeof (int));
+    iin = a->periodicX[count][5];
     result.write((char*)&iin, sizeof (int));
 
     iin = p->G10;
