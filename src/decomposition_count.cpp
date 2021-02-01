@@ -23,14 +23,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 void decomp::surfcount(lexer* p,dive* a)
 {	
-    for(i=0;i<a->surfcount;i++)
-    {
-    cout<<a->surf[i][0]<<" "<<a->surf[i][1]<<" "<<a->surf[i][2]<<" "<<a->surf[i][3]<<" "<<a->surf[i][4]<<endl;
-    n=a->subgrid(a->surf[i][0],a->surf[i][1],a->surf[i][2]);
-    a->wall[n]++;
-    }
-	
-
+    
     for(i=0;i<a->para1count;i++)
     {
     n=a->subgrid(a->para1sf[i][0],a->para1sf[i][1],a->para1sf[i][2]);

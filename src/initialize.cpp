@@ -47,7 +47,7 @@ void initialize::start(lexer* p, dive* a)
 
     LOOP
 	{
-    a->flag(i,j,k)=0;
+    a->flag(i,j,k)=1;
 	a->solid(i,j,k)=1;
 	}
 

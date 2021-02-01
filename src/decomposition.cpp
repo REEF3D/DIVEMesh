@@ -46,11 +46,11 @@ void decomp::start(lexer* p, dive* a)
 	p->Iarray(ycross,a->knoy+10);
 	p->Iarray(zcross,a->knoz+10);
 
-
+/*
     MALOOP
     if(a->flag(i,j,k)<0)
     a->flag(i,j,k)=-1;
-	
+*/	
 	if(p->M20==1)
 	{
     nodecalc(p,a);
@@ -85,7 +85,7 @@ void decomp::start(lexer* p, dive* a)
     periodic_surf(p,a);
     periodic_count(p,a);
     
-    //surfcount(p,a);
+    surfcount(p,a);
     ccsurf(p,a);
     cornercount(p,a);
 
@@ -115,7 +115,7 @@ int decomp::partition_check(lexer* p, dive* a)
 
     LOOP
     {
-    if(a->flag(i,j,k)==1)
+    if(a->flag(i,j,k)>0)
     partcount[a->subgrid(i,j,k)]++;
     }
 

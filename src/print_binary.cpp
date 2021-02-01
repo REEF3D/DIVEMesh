@@ -246,20 +246,6 @@ NLOOP
     result.write((char*)&iin, sizeof (int));
     iin = p->C23;
     result.write((char*)&iin, sizeof (int));
-	
-    /*
-    iin = a->para1[count]-a->periodicX[count][0];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->para2[count]-a->periodicX[count][1];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->para3[count]-a->periodicX[count][2];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->para4[count]-a->periodicX[count][3];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->para5[count]-a->periodicX[count][4];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->para6[count]-a->periodicX[count][5];
-    result.write((char*)&iin, sizeof (int));*/
     
     iin = a->periodicX[count][0];
     result.write((char*)&iin, sizeof (int));
@@ -382,10 +368,13 @@ NLOOP
         result.write((char*)&iin, sizeof (int)); 
         iin = k-a->znode[cc-1];
         result.write((char*)&iin, sizeof (int)); 
-        iin = a->surf[q][3];
+        iin = a->surf[q][3]; // side
         result.write((char*)&iin, sizeof (int)); 
-        iin = a->surf[q][4];
+        iin = a->surf[q][4]; // group
         result.write((char*)&iin, sizeof (int)); 
+        
+        //if(a->surf[q][4]==21)
+        //cout<<n<<" . "<<i-a->xnode[aa-1]<<" "<<j-a->ynode[bb-1]<<" "<<k-a->znode[cc-1]<<" | "<<a->surf[q][3]<<" "<<a->surf[q][4]<<endl;
         }
     }
 

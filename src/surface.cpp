@@ -157,6 +157,14 @@ void surface::makesurf(lexer* p, dive* a)
     
     cout<<"surfcount: "<<a->surfcount<<endl;
     
+    
+    for(i=0;i<a->surfcount;i++)
+    {
+    //cout<<" surface: "<<a->surf[i][0]<<" "<<a->surf[i][1]<<" "<<a->surf[i][2]<<" "<<a->surf[i][3]<<" "<<a->surf[i][4]<<endl;
+    n=a->subgrid(a->surf[i][0],a->surf[i][1],a->surf[i][2]);
+    a->wall[n]++;
+    }
+    
 }
 
 void surface::ccactive(lexer* p, dive* a)
