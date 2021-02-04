@@ -1,0 +1,91 @@
+
+
+x fixed kriging 
+x added support for periodic boundary conditions
+
+20.10
+x improved three-zone grid refinement
+x improved stl ascii recognition
+
+20.09
+x added new geodat sampling algorithms
+x added various geodat point print outs
+x partition origin fix
+
+20.08
+x fixed a problem for 2D local inverse distance interpolation
+
+20.06
+x changed hydrodynamic coupling file numbering
+
+20.02
+x added kriging to geodat interpolation
+x added line skipping to geodat interpolation
+x added duplicate identification to geodat interpolation
+x improved solid raytracing
+x added FNPF to CFD coupling capabilities (HDC)
+
+19.10
+x added fluvial box
+x improved solid raytracing
+x fixed STL rotation
+
+18.12
+x added jacket rotation
+x fixed solid and stl geometry problems
+x fixed: B101 9, B 102 9, B 103 9
+x added geo.dat print-out in paraview format
+
+18.07
+x fixed a NUG-related solid geometry crash
+x fixed solid ray-tracing bug
+x fixed a bug with box object
+x fixed a bug with arch bridge solid
+x fixed a problem with coordinates (i.e. large numbers) for mesh, solid and topo
+x changed format of grid file from ascii to binary
+
+18.06
+x added non-unifom grid support
+x added a selection of stretching functions
+x added coupling of solid and geodat rotation
+
+18.01
+x minor bug fixed
+
+17.12
+x added solid cylinder in y-direction
+x added solid cylinders S 37 and S 38
+
+17.06
+x added jacket members for solid
+x added csg for stl and solid
+
+17.02
+x added semi-ellipsoid with vertical base and rotation solid
+x added semi-ellipsoid with vertical base solid
+x added ellipsoid solid
+x added sphere solid
+x fixed: reduced memory usage when using solids
+
+16.12
+x added thin solids
+x fixed crash for large amount of vertical cylinders, object type
+x added solid.stl print out
+x added vertical cylinder to solid
+x added arch bridge solid object
+x fixed M20 2 for a rare crash
+x fixed a rare decomposition problem for large cell counts
+
+16.03
+x added tetrahedon to solid
+x added pyramid to solid
+x added wedge to solid
+x added hexahedron to solid
+
+15.12
+x added local inverse distance weighting for geodat points
+x added rotation of geodat points
+
+15.02
+x added new solid geometry: ogee weir
+x added M 20 2 for improved domain decomposition with better load balancing

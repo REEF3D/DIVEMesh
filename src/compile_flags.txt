@@ -1,0 +1,2 @@
+-I/Users/hansbihs/Codelite/DIVEMesh/src
+-DVERSION=\"$(GIT_VERSION)\"
