@@ -1,4 +1,5 @@
 src/Makefile*
+src/*.txt
 **/.codelite
 .codelite/.tern-port
 .codelite/DIVEMesh.tags
