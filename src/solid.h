@@ -80,8 +80,12 @@ public:
     void jacket_member_vert(lexer*,dive*,int,int&,int&);
     void jacket_member_horz(lexer*,dive*,int,int&,int&);
     void plate_x(lexer*,dive*,int,int&,int&);
-    void fluvial_box(lexer*,dive*,int,int&,int&);
     
+    // fluvial box
+    void fluvial_box(lexer*,dive*,int,int&,int&);
+    void fluvial_box_fill_segments(lexer*,dive*,int,int&,int&);
+    void fluvial_box_v1(lexer*,dive*,int,int&,int&);
+    void fluvial_box_v2(lexer*,dive*,int,int&,int&);
 	
 	void rotation(double&,double&,double&,double,double,double);
 	void rotate_triangle(lexer*,dive*,int,int);
@@ -96,7 +100,6 @@ public:
     
     void angle_calc(double,double,double,double&,double&,double&);
     
-    void solid_object_conv(lexer*,dive*);
 
 	
 private:
@@ -116,6 +119,29 @@ private:
     int is_count;
     int maxpt;
     const double epsi;
+    
+    // fluvial box
+    void fluvial_box_move(lexer*,dive*);
+    void fluvial_box_extend(lexer*,dive*);
+    
+    int countS310;
+    int countS320;
+    int countS330;
+    int countS340;
+    int countds;
+    int numds;
+    int ds_count;
+    double dangle,length;
+    double *xl,*yl,*xr,*yr;
+    double x0; // add origin afterwards
+    double y0; // add origin
+    double phi0;
+    double deltax,deltay;
+    int lastds;
+    int fluvial_outflow_side;
+    double box_xs,box_xe,box_ys,box_ye,box_zs,box_ze;
+    
+    double nx,ny,norm,xc,yc,x1,y1,teta,ds,m,s;
 };
 
 #endif

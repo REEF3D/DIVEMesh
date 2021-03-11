@@ -578,6 +578,9 @@ void lexer::read_control()
                 case 203: ++S203;
 						 clear(c,numint);
 						 break;
+                case 301: control>>S301;
+						 clear(c,numint);
+						 break;
                 case 305: control>>S305;
 						 clear(c,numint);
 						 break;

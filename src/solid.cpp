@@ -331,7 +331,19 @@ void solid::start(lexer* p, dive* a)
         {
         fluvial_box(p,a,qn,tri_start,tri_end);
         rotate_triangle(p,a,tri_start,tri_end);
-        ray_cast(p,a,tri_start,tri_end);
+        
+            if(p->S301==1)
+            {
+            int temp=p->S18;
+            p->S18=2;
+            ray_cast(p,a,tri_start,tri_end);
+            p->S18_1=temp;
+            }
+            
+            if(p->S301==2)
+            {
+            ray_cast(p,a,tri_start,tri_end);
+            }
         }
     }
     
@@ -364,9 +376,6 @@ void solid::start(lexer* p, dive* a)
 
 	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
     
-    
-    if(p->S18==1)
-    solid_object_conv(p,a);
 
 }
 

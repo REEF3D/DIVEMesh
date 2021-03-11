@@ -170,7 +170,7 @@ void lexer::ini_default()
 	S10 = 0;		// int solid box
 	S11 = 0;		// int solid box array
     S15 = 0;        // int rotate solids with geodat
-    S18 = 0;        // int convert solid to object
+    S18 = 1;        // int invert solid
     S19 = 0.1;       // double factor solid resolution
     S31 = 0;			// int jacket rotation
     S31_x=S31_y=S31_z=S31_phi=S31_theta=S31_psi=0.0;
@@ -205,6 +205,7 @@ void lexer::ini_default()
     S202 = 0;       // int y-plate
     S203 = 0;       // int z-plate
     S300 = 0;       // int turn fluvial box
+    S301 = 1;       // int fluvial box type
     S300_ds = 0;    // int fluvial box ds num
     S305 = 0.5;     // double factor times dx for calculating ds
     S306 = 1.0;     // double width fluival channel

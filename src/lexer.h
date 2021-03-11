@@ -200,7 +200,7 @@ public:
 	
 	int S1,S2,S3,S5,S6,S7,S9,S10,S11,S18;
 	double S4,S8,S9_1;
-    double S19;
+    double S18_1,S19;
 	
 	double S5_x,S5_y,S5_z,S5_phi,S5_theta,S5_psi;
 	double S3_xs,S3_xe,S3_ys,S3_ye,S3_zs,S3_ze;
@@ -289,6 +289,7 @@ public:
     
     int S300,S300_ds;
     int *S300_ord;
+    int S301;
     double S305,S306,S307_fh,S307_bh,S308_x,S308_y,S308_z,S309_x,S309_y,S309_z;
     int S310;
     double *S310_l;

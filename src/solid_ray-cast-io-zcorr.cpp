@@ -170,9 +170,19 @@ void solid::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 		}
 	}
 
+	if(p->S18==1)
 	LOOP
 	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
+    {
 	a->solid(i,j,k)=-1;
+    }
+    
+    if(p->S18==2)
+	LOOP
+	if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
+    {
+	a->solid(i,j,k)=-1;
+    }
 
 	count=0;
 	LOOP
