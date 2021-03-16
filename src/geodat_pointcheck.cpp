@@ -30,7 +30,7 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
 	int count=0;
     
     
-    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+    
 
     //-----
     int numpt = p->Np;

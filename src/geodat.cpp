@@ -80,6 +80,10 @@ void geodat::start(lexer* p, dive* a)
     cout<<"geodat  Np_0: "<<p->G10<<endl;
     p->Np=p->G10;
     
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+    
+    holecheck(p,a,p->G10_x,p->G10_y,p->G10_z);
+    
     if(p->G39==1)
     remove_bounds(p,a);
     
