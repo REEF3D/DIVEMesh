@@ -24,5 +24,15 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *F)
+void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
 {
+    
+    
+    // radius either G18 or max radius of nearest nb
+    // go to very cell, is there a geodat point within the radius?
+    // if not at geodat point in cell center with given height G16
+        // count entries
+        // resize ptid
+        // fill ptid
+    
+}
