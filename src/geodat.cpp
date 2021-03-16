@@ -89,6 +89,8 @@ void geodat::start(lexer* p, dive* a)
     if(p->G37_select==1)
     pointcheck_random(p,a,p->G10_x,p->G10_y,p->G10_z);
     
+    // hole check
+    
     
     print(p,a);
 

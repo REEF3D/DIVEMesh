@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"surface.h"
@@ -100,6 +101,6 @@ double surface::distcalc(lexer* p, dive* a, int cs, int ii,int jj,int kk,int aa,
 
     if(cs==5 || cs==6)
     dist=fabs(sumz/denom);
-	
+
     return dist;
 }

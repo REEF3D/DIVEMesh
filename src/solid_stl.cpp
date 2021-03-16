@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"solid.h"
@@ -24,13 +25,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"lexer.h"
 
 void solid::stl_preproc(lexer* p, dive* a, int &ts, int &te)
-{	
+{
    ts=0;
    te=p->tricount;
 }
 
 void solid::stl_postproc(lexer* p, dive* a, int &ts, int &te)
-{	
+{
     LOOP
 	{
 	a->solid(i,j,k)*=p->S9_1;

@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"spline.h"
@@ -26,7 +27,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 spline::spline(lexer *pp, int rank, int side) : eps(1.0e-9)
 {
     p = pp;
-    
+
     spline_rank = rank;
     spline_side = side;
     spline_type = 1;
@@ -165,4 +166,3 @@ double spline::cfz(lexer *p, dive *a, int ii, int jj, int kk)
 
     return val;
 }
-

@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"surface.h"
@@ -47,50 +48,50 @@ void surface::mem_alloc(lexer* p, dive* a)
 {
     cout<<"surface"<<endl;
     a->surfcount=0;
-	
+
 	surfnum=0;
 
     LOOP
     if(a->flag(i,j,k)==-20)
     a->flag(i,j,k)=-21;
-	
+
 	LOOP
     if(a->flag(i,j,k)>0)
     {
         if(a->flag(i-1,j,k)<0)
         ++surfnum;
-		
+
         if(a->flag(i+1,j,k)<0)
         ++surfnum;
-		
+
         if(a->flag(i,j-1,k)<0)
         ++surfnum;
-		
+
 		if(a->flag(i,j+1,k)<0)
         ++surfnum;
-		
+
         if(a->flag(i,j,k-1)<0)
         ++surfnum;
-		
+
         if(a->flag(i,j,k+1)<0)
         ++surfnum;
     }
-    
+
     mem_alloc_plate(p,a);
-	
+
 	cout<<"surfnum: "<<surfnum<<"  surfnum_solid: "<<a->surfcount_solid<<endl;
-    
-	 
+
+
 	a->Iarray(a->surf,surfnum+a->surfcount_solid,5);
 	a->Iarray(a->surfdir,surfnum+a->surfcount_solid,3);
 	a->Darray(a->gcn,surfnum+a->surfcount_solid,3);
 	a->Darray(a->gcd,surfnum+a->surfcount_solid);
 }
-	
+
 void surface::makesurf(lexer* p, dive* a)
 {
 //-------
-    
+
     LOOP
     if(a->flag(i,j,k)>0)
     {
@@ -103,7 +104,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surf[a->surfcount][4]=fabs(a->flag(i-1,j,k));
         a->surfcount++;
         }
-		
+
         if(a->flag(i+1,j,k)<0 && (p->C21<=1||i<p->knox-1))
         {
         a->surf[a->surfcount][0]=i;
@@ -113,7 +114,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surf[a->surfcount][4]=fabs(a->flag(i+1,j,k));
         a->surfcount++;
         }
-		
+
         if(a->flag(i,j-1,k)<0 && (p->C22<=1||j>0))
         {
         a->surf[a->surfcount][0]=i;
@@ -123,7 +124,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surf[a->surfcount][4]=fabs(a->flag(i,j-1,k));
         a->surfcount++;
         }
-		
+
 		if(a->flag(i,j+1,k)<0 && (p->C22<=1||j<p->knoy-1))
         {
         a->surf[a->surfcount][0]=i;
@@ -133,7 +134,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surf[a->surfcount][4]=fabs(a->flag(i,j+1,k));
         a->surfcount++;
         }
-		
+
         if(a->flag(i,j,k-1)<0 && (p->C23<=1||k>0))
         {
         a->surf[a->surfcount][0]=i;
@@ -143,7 +144,7 @@ void surface::makesurf(lexer* p, dive* a)
         a->surf[a->surfcount][4]=fabs(a->flag(i,j,k-1));
         a->surfcount++;
         }
-		
+
         if(a->flag(i,j,k+1)<0 && (p->C23<=1||k<p->knoz-1))
         {
         a->surf[a->surfcount][0]=i;
@@ -154,17 +155,17 @@ void surface::makesurf(lexer* p, dive* a)
         a->surfcount++;
         }
     }
-    
+
     cout<<"surfcount: "<<a->surfcount<<endl;
-    
-    
+
+
     for(i=0;i<a->surfcount;i++)
     {
     //cout<<" surface: "<<a->surf[i][0]<<" "<<a->surf[i][1]<<" "<<a->surf[i][2]<<" "<<a->surf[i][3]<<" "<<a->surf[i][4]<<endl;
     n=a->subgrid(a->surf[i][0],a->surf[i][1],a->surf[i][2]);
     a->wall[n]++;
     }
-    
+
 }
 
 void surface::ccactive(lexer* p, dive* a)

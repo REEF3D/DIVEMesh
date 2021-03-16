@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"surface.h"
@@ -35,13 +36,13 @@ void surface::makesurfsolid(lexer* p, dive* a)
         a->surf[count][4]=a->surf_solid[qn][4];
         count++;
     }
-    
+
     count=a->surfcount;
     for(qn=0;qn<a->surfcount_solid;++qn)
     {
         a->gcd[count] = 0.5*p->dx;
         ++count;
     }
-    
+
     a->surfcount +=a->surfcount_solid;
 }

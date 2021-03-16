@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"surface.h"
@@ -52,13 +53,13 @@ void surface::direction(lexer* p, dive* a)
 
     if(a->surfdir[q][2]==6)
     a->gcn[q][2] = -fabs(a->gcn[q][2]);
-	
+
 		if(a->numfac(i,j,k)==1)
 		{
 		a->gcn[q][0]=0.0;
 		a->gcn[q][1]=0.0;
 		a->gcn[q][2]=0.0;
-		
+
 		if(a->surfdir[q][0]==1)
 		a->gcn[q][0] = 1.0;
 
@@ -76,11 +77,7 @@ void surface::direction(lexer* p, dive* a)
 
 		if(a->surfdir[q][2]==6)
 		a->gcn[q][2] = -1.0;
-						
+
 		}
     }
 }
-
-
-
-

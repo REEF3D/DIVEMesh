@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"spline.h"
@@ -119,7 +120,7 @@ int spline::inbound_onnode(int ii,int jj, int kk)
 
     y1 = p->YN[JJ];
     y2 = p->YN[JJP1];
-    
+
     xx = ((xe-xs)/ydenom)*(p->XP[II] - ys) + xs;
     yy = ((ye-ys)/xdenom)*(p->XP[jj] - xs) + ys;
 

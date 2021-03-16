@@ -286,6 +286,7 @@
       <File Name="object_wedge_y.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Topography">
+      <File Name="geodat_holecheck.cpp"/>
       <File Name="geodat_remove_bounds.cpp"/>
       <File Name="geodat_multigrid_ccipol.cpp"/>
       <File Name="geodat_print-sampled.cpp"/>

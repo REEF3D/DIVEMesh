@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"surfdir_indicate.h"
@@ -172,9 +173,3 @@ void surfdir_indicate::finalize(lexer* p, dive* a)
 
 	}
 }
-
-
-
-
-
-

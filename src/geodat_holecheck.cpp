@@ -20,38 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"surface.h"
+#include"geodat.h"
 #include"dive.h"
 #include"lexer.h"
 
-void surface::normalvec(lexer* p, dive* a)
+void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *F)
 {
-    double xp[6],yp[6],zp[6];
-    double nx,ny,nz;
-    double nl;
-
-    LOOP
-    if(a->numfac(i,j,k)>0)
-    {
-     q=a->confac(i,j,k);
-
-// gcn
-    xp[0]=a->ccpoint[a->facet[q][1]][0]-a->ccpoint[a->facet[q][0]][0];
-    yp[0]=a->ccpoint[a->facet[q][1]][1]-a->ccpoint[a->facet[q][0]][1];
-    zp[0]=a->ccpoint[a->facet[q][1]][2]-a->ccpoint[a->facet[q][0]][2];
-
-    xp[1]=a->ccpoint[a->facet[q][2]][0]-a->ccpoint[a->facet[q][0]][0];
-    yp[1]=a->ccpoint[a->facet[q][2]][1]-a->ccpoint[a->facet[q][0]][1];
-    zp[1]=a->ccpoint[a->facet[q][2]][2]-a->ccpoint[a->facet[q][0]][2];
-
-    nx=fabs(yp[0]*zp[1] - zp[0]*yp[1]);
-    ny=fabs(zp[0]*xp[1] - xp[0]*zp[1]);
-    nz=fabs(xp[0]*yp[1] - yp[0]*xp[1]);
-
-    nl = sqrt(nx*nx + ny*ny + nz*nz);
-
-    a->gcn[q][0]= nx=nx/nl;
-    a->gcn[q][1]= ny=ny/nl;
-    a->gcn[q][2]= nz=nz/nl;
-    }
-}
