@@ -80,6 +80,8 @@ public:
 	void Iresize(int**&,int,int,int,int);
 	void Iresize(int***&,int,int,int,int,int,int);
 	void Iresize(int****&,int,int,int,int,int,int,int,int);
+    
+    void Iresize(int***&, int, int, int**, int**);
 	
 	int pararank;
 

@@ -153,3 +153,22 @@ void resize_class::Iresize(int ****&field, int iold, int inew, int jold, int jne
 	
 	field=cache;
 }
+
+
+void resize_class::Iresize(int ***& field, int numi, int numj, int **numk_old, int **numk)
+{
+	int ***cache;
+	int n,m,q;
+	
+	Iarray(cache,numi,numi,numk);
+    
+	
+	for(n=0; n<numi; ++n)
+	for(m=0; m<numj; ++m)
+    for(q=0;q<MIN(numk_old[n][m],numk[n][m]);++q)
+	cache[n][m][q]=field[n][m][q];
+	
+	del_Iarray(field,numi,numj,numk_old);
+
+	field=cache;
+}
