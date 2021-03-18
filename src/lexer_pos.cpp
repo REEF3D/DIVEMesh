@@ -553,27 +553,6 @@ int lexer::poscgen_i(double xs, double *XC, int kx)
          break;   
         }
         
-        /*
-        // out of bounds
-        if(xs<XC[0])
-        {
-            ii = -3;
-            
-            cout<<" xs: "<<xs<<" XC[0]: "<<XC[0]<<endl;
-             
-         stop=1;
-         break;   
-        }
-        
-        // out of bounds
-        if(xs>XC[kx-1+marge])
-        {
-            ii = kx+marge+3;
-            cout<<" xs: "<<xs<<" XC[kx-1+marge]: "<<XC[kx-1+marge]<<endl;
-         stop=1;
-         break;   
-        }*/
-        
         // further division
         if(xs<XC[iloc+marge] && xs<XC[iloc-1+marge])
         ie=iloc;

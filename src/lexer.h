@@ -155,7 +155,7 @@ public:
     double G12_x, G12_y, G12_z;
 	double G13_phi;
 	double G14_x, G14_y,G16;
-    int G15,G17,G19;
+    int G15,G17,G18,G19;
     int G20,G23,G24,G25;
     double G24_h,G24_dz;
     double G25_h,G25_fz;

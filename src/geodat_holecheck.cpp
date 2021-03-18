@@ -48,11 +48,11 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
     
     for(n=0;n<p->Np;++n)
     {
-        i = p->poscgen_i(X[n],XC,kx);
-        j = p->poscgen_j(Y[n],YC,ky);
+        i = p->poscgen_i(X[n],p->XP,kx);
+        j = p->poscgen_j(Y[n],p->YP,ky);
         
-        //cp=0;
-        //do{
+        cp=0;
+        do{
 
         is=MAX(i-dij-cp,-3);
         ie=MIN(i+dij+cp,Nx-3);
@@ -60,40 +60,36 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
         js=MAX(j-dij-cp,-3);
         je=MIN(j+dij+cp,Ny-3);
         
-        //cout<<n<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
         
 
             count=0;
             for(r=is;r<ie;++r)
+            for(s=js;s<je;++s)
+            for(t=0;t<ptnum[r+dd][s+dd];++t)
             {
-                for(s=js;s<je;++s)
+                q = ptid[r+dd][s+dd][t];
+                        
+                if(q!=n)
                 {
-                    for(t=0;t<ptnum[r+dd][s+dd];++t)
-                    {
-                        q = ptid[r+dd][s+dd][t];
+                    dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
                         
-                        if(q!=n)
-                        {
-                        dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
-                        
-                        maxdist = MAX(maxdist,dist);
+                    maxdist = MAX(maxdist,dist);
         
-                        meandist += dist;
-                        ++pcount;
-                        ++count;
+                    meandist += dist;
+                    ++pcount;
+                    ++count;
                         
-                        cout<<"DIST: "<<dist<<" X[n]: "<<X[n]<<" X[q]: "<<X[q]<<" Y[n]: "<<Y[n]<<" Y[q]: "<<Y[q]<<"  ptnum[r+dd][s+dd]: "<<ptnum[r+dd][s+dd]<<" t: "<<t<<endl;
-                        }
-                        
-                        
-                    }
-                    
+                    //cout<<"DIST: "<<dist<<" X[n]: "<<X[n]<<" X[q]: "<<X[q]<<" Y[n]: "<<Y[n]<<" Y[q]: "<<Y[q]<<"  ptnum[r+dd][s+dd]: "<<ptnum[r+dd][s+dd]<<" t: "<<t<<" |  n: "<<n<<" q: "<<q
+                    //<<"   | i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" |  count: "<<count<<endl;
                 }
 
             }
+            
+        //cout<<n<<"  "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
+        
       
-        //cp+=2;
-        //}while(count<MIN(9,p->Np) && cp<10);
+        cp+=2;
+        }while(count<MIN(19,p->Np) && cp<10);
         
         //cout<<"PCOUNT: "<<pcount<<endl;
     }
@@ -121,11 +117,12 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
         // resize ptid
         // fill ptid
         
-    dij =int(meandist/(p->DXM));
+    dij =int(2.6*meandist/(p->DXM));
     
     cout<<"DIJ: "<<dij<<endl;
     
     // count entries
+    count=0;
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
@@ -137,8 +134,6 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
         js=MAX(j-dij,-3);
         je=MIN(j+dij,Ny-3);
         
-        //cout<<n<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" | is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
-        
 
         check=0;
         for(r=is;r<ie;++r)
@@ -148,22 +143,21 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
             
         if(check==0)
         {
-        ++ptnum[i+dd][j+dd];
         ++count;
         }
 
-    //cout<<"check: "<<check<<" "<<" i: "<<i<<" j: "<<j<<endl;
     }
-    cout<<"COUNT: "<<count<<endl;
-    // p->Iresize(ptid,Nx,Ny,ptnum_old,ptnum);
+    cout<<"NEW POINTS: "<<count<<endl;
+  
     
     
-    p->Dresize(X,p->Np,p->Np+count);
-    p->Dresize(Y,p->Np,p->Np+count);
-    p->Dresize(F,p->Np,p->Np+count);
+    p->Dresize(p->G10_x,p->Np,p->Np+count);
+    p->Dresize(p->G10_y,p->Np,p->Np+count);
+    p->Dresize(p->G10_z,p->Np,p->Np+count);
     
     
     // FILL
+    //ap->Np=0;
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
@@ -186,10 +180,13 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
             
         if(check==0)
         {
-        X[p->Np] = p->XP[IP];
-        Y[p->Np] = p->YP[JP];
-        F[p->Np] = p->G16;
-        ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=p->Np;
+        p->G10_x[p->Np] = p->XP[IP];
+        p->G10_y[p->Np] = p->YP[JP];
+        p->G10_z[p->Np] = p->G16;
+        
+       //cout<<" Np: "<<p->Np<<" X[p->Np]: "<<X[p->Np]<<" Y[p->Np]: "<<Y[p->Np]<<" F[p->Np]: "<<F[p->Np]<<endl;
+        //cout<<" Np: "<<p->Np<<" p->G10_x: "<<p->G10_x[p->Np]<<" p->G10_y: "<<p->G10_y[p->Np]<<" p->G10_z: "<<p->G10_z[p->Np]<<endl;
+        
         ++p->Np;
         }
 
