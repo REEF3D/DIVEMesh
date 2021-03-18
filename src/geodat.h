@@ -44,6 +44,7 @@ private:
     void pointcheck_radius(lexer*,dive*,double*,double*,double*);
     void pointcheck_random(lexer*,dive*,double*,double*,double*);
     void setup_ijk(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
+    void setup_ijk_delete(lexer*,dive*,int,int);
     void remove_bounds(lexer*,dive*);
     void holecheck(lexer*,dive*,double*,double*,double*);
     

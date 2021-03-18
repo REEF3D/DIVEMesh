@@ -91,6 +91,10 @@ void geodat::start(lexer* p, dive* a)
     
     if(p->G37_select==1)
     pointcheck_random(p,a,p->G10_x,p->G10_y,p->G10_z);
+    
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+    setup_ijk_delete(p,a,p->knox,p->knoy);
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
 
     holecheck(p,a,p->G10_x,p->G10_y,p->G10_z);
     

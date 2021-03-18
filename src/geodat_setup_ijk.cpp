@@ -71,3 +71,16 @@ void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, do
     
 }
 
+void geodat::setup_ijk_delete(lexer *p, dive *a, int kx, int ky)
+{
+    
+    Nx = kx + 2*dd+1;
+    Ny = ky + 2*dd+1;
+
+    
+    p->del_Iarray(ptid,Nx,Ny, ptnum);
+    p->del_Iarray(ptnum,Nx,Ny);
+    
+}
+
+
