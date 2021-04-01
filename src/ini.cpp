@@ -104,9 +104,7 @@ void lexer::ini_default()
 	G14_x=0.0;       // double x origin for turn angle
     G14_y=0.0;       // double y origin for turn angle
     G15=2;           // int interpolation scheme
-    G16=0.0;         // double base topo level for local IDW
     G17=2;          // int dij limit
-    G18=0;
     G19=0;              // int read letter in front of 3D coordinates
     G20=0;              // int auto box
     G21_x=0.0;       // double dxmin
@@ -129,6 +127,10 @@ void lexer::ini_default()
     G38_select=0;
     G39=1;          // int remove out of bounds geodat points
     G41=0;          // print SWAN bottom file
+    G51=0;          // int turn on holefill
+    G52=0.0;         // double base topo level for local IDW
+    G53_flag=0;     // int turn on manual search radius
+    G53=0.0;         // double manual search radius
     
     H10=0;          // int turn on hydrodynamic coupling procedures
     H21=0.0;        // double deltax

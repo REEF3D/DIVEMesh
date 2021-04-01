@@ -110,14 +110,17 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
     for(s=0;s<Ny;++s)
     ptnum_old[r][s]=ptnum[r][s];
     
-    // radius either G18 or max radius of nearest nb
+    // radius either G53 or max radius of nearest nb
     // go to very cell, is there a geodat point within the radius?
-    // if not at geodat point in cell center with given height G16
+    // if not at geodat point in cell center with given height G52
         // count entries
         // resize ptid
         // fill ptid
         
     dij =int(2.6*meandist/(p->DXM));
+    
+    if(p->G53_flag==1)
+    dij = int(p->G53/(p->DXM));
     
     cout<<"DIJ: "<<dij<<endl;
     
@@ -182,7 +185,7 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
         {
         p->G10_x[p->Np] = p->XP[IP];
         p->G10_y[p->Np] = p->YP[JP];
-        p->G10_z[p->Np] = p->G16;
+        p->G10_z[p->Np] = p->G52;
         
        //cout<<" Np: "<<p->Np<<" X[p->Np]: "<<X[p->Np]<<" Y[p->Np]: "<<Y[p->Np]<<" F[p->Np]: "<<F[p->Np]<<endl;
         //cout<<" Np: "<<p->Np<<" p->G10_x: "<<p->G10_x[p->Np]<<" p->G10_y: "<<p->G10_y[p->Np]<<" p->G10_z: "<<p->G10_z[p->Np]<<endl;

@@ -52,7 +52,7 @@ double inverse_dist_local::gxy(lexer *p, dive *a, double *Fx, double *Fy, double
     xc = XC[IP];
     yc = YC[JP];
 
-    g=p->G16;
+    g=0.0;
     wsum=0.0;
 
     double zmean=0.0;

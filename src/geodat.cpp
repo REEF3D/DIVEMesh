@@ -93,7 +93,7 @@ void geodat::start(lexer* p, dive* a)
     pointcheck_random(p,a,p->G10_x,p->G10_y,p->G10_z);
     
     
-    if(p->G18==1)
+    if(p->G51==1)
     {
     setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
     setup_ijk_delete(p,a,p->knox,p->knoy);
