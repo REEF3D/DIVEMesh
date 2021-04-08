@@ -28,7 +28,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2020 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210401" <<endl<<endl;
+    cout<<endl<<"v_210408" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -66,7 +66,6 @@ void driver::mainloop()
 // Solid
 	if(p->solid_count>0||p->S1==1)
 	psolid->start(p,a);
-
 
 	if(p->solid_count>0||p->S1==1)
 	{

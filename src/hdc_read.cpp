@@ -39,6 +39,18 @@ void hdc::read(lexer *p, dive *a)
 	filename_in(p,a,n,q); 
 	
 	result.open(name, ios::binary);
+    
+    // head section
+        result.read((char*)&iin, sizeof (int));
+        result.read((char*)&iin, sizeof (int));
+        result.read((char*)&iin, sizeof (int));
+
+        result.read((char*)&ffn, sizeof (float)); 
+        result.read((char*)&ffn, sizeof (float)); 
+        result.read((char*)&ffn, sizeof (float)); 
+        result.read((char*)&ffn, sizeof (float)); 
+        result.read((char*)&ffn, sizeof (float)); 
+        result.read((char*)&ffn, sizeof (float)); 
 	
     
     // read eta and bed
@@ -47,6 +59,13 @@ void hdc::read(lexer *p, dive *a)
     {
     result.read((char*)&ffn, sizeof (float)); 
     eta[i+orig_i[q]][j+orig_j[q]] = ffn;
+    }
+    
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
+    {
+    result.read((char*)&ffn, sizeof (float)); 
+    Fifsf[i+orig_i[q]][j+orig_j[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
