@@ -34,6 +34,7 @@ void hdc::read(lexer *p, dive *a)
 
     // result
     for(q=0; q<numprocs; ++q)
+    if(flag_all[qn]==1)
     {
     // Open File
 	filename_in(p,a,n,q); 

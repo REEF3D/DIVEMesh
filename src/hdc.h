@@ -61,6 +61,7 @@ private:
     double ddn;
     float ffn;
 	char name[200];
+    int *flag_all;
     
     int n,q,count;
     int numprocs, jdir, numiter;

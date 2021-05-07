@@ -62,6 +62,17 @@ void hdc::read_mainheader(lexer *p, dive *a)
     cout<<"HDC jdir: "<<jdir<<endl;
     cout<<"HDC file_version: "<<file_version<<endl;
     
+    // read flag
+    p->Iarray(flag_all,numprocs);
+    for(int qn=0;qn<numprocs;++qn)
+    {
+    mainhead.read((char*)&iin, sizeof (int));
+	flag_all[qn]=iin;
+    }
+    
+    
+    
+    // read timesteps
     numiter=0;
     while(!mainhead.eof())
 	{

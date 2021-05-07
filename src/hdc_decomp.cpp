@@ -59,7 +59,7 @@ void hdc::decomp(lexer *p, dive *a)
         xstart = a->xorig[aa];
         xend  = a->xorig[aa+1];
         
-        cout<<" HDC decomp x_se: "<<xstart<<" "<<xend<<endl;
+        //cout<<" HDC decomp x_se: "<<xstart<<" "<<xend<<endl;
         
         for(i=0;i<NGx;++i)
         {
