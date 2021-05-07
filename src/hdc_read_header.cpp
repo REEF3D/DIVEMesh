@@ -93,7 +93,7 @@ void hdc::read_header(lexer *p, dive *a)
         header.read((char*)&iin, sizeof (int));
         nb4[q]=iin;
         
-        /*
+        
         cout<<"HDC read coords: "<<q<<endl;
         
         cout<<"HDC NGx: "<<NGx<<endl;
@@ -110,7 +110,7 @@ void hdc::read_header(lexer *p, dive *a)
         
         cout<<"HDC orig_x: "<<orig_x[q]<<endl;
         cout<<"HDC orig_y: "<<orig_y[q]<<endl;
-        cout<<"HDC orig_z: "<<orig_z[q]<<endl;*/
+        cout<<"HDC orig_z: "<<orig_z[q]<<endl;
         
         
           // read coordinates

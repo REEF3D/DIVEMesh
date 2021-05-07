@@ -67,6 +67,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     for(int qn=0;qn<numprocs;++qn)
     {
     mainhead.read((char*)&iin, sizeof (int));
+    cout<<"FLAG_ALL["<<qn<<"] "<<iin<<endl;
 	flag_all[qn]=iin;
     }
     
