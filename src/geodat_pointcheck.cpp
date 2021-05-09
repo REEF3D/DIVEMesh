@@ -29,9 +29,6 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
 	double xdiff,ydiff,zdiff;
 	int count=0;
     
-    
-    
-
     //-----
     int numpt = p->Np;
     if(p->G36_select==1)
@@ -40,7 +37,6 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
     Nx = p->knox; + 2*dd+1;
 
     int dij = int(p->G36);
-    
     int qq;
     
     dij += 2;
@@ -52,10 +48,7 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
     
         qq = (rand() % ptnum[i+dd][j+dd]);
         
-        
         n = ptid[i+dd][j+dd][qq];
-        
-        
         
         
         if(n==-1 && ptnum[i+dd][j+dd]>1)
@@ -83,9 +76,13 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
         js=MAX(j-dij,-dd);
         je=MIN(j+dij,p->knoy+dd); 
 
+    //cout<<"PTCHK is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<endl;
+
         for(r=is;r<ie;++r)
+        if(r<Nx)
         {
             for(s=js;s<je;++s)
+            if(s<Ny)
             {
                 for(t=0;t<ptnum[r+dd][s+dd];++t)
                 {
@@ -103,26 +100,26 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
                         {
                         --numpt;
                         
+                        if(numpt<=0)
+                        {
+                        cout<<"!!! Pointcheck gives 0 geodat points, using original Np ... numpt: "<<numpt<<endl;
+                        goto part2;
+                        }
+                        
                         ptid[r+dd][s+dd][t]=-1;
                         }
-
                     }
-                    
                 }
-                
             }
-
         }  
         }      
-    
     }
-    
-    
     
     p->Darray(Xtemp,numpt);
     p->Darray(Ytemp,numpt);
     p->Darray(Ftemp,numpt);
-       
+    
+
     qn=0;
         // put back
         XYBCLOOP
@@ -139,7 +136,7 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
             }
         }
         
-        cout<<"numpt: "<<numpt<<" qn: "<<qn<<endl;
+        //cout<<"numpt: "<<numpt<<" qn: "<<qn<<endl;
         
         p->Np=qn;
         
@@ -160,6 +157,7 @@ void geodat::pointcheck_radius(lexer *p, dive *a, double *X, double *Y, double *
     
     print_sampled(p,a);
     
+    part2:
     cout<<"p->Np after pointcheck: "<<p->Np<<endl;
 }
     
@@ -178,7 +176,6 @@ void geodat::pointcheck_random(lexer *p, dive *a, double *X, double *Y, double *
                 F[q] = F[p->Np-1];
                 -- p->Np;
                 --q;
-
 
 
     }while(p->Np>p->G37);
