@@ -55,6 +55,7 @@ void hdc::write(lexer *p, dive *a)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=float(eta[i][j]);
+        cout<<" W ETA: "<<ffn<<endl;
         wfile.write((char*)&ffn, sizeof (float));
         }
             

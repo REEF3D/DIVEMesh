@@ -71,8 +71,6 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&iin, sizeof (int));
     
 	flag_all[qn]=iin;
-    
-    //cout<<"FLAG_ALL["<<qn<<"] "<<flag_all[qn]<<endl;
     }
     
     
