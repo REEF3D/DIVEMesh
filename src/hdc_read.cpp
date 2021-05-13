@@ -52,13 +52,11 @@ void hdc::read(lexer *p, dive *a)
         result.read((char*)&ddn, sizeof (double)); 
         result.read((char*)&ddn, sizeof (double)); 
 	
-    
     // read eta and bed
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     {
     result.read((char*)&ffn, sizeof (float)); 
-    cout<<q<<" it: "<<n<<" R ETA: "<<ffn<<endl;
     eta[i+orig_i[q]][j+orig_j[q]] = double(ffn);
     }
     
@@ -66,7 +64,6 @@ void hdc::read(lexer *p, dive *a)
     for(j=0;j<NLy[q];++j)
     {
     result.read((char*)&ffn, sizeof (float)); 
-    //cout<<q<<" it: "<<n<<" R Fisfsf: "<<ffn<<endl;
     Fifsf[i+orig_i[q]][j+orig_j[q]] = double(ffn);
     }
     
@@ -75,7 +72,6 @@ void hdc::read(lexer *p, dive *a)
     for(k=0;k<NLz[q];++k)
     {
     result.read((char*)&ffn, sizeof (float)); 
-    //cout<<q<<" it: "<<n<<" R U: "<<ffn<<endl;
     U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = double(ffn);
     }
     

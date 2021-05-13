@@ -28,7 +28,7 @@ void hdc::filename_in(lexer *p, dive *a,int num, int rank)
 	if(rank<9)
 	{
 		if(num<10)
-		sprintf(name,"./REEF3D_FNPF_State/REEF3D_FNPF-State-00000%d-0000%d.r3d",num,rank+1);
+		sprintf(name,"./REEF3D_FNPF_State/REEF3D_FNPF-State-0000000%d-0000%d.r3d",num,rank+1);
 
 		if(num<100&&num>9)
 		sprintf(name,"./REEF3D_FNPF_State/REEF3D_FNPF-State-000000%d-0000%d.r3d",num,rank+1);

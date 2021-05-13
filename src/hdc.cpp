@@ -37,7 +37,7 @@ hdc::~hdc()
 
 void hdc::start(lexer* p, dive* a)
 {
-    cout<<"Hydrodynamic Coupling (HDC) procedure "<<endl;
+    cout<<endl<<"Hydrodynamic Coupling (HDC) procedure "<<endl<<endl;
 
     read_mainheader(p,a);
     allocate(p,a);

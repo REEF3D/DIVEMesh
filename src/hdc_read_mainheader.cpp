@@ -74,7 +74,6 @@ void hdc::read_mainheader(lexer *p, dive *a)
     }
     
     
-    
     // read timesteps
     numiter=0;
     while(!mainhead.eof())
@@ -95,7 +94,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.close();
     
-    cout<<"HDC numiter: "<<numiter<<endl;
+    cout<<"HDC numiter: "<<numiter<<endl<<endl;
     
     
     // allocate simtime
