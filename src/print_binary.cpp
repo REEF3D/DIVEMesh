@@ -56,22 +56,22 @@ NLOOP
     ++count;
 
 	if(count<10&&count>0)
-	sprintf(name,"grid-00000%d.dat",count);
+	sprintf(name,"grid-00000%i.dat",count);
 
 	if(count<100&&count>9)
-	sprintf(name,"grid-0000%d.dat",count);
+	sprintf(name,"grid-0000%i.dat",count);
 
 	if(count<1000&&count>99)
-	sprintf(name,"grid-000%d.dat",count);
+	sprintf(name,"grid-000%i.dat",count);
 
 	if(count<10000&&count>999)
-	sprintf(name,"grid-00%d.dat",count);
+	sprintf(name,"grid-00%i.dat",count);
 
 	if(count<100000&&count>9999)
-	sprintf(name,"grid-0%d.dat",count);
+	sprintf(name,"grid-0%i.dat",count);
 
 	if(count>99999)
-	sprintf(name,"grid-%d.dat",count);
+	sprintf(name,"grid-%i.dat",count);
 
 	ofstream result;
 	result.open(name, ios::binary);
