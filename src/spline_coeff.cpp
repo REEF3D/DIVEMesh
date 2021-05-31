@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"spline.h"
@@ -25,7 +26,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 /*
 void spline::spline_coeff(double *t, double *f, int *i_support, int num_support, double *a, double *b, double *c, double *D)
 {
-	
+
 
     int i,k;
 
@@ -39,7 +40,7 @@ void spline::spline_coeff(double *t, double *f, int *i_support, int num_support,
 	r=new double [maxPt+1];
 	w=new double [maxPt+1];
 
-                                     
+
 
 	// form the tridiagonal system
 
@@ -131,7 +132,7 @@ void spline::spline_coeff(double *t, double *f, int *i_support, int num_support,
 
 	}
 
-	
+
 
 }
 */

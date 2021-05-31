@@ -36,7 +36,7 @@ void hdc::write_header(lexer *p, dive *a)
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {
-        cout<<"HDC write_header: "<<count<<endl;
+        //cout<<"HDC write_header: "<<count<<endl;
         filename_out_header(p,a,count);
         header.open(name, ios::binary);
         
@@ -48,14 +48,14 @@ void hdc::write_header(lexer *p, dive *a)
         iin=is[aa];
         header.write((char*)&iin, sizeof (int));
         
-        iin=js[aa];
+        iin=js[bb];
         header.write((char*)&iin, sizeof (int));
         
         // origin_xy
         ffn=xs[aa];
         header.write((char*)&ffn, sizeof (float));
         
-        ffn=ys[aa];
+        ffn=ys[bb];
         header.write((char*)&ffn, sizeof (float));
         
         // Nx,Ny,Nz
@@ -68,6 +68,7 @@ void hdc::write_header(lexer *p, dive *a)
         iin=NGz;
         header.write((char*)&iin, sizeof (int));
         
+        //cout<<count<<" Nx: "<<ie[aa]-is[aa]<<" Ny: "<<je[bb]-js[bb]<<" orig_i: "<<is[aa]<<" orig_j: "<<js[bb]<<endl;
         
         // write coordinates
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -105,8 +106,7 @@ void hdc::write_header(lexer *p, dive *a)
         if(n>=p->H33 && n<p->H34)
         ++qn;
         
-        cout<<"HDC final iteration print: "<<qn<<" "<<p->H31<<" "<<p->H32<<" "<<p->H33<<" "<<p->H34<<endl;
-            
+
         iin=qn;
         header.write((char*)&iin, sizeof (int));
         

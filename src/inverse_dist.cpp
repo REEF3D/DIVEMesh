@@ -70,7 +70,6 @@ double inverse_dist::w(lexer  *p, int Np, double *Fx, double *Fy, double *Fz)
 {
     dist = sqrt(pow(xc-Fx[n],2.0) + pow(yc-Fy[n],2.0));
 	
-	
     dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),p->G35);
 
     return dist;

@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"solid.h"
@@ -28,11 +29,11 @@ void solid::ray_cast(lexer* p, dive* a, int ts, int te)
 {
     if(rayiter==0)
     {
-	ray_cast_io_x(p,a,tri_start,tri_end);	
+	ray_cast_io_x(p,a,tri_start,tri_end);
     ray_cast_io_ycorr(p,a,tri_start,tri_end);
-    ray_cast_io_zcorr(p,a,tri_start,tri_end);	
+    ray_cast_io_zcorr(p,a,tri_start,tri_end);
     }
-    
+
     if(rayiter==1)
     {
 	ray_cast_x(p,a,tri_start,tri_end);

@@ -68,7 +68,6 @@ geodat::geodat(lexer *p, dive *a)
      
     p->Darray(XC,p->knox+14);
     p->Darray(YC,p->knoy+14);
-     
 }
 
 geodat::~geodat()
@@ -83,6 +82,8 @@ void geodat::start(lexer* p, dive* a)
     if(p->G39==1)
     remove_bounds(p,a);
     
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+    
     if(p->G36_select==1)
     pointcheck_radius(p,a,p->G10_x,p->G10_y,p->G10_z);
     
@@ -90,8 +91,18 @@ void geodat::start(lexer* p, dive* a)
     pointcheck_random(p,a,p->G10_x,p->G10_y,p->G10_z);
     
     
-    print(p,a);
+    if(p->G51==1)
+    {
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+    setup_ijk_delete(p,a,p->knox,p->knoy);
+    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
 
+    holecheck(p,a,p->G10_x,p->G10_y,p->G10_z);
+    }
+    
+    print(p,a);
+    
+    
     coarsen(p,a);
 
     pipol->start(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);

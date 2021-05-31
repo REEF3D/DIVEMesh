@@ -55,6 +55,7 @@ void hdc::allocate(lexer *p, dive *a)
     p->Darray(Y,NGy);
     p->Darray(Z,NGz);
     p->Darray(eta,NGx,NGy);
+    p->Darray(Fifsf,NGx,NGy);
     p->Darray(bed,NGx,NGy);
     p->Darray(U,NGx,NGy,NGz);
     p->Darray(V,NGx,NGy,NGz);

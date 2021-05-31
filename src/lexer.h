@@ -154,7 +154,7 @@ public:
     double G11_x, G11_y, G11_z;
     double G12_x, G12_y, G12_z;
 	double G13_phi;
-	double G14_x, G14_y,G16;
+	double G14_x, G14_y;
     int G15,G17,G19;
     int G20,G23,G24,G25;
     double G24_h,G24_dz;
@@ -164,6 +164,8 @@ public:
     int G31,G37,G38,G41;
     int G36_select,G37_select,G38_select,G39;
 	double G32,G35,G36;
+    int G51,G53_flag;
+    double G52,G53;
     
     int H10;
     double H21,H22,H23;
@@ -200,7 +202,7 @@ public:
 	
 	int S1,S2,S3,S5,S6,S7,S9,S10,S11,S18;
 	double S4,S8,S9_1;
-    double S19;
+    double S18_1,S19;
 	
 	double S5_x,S5_y,S5_z,S5_phi,S5_theta,S5_psi;
 	double S3_xs,S3_xe,S3_ys,S3_ye,S3_zs,S3_ze;
@@ -289,6 +291,7 @@ public:
     
     int S300,S300_ds;
     int *S300_ord;
+    int S301;
     double S305,S306,S307_fh,S307_bh,S308_x,S308_y,S308_z,S309_x,S309_y,S309_z;
     int S310;
     double *S310_l;

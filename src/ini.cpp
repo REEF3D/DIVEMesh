@@ -104,7 +104,6 @@ void lexer::ini_default()
 	G14_x=0.0;       // double x origin for turn angle
     G14_y=0.0;       // double y origin for turn angle
     G15=2;           // int interpolation scheme
-    G16=0.0;         // double base topo level for local IDW
     G17=2;          // int dij limit
     G19=0;              // int read letter in front of 3D coordinates
     G20=0;              // int auto box
@@ -128,6 +127,10 @@ void lexer::ini_default()
     G38_select=0;
     G39=1;          // int remove out of bounds geodat points
     G41=0;          // print SWAN bottom file
+    G51=0;          // int turn on holefill
+    G52=0.0;         // double base topo level for local IDW
+    G53_flag=0;     // int turn on manual search radius
+    G53=0.0;         // double manual search radius
     
     H10=0;          // int turn on hydrodynamic coupling procedures
     H21=0.0;        // double deltax
@@ -170,7 +173,7 @@ void lexer::ini_default()
 	S10 = 0;		// int solid box
 	S11 = 0;		// int solid box array
     S15 = 0;        // int rotate solids with geodat
-    S18 = 0;        // int convert solid to object
+    S18 = 1;        // int invert solid
     S19 = 0.1;       // double factor solid resolution
     S31 = 0;			// int jacket rotation
     S31_x=S31_y=S31_z=S31_phi=S31_theta=S31_psi=0.0;
@@ -205,6 +208,7 @@ void lexer::ini_default()
     S202 = 0;       // int y-plate
     S203 = 0;       // int z-plate
     S300 = 0;       // int turn fluvial box
+    S301 = 1;       // int fluvial box type
     S300_ds = 0;    // int fluvial box ds num
     S305 = 0.5;     // double factor times dx for calculating ds
     S306 = 1.0;     // double width fluival channel

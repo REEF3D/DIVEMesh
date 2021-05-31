@@ -30,23 +30,41 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void hdc::read(lexer *p, dive *a)
 {
     ifstream result;
-    
 
     // result
     for(q=0; q<numprocs; ++q)
+    if(flag_all[q]==1)
     {
     // Open File
 	filename_in(p,a,n,q); 
 	
 	result.open(name, ios::binary);
-	
     
+    // head section
+        result.read((char*)&iin, sizeof (int));
+        result.read((char*)&iin, sizeof (int));
+        result.read((char*)&iin, sizeof (int));
+
+        result.read((char*)&ddn, sizeof (double)); 
+        result.read((char*)&ddn, sizeof (double)); 
+        result.read((char*)&ddn, sizeof (double)); 
+        result.read((char*)&ddn, sizeof (double)); 
+        result.read((char*)&ddn, sizeof (double)); 
+        result.read((char*)&ddn, sizeof (double)); 
+	
     // read eta and bed
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     {
     result.read((char*)&ffn, sizeof (float)); 
-    eta[i+orig_i[q]][j+orig_j[q]] = ffn;
+    eta[i+orig_i[q]][j+orig_j[q]] = double(ffn);
+    }
+    
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
+    {
+    result.read((char*)&ffn, sizeof (float)); 
+    Fifsf[i+orig_i[q]][j+orig_j[q]] = double(ffn);
     }
     
     for(i=0;i<NLx[q];++i)
@@ -54,7 +72,7 @@ void hdc::read(lexer *p, dive *a)
     for(k=0;k<NLz[q];++k)
     {
     result.read((char*)&ffn, sizeof (float)); 
-    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = double(ffn);
     }
     
     for(i=0;i<NLx[q];++i)
@@ -62,7 +80,7 @@ void hdc::read(lexer *p, dive *a)
     for(k=0;k<NLz[q];++k)
     {
     result.read((char*)&ffn, sizeof (float)); 
-    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = double(ffn);
     }
     
     for(i=0;i<NLx[q];++i)
@@ -70,7 +88,7 @@ void hdc::read(lexer *p, dive *a)
     for(k=0;k<NLz[q];++k)
     {
     result.read((char*)&ffn, sizeof (float)); 
-    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = double(ffn);
     }
     
     

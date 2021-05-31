@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"surface.h"
@@ -54,4 +55,3 @@ void surface::normalvec(lexer* p, dive* a)
     a->gcn[q][2]= nz=nz/nl;
     }
 }
-

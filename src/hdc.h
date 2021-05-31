@@ -61,10 +61,12 @@ private:
     double ddn;
     float ffn;
 	char name[200];
+    int *flag_all;
     
     int n,q,count;
     int numprocs, jdir, numiter;
     int NGx,NGy,NGz;
+    int file_version;
     
     
 	double g,wsum,dist;
@@ -80,7 +82,7 @@ private:
     
     double *simtime;
     double *X,*Y,*Z;
-    double ***U,***V,***W,**eta,**bed;
+    double ***U,***V,***W,**eta,**Fifsf,**bed;
     
     int *is,*ie,*js,*je;
     double *xs,*xe,*ys,*ye;

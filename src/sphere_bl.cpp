@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"sphere_bl.h"
@@ -26,7 +27,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 sphere_bl::sphere_bl(lexer *pp, int rank, int side) : eps(1.0e-9), psi(1.0e-9*pp->dx)
 {
     p=pp;
-    
+
     sphere_bl_rank = rank;
     sphere_bl_side = side;
     sphere_bl_type = 21;
@@ -104,10 +105,10 @@ double sphere_bl::fx(lexer *p, dive *a, int ii, int jj, int kk)
 
     root=r*r - yn*yn - zn*zn;
 	root = root>=-psi?root:1.0e20;
-	
+
 	if(root>=-psi  && root<psi)
 		root=0.0;
-		
+
 
     val = signx*sqrt(root) + xm;
 
@@ -128,7 +129,7 @@ double sphere_bl::fy(lexer *p, dive *a, int ii, int jj, int kk)
 
     root=r*r - xn*xn - zn*zn;
     root = root>=-psi?root:1.0e20;
-	
+
 	if(root>=-psi  && root<psi)
 		root=0.0;
 
@@ -151,10 +152,10 @@ double sphere_bl::fz(lexer *p, dive *a, int ii, int jj, int kk)
 
     root=r*r - xn*xn - yn*yn;
     root = root>=-psi?root:1.0e20;
-	
+
 	if(root>=-psi  && root<psi)
 		root=0.0;
-		
+
 
     val = signz*sqrt(root) + zm;
 
@@ -175,10 +176,10 @@ double sphere_bl::cfx(lexer *p, dive *a, int ii, int jj, int kk)
 
     root=r*r - yc*yc -zc*zc;
     root = root>=-psi?root:1.0e20;
-	
+
 	if(root>=-psi  && root<psi)
 		root=0.0;
-		
+
 
     val = signx*sqrt(root) + xm;
 
@@ -199,10 +200,10 @@ double sphere_bl::cfy(lexer *p, dive *a, int ii, int jj, int kk)
 
     root=r*r - xc*xc -zc*zc;
     root = root>=-psi?root:1.0e20;
-	
+
 	if(root>=-psi  && root<psi)
 		root=0.0;
-		
+
 
     val = signy*sqrt(root) + ym;
 
@@ -223,10 +224,10 @@ double sphere_bl::cfz(lexer *p, dive *a, int ii, int jj, int kk)
 
     root=r*r - xc*xc -yc*yc;
     root = root>=-psi?root:1.0e20;
-	
+
 	if(root>=-psi  && root<psi)
 		root=0.0;
-		
+
 
     val = signy*sqrt(root) + zm;
 
@@ -395,7 +396,7 @@ int sphere_bl::inbound_onnode(int ii,int jj, int kk)
  /*
     cout<<ii<<" "<<jj<<" "<<kk<<" . "<<i<<" "<<j<<"  "<<k<<"  "<<"RADIUS: "<<count<<"  "<<rad[0]<<"  "<<rad[1]<<"  "<<rad[2]<<"  "<<rad[3]<<endl;
     cout<<x[0]+xm<<" "<<y[0]+ym<<" . "<<x[1]+xm<<" "<<y[1]+ym<<" . "<<x[2]+xm<<" "<<y[2]+ym<<" . "<<x[3]+xm<<" "<<y[3]+ym<<" . "<<endl<<endl;
-    
+
 */
     if(count>=2 && count<8)
     bound=1;

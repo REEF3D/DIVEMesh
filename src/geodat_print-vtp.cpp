@@ -35,7 +35,7 @@ void geodat::print(lexer* p, dive* a)
     int count;
     
 	
-    sprintf(name,"REEF3D_geodat-%d.vtu",printcount);
+    sprintf(name,"REEF3D_geodat-%i.vtu",printcount);
     
     ++printcount;
 

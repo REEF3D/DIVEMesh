@@ -286,6 +286,7 @@
       <File Name="object_wedge_y.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Topography">
+      <File Name="geodat_holecheck.cpp"/>
       <File Name="geodat_remove_bounds.cpp"/>
       <File Name="geodat_multigrid_ccipol.cpp"/>
       <File Name="geodat_print-sampled.cpp"/>
@@ -311,10 +312,15 @@
       <File Name="bedlevel.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
-      <File Name="solid_object_conv.cpp"/>
+      <VirtualDirectory Name="Fluvial Box">
+        <File Name="solid_fluvial_box_util.cpp"/>
+        <File Name="solid_fluvial_box_fill_segments.cpp"/>
+        <File Name="solid_fluvial_box_v2.cpp"/>
+        <File Name="solid_fluvial_box_v1.cpp"/>
+        <File Name="solid_fluvial_box.cpp"/>
+      </VirtualDirectory>
       <File Name="solid_plate_z.cpp"/>
       <File Name="solid_plate_y.cpp"/>
-      <File Name="solid_fluvial_box.cpp"/>
       <File Name="solid.cpp"/>
       <File Name="solid_box.cpp"/>
       <File Name="solid_cone_z.cpp"/>

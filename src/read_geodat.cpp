@@ -143,7 +143,6 @@ void lexer::read_geodat()
             B10_ze = new double[B10];
             }
 
-            //cout<<" xs: "<<xmin<<" xe: "<<xmax<<" ys: "<<ymin<<" ye: "<<ymax<<" zs: "<<zmin<<" ze: "<<zmax<<endl;
             B10_xs[0] = xmin-G21_x;
             B10_xe[0] = xmax+G22_x;
 

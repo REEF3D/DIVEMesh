@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"surface.h"
@@ -26,20 +27,20 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void surface::mem_alloc_plate(lexer* p, dive* a)
 {
     int js,je,ks,ke;
- 
+
     for(qn=0;qn<p->S201;++qn)
     {
 
         js = p->posc_j(p->S201_ys[qn]);
         je = p->posc_j(p->S201_ye[qn]);
-        
+
         ks = p->posc_k(p->S201_zs[qn]);
         ke = p->posc_k(p->S201_ze[qn]);
-        
+
         for(j=js;j<=je;++j)
         for(k=ks;k<=ke;++k)
         ++surfnum;
-        
+
         for(j=js;j<=je;++j)
         for(k=ks;k<=ke;++k)
         ++surfnum;
@@ -48,11 +49,11 @@ void surface::mem_alloc_plate(lexer* p, dive* a)
 
 void surface::makesurf_plate(lexer* p, dive* a)
 {
-    
+
     double locx;
     int loci;
     int js,je,ks,ke;
- 
+
     for(qn=0;qn<p->S201;++qn)
     {
         //left
@@ -61,10 +62,10 @@ void surface::makesurf_plate(lexer* p, dive* a)
         {
         js = p->posc_j(p->S201_ys[qn]);
         je = p->posc_j(p->S201_ye[qn]);
-        
+
         ks = p->posc_k(p->S201_zs[qn]);
         ke = p->posc_k(p->S201_ze[qn]);
-        
+
         for(j=js;j<=je;++j)
         for(k=ks;k<=ke;++k)
         {
@@ -75,7 +76,7 @@ void surface::makesurf_plate(lexer* p, dive* a)
         a->surf[a->surfcount][4]=21;
         a->surfcount++;
         }
-        
+
         for(j=js;j<=je;++j)
         for(k=ks;k<=ke;++k)
         {
@@ -86,12 +87,12 @@ void surface::makesurf_plate(lexer* p, dive* a)
         a->surf[a->surfcount][4]=21;
         a->surfcount++;
         }
-        
-        }
-        
 
-        
+        }
+
+
+
     }
-   
-    
+
+
 }

@@ -31,11 +31,9 @@ void hdc::read_header(lexer *p, dive *a)
 {
     ifstream header;
     
-    cout<<"HDC numprocs:"<<numprocs<<endl;
-    
-    
 
     for(q=0; q<numprocs; ++q)
+    if(flag_all[q]==1)
     {
         // filename
         filename_in_header(p,a,q);
@@ -93,24 +91,22 @@ void hdc::read_header(lexer *p, dive *a)
         nb4[q]=iin;
         
         /*
-        cout<<"HDC read coords: "<<q<<endl;
+        cout<<q<<" HDC NGx: "<<NGx<<endl;
+        cout<<q<<" HDC NGy: "<<NGy<<endl;
+        cout<<q<<" HDC NGz: "<<NGz<<endl;
         
-        cout<<"HDC NGx: "<<NGx<<endl;
-        cout<<"HDC NGy: "<<NGy<<endl;
-        cout<<"HDC NGz: "<<NGz<<endl;
+        cout<<q<<" HDC NLx: "<<NLx[q]<<endl;
+        cout<<q<<" HDC NLy: "<<NLy[q]<<endl;
+        cout<<q<<" HDC NLz: "<<NLz[q]<<endl;
         
-        cout<<"HDC NLx: "<<NLx[q]<<endl;
-        cout<<"HDC NLy: "<<NLy[q]<<endl;
-        cout<<"HDC NLz: "<<NLz[q]<<endl;
+        cout<<q<<" HDC orig_i: "<<orig_i[q]<<endl;
+        cout<<q<<" HDC orig_j: "<<orig_j[q]<<endl;
+        cout<<q<<" HDC orig_k: "<<orig_k[q]<<endl;
         
-        cout<<"HDC orig_i: "<<orig_i[q]<<endl;
-        cout<<"HDC orig_j: "<<orig_j[q]<<endl;
-        cout<<"HDC orig_k: "<<orig_k[q]<<endl;
-        
-        cout<<"HDC orig_x: "<<orig_x[q]<<endl;
-        cout<<"HDC orig_y: "<<orig_y[q]<<endl;
-        cout<<"HDC orig_z: "<<orig_z[q]<<endl;*/
-        
+        cout<<q<<" HDC orig_x: "<<orig_x[q]<<endl;
+        cout<<q<<" HDC orig_y: "<<orig_y[q]<<endl;
+        cout<<q<<" HDC orig_z: "<<orig_z[q]<<endl<<endl;
+        */
         
           // read coordinates
         for(i=0;i<NLx[q];++i)

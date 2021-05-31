@@ -52,12 +52,29 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&iin, sizeof (int));
 	NGz=iin;
     
+    mainhead.read((char*)&iin, sizeof (int));
+	file_version=iin;
+    
+    
     cout<<"HDC numprocs: "<<numprocs<<endl;
     cout<<"HDC NGx: "<<NGx<<endl;
     cout<<"HDC NGy: "<<NGy<<endl;
     cout<<"HDC NGz: "<<NGz<<endl;
     cout<<"HDC jdir: "<<jdir<<endl;
+    cout<<"HDC file_version: "<<file_version<<endl;
     
+    // read flag
+    p->Iarray(flag_all,numprocs);
+    
+    for(int qn=0;qn<numprocs;++qn)
+    {    
+    mainhead.read((char*)&iin, sizeof (int));
+    
+	flag_all[qn]=iin;
+    }
+    
+    
+    // read timesteps
     numiter=0;
     while(!mainhead.eof())
 	{
@@ -77,14 +94,15 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.close();
     
-    cout<<"HDC numiter: "<<numiter<<endl;
+    cout<<"HDC numiter: "<<numiter<<endl<<endl;
     
     
     // allocate simtime
     p->Darray(simtime,numiter);
     
+// ------------
     
-    // read mainhead
+    // re-read mainhead
     mainhead.open(name, ios::binary);
     
     mainhead.read((char*)&iin, sizeof (int));
@@ -101,6 +119,16 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.read((char*)&iin, sizeof (int));
 	NGz=iin;
+    
+    mainhead.read((char*)&iin, sizeof (int));
+	file_version=iin;
+
+    // read flag    
+    for(qn=0;qn<numprocs;++qn)
+    {
+    mainhead.read((char*)&iin, sizeof (int));
+	flag_all[qn]=iin;
+    }
     
     count=0;
     while(!mainhead.eof())

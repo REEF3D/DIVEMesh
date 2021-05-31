@@ -59,7 +59,7 @@ void hdc::decomp(lexer *p, dive *a)
         xstart = a->xorig[aa];
         xend  = a->xorig[aa+1];
         
-        cout<<" HDC decomp x_se: "<<xstart<<" "<<xend<<endl;
+        //cout<<" HDC decomp x_se: "<<xstart<<" "<<xend<<endl;
         
         for(i=0;i<NGx;++i)
         {
@@ -125,7 +125,7 @@ void hdc::decomp(lexer *p, dive *a)
     }
             
     
-    
+    /*
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {
@@ -134,6 +134,6 @@ void hdc::decomp(lexer *p, dive *a)
     cout<<"HDC is: "<<is[aa]<<" ie: "<<ie[aa]<<" js: "<<js[bb]<<" je: "<<je[bb]<<endl;
     cout<<"HDC xs: "<<xs[aa]<<" xe: "<<xe[aa]<<" ys: "<<ys[bb]<<" ye: "<<ye[bb]<<endl<<endl;
     }
-
+    */
     
 }
