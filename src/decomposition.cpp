@@ -46,11 +46,7 @@ void decomp::start(lexer* p, dive* a)
 	p->Iarray(ycross,a->knoy+10);
 	p->Iarray(zcross,a->knoz+10);
 
-/*
-    MALOOP
-    if(a->flag(i,j,k)<0)
-    a->flag(i,j,k)=-1;
-*/	
+
 	if(p->M20==1)
 	{
     nodecalc(p,a);
@@ -98,10 +94,10 @@ void decomp::start(lexer* p, dive* a)
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
     
     
-    //for(n=1;n<=p->M10;++n)
-    //cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
+    /*for(n=1;n<=p->M10;++n)
+    cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
     
-    //cout<<"C21: "<<p->C21<<" C22: "<<p->C22<<" C23: "<<p->C23<<endl;
+    cout<<"C21: "<<p->C21<<" C22: "<<p->C22<<" C23: "<<p->C23<<endl;*/
     
 }
 
@@ -145,9 +141,6 @@ void decomp::neighbors(lexer* p,dive* a)
 
     NLOOP
     a->sgfield[aa][bb][cc]=PARANUM;
-
-//    NLOOP
-//    cout<<a->sgfield[aa][bb][cc]<<endl;
 
     count=0;
     NLOOP
