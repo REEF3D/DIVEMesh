@@ -24,8 +24,6 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void decomp::periodic_ini(lexer* p, dive* a)
 {
 
-
-
     // serial or parallel periodic BC
     if(p->C21>=1)
     {
@@ -35,7 +33,6 @@ void decomp::periodic_ini(lexer* p, dive* a)
 
         if(a->mx>1)
         p->C21=2;
-
     }
 
     if(p->C22>=1)
@@ -57,14 +54,10 @@ void decomp::periodic_ini(lexer* p, dive* a)
 
     }
 
-     //cout<<"C21: "<<p->C21<<" mx: "<<a->mx<<endl;
-
 }
 
 void decomp::periodic_nb(lexer* p, dive* a)
 {
-
-
     // x-dir parallel periodic BC
     if(p->C21==2)
     {
@@ -113,7 +106,6 @@ void decomp::periodic_nb(lexer* p, dive* a)
         }
     }
 }
-
 
 void decomp::periodic_count(lexer* p, dive* a)
 {

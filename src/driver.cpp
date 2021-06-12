@@ -95,7 +95,7 @@ void driver::mainloop()
 
 // Decomp
     pdd->start(p,a);
-    
+
     pbc->makebc(p,a);
     psurf->start(p,a);
     //pdd->surfcount(p,a);
