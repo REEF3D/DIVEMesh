@@ -419,7 +419,7 @@ void lexer::read_control()
 				}
 				break;
 
-        case 'O': control>>numint;
+        case 'OO': control>>numint;
 				switch(numint)
 				{
 				case 10: ++O10;
@@ -443,7 +443,9 @@ void lexer::read_control()
 				}
 				break;
 				
-		case 'S': control>>numint;
+		case 'S': 
+        case 'O': 
+        control>>numint;
 				switch(numint)
 				{
 				case 1: control>>S1;
@@ -1183,7 +1185,7 @@ void lexer::read_control()
 				}
 				break;
 
-		    case 'O': control>>numint;
+		    case 'OO': control>>numint;
 				switch(numint)
 				{
 
@@ -1230,7 +1232,9 @@ void lexer::read_control()
 				}
 				break;
 				
-			case 'S': control>>numint;
+			case 'S': 
+           case 'O': 
+            control>>numint;
 				switch(numint)
 				{
                 case 10: control>>S10_xs[countS10]>>S10_xe[countS10]>>S10_ys[countS10]>>S10_ye[countS10]>>S10_zs[countS10]>>S10_ze[countS10];
