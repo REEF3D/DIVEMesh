@@ -72,6 +72,7 @@ solid::solid(lexer *p, dive *a) : cutl(p),cutr(p),epsi(1.6)
 	xrot=p->S5_x;
 	yrot=p->S5_y;
 	zrot=p->S5_z;
+    
 	phi=(PI/180.0)*p->S5_phi;
 	theta=(PI/180.0)*p->S5_theta;
 	psi=(PI/180.0)*p->S5_psi;
@@ -162,37 +163,9 @@ void solid::start(lexer* p, dive* a)
         ray_cast(p,a,tri_start,tri_end);
         }
 
-        for(qn=0;qn<p->S34;++qn)
-        {
-        jacket_member_x(p,a,qn,tri_start,tri_end);
-        rotate_triangle(p,a,tri_start,tri_end);
-        ray_cast(p,a,tri_start,tri_end);
-        }
-
-        for(qn=0;qn<p->S35;++qn)
-        {
-        jacket_member_y(p,a,qn,tri_start,tri_end);
-        rotate_triangle(p,a,tri_start,tri_end);
-        ray_cast(p,a,tri_start,tri_end);
-        }
-
-        for(qn=0;qn<p->S36;++qn)
-        {
-        jacket_member_z(p,a,qn,tri_start,tri_end);
-        rotate_triangle(p,a,tri_start,tri_end);
-        ray_cast(p,a,tri_start,tri_end);
-        }
-
         for(qn=0;qn<p->S37;++qn)
         {
         jacket_member_norm(p,a,qn,tri_start,tri_end);
-        rotate_triangle(p,a,tri_start,tri_end);
-        ray_cast(p,a,tri_start,tri_end);
-        }
-
-        for(qn=0;qn<p->S38;++qn)
-        {
-        jacket_member_vert(p,a,qn,tri_start,tri_end);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }

@@ -503,22 +503,7 @@ void lexer::read_control()
                case 33: ++S33;
 						 clear(c,numint);
 						 break;
-               case 34: ++S34;
-						 clear(c,numint);
-						 break;
-               case 35: ++S35;
-						 clear(c,numint);
-						 break;
-               case 36: ++S36;
-						 clear(c,numint);
-						 break;
                case 37: ++S37;
-						 clear(c,numint);
-						 break;
-               case 38: ++S38;
-						 clear(c,numint);
-						 break;
-               case 39: ++S39;
 						 clear(c,numint);
 						 break;
 				case 41: ++S41;
@@ -800,33 +785,6 @@ void lexer::read_control()
 	S33_ym = new double[S33];
 	S33_r  = new double[S33];
     
-    S34_xm1 = new double[S34];
-	S34_ym1 = new double[S34];
-    S34_zm1 = new double[S34];
-    S34_r1 = new double[S34];
-	S34_xm2 = new double[S34];
-	S34_ym2 = new double[S34];
-    S34_zm2 = new double[S34];
-    S34_r2 = new double[S34];
-    
-    S35_xm1 = new double[S35];
-	S35_ym1 = new double[S35];
-    S35_zm1 = new double[S35];
-    S35_r1 = new double[S35];
-	S35_xm2 = new double[S35];
-	S35_ym2 = new double[S35];
-    S35_zm2 = new double[S35];
-    S35_r2 = new double[S35];
-    
-    S36_xm1 = new double[S36];
-	S36_ym1 = new double[S36];
-    S36_zm1 = new double[S36];
-    S36_r1 = new double[S36];
-	S36_xm2 = new double[S36];
-	S36_ym2 = new double[S36];
-    S36_zm2 = new double[S36];
-    S36_r2 = new double[S36];
-    
     S37_xm1 = new double[S37];
 	S37_ym1 = new double[S37];
     S37_zm1 = new double[S37];
@@ -835,24 +793,6 @@ void lexer::read_control()
 	S37_ym2 = new double[S37];
     S37_zm2 = new double[S37];
     S37_r2 = new double[S37];
-    
-    S38_xm1 = new double[S38];
-	S38_ym1 = new double[S38];
-    S38_zm1 = new double[S38];
-    S38_r1 = new double[S38];
-	S38_xm2 = new double[S38];
-	S38_ym2 = new double[S38];
-    S38_zm2 = new double[S38];
-    S38_r2 = new double[S38];
-    
-    S39_xm1 = new double[S39];
-	S39_ym1 = new double[S39];
-    S39_zm1 = new double[S39];
-    S39_r1 = new double[S39];
-	S39_xm2 = new double[S39];
-	S39_ym2 = new double[S39];
-    S39_zm2 = new double[S39];
-    S39_r2 = new double[S39];
 	
 	S41_ym = new double[S41];
 	S41_zm = new double[S41];
@@ -1087,12 +1027,7 @@ void lexer::read_control()
 	int countS11=0;
 	int countS32=0;
     int countS33=0;
-    int countS34=0;
-    int countS35=0;
-    int countS36=0;
     int countS37=0;
-    int countS38=0;
-    int countS39=0;
 	int countS41=0;
 	int countS42=0;
 	int countS43=0;
@@ -1253,28 +1188,8 @@ void lexer::read_control()
                         ++countS33;
 						 clear(c,numint);
 						 break;
-               case 34: control>>S34_xm1[countS34]>>S34_ym1[countS34]>>S34_zm1[countS34]>>S34_r1[countS34]>>S34_xm2[countS34]>>S34_ym2[countS34]>>S34_zm2[countS34]>>S34_r2[countS34];
-                        ++countS34;
-						 clear(c,numint);
-						 break;
-               case 35: control>>S35_xm1[countS35]>>S35_ym1[countS35]>>S35_zm1[countS35]>>S35_r1[countS35]>>S35_xm2[countS35]>>S35_ym2[countS35]>>S35_zm2[countS35]>>S35_r2[countS35];
-                        ++countS35;
-						 clear(c,numint);
-						 break;
-               case 36: control>>S36_xm1[countS36]>>S36_ym1[countS36]>>S36_zm1[countS36]>>S36_r1[countS36]>>S36_xm2[countS36]>>S36_ym2[countS36]>>S36_zm2[countS36]>>S36_r2[countS36];
-                        ++countS36;
-						 clear(c,numint);
-						 break;
                case 37: control>>S37_xm1[countS37]>>S37_ym1[countS37]>>S37_zm1[countS37]>>S37_r1[countS37]>>S37_xm2[countS37]>>S37_ym2[countS37]>>S37_zm2[countS37]>>S37_r2[countS37];
                         ++countS37;
-						 clear(c,numint);
-						 break;
-               case 38: control>>S38_xm1[countS38]>>S38_ym1[countS38]>>S38_zm1[countS38]>>S38_r1[countS38]>>S38_xm2[countS38]>>S38_ym2[countS38]>>S38_zm2[countS38]>>S38_r2[countS38];
-                        ++countS38;
-						 clear(c,numint);
-						 break;
-               case 39: control>>S39_xm1[countS39]>>S39_ym1[countS39]>>S39_zm1[countS39]>>S39_r1[countS39]>>S39_xm2[countS39]>>S39_ym2[countS39]>>S39_zm2[countS39]>>S39_r2[countS39];
-                        ++countS39;
 						 clear(c,numint);
 						 break;
 				case 41: control>>S41_ym[countS41]>>S41_zm[countS41]>>S41_x1[countS41]>>S41_x2[countS41]>>S41_r1[countS41]>>S41_r2[countS41];

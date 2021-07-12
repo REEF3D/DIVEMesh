@@ -179,12 +179,7 @@ void lexer::ini_default()
     S31_x=S31_y=S31_z=S31_phi=S31_theta=S31_psi=0.0;
     S32 = 0;       // int solid cylinder_y 
 	S33 = 0;		// int solid cylinder_z 
-    S34 = 0;		// int solid jacketmember_x 
-    S35 = 0;		// int solid jacketmember_y 
-    S36 = 0;		// int solid jacketmember_z 
     S37 = 0;		// int solid jacketmember_horz
-    S38 = 0;		// int solid jacketmember_vert 
-    S39 = 0;		// int solid jacketmember_norm 
 	S41 = 0;		// int solid cone_x
 	S42 = 0;		// int solid cone_y
 	S43 = 0;		// int solid cone_z

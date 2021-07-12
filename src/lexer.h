@@ -217,18 +217,8 @@ public:
     double *S32_xm, *S32_zm, *S32_r;
 	int S33;
     double *S33_xm, *S33_ym, *S33_r;
-    int S34;
-    double *S34_xm1, *S34_ym1, *S34_zm1, *S34_r1, *S34_xm2, *S34_ym2, *S34_zm2, *S34_r2;
-    int S35;
-    double *S35_xm1, *S35_ym1, *S35_zm1, *S35_r1, *S35_xm2, *S35_ym2, *S35_zm2, *S35_r2;
-    int S36;
-    double *S36_xm1, *S36_ym1, *S36_zm1, *S36_r1, *S36_xm2, *S36_ym2, *S36_zm2, *S36_r2;
     int S37;
     double *S37_xm1, *S37_ym1, *S37_zm1, *S37_r1, *S37_xm2, *S37_ym2, *S37_zm2, *S37_r2;
-    int S38;
-    double *S38_xm1, *S38_ym1, *S38_zm1, *S38_r1, *S38_xm2, *S38_ym2, *S38_zm2, *S38_r2;
-    int S39;
-    double *S39_xm1, *S39_ym1, *S39_zm1, *S39_r1, *S39_xm2, *S39_ym2, *S39_zm2, *S39_r2;
 	int S41,S42,S43;
     double *S41_ym, *S41_zm, *S41_x1, *S41_x2, *S41_r1, *S41_r2;
 	double *S42_xm, *S42_zm, *S42_y1, *S42_y2, *S42_r1, *S42_r2;

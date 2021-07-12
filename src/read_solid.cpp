@@ -62,74 +62,10 @@ void lexer::solid_preproc()
 	trinum+=6*snum;
 	}
     
-    for(n=0; n<S34;++n)
-	{
-	r1=S34_r1[n];
-	r2=S34_r2[n];    
-	
-	rmax = MAX(r1,r2);
-	
-	U = 2.0 * PI * rmax;
-	
-	ds = S19*(U*DXM);
-	
-	snum = int(U/ds);
-	
-	trinum+=6*snum;
-	}
-    
-    for(n=0; n<S35;++n)
-	{
-	r1=S35_r1[n];
-	r2=S35_r2[n];    
-	
-	rmax = MAX(r1,r2);
-	
-	U = 2.0 * PI * rmax;
-	
-	ds = S19*(U*DXM);
-	
-	snum = int(U/ds);
-	
-	trinum+=6*snum;
-	}
-    
-    for(n=0; n<S36;++n)
-	{
-	r1=S36_r1[n];
-	r2=S36_r2[n];    
-	
-	rmax = MAX(r1,r2);
-	
-	U = 2.0 * PI * rmax;
-	
-	ds = S19*(U*DXM);
-	
-	snum = int(U/ds);
-	
-	trinum+=6*snum;
-	}
-    
     for(n=0; n<S37;++n)
 	{
 	r1=S37_r1[n];
 	r2=S37_r2[n];    
-	
-	rmax = MAX(r1,r2);
-	
-	U = 2.0 * PI * rmax;
-	
-	ds = S19*(U*DXM);
-	
-	snum = int(U/ds);
-	
-	trinum+=6*snum;
-	}
-    
-    for(n=0; n<S38;++n)
-	{
-	r1=S38_r1[n];
-	r2=S38_r2[n];    
 	
 	rmax = MAX(r1,r2);
 	

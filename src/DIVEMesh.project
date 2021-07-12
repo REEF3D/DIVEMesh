@@ -390,12 +390,7 @@
       <File Name="solid_ellipsoid_semi.cpp"/>
       <File Name="solid_sphere.cpp"/>
       <File Name="solid_ellipsoid_semi_rot.cpp"/>
-      <File Name="solid_jacketmember_x.cpp"/>
-      <File Name="solid_jacketmember_y.cpp"/>
-      <File Name="solid_jacketmember_z.cpp"/>
       <File Name="solid_stl.cpp"/>
-      <File Name="solid_jacketmember_vert.cpp"/>
-      <File Name="solid_jacketmember_horz.cpp"/>
       <File Name="solid_jacketmember_norm.cpp"/>
       <File Name="solid_cylinder_y.cpp"/>
     </VirtualDirectory>

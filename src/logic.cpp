@@ -28,7 +28,7 @@ void driver::logic(lexer* p)
 	p->bl_count = p->B10 + p->B22 + p->B31 + p->B32 + p->B33;	
 	p->fc_count = p->F11 + p->F21;
 	p->obj_count = p->O10 + p->O32 + p->O33 + p->O43 + p->O61 + p->O62;
-	p->solid_count = p->S10 + p->S11 + p->S32 + p->S33 + p->S34 + p->S35 + p->S36 + p->S37 + p->S38  + p->S39
+	p->solid_count = p->S10 + p->S11 + p->S32 + p->S33 + p->S37
             + p->S41 + p->S42 + p->S43
             + p->S51 + p->S52 + p->S53 + p->S54 + p->S61 
             + p->S62 + p->S81 + p->S82 + p->S83 + p->S84 + p->S63 + p->S121 + p->S131 + p->S141
