@@ -17,6 +17,9 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="Headers">
+    <VirtualDirectory Name="Geometry">
+      <File Name="geometry.h"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Hydrodynamic Coupling">
       <File Name="hdc.h"/>
     </VirtualDirectory>
@@ -129,6 +132,39 @@
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="Sources">
+    <VirtualDirectory Name="Geometry">
+      <File Name="geometry_wedge_z.cpp"/>
+      <File Name="geometry_wedge_y.cpp"/>
+      <File Name="geometry_wedge_x.cpp"/>
+      <File Name="geometry_wedge.cpp"/>
+      <File Name="geometry_tetrahedon.cpp"/>
+      <File Name="geometry_stl.cpp"/>
+      <File Name="geometry_sphere.cpp"/>
+      <File Name="geometry_semicyl_y.cpp"/>
+      <File Name="geometry_rotation.cpp"/>
+      <File Name="geometry_pyramid.cpp"/>
+      <File Name="geometry_plate_x.cpp"/>
+      <File Name="geometry_ogee-weir.cpp"/>
+      <File Name="geometry_jacketmember_z.cpp"/>
+      <File Name="geometry_jacketmember_y.cpp"/>
+      <File Name="geometry_jacketmember_x.cpp"/>
+      <File Name="geometry_jacketmember_vert.cpp"/>
+      <File Name="geometry_jacketmember_norm.cpp"/>
+      <File Name="geometry_jacketmember_horz.cpp"/>
+      <File Name="geometry_hexahedron.cpp"/>
+      <File Name="geometry_ellipsoid_semi_rot.cpp"/>
+      <File Name="geometry_ellipsoid_semi.cpp"/>
+      <File Name="geometry_ellipsoid.cpp"/>
+      <File Name="geometry_cylinder_z.cpp"/>
+      <File Name="geometry_cylinder_y.cpp"/>
+      <File Name="geometry_cone_z.cpp"/>
+      <File Name="geometry_cone_y.cpp"/>
+      <File Name="geometry_cone_x.cpp"/>
+      <File Name="geometry_box_array.cpp"/>
+      <File Name="geometry_box.cpp"/>
+      <File Name="geometry_arch.cpp"/>
+      <File Name="geometry.cpp"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Hydrodynamic Coupling">
       <File Name="hdc_write_header.cpp"/>
       <File Name="hdc_write.cpp"/>
@@ -273,10 +309,8 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Objects">
+      <File Name="objects_geometry.cpp"/>
       <File Name="objects.cpp"/>
-      <VirtualDirectory Name="Geometry">
-        <File Name="objects_geometry.cpp"/>
-      </VirtualDirectory>
       <File Name="object_conical.cpp"/>
       <File Name="object_cylinder_y.cpp"/>
       <File Name="object_cylinder_z.cpp"/>
@@ -319,8 +353,6 @@
         <File Name="solid_fluvial_box_v1.cpp"/>
         <File Name="solid_fluvial_box.cpp"/>
       </VirtualDirectory>
-      <File Name="solid_plate_z.cpp"/>
-      <File Name="solid_plate_y.cpp"/>
       <File Name="solid.cpp"/>
       <File Name="solid_box.cpp"/>
       <File Name="solid_cone_z.cpp"/>
@@ -330,8 +362,6 @@
       <File Name="solid_wedge_y.cpp"/>
       <File Name="solid_wedge_z.cpp"/>
       <File Name="solid_ogee-weir.cpp"/>
-      <File Name="solid_gcb.cpp"/>
-      <File Name="solid_dist.cpp"/>
       <File Name="solid_semicyl_y.cpp"/>
       <File Name="solid_box_array.cpp"/>
       <File Name="solid_rotation.cpp"/>

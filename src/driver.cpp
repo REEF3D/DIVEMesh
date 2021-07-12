@@ -28,7 +28,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2020 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210708" <<endl<<endl;
+    cout<<endl<<"v_210712" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -62,6 +62,16 @@ void driver::mainloop()
 	objgeo->start(p,a);
 	objprint->start(p,a);
 	}
+    
+// Geometry Pipeline
+    //Solid
+        // geodat
+        // STL
+        // solids
+    //Topo
+        // geodat
+        // STL
+        // solids
 
 // Solid
 	if(p->solid_count>0||p->S1==1)

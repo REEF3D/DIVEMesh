@@ -29,7 +29,6 @@ solid::solid(lexer *p, dive *a) : cutl(p),cutr(p),epsi(1.6)
 {
 	cout<<"solid ini";
 
-
 	a->vnum=0;
 
 	cout<<"."<<endl;
@@ -70,16 +69,12 @@ solid::solid(lexer *p, dive *a) : cutl(p),cutr(p),epsi(1.6)
     p->Iarray(a->surf_solid,a->surfnum_solid,5);
     }
 
-
 	xrot=p->S5_x;
 	yrot=p->S5_y;
 	zrot=p->S5_z;
 	phi=(PI/180.0)*p->S5_phi;
 	theta=(PI/180.0)*p->S5_theta;
 	psi=(PI/180.0)*p->S5_psi;
-
-
-
 }
 
 solid::~solid()

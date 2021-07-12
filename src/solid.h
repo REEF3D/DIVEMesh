@@ -38,8 +38,6 @@ public:
 
     virtual void start(lexer*,dive*);
 	void gcb_estimate(lexer*,dive*);
-	void gcb(lexer*,dive*);
-	void dist(lexer*,dive*);
 	void ray_cast(lexer*,dive*,int,int);
     void ray_cast_io_x(lexer*,dive*,int,int);
     void ray_cast_io_ycorr(lexer*,dive*,int,int);
