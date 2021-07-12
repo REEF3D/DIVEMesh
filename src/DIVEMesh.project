@@ -145,12 +145,7 @@
       <File Name="geometry_pyramid.cpp"/>
       <File Name="geometry_plate_x.cpp"/>
       <File Name="geometry_ogee-weir.cpp"/>
-      <File Name="geometry_jacketmember_z.cpp"/>
-      <File Name="geometry_jacketmember_y.cpp"/>
-      <File Name="geometry_jacketmember_x.cpp"/>
-      <File Name="geometry_jacketmember_vert.cpp"/>
       <File Name="geometry_jacketmember_norm.cpp"/>
-      <File Name="geometry_jacketmember_horz.cpp"/>
       <File Name="geometry_hexahedron.cpp"/>
       <File Name="geometry_ellipsoid_semi_rot.cpp"/>
       <File Name="geometry_ellipsoid_semi.cpp"/>
