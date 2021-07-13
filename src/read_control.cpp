@@ -868,53 +868,11 @@ void lexer::read_control()
 	S63_zs = new double[S63];
 	S63_ze = new double[S63];
     
-    S81_x1 = new double[S81];
-	S81_y1 = new double[S81];
-	S81_z1 = new double[S81];
-    S81_x2 = new double[S81];
-	S81_y2 = new double[S81];
-	S81_z2 = new double[S81];
-    S81_x3 = new double[S81];
-	S81_y3 = new double[S81];
-	S81_z3 = new double[S81];
-    S81_x4 = new double[S81];
-	S81_y4 = new double[S81];
-	S81_z4 = new double[S81];
+    Darray(S81_xyz,S81,12);
     
-    S82_x1 = new double[S82];
-	S82_y1 = new double[S82];
-	S82_z1 = new double[S82];
-    S82_x2 = new double[S82];
-	S82_y2 = new double[S82];
-	S82_z2 = new double[S82];
-    S82_x3 = new double[S82];
-	S82_y3 = new double[S82];
-	S82_z3 = new double[S82];
-    S82_x4 = new double[S82];
-	S82_y4 = new double[S82];
-	S82_z4 = new double[S82];
-    S82_x5 = new double[S82];
-	S82_y5 = new double[S82];
-	S82_z5 = new double[S82];
+    Darray(S82_xyz,S82,15);
     
-    S83_x1 = new double[S83];
-	S83_y1 = new double[S83];
-	S83_z1 = new double[S83];
-    S83_x2 = new double[S83];
-	S83_y2 = new double[S83];
-	S83_z2 = new double[S83];
-    S83_x3 = new double[S83];
-	S83_y3 = new double[S83];
-	S83_z3 = new double[S83];
-    S83_x4 = new double[S83];
-	S83_y4 = new double[S83];
-	S83_z4 = new double[S83];
-    S83_x5 = new double[S83];
-	S83_y5 = new double[S83];
-	S83_z5 = new double[S83];
-    S83_x6 = new double[S83];
-	S83_y6 = new double[S83];
-	S83_z6 = new double[S83];
+    Darray(S83_xyz,S83,18);
     
     Darray(S84_xyz,S84,24);
 	
@@ -1209,23 +1167,22 @@ void lexer::read_control()
                         ++countS63;
 						 clear(c,numint);
 						 break;
-               case 81: control>>S81_x1[countS81]>>S81_y1[countS81]>>S81_z1[countS81]>>S81_x2[countS81]>>S81_y2[countS81]>>S81_z2[countS81]>>S81_x3[countS81]>>S81_y3[countS81]>>S81_z3[countS81]
-                               >>S81_x4[countS81]>>S81_y4[countS81]>>S81_z4[countS81];
+               case 81: for(int qn=0;qn<12;++qn)
+                        control>>S81_xyz[countS81][qn];
                         ++countS81;
 						 clear(c,numint);
 						 break;
-               case 82: control>>S82_x1[countS82]>>S82_y1[countS82]>>S82_z1[countS82]>>S82_x2[countS82]>>S82_y2[countS82]>>S82_z2[countS82]>>S82_x3[countS82]>>S82_y3[countS82]>>S82_z3[countS82]
-                        >>S82_x4[countS82]>>S82_y4[countS82]>>S82_z4[countS82]>>S82_x5[countS82]>>S82_y5[countS82]>>S82_z5[countS82];
+               case 82: for(int qn=0;qn<15;++qn)
+                        control>>S82_xyz[countS82][qn];
                         ++countS82;
 						 clear(c,numint);
 						 break;
-               case 83: control>>S83_x1[countS83]>>S83_y1[countS83]>>S83_z1[countS83]>>S83_x2[countS83]>>S83_y2[countS83]>>S83_z2[countS83]>>S83_x3[countS83]>>S83_y3[countS83]>>S83_z3[countS83]
-                        >>S83_x4[countS83]>>S83_y4[countS83]>>S83_z4[countS83]>>S83_x5[countS83]>>S83_y5[countS83]>>S83_z5[countS83]>>S83_x6[countS83]>>S83_y6[countS83]>>S83_z6[countS83];
+               case 83: for(int qn=0;qn<18;++qn)
+                        control>>S83_xyz[countS83][qn];
                         ++countS83;
 						 clear(c,numint);
 						 break;
-               case 84: 
-                        for(int qn=0;qn<24;++qn)
+               case 84: for(int qn=0;qn<24;++qn)
                         control>>S84_xyz[countS84][qn];
                         ++countS84;
 						 clear(c,numint);

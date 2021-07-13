@@ -24,7 +24,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include"lexer.h"
 
 
-void geometry::box(lexer* p, dive* a,int rank, int &ts, int &te,double xs,double xe,double ys,double ye,double zs,double ze)
+void geometry::box(lexer* p, dive* a,int rank, int &ts, int &te,
+                double xs,double xe,double ys,double ye,double zs,double ze)
 {	
 	/*
 	xs = p->S10_xs[rank];

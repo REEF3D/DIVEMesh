@@ -51,9 +51,9 @@ public:
 	void wedge_y(lexer*,dive*,int,int&,int&);
 	void wedge_z(lexer*,dive*,int,int&,int&);
     void hexahedron(lexer*,dive*,int,int&,int&,double**);
-    void wedge(lexer*,dive*,int,int&,int&);
-    void tetrahedon(lexer*,dive*,int,int&,int&);
-    void pyramid(lexer*,dive*,int,int&,int&);
+    void wedge(lexer*,dive*,int,int&,int&,double**);
+    void tetrahedon(lexer*,dive*,int,int&,int&,double**);
+    void pyramid(lexer*,dive*,int,int&,int&,double**);
 	void ogee_weir(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double,double,double,double,double,double);
 	void semicyl_y(lexer*,dive*,int,int&,int&);
     void arch(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
@@ -62,7 +62,7 @@ public:
     void ellipsoid_semi(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
     void ellipsoid_semi_rot(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
     void jacket_member_norm(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double,double);
-    void plate_x(lexer*,dive*,int,int&,int&);
+    void plate_x(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
     
     //STL
     void ray_cast(lexer*,dive*,int,int);

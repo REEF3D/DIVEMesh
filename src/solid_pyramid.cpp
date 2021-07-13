@@ -29,25 +29,25 @@ void solid::pyramid(lexer *p, dive *a, int rank, int &ts, int &te)
 
 	double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4,x5,y5,z5;
 
-	x1 = p->S82_x1[rank];
-    y1 = p->S82_y1[rank];
-    z1 = p->S82_z1[rank];
-
-    x2 = p->S82_x2[rank];
-    y2 = p->S82_y2[rank];
-    z2 = p->S82_z2[rank];
-
-    x3 = p->S82_x3[rank];
-    y3 = p->S82_y3[rank];
-    z3 = p->S82_z3[rank];
-
-    x4 = p->S82_x4[rank];
-    y4 = p->S82_y4[rank];
-    z4 = p->S82_z4[rank];
-
-	x5 = p->S82_x5[rank];
-    y5 = p->S82_y5[rank];
-    z5 = p->S82_z5[rank];
+	x1 = p->S83_xyz[rank][0];
+    y1 = p->S83_xyz[rank][1];
+    z1 = p->S83_xyz[rank][2];
+    
+    x2 = p->S83_xyz[rank][3];
+    y2 = p->S83_xyz[rank][4];
+    z2 = p->S83_xyz[rank][5];
+    
+    x3 = p->S83_xyz[rank][6];
+    y3 = p->S83_xyz[rank][7];
+    z3 = p->S83_xyz[rank][8];
+    
+    x4 = p->S83_xyz[rank][9];
+    y4 = p->S83_xyz[rank][10];
+    z4 = p->S83_xyz[rank][11];
+	
+	x5 = p->S83_xyz[rank][12];
+    y5 = p->S83_xyz[rank][13];
+    z5 = p->S83_xyz[rank][14];
 
 
 	ts=p->tricount;

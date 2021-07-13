@@ -29,21 +29,21 @@ void solid::tetrahedon(lexer *p, dive *a, int rank, int &ts, int &te)
 
 	double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4;
 
-	x1 = p->S81_x1[rank];
-    y1 = p->S81_y1[rank];
-    z1 = p->S81_z1[rank];
-
-    x2 = p->S81_x2[rank];
-    y2 = p->S81_y2[rank];
-    z2 = p->S81_z2[rank];
-
-    x3 = p->S81_x3[rank];
-    y3 = p->S81_y3[rank];
-    z3 = p->S81_z3[rank];
-
-    x4 = p->S81_x4[rank];
-    y4 = p->S81_y4[rank];
-    z4 = p->S81_z4[rank];
+	x1 = p->S81_xyz[rank][0];
+    y1 = p->S81_xyz[rank][1];
+    z1 = p->S81_xyz[rank][2];
+    
+    x2 = p->S81_xyz[rank][3];
+    y2 = p->S81_xyz[rank][4];
+    z2 = p->S81_xyz[rank][5];
+    
+    x3 = p->S81_xyz[rank][6];
+    y3 = p->S81_xyz[rank][7];
+    z3 = p->S81_xyz[rank][8];
+    
+    x4 = p->S81_xyz[rank][9];
+    y4 = p->S81_xyz[rank][10];
+    z4 = p->S81_xyz[rank][11];
 
 
 	ts=p->tricount;

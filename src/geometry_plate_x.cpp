@@ -24,10 +24,11 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-
-void geometry::plate_x(lexer* p, dive* a,int rank, int &ts, int &te)
+void geometry::plate_x(lexer* p, dive* a,int rank, int &ts, int &te,
+                double xs, double xe,double ys,double ye,double zs,double ze)
 {
-
+    
+    /*
 	xs = p->S201_x[rank]-0.001*p->DXM;
     xe = p->S201_x[rank]+0.001*p->DXM;
 
@@ -35,7 +36,7 @@ void geometry::plate_x(lexer* p, dive* a,int rank, int &ts, int &te)
     ye = p->S201_ye[rank];
 
     zs = p->S201_zs[rank];
-    ze = p->S201_ze[rank];
+    ze = p->S201_ze[rank];*/
 
 
 // Vert
