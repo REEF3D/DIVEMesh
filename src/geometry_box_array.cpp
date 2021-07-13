@@ -39,7 +39,7 @@ void geometry::box_array(lexer* p, dive* a,int rank, int &ts, int &te,
 	nk = p->S11_nk[rank];*/
 	
 	//cout<<"BOX ARRAY: "<<ni<<" "<<nj<<" "<<nk<<endl;
-/*	
+	
 	for(aa=0;aa<ni;++aa)
 	for(bb=0;bb<nj;++bb)
 	for(cc=0;cc<nk;++cc)
@@ -287,9 +287,9 @@ void geometry::box_array(lexer* p, dive* a,int rank, int &ts, int &te,
 		
 		rotate_triangle(p,a,ts,te);
 		
-		ray_cast(p,a,ts,te);
+		//ray_cast(p,a,ts,te);
 	}
 	
-	*/
+	
 }
 

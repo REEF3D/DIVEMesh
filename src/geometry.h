@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"increment.h"
@@ -49,23 +50,18 @@ public:
 	void wedge_x(lexer*,dive*,int,int&,int&);
 	void wedge_y(lexer*,dive*,int,int&,int&);
 	void wedge_z(lexer*,dive*,int,int&,int&);
-    void hexahedron(lexer*,dive*,int,int&,int&);
+    void hexahedron(lexer*,dive*,int,int&,int&,double**);
     void wedge(lexer*,dive*,int,int&,int&);
     void tetrahedon(lexer*,dive*,int,int&,int&);
     void pyramid(lexer*,dive*,int,int&,int&);
-	void ogee_weir(lexer*,dive*,int,int&,int&);
+	void ogee_weir(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double,double,double,double,double,double);
 	void semicyl_y(lexer*,dive*,int,int&,int&);
     void arch(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
     void sphere(lexer*,dive*,int,int&,int&);
     void ellipsoid(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
     void ellipsoid_semi(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
     void ellipsoid_semi_rot(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
-    void jacket_member_x(lexer*,dive*,int,int&,int&);
-    void jacket_member_y(lexer*,dive*,int,int&,int&);
-    void jacket_member_z(lexer*,dive*,int,int&,int&);
-    void jacket_member_norm(lexer*,dive*,int,int&,int&);
-    void jacket_member_vert(lexer*,dive*,int,int&,int&);
-    void jacket_member_horz(lexer*,dive*,int,int&,int&);
+    void jacket_member_norm(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double,double);
     void plate_x(lexer*,dive*,int,int&,int&);
     
     //STL
@@ -96,7 +92,7 @@ public:
     double ytrans(double,double,double,double,double,double,double,double,double);
     double ztrans(double,double,double,double,double,double,double,double,double);
     
-    void rotation_ellipsoid(lexer*,int,double&,double&,double&,double,double,double,double,double,double);
+    void rotation_ellipsoid(lexer*,int,double&,double&,double&,double,double,double);
 	void rotate_triangle_ellipsoid(lexer*,dive*,int,int,int,double,double,double);
     
     void angle_calc(double,double,double,double&,double&,double&);

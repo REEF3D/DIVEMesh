@@ -230,14 +230,14 @@ void geometry::rotate_triangle_ellipsoid(lexer* p, dive* a, int qn, int ts, int 
 {
 	for(int qr=ts;qr<te;++qr)
 	{
-		rotation_ellipsoid(p,qn,p->tri_x[qr][0],p->tri_y[qr][0],p->tri_z[qr][0],phi,theta,psi,xm,ym,zm);
-		rotation_ellipsoid(p,qn,p->tri_x[qr][1],p->tri_y[qr][1],p->tri_z[qr][1],phi,theta,psi,xm,ym,zm);
-		rotation_ellipsoid(p,qn,p->tri_x[qr][2],p->tri_y[qr][2],p->tri_z[qr][2],phi,theta,psi,xm,ym,zm);
+		rotation_ellipsoid(p,qn,p->tri_x[qr][0],p->tri_y[qr][0],p->tri_z[qr][0],xm,ym,zm);
+		rotation_ellipsoid(p,qn,p->tri_x[qr][1],p->tri_y[qr][1],p->tri_z[qr][1],xm,ym,zm);
+		rotation_ellipsoid(p,qn,p->tri_x[qr][2],p->tri_y[qr][2],p->tri_z[qr][2],xm,ym,zm);
 	}
 	
 }
 
-void geometry::rotation_ellipsoid(lexer *p, int qn, double &xvec,double &yvec,double &zvec, double phi, double theta, double psi, double xm, double ym, double zm)
+void geometry::rotation_ellipsoid(lexer *p, int qn, double &xvec,double &yvec,double &zvec,double xm, double ym, double zm)
 {
 	double a,b,c;
     

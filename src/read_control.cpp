@@ -916,30 +916,7 @@ void lexer::read_control()
 	S83_y6 = new double[S83];
 	S83_z6 = new double[S83];
     
-    S84_x1 = new double[S84];
-	S84_y1 = new double[S84];
-	S84_z1 = new double[S84];
-    S84_x2 = new double[S84];
-	S84_y2 = new double[S84];
-	S84_z2 = new double[S84];
-    S84_x3 = new double[S84];
-	S84_y3 = new double[S84];
-	S84_z3 = new double[S84];
-    S84_x4 = new double[S84];
-	S84_y4 = new double[S84];
-	S84_z4 = new double[S84];
-    S84_x5 = new double[S84];
-	S84_y5 = new double[S84];
-	S84_z5 = new double[S84];
-    S84_x6 = new double[S84];
-	S84_y6 = new double[S84];
-	S84_z6 = new double[S84];
-    S84_x7 = new double[S84];
-	S84_y7 = new double[S84];
-	S84_z7 = new double[S84];
-    S84_x8 = new double[S84];
-	S84_y8 = new double[S84];
-	S84_z8 = new double[S84];
+    Darray(S84_xyz,S84,24);
 	
 	S131_xm = new double[S131];
 	S131_zm = new double[S131];
@@ -1247,9 +1224,9 @@ void lexer::read_control()
                         ++countS83;
 						 clear(c,numint);
 						 break;
-               case 84: control>>S84_x1[countS84]>>S84_y1[countS84]>>S84_z1[countS84]>>S84_x2[countS84]>>S84_y2[countS84]>>S84_z2[countS84]>>S84_x3[countS84]>>S84_y3[countS84]>>S84_z3[countS84]
-                        >>S84_x4[countS84]>>S84_y4[countS84]>>S84_z4[countS84]>>S84_x5[countS84]>>S84_y5[countS84]>>S84_z5[countS84]>>S84_x6[countS84]>>S84_y6[countS84]>>S84_z6[countS84]
-                        >>S84_x7[countS84]>>S84_y7[countS84]>>S84_z7[countS84]>>S84_x8[countS84]>>S84_y8[countS84]>>S84_z8[countS84];
+               case 84: 
+                        for(int qn=0;qn<24;++qn)
+                        control>>S84_xyz[countS84][qn];
                         ++countS84;
 						 clear(c,numint);
 						 break;

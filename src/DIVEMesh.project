@@ -77,7 +77,6 @@
       <File Name="cylinder_z.h"/>
       <File Name="objects.h"/>
       <File Name="wedge_x.h"/>
-      <File Name="sphere.h"/>
       <File Name="conical.h"/>
       <File Name="wedge_y.h"/>
       <VirtualDirectory Name="Geometry">
@@ -309,7 +308,6 @@
       <File Name="object_conical.cpp"/>
       <File Name="object_cylinder_y.cpp"/>
       <File Name="object_cylinder_z.cpp"/>
-      <File Name="object_sphere.cpp"/>
       <File Name="object_box.cpp"/>
       <File Name="object_wedge_x.cpp"/>
       <File Name="object_wedge_y.cpp"/>

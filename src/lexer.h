@@ -17,6 +17,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include<iostream>
@@ -254,14 +255,7 @@ public:
     double *S83_x5,*S83_y5,*S83_z5;
     double *S83_x6,*S83_y6,*S83_z6;
     int S84;
-    double *S84_x1,*S84_y1,*S84_z1;
-    double *S84_x2,*S84_y2,*S84_z2;
-    double *S84_x3,*S84_y3,*S84_z3;
-    double *S84_x4,*S84_y4,*S84_z4;
-    double *S84_x5,*S84_y5,*S84_z5;
-    double *S84_x6,*S84_y6,*S84_z6;
-    double *S84_x7,*S84_y7,*S84_z7;
-    double *S84_x8,*S84_y8,*S84_z8;
+    double **S84_xyz;
 	int S121;
 	double *S121_x,*S121_y,*S121_z,*S121_b,*S121_Pd,*S121_H0;
 	double S122;
