@@ -26,7 +26,6 @@ Author: Hans Bihs
 
 void solid::wedge(lexer *p, dive *a, int rank, int &ts, int &te)
 {
-
 	double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4,x5,y5,z5,x6,y6,z6;
 
 	x1 = p->S82_xyz[rank][0];

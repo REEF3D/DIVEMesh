@@ -25,6 +25,7 @@ Author: Hans Bihs
 
 class lexer;
 class dive;
+class field;
 
 using namespace std;
 
@@ -55,9 +56,9 @@ public:
     void tetrahedon(lexer*,dive*,int,int&,int&,double**);
     void pyramid(lexer*,dive*,int,int&,int&,double**);
 	void ogee_weir(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double,double,double,double,double,double);
-	void semicyl_y(lexer*,dive*,int,int&,int&);
+	void semicyl_y(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
     void arch(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
-    void sphere(lexer*,dive*,int,int&,int&);
+    void sphere(lexer*,dive*,int,int&,int&,double,double,double,double);
     void ellipsoid(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
     void ellipsoid_semi(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
     void ellipsoid_semi_rot(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
@@ -76,7 +77,7 @@ public:
     void ray_cast_x_gcb(lexer*,dive*,int,int);
 	void ray_cast_stl(lexer*,dive*);
     void stl_preproc(lexer*,dive*,int&,int&);
-    void stl_postproc(lexer*,dive*,int&,int&);
+    void stl_postproc(lexer*,dive*,int&,int&,intfield&,field&,int);
     
     // fluvial box
     void fluvial_box(lexer*,dive*,int,int&,int&);
