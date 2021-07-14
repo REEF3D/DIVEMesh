@@ -132,6 +132,15 @@
   </VirtualDirectory>
   <VirtualDirectory Name="Sources">
     <VirtualDirectory Name="Geometry">
+      <VirtualDirectory Name="Ray Casting">
+        <File Name="geometry_ray_cast_io_zcorr.cpp"/>
+        <File Name="geometry_ray_cast_io_ycorr.cpp"/>
+        <File Name="geometry_ray_cast_io_x.cpp"/>
+        <File Name="geometry_ray_cast_z.cpp"/>
+        <File Name="geometry_ray_cast_y.cpp"/>
+        <File Name="geometry_ray_cast_x.cpp"/>
+        <File Name="geometry_ray_cast.cpp"/>
+      </VirtualDirectory>
       <File Name="geometry_wedge_z.cpp"/>
       <File Name="geometry_wedge_y.cpp"/>
       <File Name="geometry_wedge_x.cpp"/>
@@ -368,7 +377,6 @@
         <File Name="solid_ray-cast-io-zcorr.cpp"/>
         <File Name="solid_ray-cast-io-ycorr.cpp"/>
         <File Name="solid_ray-cast-io-x.cpp"/>
-        <File Name="solid_ray-cast-stl.cpp"/>
         <File Name="solid_ray-cast-y.cpp"/>
         <File Name="solid_ray-cast-z.cpp"/>
         <File Name="solid_ray-cast.cpp"/>
@@ -376,7 +384,6 @@
         <VirtualDirectory Name="ray_gcb">
           <File Name="solid_ray-cast-x_gcb.cpp"/>
         </VirtualDirectory>
-        <File Name="solid_ray-cast-correct.cpp"/>
       </VirtualDirectory>
       <File Name="solid_cylinder_z.cpp"/>
       <File Name="solid_ellipsoid.cpp"/>

@@ -28,7 +28,6 @@ void geometry::rotate_triangle(lexer* p, dive* a, int ts, int te)
 {
     double beta,xval,yval;
 
-
 	for(int qr=ts;qr<te;++qr)
 	{
 		rotation(p->tri_x[qr][0],p->tri_y[qr][0],p->tri_z[qr][0],phi,theta,psi);

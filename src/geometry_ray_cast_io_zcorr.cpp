@@ -20,11 +20,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"solid.h"
+#include"geometry.h"
 #include"dive.h"
 #include"lexer.h"
 
-void solid::ray_cast_correct(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -39,11 +39,17 @@ void solid::ray_cast_correct(lexer* p, dive* a, int ts, int te)
 	double PCx,PCy,PCz;
 	double Mx,My,Mz;
 	int js,je,ks,ke;
-	int ir;
+    int ie,is;
 	double u,v,w;
 	double denom;
-	int insidecheck;
+    double psi = 1.0e-8*p->DXM;
 
+
+    MALOOP
+	{
+	cutl(i,j,k)=0;
+	cutr(i,j,k)=0;
+	}
 
 	for(n=ts; n<te; ++n)
 	{
@@ -59,35 +65,48 @@ void solid::ray_cast_correct(lexer* p, dive* a, int ts, int te)
 	Cy = p->tri_y[n][2];
 	Cz = p->tri_z[n][2];
 
-	ys = MIN3(Ay,By,Cy) - epsi*p->dx;
-	ye = MAX3(Ay,By,Cy) + epsi*p->dx;
+	xs = MIN3(Ax,Bx,Cx);
+	xe = MAX3(Ax,Bx,Cx);
 
-	zs = MIN3(Az,Bz,Cz) - epsi*p->dx;
-	ze = MAX3(Az,Bz,Cz) + epsi*p->dx;
+	ys = MIN3(Ay,By,Cy);
+	ye = MAX3(Ay,By,Cy);
 
-	js = int((ys-p->ymin)/p->dx);
-	je = int((ye-p->ymin)/p->dx);
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
 
-	ks = int((zs-p->zmin)/p->dx);
-	ke = int((ze-p->zmin)/p->dx);
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
+
+    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge];
+	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge];
+
+	ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
+	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge];
+
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
+
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
+
+
+	is = MAX(is,0);
+	ie = MIN(ie,p->knox);
 
 	js = MAX(js,0);
 	je = MIN(je,p->knoy);
 
-	ks = MAX(ks,0);
-	ke = MIN(ke,p->knoz);
 
-
+		for(i=is;i<ie;i++)
 		for(j=js;j<je;j++)
-		for(k=ks;k<ke;k++)
 		{
-		Px = p->xmin-10.0*p->dx ;
-		Py = (double(j)+0.500001)*p->dx + p->ymin;
-		Pz = (double(k)+0.500001)*p->dx + p->zmin;
+		Px = p->XP[IP]+psi;
+		Py = p->YP[JP]+psi;
+		Pz = p->zmin-10.0*p->DXM ;
 
-		Qx = p->xmax+10.0*p->dx ;
-		Qy = (double(j)+0.500001)*p->dx + p->ymin;
-		Qz = (double(k)+0.500001)*p->dx + p->zmin;
+		Qx = p->XP[IP]+psi;
+		Qy = p->YP[JP]+psi;
+		Qz = p->zmax+10.0*p->DXM ;
 
 
 		PQx = Qx-Px;
@@ -123,31 +142,55 @@ void solid::ray_cast_correct(lexer* p, dive* a, int ts, int te)
 
 
 		int check=1;
-		if(u==0.0 && v==0.0 && w==0.0)
+		if(fabs(u)<=1.0e-20 && fabs(v)<=1.0e-20 && fabs(w)<=1.0e-20)
 		check = 0;
 
-			if(((u>=0.0 && v>=0.0 && w>=0.0) || (u<0.0 && v<0.0 && w<0.0)) && check==1)
+			if(((u>1.0e-20 && v>1.0e-20 && w>1.0e-20) || (u<-1.0e-20 && v<-1.0e-20 && w<-1.0e-20)) && check==1)
 			{
 			denom = 1.0/(u+v+w);
+
+            //cout<<"u: "<<u<<" v: "<<v<<" w: "<<w<<" denom: "<<denom<<endl;
 			u *= denom;
 			v *= denom;
 			w *= denom;
 
 			Rx = u*Ax + v*Bx + w*Cx;
-
-			for(i=0;i<=p->knox;++i)
-            if(fabs(a->solid_dist(i,j,k)<1.6*p->dx))
-            {
-            if(fabs(a->solid_dist(i,j,k))>fabs(Rx-p->posc_x()));
-            cout<<"DIST: "<<fabs(a->solid_dist(i,j,k))-fabs(Rx-p->posc_x())<<endl;
+			Ry = u*Ay + v*By + w*Cy;
+			Rz = u*Az + v*Bz + w*Cz;
 
 
+				for(k=0;k<=a->knoz;++k)
+				{
+				if(p->ZP[KP]<Rz)
+				cutr(i,j,k) += 1;
 
-            //a->solid_dist(i,j,k)=MIN(fabs(Rx-p->posc_x()),a->solid_dist(i,j,k));
-            }
-
+				if(p->ZP[KP]>=Rz)
+				cutl(i,j,k) += 1;
+				}
 			}
 		}
 	}
+
+	if(p->S18==1)
+	LOOP
+	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
+    {
+	a->solid(i,j,k)=-1;
+    }
+
+    if(p->S18==2)
+	LOOP
+	if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
+    {
+	a->solid(i,j,k)=-1;
+    }
+
+	count=0;
+	LOOP
+	if(a->solid(i,j,k)>0)
+	++count;
+
+
+	cout<<"Number of active cells after geometry_z: "<<count<<endl;
 
 }

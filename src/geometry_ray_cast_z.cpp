@@ -20,11 +20,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"solid.h"
+#include"geometry.h"
 #include"dive.h"
 #include"lexer.h"
 
-void solid::ray_cast_stl(lexer* p, dive* a)
+
+void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -38,18 +39,13 @@ void solid::ray_cast_stl(lexer* p, dive* a)
 	double PBx,PBy,PBz;
 	double PCx,PCy,PCz;
 	double Mx,My,Mz;
-	int js,je,ks,ke;
-	int ir;
+	int is,ie,js,je,ks,ke;
+	int ir,insidecheck;
 	double u,v,w;
 	double denom;
+    double psi = 1.0e-8*p->DXM;
 
-	MALOOP
-	{
-	cutl(i,j,k)=0;
-	cutr(i,j,k)=0;
-	}
-
-	for(n=0; n<p->tricount; ++n)
+	for(n=ts; n<te; ++n)
 	{
 	Ax = p->tri_x[n][0];
 	Ay = p->tri_y[n][0];
@@ -63,40 +59,48 @@ void solid::ray_cast_stl(lexer* p, dive* a)
 	Cy = p->tri_y[n][2];
 	Cz = p->tri_z[n][2];
 
-	ys = MIN3(Ay,By,Cy) - 0.6*p->DXM;
-	ye = MAX3(Ay,By,Cy) + 0.6*p->DXM;
+	xs = MIN3(Ax,Bx,Cx);
+	xe = MAX3(Ax,Bx,Cx);
 
-	zs = MIN3(Az,Bz,Cz) - 0.6*p->DXM;
-	ze = MAX3(Az,Bz,Cz) + 0.6*p->DXM;
+	ys = MIN3(Ay,By,Cy);
+	ye = MAX3(Ay,By,Cy);
 
-	js = p->posc_j(ys);
-    js = p->posc_j(ye);
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
 
-    ks = p->posc_k(zs);
-    ke = p->posc_k(ze);
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
 
+    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge];
+	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge];
+
+	ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
+	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge];
+
+	is = p->posf_i(xs);
+	ie = p->posf_i(xe);
+
+	js = p->posf_j(ys);
+	je = p->posf_j(ye);
+
+
+	is = MAX(is,0);
+	ie = MIN(ie,p->knox);
 
 	js = MAX(js,0);
 	je = MIN(je,p->knoy);
 
-	ks = MAX(ks,0);
-	ke = MIN(ke,p->knoz);
 
-
-
+		for(i=is;i<ie;i++)
 		for(j=js;j<je;j++)
-		for(k=ks;k<ke;k++)
 		{
+		Px = p->XP[IP]+psi;
+		Py = p->YP[JP]+psi;
+		Pz = p->zmin-10.0*p->DXM ;
 
-
-		Px = p->xmin-10.0*p->DXM ;
-		Py = p->YP[JP] + p->ymin;
-		Pz = p->ZP[KP] + p->zmin;
-
-		Qx = p->xmax+10.0*p->DXM ;
-		Qy = p->YP[JP] + p->ymin;
-		Qz = p->ZP[KP] + p->zmin;
-
+		Qx = p->XP[IP]+psi;
+		Qy = p->YP[JP]+psi;
+		Qz = p->zmax+10.0*p->DXM ;
 
 		PQx = Qx-Px;
 		PQy = Qy-Py;
@@ -129,52 +133,48 @@ void solid::ray_cast_stl(lexer* p, dive* a)
 		w = PQx*(By*Az - Bz*Ay) + PQy*(Bz*Ax - Bx*Az) + PQz*(Bx*Ay - By*Ax)
 		  + Mx*(Bx-Ax) + My*(By-Ay) + Mz*(Bz-Az);
 
-
-		int check=1;
-		if(u==0.0 && v==0.0 && w==0.0)
+        int check=1;
+		if(fabs(u)<=1.0e-20 && fabs(v)<=1.0e-20 && fabs(w)<=1.0e-20)
 		check = 0;
 
-			if(((u>=0.0 && v>=0.0 && w>=0.0) || (u<0.0 && v<0.0 && w<0.0)) && check==1)
+			if(((u>1.0e-20 && v>1.0e-20 && w>1.0e-20) || (u<-1.0e-20 && v<-1.0e-20 && w<-1.0e-20)) && check==1)
 			{
 			denom = 1.0/(u+v+w);
+
+            //cout<<"u: "<<u<<" v: "<<v<<" w: "<<w<<" denom: "<<denom<<endl;
 			u *= denom;
 			v *= denom;
 			w *= denom;
 
-			Rx = u*Ax + v*Bx + w*Cx;
-			Ry = u*Ay + v*By + w*Cy;
 			Rz = u*Az + v*Bz + w*Cz;
 
-			//ir = int((Rx)/p->DXM - 0.5);
-           ir = p->posc_i(Rx);
 
+			k = p->posf_k(Rz);
 
-				for(i=0;i<=a->knox;++i)
-				{
-				if(i<=ir)
-				cutr(i,j,k) += 1;
+            //cout<<"k: "<<k<<" Rz: "<<Rz<<endl;
+            int distcheck=1;
 
-				if(i>ir)
-				cutl(i,j,k) += 1;
-				}
-			}
+            if(Rz<p->ZP[KP])
+            if(k>=0 && k<p->knoz)
+            if(a->solid(i,j,k)<0 && a->solid(i,j,k-1)<0)
+            distcheck=0;
+
+            if(Rz>=p->ZP[KP])
+            if(k>=0 && k<p->knoz)
+            if(a->solid(i,j,k)<0 && a->solid(i,j,k+1)<0)
+            distcheck=0;
+
+            if(distcheck==1)
+			for(k=0;k<p->knoz;++k)
+			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]),a->solid_dist(i,j,k));
+
+            if(Rz>p->zmin && Rz<p->zmax)
+            {
+            if(Rz<p->zmax-1.0e-10)
+            a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
+			 }
+
+            }
 		}
 	}
-
-	LOOP
-	{
-	if((cutl(i,j,k)%2==0 || cutl(i,j,k)==0) && (cutr(i,j,k)%2==0 || cutr(i,j,k)==0))
-	a->solid(i,j,k)=1*p->S9_1;
-
-	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
-	a->solid(i,j,k)=-1*p->S9_1;
-	}
-
-	count=0;
-	LOOP
-	if(a->solid(i,j,k)>0)
-	++count;
-
-	cout<<"Number of active cells after solid stl: "<<count<<endl;
-
 }
