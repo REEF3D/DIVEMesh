@@ -17,9 +17,9 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
+Author: Hans Bihs
 --------------------------------------------------------------------*/
-
-#include "dive.h"
+#include "dive.h"
 
 dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
                    cellside(p),subgrid(p),

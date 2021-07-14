@@ -24,7 +24,6 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-
 void solid::ray_cast_x(lexer* p, dive* a, int ts, int te)
 {
 	double ys,ye,zs,ze;
