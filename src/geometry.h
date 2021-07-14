@@ -48,9 +48,9 @@ public:
 	void cone_x(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
 	void cone_y(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
 	void cone_z(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
-	void wedge_x(lexer*,dive*,int,int&,int&);
-	void wedge_y(lexer*,dive*,int,int&,int&);
-	void wedge_z(lexer*,dive*,int,int&,int&);
+	void wedge_x(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
+	void wedge_y(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
+	void wedge_z(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
     void hexahedron(lexer*,dive*,int,int&,int&,double**);
     void wedge(lexer*,dive*,int,int&,int&,double**);
     void tetrahedon(lexer*,dive*,int,int&,int&,double**);
