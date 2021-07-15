@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"increment.h"
+#include"geometry.h"
 #include"intfield.h"
 
 class lexer;
@@ -31,7 +31,7 @@ using namespace std;
 #ifndef SOLID_H_
 #define SOLID_H_
 
-class solid : public increment
+class solid : public geometry
 {
 public:
     solid(lexer*,dive*);
@@ -49,16 +49,6 @@ public:
     void ray_cast_x_gcb(lexer*,dive*,int,int);
     void stl_preproc(lexer*,dive*,int&,int&);
     void stl_postproc(lexer*,dive*,int&,int&);
-	void box(lexer*,dive*,int,int&,int&);
-	void box_array(lexer*,dive*,int,int&,int&);
-	void cylinder_y(lexer*,dive*,int,int&,int&);
-    void cylinder_z(lexer*,dive*,int,int&,int&);
-	void cone_x(lexer*,dive*,int,int&,int&);
-	void cone_y(lexer*,dive*,int,int&,int&);
-	void cone_z(lexer*,dive*,int,int&,int&);
-	void wedge_x(lexer*,dive*,int,int&,int&);
-	void wedge_y(lexer*,dive*,int,int&,int&);
-	void wedge_z(lexer*,dive*,int,int&,int&);
     void hexahedron(lexer*,dive*,int,int&,int&);
     void wedge(lexer*,dive*,int,int&,int&);
     void tetrahedon(lexer*,dive*,int,int&,int&);
@@ -66,16 +56,6 @@ public:
 	void ogee_weir(lexer*,dive*,int,int&,int&);
 	void semicyl_y(lexer*,dive*,int,int&,int&);
     void arch(lexer*,dive*,int,int&,int&);
-    void sphere(lexer*,dive*,int,int&,int&);
-    void ellipsoid(lexer*,dive*,int,int&,int&);
-    void ellipsoid_semi(lexer*,dive*,int,int&,int&);
-    void ellipsoid_semi_rot(lexer*,dive*,int,int&,int&);
-    void jacket_member_x(lexer*,dive*,int,int&,int&);
-    void jacket_member_y(lexer*,dive*,int,int&,int&);
-    void jacket_member_z(lexer*,dive*,int,int&,int&);
-    void jacket_member_norm(lexer*,dive*,int,int&,int&);
-    void jacket_member_vert(lexer*,dive*,int,int&,int&);
-    void jacket_member_horz(lexer*,dive*,int,int&,int&);
     void plate_x(lexer*,dive*,int,int&,int&);
     
     // fluvial box
@@ -91,9 +71,6 @@ public:
     double xtrans(double,double,double,double,double,double,double,double,double);
     double ytrans(double,double,double,double,double,double,double,double,double);
     double ztrans(double,double,double,double,double,double,double,double,double);
-    
-    void rotation_ellipsoid(lexer*,int,double&,double&,double&);
-	void rotate_triangle_ellipsoid(lexer*,dive*,int,int,int);
     
     void angle_calc(double,double,double,double&,double&,double&);
     

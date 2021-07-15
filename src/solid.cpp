@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-solid::solid(lexer *p, dive *a) : cutl(p),cutr(p),epsi(1.6)
+solid::solid(lexer *p, dive *a) : geometry(p,a),cutl(p),cutr(p),epsi(1.6)
 {
 	cout<<"solid ini";
 
@@ -138,103 +138,105 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S10;++qn)
         {
-        box(p,a,qn,tri_start,tri_end);
+        box(p,a,qn,tri_start,tri_end,p->S10_xs[qn],p->S10_xe[qn],p->S10_ys[qn],p->S10_ye[qn],p->S10_zs[qn],p->S10_ze[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S11;++qn)
         {
-        box_array(p,a,qn,tri_start,tri_end);
+        box_array(p,a,qn,tri_start,tri_end,p->S11_xs[qn],p->S11_ys[qn],p->S11_zs[qn],
+                p->S11_L[qn],p->S11_G[qn],p->S11_ni[qn],p->S11_nj[qn],p->S11_nk[qn]);
         }
 
         for(qn=0;qn<p->S32;++qn)
         {
-        cylinder_y(p,a,qn,tri_start,tri_end);
+        cylinder_y(p,a,qn,tri_start,tri_end,p->S32_xm[qn],p->S32_zm[qn],p->ymin,p->ymax,p->S32_r[qn],p->S32_r[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S33;++qn)
         {
-        cylinder_z(p,a,qn,tri_start,tri_end);
+        cylinder_z(p,a,qn,tri_start,tri_end,p->S33_xm[qn],p->S33_ym[qn],p->zmin,p->zmax,p->S33_r[qn],p->S33_r[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S37;++qn)
         {
-        jacket_member_norm(p,a,qn,tri_start,tri_end);
+        jacket_member_norm(p,a,qn,tri_start,tri_end,p->S37_xm1[qn],
+                p->S37_ym1[qn],p->S37_ym1[qn],p->S37_r1[qn],p->S37_xm2[qn],p->S37_ym2[qn],p->S37_ym2[qn],p->S37_r1[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S41;++qn)
         {
-        cone_x(p,a,qn,tri_start,tri_end);
+        cone_x(p,a,qn,tri_start,tri_end,p->S41_ym[qn],p->S41_zm[qn],p->S41_x1[qn],p->S41_x2[qn],p->S41_r1[qn],p->S41_r2[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S42;++qn)
         {
-        cone_y(p,a,qn,tri_start,tri_end);
+        cone_y(p,a,qn,tri_start,tri_end,p->S42_xm[qn],p->S42_zm[qn],p->S42_y1[qn],p->S42_y2[qn],p->S42_r1[qn],p->S42_r2[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S43;++qn)
         {
-        cone_z(p,a,qn,tri_start,tri_end);
+        cone_z(p,a,qn,tri_start,tri_end,p->S43_xm[qn],p->S43_ym[qn],p->S43_z1[qn],p->S43_z2[qn],p->S43_r1[qn],p->S43_r2[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
-
+ 
         for(qn=0;qn<p->S51;++qn)
         {
-        sphere(p,a,qn,tri_start,tri_end);
+        sphere(p,a,qn,tri_start,tri_end,p->S51_xm[qn],p->S51_ym[qn],p->S51_zm[qn],p->S51_r[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S52;++qn)
         {
-        ellipsoid(p,a,qn,tri_start,tri_end);
+        ellipsoid(p,a,qn,tri_start,tri_end,p->S52_xm[qn],p->S52_ym[qn],p->S52_zm[qn],p->S52_a[qn],p->S52_b[qn],p->S52_c[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S53;++qn)
         {
-        ellipsoid_semi(p,a,qn,tri_start,tri_end);
+        ellipsoid_semi(p,a,qn,tri_start,tri_end,p->S53_xm[qn],p->S53_ym[qn],p->S53_zm[qn],p->S53_a[qn],p->S53_b[qn],p->S53_c[qn],p->S53_h[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S54;++qn)
         {
-        ellipsoid_semi_rot(p,a,qn,tri_start,tri_end);
-        rotate_triangle_ellipsoid(p,a,qn,tri_start,tri_end);
+        ellipsoid_semi_rot(p,a,qn,tri_start,tri_end,p->S54_xm[qn],p->S54_ym[qn],p->S54_zm[qn],p->S54_a[qn],p->S54_b[qn],p->S54_c[qn],p->S54_h[qn]);
+        rotate_triangle_ellipsoid(p,a,qn,tri_start,tri_end,p->S54_xm[qn],p->S54_ym[qn],p->S54_zm[qn]);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S61;++qn)
         {
-        wedge_x(p,a,qn,tri_start,tri_end);
+        wedge_x(p,a,qn,tri_start,tri_end,p->S61_xs[qn],p->S61_xe[qn],p->S61_ys[qn],p->S61_ye[qn],p->S61_zs[qn],p->S61_ze[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S62;++qn)
         {
-        wedge_y(p,a,qn,tri_start,tri_end);
+        wedge_y(p,a,qn,tri_start,tri_end,p->S62_xs[qn],p->S62_xe[qn],p->S62_ys[qn],p->S62_ye[qn],p->S62_zs[qn],p->S62_ze[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S63;++qn)
         {
-        wedge_z(p,a,qn,tri_start,tri_end);
+        wedge_z(p,a,qn,tri_start,tri_end,p->S63_xs[qn],p->S63_xe[qn],p->S63_ys[qn],p->S63_ye[qn],p->S63_zs[qn],p->S63_ze[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }

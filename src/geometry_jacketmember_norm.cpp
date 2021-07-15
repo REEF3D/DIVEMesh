@@ -46,12 +46,6 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     double x2,y2,z2;
     double a1,b1,c1;
     double a2,b2,c2;
-
-    dX = p->S37_xm2[rank]-p->S37_xm1[rank];
-    dY = p->S37_ym2[rank]-p->S37_ym1[rank];
-    dZ = p->S37_zm2[rank]-p->S37_zm1[rank];
-
-    length = sqrt(dX*dX + dY*dY + dZ*dZ);
     
     /*
     xm1=p->S37_xm1[rank];
@@ -64,6 +58,11 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
 	zm2=p->S37_zm1[rank];
     r2=p->S37_r2[rank];*/
 
+    dX = xm2-xm1;
+    dY = ym2-ym1;
+    dZ = zm2-zm1;
+
+    length = sqrt(dX*dX + dY*dY + dZ*dZ);
 
     alpha=beta=gamma=0.0;
 

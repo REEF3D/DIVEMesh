@@ -356,16 +356,8 @@
         <File Name="solid_fluvial_box.cpp"/>
       </VirtualDirectory>
       <File Name="solid.cpp"/>
-      <File Name="solid_box.cpp"/>
-      <File Name="solid_cone_z.cpp"/>
-      <File Name="solid_cone_y.cpp"/>
-      <File Name="solid_cone_x.cpp"/>
-      <File Name="solid_wedge_x.cpp"/>
-      <File Name="solid_wedge_y.cpp"/>
-      <File Name="solid_wedge_z.cpp"/>
       <File Name="solid_ogee-weir.cpp"/>
       <File Name="solid_semicyl_y.cpp"/>
-      <File Name="solid_box_array.cpp"/>
       <File Name="solid_rotation.cpp"/>
       <File Name="solid_tetrahedon.cpp"/>
       <File Name="solid_pyramid.cpp"/>
@@ -385,14 +377,7 @@
           <File Name="solid_ray-cast-x_gcb.cpp"/>
         </VirtualDirectory>
       </VirtualDirectory>
-      <File Name="solid_cylinder_z.cpp"/>
-      <File Name="solid_ellipsoid.cpp"/>
-      <File Name="solid_ellipsoid_semi.cpp"/>
-      <File Name="solid_sphere.cpp"/>
-      <File Name="solid_ellipsoid_semi_rot.cpp"/>
       <File Name="solid_stl.cpp"/>
-      <File Name="solid_jacketmember_norm.cpp"/>
-      <File Name="solid_cylinder_y.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Executable">
