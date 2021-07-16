@@ -17,6 +17,9 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="Headers">
+    <VirtualDirectory Name="Topo">
+      <File Name="topo.h"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Geometry">
       <File Name="geometry.h"/>
     </VirtualDirectory>
@@ -83,7 +86,7 @@
         <File Name="objects_geometry.h"/>
       </VirtualDirectory>
     </VirtualDirectory>
-    <VirtualDirectory Name="Topography">
+    <VirtualDirectory Name="Geodat">
       <VirtualDirectory Name="Interpolation">
         <File Name="kriging.h"/>
         <File Name="inverse_dist_local.h"/>
@@ -131,6 +134,9 @@
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="Sources">
+    <VirtualDirectory Name="Topo">
+      <File Name="topo.cpp"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Geometry">
       <VirtualDirectory Name="Ray Casting">
         <File Name="geometry_ray_cast_x_gcb.cpp"/>
@@ -322,7 +328,7 @@
       <File Name="object_wedge_x.cpp"/>
       <File Name="object_wedge_y.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="Topography">
+    <VirtualDirectory Name="Geodat">
       <File Name="geodat_holecheck.cpp"/>
       <File Name="geodat_remove_bounds.cpp"/>
       <File Name="geodat_multigrid_ccipol.cpp"/>
