@@ -33,10 +33,10 @@ solid::solid(lexer *p, dive *a) : geometry(p,a),cutl(p),cutr(p),epsi(1.6)
 	cout<<"."<<endl;
 
 	if(p->S9==1)
-	p->S9_1=1.0;
+	p->S9_1=1;
 
 	if(p->S9==2)
-	p->S9_1=-1.0;
+	p->S9_1=-1;
 
 	if(p->S121>0)
 	{
@@ -123,7 +123,7 @@ void solid::start(lexer* p, dive* a)
 	ray_cast(p,a,tri_start,tri_end);
 
     if(rayiter==0)
-    stl_postproc(p,a,tri_start,tri_end);
+    stl_postproc(p,a,tri_start,tri_end,a->solid,a->solid_dist,p->S9_1);
     }
 
     ts_stl=tri_start;
@@ -243,56 +243,57 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S81;++qn)
         {
-        tetrahedon(p,a,qn,tri_start,tri_end);
+        tetrahedon(p,a,qn,tri_start,tri_end,p->S81_xyz);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S82;++qn)
         {
-        pyramid(p,a,qn,tri_start,tri_end);
+        pyramid(p,a,qn,tri_start,tri_end,p->S82_xyz);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S83;++qn)
         {
-        wedge(p,a,qn,tri_start,tri_end);
+        wedge(p,a,qn,tri_start,tri_end,p->S83_xyz);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S84;++qn)
         {
-        hexahedron(p,a,qn,tri_start,tri_end);
+        hexahedron(p,a,qn,tri_start,tri_end,p->S84_xyz);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S121;++qn)
         {
-        ogee_weir(p,a,qn,tri_start,tri_end);
+        ogee_weir(p,a,qn,tri_start,tri_end,p->S121_x[qn],p->S121_y[qn],p->S121_z[qn],p->S121_Pd[qn],p->S121_b[qn],
+                p->S121_H0[qn],p->S122_K[qn],p->S122_n[qn],p->S122_xc[qn],p->S122_yc[qn],p->S123_R1[qn],p->S123_R2[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S131;++qn)
         {
-        semicyl_y(p,a,qn,tri_start,tri_end);
+        semicyl_y(p,a,qn,tri_start,tri_end,p->S131_xm[qn],p->S131_zm[qn],p->S131_y1[qn],p->S131_y2[qn],p->S131_r1[qn],p->S131_r2[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
-
+        
         for(qn=0;qn<p->S141;++qn)
         {
-        arch(p,a,qn,tri_start,tri_end);
+        arch(p,a,qn,tri_start,tri_end,p->S141_xs[qn],p->S141_xe[qn],p->S141_ys[qn],p->S141_ye[qn],p->S141_zs[qn],p->S141_ze[qn],p->S141_r[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end);
         }
 
         for(qn=0;qn<p->S201;++qn)
         {
-        plate_x(p,a,qn,tri_start,tri_end);
+        plate_x(p,a,qn,tri_start,tri_end,p->S201_x[qn],p->S201_ys[qn],p->S201_ye[qn],p->S201_zs[qn],p->S201_ze[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast_x_gcb(p,a,tri_start,tri_end);
         }

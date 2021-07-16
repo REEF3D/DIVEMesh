@@ -25,7 +25,7 @@ Author: Hans Bihs
 #include"lexer.h"
 
 void geometry::plate_x(lexer* p, dive* a,int rank, int &ts, int &te,
-                double xs, double xe,double ys,double ye,double zs,double ze)
+                double x,double ys,double ye,double zs,double ze)
 {
     
     /*

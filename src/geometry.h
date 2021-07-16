@@ -63,7 +63,7 @@ public:
     void ellipsoid_semi(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
     void ellipsoid_semi_rot(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double);
     void jacket_member_norm(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double,double);
-    void plate_x(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
+    void plate_x(lexer*,dive*,int,int&,int&,double,double,double,double,double);
     
     //STL
     void ray_cast(lexer*,dive*,int,int);

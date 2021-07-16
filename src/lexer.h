@@ -201,8 +201,8 @@ public:
     double *O66_xs,*O66_xe,*O66_ys,*O66_ye,*O66_zs,*O66_ze;
 	
 	
-	int S1,S2,S3,S5,S6,S7,S9,S10,S11,S18;
-	double S4,S8,S9_1;
+	int S1,S2,S3,S5,S6,S7,S9,S9_1,S10,S11,S18;
+	double S4,S8;
     double S18_1,S19;
 	
 	double S5_x,S5_y,S5_z,S5_phi,S5_theta,S5_psi;

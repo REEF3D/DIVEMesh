@@ -20,11 +20,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"solid.h"
+#include"geometry.h"
 #include"dive.h"
 #include"lexer.h"
 
-void solid::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -39,17 +39,15 @@ void solid::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
 	double PCx,PCy,PCz;
 	double Mx,My,Mz;
 	int js,je,ks,ke;
-    int ie,is;
+	int ir;
 	double u,v,w;
 	double denom;
-    double psi = 1.0e-8*p->DXM;
 
+    is_count=0;
 
-    MALOOP
-	{
-	cutl(i,j,k)=0;
-	cutr(i,j,k)=0;
-	}
+    for(j=0;j<maxpt;++j)
+    for(k=0;k<maxpt;++k)
+    is_num[j][k]=0;
 
 	for(n=ts; n<te; ++n)
 	{
@@ -65,49 +63,51 @@ void solid::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
 	Cy = p->tri_y[n][2];
 	Cz = p->tri_z[n][2];
 
-	xs = MIN3(Ax,Bx,Cx);
-	xe = MAX3(Ax,Bx,Cx);
+// --
+    ys = MIN3(Ay,By,Cy);
+	ye = MAX3(Ay,By,Cy);
 
 	zs = MIN3(Az,Bz,Cz);
 	ze = MAX3(Az,Bz,Cz);
 
-	is = p->posf_i(xs);
-	ie = p->posf_i(xe);
+    js = p->posc_j(ys);
+    js = p->posc_j(ye);
 
-	ks = p->posf_k(zs);
-    ke = p->posf_k(ze);
+	ks = p->posc_k(zs);
+    ke = p->posc_k(ze);
+// --
 
-    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is +marge];
-	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie +marge];
+	ys = MIN3(Ay,By,Cy) - 0.6*p->DY[js];
+	ye = MAX3(Ay,By,Cy) + 0.6*p->DY[je];
 
-	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks +marge];
-	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke +marge];
+	zs = MIN3(Az,Bz,Cz) - 0.6*p->DZ[ks];
+	ze = MAX3(Az,Bz,Cz) + 0.6*p->DZ[ke];
 
-	is = p->posf_i(xs);
-	ie = p->posf_i(xe);
+	js = p->posc_j(ys);
+    js = p->posc_j(ye);
 
-	ks = p->posf_k(zs);
-    ke = p->posf_k(ze);
+	ks = p->posc_k(zs);
+    ke = p->posc_k(ze);
 
-	is = MAX(is,0);
-	ie = MIN(ie,p->knox);
+	js = MAX(js,0);
+	je = MIN(je,p->knoy);
 
 	ks = MAX(ks,0);
 	ke = MIN(ke,p->knoz);
 
 
-		for(i=is;i<ie;i++)
+		for(j=js;j<je;j++)
 		for(k=ks;k<ke;k++)
 		{
 
 
-		Px = p->XP[IP]+psi;
-		Py = p->ymin-10.0*p->DXM ;
-		Pz = p->ZP[KP]+psi;
+		Px = p->xmin-10.0*p->dx ;
+		Py = p->YP[JP];
+		Pz = p->ZP[KP];
 
-		Qx = p->XP[IP]+psi;
-		Qy = p->ymax+10.0*p->DXM ;
-		Qz = p->ZP[KP]+psi;
+		Qx = p->xmax+10.0*p->dx ;
+		Qy = p->YP[JP];
+		Qz = p->ZP[KP];
 
 
 		PQx = Qx-Px;
@@ -146,7 +146,7 @@ void solid::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
 		if(u==0.0 && v==0.0 && w==0.0)
 		check = 0;
 
-			if(((u>0.0 && v>0.0 && w>0.0) || (u<0.0 && v<0.0 && w<0.0)) && check==1)
+			if((u>=0.0 && v>=0.0 && w>=0.0) || (u<0.0 && v<0.0 && w<0.0) && check==1)
 			{
 			denom = 1.0/(u+v+w);
 			u *= denom;
@@ -154,42 +154,89 @@ void solid::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
 			w *= denom;
 
 			Rx = u*Ax + v*Bx + w*Cx;
-			Ry = u*Ay + v*By + w*Cy;
-			Rz = u*Az + v*Bz + w*Cz;
 
+            is_R[j][k][is_num[j][k]] = Rx;
 
-				for(j=0;j<=a->knoy;++j)
-				{
-				if(p->YP[JP]<Ry)
-				cutr(i,j,k) += 1;
-
-				if(p->YP[JP]>=Ry)
-				cutl(i,j,k) += 1;
-				}
+            ++is_num[j][k];
 			}
 		}
 	}
 
-	if(p->S18==1)
-	LOOP
-	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
+
+
+    //sort entries
+    JLOOP
+    KLOOP
     {
-	a->solid(i,j,k)=-1;
+    sort(is_R[j][k],0,is_num[j][k]-1);
     }
 
-    if(p->S18==2)
-	LOOP
-	if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
+    // gcb from intersects
+    JLOOP
+    KLOOP
+    for(n=0;n<is_num[j][k];++n)
     {
-	a->solid(i,j,k)=-1;
+
+    if((n+1)%2!=0)
+    i = p->posc_i(is_R[j][k][n]);
+
+    if((n+1)%2==0)
+    i = p->posc_i(is_R[j][k][n]);
+
+        a->surf_solid[a->surfcount_solid][0]=i;
+        a->surf_solid[a->surfcount_solid][1]=j;
+        a->surf_solid[a->surfcount_solid][2]=k;
+
+        if((n+1)%2!=0)
+        a->surf_solid[a->surfcount_solid][3]=4;
+        if((n+1)%2==0)
+        a->surf_solid[a->surfcount_solid][3]=1;
+
+        a->surf_solid[a->surfcount_solid][4]=21;
+
+
+        //cout<<"is_num: "<<is_num[j][k]<<" n: "<<n<<"is_R: "<<is_R[j][k][n]<<"  i: "<<i<<" k: "<<k<<" gcside: "<<a->surf_solid[a->surfcount_solid][3]<<endl;
+        a->surfcount_solid++;
+
+        if(a->surfcount_solid>=a->surfnum_solid)
+        {
+        p->Iresize(a->surf_solid,a->surfnum_solid,a->surfnum_solid+maxpt,5,5);
+        a->surfnum_solid+=maxpt;
+        }
     }
 
-	count=0;
-	LOOP
-	if(a->solid(i,j,k)>0)
-	++count;
+	cout<<"Number of solid intersections in x-dir: "<<is_count<<endl;
+
+}
 
 
-	cout<<"Number of active cells after solid_y: "<<count<<endl;
+void geometry::sort(double *a, int left, int right)
+ {
 
+  if (left < right)
+  {
+
+    double pivot = a[right];
+    int l = left;
+    int r = right;
+
+    do {
+      while (a[l] < pivot) l++;
+
+      while (a[r] > pivot) r--;
+
+      if (l <= r) {
+          double swap = a[l];
+
+          a[l] = a[r];
+          a[r] = swap;
+
+          l++;
+          r--;
+      }
+    } while (l <= r);
+
+    sort(a, left, r);
+    sort(a, l, right);
+  }
 }

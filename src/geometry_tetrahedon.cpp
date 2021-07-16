@@ -26,7 +26,6 @@ Author: Hans Bihs
 
 void geometry::tetrahedon(lexer *p, dive *a, int rank, int &ts, int &te, double **xyz)
 {
-
 	double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4;
 
 	x1 = xyz[rank][0];

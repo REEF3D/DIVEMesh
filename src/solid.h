@@ -39,34 +39,12 @@ public:
 
     virtual void start(lexer*,dive*);
 	void gcb_estimate(lexer*,dive*);
-	void ray_cast(lexer*,dive*,int,int);
-    void ray_cast_io_x(lexer*,dive*,int,int);
-    void ray_cast_io_ycorr(lexer*,dive*,int,int);
-    void ray_cast_io_zcorr(lexer*,dive*,int,int);
-	void ray_cast_x(lexer*,dive*,int,int);
-	void ray_cast_y(lexer*,dive*,int,int);
-	void ray_cast_z(lexer*,dive*,int,int);
-    void ray_cast_x_gcb(lexer*,dive*,int,int);
-    void stl_preproc(lexer*,dive*,int&,int&);
-    void stl_postproc(lexer*,dive*,int&,int&);
-    void hexahedron(lexer*,dive*,int,int&,int&);
-    void wedge(lexer*,dive*,int,int&,int&);
-    void tetrahedon(lexer*,dive*,int,int&,int&);
-    void pyramid(lexer*,dive*,int,int&,int&);
-	void ogee_weir(lexer*,dive*,int,int&,int&);
-	void semicyl_y(lexer*,dive*,int,int&,int&);
-    void arch(lexer*,dive*,int,int&,int&);
-    void plate_x(lexer*,dive*,int,int&,int&);
-    
+
     // fluvial box
     void fluvial_box(lexer*,dive*,int,int&,int&);
     void fluvial_box_fill_segments(lexer*,dive*,int,int&,int&);
     void fluvial_box_v1(lexer*,dive*,int,int&,int&);
     void fluvial_box_v2(lexer*,dive*,int,int&,int&);
-	
-	void rotation(double&,double&,double&,double,double,double);
-	void rotate_triangle(lexer*,dive*,int,int);
-    
     
     double xtrans(double,double,double,double,double,double,double,double,double);
     double ytrans(double,double,double,double,double,double,double,double,double);
@@ -74,8 +52,6 @@ public:
     
     void angle_calc(double,double,double,double&,double&,double&);
     
-
-	
 private:
     void sort(double*, int, int);
     

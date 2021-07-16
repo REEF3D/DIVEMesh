@@ -133,6 +133,7 @@
   <VirtualDirectory Name="Sources">
     <VirtualDirectory Name="Geometry">
       <VirtualDirectory Name="Ray Casting">
+        <File Name="geometry_ray_cast_x_gcb.cpp"/>
         <File Name="geometry_ray_cast_io_zcorr.cpp"/>
         <File Name="geometry_ray_cast_io_ycorr.cpp"/>
         <File Name="geometry_ray_cast_io_x.cpp"/>
@@ -356,28 +357,7 @@
         <File Name="solid_fluvial_box.cpp"/>
       </VirtualDirectory>
       <File Name="solid.cpp"/>
-      <File Name="solid_ogee-weir.cpp"/>
-      <File Name="solid_semicyl_y.cpp"/>
-      <File Name="solid_rotation.cpp"/>
-      <File Name="solid_tetrahedon.cpp"/>
-      <File Name="solid_pyramid.cpp"/>
-      <File Name="solid_wedge.cpp"/>
-      <File Name="solid_hexahedron.cpp"/>
-      <File Name="solid_arch.cpp"/>
-      <File Name="solid_plate_x.cpp"/>
-      <VirtualDirectory Name="Ray Casting">
-        <File Name="solid_ray-cast-io-zcorr.cpp"/>
-        <File Name="solid_ray-cast-io-ycorr.cpp"/>
-        <File Name="solid_ray-cast-io-x.cpp"/>
-        <File Name="solid_ray-cast-y.cpp"/>
-        <File Name="solid_ray-cast-z.cpp"/>
-        <File Name="solid_ray-cast.cpp"/>
-        <File Name="solid_ray-cast-x.cpp"/>
-        <VirtualDirectory Name="ray_gcb">
-          <File Name="solid_ray-cast-x_gcb.cpp"/>
-        </VirtualDirectory>
-      </VirtualDirectory>
-      <File Name="solid_stl.cpp"/>
+      <VirtualDirectory Name="Ray Casting"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Executable">
