@@ -20,25 +20,25 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"solid.h"
+#include"geometry.h"
 #include"dive.h"
 #include"lexer.h"
 
-void solid::fluvial_box_move(lexer *p, dive *a)
+void geometry::fluvial_box_move(lexer *p, dive *a)
 {
     for(n=0;n<numds;++n)
     {
-    xl[n] += p->S308_x;
-    xr[n] += p->S308_x;
+    xl[n] += G308_x;
+    xr[n] += G308_x;
     
-    yl[n] += p->S308_y;
-    yr[n] += p->S308_y;
+    yl[n] += G308_y;
+    yr[n] += G308_y;
     }
     
 }
 
 
-void solid::fluvial_box_extend(lexer *p, dive *a)
+void geometry::fluvial_box_extend(lexer *p, dive *a)
 {
     double xmin,xmax,ymin,ymax;
     
@@ -66,13 +66,13 @@ void solid::fluvial_box_extend(lexer *p, dive *a)
     
     
     box_xs = xmin;
-    box_xe = xmax + p->S309_x;
+    box_xe = xmax + G309_x;
     
-    box_ys = ymin - p->S309_y;
-    box_ye = ymax + p->S309_y;
+    box_ys = ymin - G309_y;
+    box_ye = ymax + G309_y;
     
-    box_zs = -p->S307_bh - p->S309_z;
-    box_ze =  p->S307_fh + p->S309_z;
+    box_zs = -G307_bh - G309_z;
+    box_ze =  G307_fh + G309_z;
     
     cout<<"fluvial box extend - xs: "<<box_xs<<" xe: "<<box_xe<<" ys: "<<box_ys<<" ye: "<<box_ye<<" zs: "<<box_zs<<" ze: "<<box_ze<<endl;
     

@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-solid::solid(lexer *p, dive *a) : geometry(p,a),cutl(p),cutr(p),epsi(1.6)
+solid::solid(lexer *p, dive *a) : geometry(p,a)
 {
 	cout<<"solid ini";
 
@@ -99,8 +99,6 @@ void solid::start(lexer* p, dive* a)
 
     MALOOP
 	{
-	cutl(i,j,k)=0;
-	cutr(i,j,k)=0;
 	a->solid_dist(i,j,k)=1.0e9;
 	}
 

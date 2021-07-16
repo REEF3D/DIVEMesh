@@ -44,10 +44,7 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     
     */
     cout<<"fluvial box start"<<endl;
-    countS310=0;
-    countS320=0;
-    countS330=0;
-    countS340=0;
+    
     countds=1;
     numds=0;
     x0=0.0; // add origin afterwards
@@ -63,6 +60,9 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     p->Darray(yl,p->S300_ds);
     p->Darray(xr,p->S300_ds);
     p->Darray(yr,p->S300_ds);
+    
+    
+    
     
     // FILL SEGMENTS
     fluvial_box_fill_segments(p, a, rank, ts, te);
@@ -81,18 +81,53 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     if(p->S301==2)
     fluvial_box_v2(p,a,rank,ts,te);
     
+    
     p->del_Darray(xl,p->S300_ds);
     p->del_Darray(yl,p->S300_ds);
     p->del_Darray(xr,p->S300_ds);
     p->del_Darray(yr,p->S300_ds);
     
     
-    
     cout<<"fluvial box end  "<<te<<endl<<endl<<endl;
     
 }
 
+void solid::fluvial_box_parameterfill(lexer *p, dive *a)
+{
+    G300 = p->S300;
+    G300_ds = p->S300_ds;
+    
+    G300_ord = p->S300_ord;
+    G301 = p->S301;
+    
+    G305 = G305;
+    G306 = G306;
+    G307_fh = G307_fh;
+    G307_bh = G307_bh;
+    G308_x = G308_x;
+    G308_y = G308_y;
+    G308_z = G308_z;
+    G309_x = G309_x;
+    G309_y = G309_y;
+    G309_z = G309_z;
+    
+    G310 = p->S310;
+    G310_l = p->S310_l;
 
+    G320 = p->S320;
+    G320_r = p->S320_r;
+    G320_phi = p->S320_phi;
+    
+    G330 = p->S330;
+    G330_r = p->S330_r;
+    G330_phi = p->S330_phi;
+    
+    G340 = p->S340;
+    G340_teta = p->S340_teta;
+    G340_L = p->S340_L;
+    G340_N = p->S340_N;
+    G340_ds = p->S340_ds;
+}
 
 
 

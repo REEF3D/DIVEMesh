@@ -42,38 +42,18 @@ public:
 
     // fluvial box
     void fluvial_box(lexer*,dive*,int,int&,int&);
-    void fluvial_box_fill_segments(lexer*,dive*,int,int&,int&);
-    void fluvial_box_v1(lexer*,dive*,int,int&,int&);
-    void fluvial_box_v2(lexer*,dive*,int,int&,int&);
-    
-    double xtrans(double,double,double,double,double,double,double,double,double);
-    double ytrans(double,double,double,double,double,double,double,double,double);
-    double ztrans(double,double,double,double,double,double,double,double,double);
-    
-    void angle_calc(double,double,double,double&,double&,double&);
+    void fluvial_box_parameterfill(lexer*,dive*);
     
 private:
-    void sort(double*, int, int);
-    
-    int rayiter,ts_stl,te_stl,tricount_stl;   
-    
-	intfield cutl,cutr;
-    int n,count;
-	int tri_start,tri_end;
     double xs,ys,zs,xe,ye,ze;
-	double phi,theta,psi;
-	double xrot,yrot,zrot;
 	double L,G;
     double ***is_R;
     int **is_num;
     int is_count;
     int maxpt;
-    const double epsi;
+
     
-    // fluvial box
-    void fluvial_box_move(lexer*,dive*);
-    void fluvial_box_extend(lexer*,dive*);
-    
+    // fluvial box 
     int countS310;
     int countS320;
     int countS330;

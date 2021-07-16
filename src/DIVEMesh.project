@@ -102,6 +102,7 @@
         <File Name="driver_declarations.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Printer">
+        <File Name="print_vtu.h"/>
         <File Name="print_binary.h"/>
         <File Name="printer.h"/>
         <File Name="print_objects.h"/>
@@ -138,6 +139,12 @@
       <File Name="topo.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Geometry">
+      <VirtualDirectory Name="Fluvial Box">
+        <File Name="geometry_fluvial_box_v2.cpp"/>
+        <File Name="geometry_fluvial_box_v1.cpp"/>
+        <File Name="geometry_fluvial_box_util.cpp"/>
+        <File Name="geometry_fluvial_box_fill_segments.cpp"/>
+      </VirtualDirectory>
       <VirtualDirectory Name="Ray Casting">
         <File Name="geometry_ray_cast_x_gcb.cpp"/>
         <File Name="geometry_ray_cast_io_zcorr.cpp"/>
@@ -311,6 +318,7 @@
       <File Name="logic.cpp"/>
       <File Name="main.cpp"/>
       <VirtualDirectory Name="Printer">
+        <File Name="print_vtu.cpp"/>
         <File Name="print_binary.cpp"/>
         <File Name="print_debug.cpp"/>
         <File Name="print_objects.cpp"/>
@@ -355,13 +363,8 @@
       <File Name="bedlevel.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
-      <VirtualDirectory Name="Fluvial Box">
-        <File Name="solid_fluvial_box_util.cpp"/>
-        <File Name="solid_fluvial_box_fill_segments.cpp"/>
-        <File Name="solid_fluvial_box_v2.cpp"/>
-        <File Name="solid_fluvial_box_v1.cpp"/>
-        <File Name="solid_fluvial_box.cpp"/>
-      </VirtualDirectory>
+      <File Name="solid_fluvial_box.cpp"/>
+      <VirtualDirectory Name="Fluvial Box"/>
       <File Name="solid.cpp"/>
       <VirtualDirectory Name="Ray Casting"/>
     </VirtualDirectory>

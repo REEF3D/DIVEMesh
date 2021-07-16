@@ -38,7 +38,6 @@ public:
     geometry(lexer*,dive*);
     virtual ~geometry();
     virtual void start(lexer*,dive*);
-	void gcb_estimate(lexer*,dive*);
     
     // entities
 	void box(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
@@ -78,10 +77,11 @@ public:
     void stl_postproc(lexer*,dive*,int&,int&,intfield&,field&,int);
     
     // fluvial box
-    void fluvial_box(lexer*,dive*,int,int&,int&);
     void fluvial_box_fill_segments(lexer*,dive*,int,int&,int&);
     void fluvial_box_v1(lexer*,dive*,int,int&,int&);
     void fluvial_box_v2(lexer*,dive*,int,int&,int&);
+    void fluvial_box_move(lexer*,dive*);
+    void fluvial_box_extend(lexer*,dive*);
 	
 	void rotation(double&,double&,double&,double,double,double);
 	void rotate_triangle(lexer*,dive*,int,int);
@@ -96,19 +96,34 @@ public:
     
     void angle_calc(double,double,double,double&,double&,double&);
     
-
-	
+    // common variables
+    int rayiter,ts_stl,te_stl,tricount_stl; 
+	double phi,theta,psi;
+	double xrot,yrot,zrot;
+    int n,count;
+	int tri_start,tri_end;
+    
+    //fluvial box variables
+    int G300,G300_ds;
+    int *G300_ord;
+    int G301;
+    double G305,G306,G307_fh,G307_bh,G308_x,G308_y,G308_z,G309_x,G309_y,G309_z;
+    int G310;
+    double *G310_l;
+    int G320;
+    double *G320_r,*G320_phi;
+    int G330;
+    double *G330_r,*G330_phi;
+    int G340;
+    double *G340_teta,*G340_L,*G340_N,*G340_ds;
+    
 private:
     void sort(double*, int, int);
     
-    int rayiter,ts_stl,te_stl,tricount_stl;   
-    
 	intfield cutl,cutr;
-    int n,count;
-	int tri_start,tri_end;
+    
     double xs,ys,zs,xe,ye,ze;
-	double phi,theta,psi;
-	double xrot,yrot,zrot;
+	
 	double L,G;
     double ***is_R;
     int **is_num;
@@ -117,9 +132,6 @@ private:
     const double epsi;
     
     // fluvial box
-    void fluvial_box_move(lexer*,dive*);
-    void fluvial_box_extend(lexer*,dive*);
-    
     int countS310;
     int countS320;
     int countS330;
