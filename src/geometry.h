@@ -65,14 +65,14 @@ public:
     void plate_x(lexer*,dive*,int,int&,int&,double,double,double,double,double);
     
     //STL
-    void ray_cast(lexer*,dive*,int,int);
-    void ray_cast_io_x(lexer*,dive*,int,int);
-    void ray_cast_io_ycorr(lexer*,dive*,int,int);
-    void ray_cast_io_zcorr(lexer*,dive*,int,int);
-	void ray_cast_x(lexer*,dive*,int,int);
-	void ray_cast_y(lexer*,dive*,int,int);
-	void ray_cast_z(lexer*,dive*,int,int);
-    void ray_cast_x_gcb(lexer*,dive*,int,int);
+    void ray_cast(lexer*,dive*,int,int,intfield&,field&);
+    void ray_cast_io_x(lexer*,dive*,int,int,intfield&,field&);
+    void ray_cast_io_ycorr(lexer*,dive*,int,int,intfield&,field&);
+    void ray_cast_io_zcorr(lexer*,dive*,int,int,intfield&,field&);
+	void ray_cast_x(lexer*,dive*,int,int,intfield&,field&);
+	void ray_cast_y(lexer*,dive*,int,int,intfield&,field&);
+	void ray_cast_z(lexer*,dive*,int,int,intfield&,field&);
+    void ray_cast_x_gcb(lexer*,dive*,int,int,intfield&,field&);
     void stl_preproc(lexer*,dive*,int&,int&);
     void stl_postproc(lexer*,dive*,int&,int&,intfield&,field&,int);
     

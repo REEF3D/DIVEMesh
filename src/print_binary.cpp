@@ -904,7 +904,7 @@ NLOOP
     XYLOOP
     if(a->subgrid(i,j,k)==count)
     {
-    ddn = a->topo(i,j);
+    ddn = a->topobed(i,j);
     result.write((char*)&ddn, sizeof (double)); 
     }
 	

@@ -113,7 +113,7 @@ void geodat::start(lexer* p, dive* a)
     dryside(p,a);
 	
 	XYLOOP
-	a->bedlevel(i,j) = MAX(a->bedlevel(i,j),a->topo(i,j));
+	a->bedlevel(i,j) = MAX(a->bedlevel(i,j),a->topobed(i,j));
 }
 
 void geodat::gcb_estimate(lexer *p, dive *a)
@@ -133,7 +133,7 @@ void geodat::gcb_estimate(lexer *p, dive *a)
     {
     zval = p->ZP[KP] + p->zmin;
  
-    if(zval>=a->topo(i,j))
+    if(zval>=a->topobed(i,j))
     gd(i,j,k)=1;
     }
 
@@ -154,13 +154,13 @@ void geodat::dryside(lexer *p, dive *a)
 {
     if(p->G24==1)
     XYLOOP
-    if(a->topo(i,j)>p->G24_h)
-    a->topo(i,j) += p->G24_dz;
+    if(a->topobed(i,j)>p->G24_h)
+    a->topobed(i,j) += p->G24_dz;
     
     if(p->G25==1)
     XYLOOP
-    if(a->topo(i,j)>p->G25_h)
-    a->topo(i,j) *= p->G25_fz;  
+    if(a->topobed(i,j)>p->G25_h)
+    a->topobed(i,j) *= p->G25_fz;  
     
     // smoothing
     k=0;
@@ -169,23 +169,23 @@ void geodat::dryside(lexer *p, dive *a)
 	{
 	
 		if(a->flag(i-1,j,k)<0)
-		a->topo(i-1,j) = a->topo(i,j);
+		a->topobed(i-1,j) = a->topobed(i,j);
 		
 		if(a->flag(i+1,j,k)<0)
-		a->topo(i+1,j) = a->topo(i,j);
+		a->topobed(i+1,j) = a->topobed(i,j);
 		
 		if(a->flag(i,j-1,k)<0)
-		a->topo(i,j-1) = a->topo(i,j);
+		a->topobed(i,j-1) = a->topobed(i,j);
 		
 		if(a->flag(i,j+1,k)<0)
-		a->topo(i,j+1) = a->topo(i,j);
+		a->topobed(i,j+1) = a->topobed(i,j);
 	}
     
     k=0;
 	for(n=0;n<p->G31;++n)
 	XYLOOP
 	if(a->flag(i,j,k)>0)
-    a->topo(i,j) = p->G32*a->topo(i,j) + 0.25*(1.0-p->G32)*(a->topo(i-1,j) + a->topo(i+1,j) + a->topo(i,j-1) + a->topo(i,j+1)); 
+    a->topobed(i,j) = p->G32*a->topobed(i,j) + 0.25*(1.0-p->G32)*(a->topobed(i-1,j) + a->topobed(i+1,j) + a->topobed(i,j-1) + a->topobed(i,j+1)); 
 }
 
 

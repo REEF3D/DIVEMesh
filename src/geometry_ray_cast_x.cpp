@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-void geometry::ray_cast_x(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast_x(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -158,17 +158,17 @@ void geometry::ray_cast_x(lexer* p, dive* a, int ts, int te)
 
             if(Rx<p->XP[IP])
             if(i>=0 && i<p->knox)
-            if(a->solid(i,j,k)<0 && a->solid(i-1,j,k)<0)
+            if(flag(i,j,k)<0 && flag(i-1,j,k)<0)
             distcheck=0;
 
             if(Rx>=p->XP[IP])
             if(i>=0 && i<p->knox)
-            if(a->solid(i,j,k)<0 && a->solid(i+1,j,k)<0)
+            if(flag(i,j,k)<0 && flag(i+1,j,k)<0)
             distcheck=0;
 
             if(distcheck==1)
 			for(i=0;i<p->knox;++i)
-			a->solid_dist(i,j,k)=MIN(fabs(Rx-p->XP[IP]),a->solid_dist(i,j,k));
+			dist(i,j,k)=MIN(fabs(Rx-p->XP[IP]),dist(i,j,k));
 			}
 		}
 	}

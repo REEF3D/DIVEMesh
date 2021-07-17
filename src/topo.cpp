@@ -82,7 +82,7 @@ topo::~topo()
 }
 
 void topo::start(lexer* p, dive* a)
-{
+{/*
     if(p->S15==1)
     {
 	xrot=p->G14_x;
@@ -295,7 +295,7 @@ void topo::start(lexer* p, dive* a)
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast_x_gcb(p,a,tri_start,tri_end);
         }
-        
+        */
         /*
         if(p->S300>0)
         {
@@ -314,8 +314,8 @@ void topo::start(lexer* p, dive* a)
             {
             ray_cast(p,a,tri_start,tri_end);
             }
-        }*/
-    }
+        }
+    }*/
 
     // finalize solid_dist
     LOOP

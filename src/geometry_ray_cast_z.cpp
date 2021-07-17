@@ -25,7 +25,7 @@ Author: Hans Bihs
 #include"lexer.h"
 
 
-void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -156,17 +156,17 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te)
 
             if(Rz<p->ZP[KP])
             if(k>=0 && k<p->knoz)
-            if(a->solid(i,j,k)<0 && a->solid(i,j,k-1)<0)
+            if(flag(i,j,k)<0 && flag(i,j,k-1)<0)
             distcheck=0;
 
             if(Rz>=p->ZP[KP])
             if(k>=0 && k<p->knoz)
-            if(a->solid(i,j,k)<0 && a->solid(i,j,k+1)<0)
+            if(flag(i,j,k)<0 && flag(i,j,k+1)<0)
             distcheck=0;
 
             if(distcheck==1)
 			for(k=0;k<p->knoz;++k)
-			a->solid_dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]),a->solid_dist(i,j,k));
+			dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]),dist(i,j,k));
 
             if(Rz>p->zmin && Rz<p->zmax)
             {

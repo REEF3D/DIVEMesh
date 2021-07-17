@@ -34,18 +34,13 @@ void print_binary::print_bottom(lexer* p,dive* a)
     ofstream result;
 	result.open(name);
     
-    
-
-
     JLOOP
     {
         ILOOP
-        result<<a->topo(i,j)<<"\t";
+        result<<a->topobed(i,j)<<"\t";
         
         result<<endl;
     }
     
-    
     result.close();
-    
 }

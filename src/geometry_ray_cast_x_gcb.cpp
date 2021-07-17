@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;

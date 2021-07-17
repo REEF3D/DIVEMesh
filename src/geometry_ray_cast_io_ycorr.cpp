@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -174,19 +174,19 @@ void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te)
 	LOOP
 	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
     {
-	a->solid(i,j,k)=-1;
+	flag(i,j,k)=-1;
     }
 
     if(p->S18==2)
 	LOOP
 	if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
     {
-	a->solid(i,j,k)=-1;
+	flag(i,j,k)=-1;
     }
 
 	count=0;
 	LOOP
-	if(a->solid(i,j,k)>0)
+	if(flag(i,j,k)>0)
 	++count;
 
 

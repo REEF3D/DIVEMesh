@@ -98,7 +98,7 @@ void geodat::prolong(lexer *p, dive *a)
     
     val = ccipol(p,topof,xc,yc);   
 
-    a->topo(i,j) = val;    
+    a->topobed(i,j) = val;    
     }
 }
 

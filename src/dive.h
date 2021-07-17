@@ -42,15 +42,15 @@ class dive : public increment, public resize_class
     void initialize();
 
     intfield flag;         // water/soC12/empty  +  which bc
-	intfield solid;
-    field solid_dist;
+	intfield solid,topo;
+    field solid_dist,topo_dist;
     intfield cellside;     // cellside
     intfield subgrid;      // for all water cells: number of subgrid
     intfield numfac;       // number of points per facet
     intfield confac;       // connects facet index to ijk
     intfield xdir,ydir,zdir;
 	intfield onnode;
-    field2d topo,data,bedlevel;
+    field2d topobed,solidbed,data,bedlevel;
     intfield2d flagslice,subslice;
 
     int knox,knoy,knoz;

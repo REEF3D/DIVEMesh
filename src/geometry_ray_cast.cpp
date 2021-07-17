@@ -24,19 +24,19 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-void geometry::ray_cast(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist) 
 {
     if(rayiter==0)
     {
-	ray_cast_io_x(p,a,tri_start,tri_end);
-    ray_cast_io_ycorr(p,a,tri_start,tri_end);
-    ray_cast_io_zcorr(p,a,tri_start,tri_end);
+	ray_cast_io_x(p,a,tri_start,tri_end,flag,dist);
+    ray_cast_io_ycorr(p,a,tri_start,tri_end,flag,dist);
+    ray_cast_io_zcorr(p,a,tri_start,tri_end,flag,dist);
     }
 
     if(rayiter==1)
     {
-	ray_cast_x(p,a,tri_start,tri_end);
-	ray_cast_y(p,a,tri_start,tri_end);
-	ray_cast_z(p,a,tri_start,tri_end);
+	ray_cast_x(p,a,tri_start,tri_end,flag,dist);
+	ray_cast_y(p,a,tri_start,tri_end,flag,dist);
+	ray_cast_z(p,a,tri_start,tri_end,flag,dist);
     }
 }

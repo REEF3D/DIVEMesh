@@ -21,11 +21,11 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 
-#include"geometry.h"
+#include"geometry.h"
 #include"dive.h"
 #include"lexer.h"
 
-void geometry::ray_cast_y(lexer* p, dive* a, int ts, int te)
+void geometry::ray_cast_y(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -159,18 +159,18 @@ void geometry::ray_cast_y(lexer* p, dive* a, int ts, int te)
 
             if(Ry<p->YP[JP])
             if(j>=0 && j<p->knoy)
-            if(a->solid(i,j,k)<0 && a->solid(i,j-1,k)<0)
+            if(flag(i,j,k)<0 && flag(i,j-1,k)<0)
             distcheck=0;
 
             if(Ry>=p->YP[JP])
             if(j>=0 && j<p->knoy)
-            if(a->solid(i,j,k)<0 && a->solid(i,j+1,k)<0)
+            if(flag(i,j,k)<0 && flag(i,j+1,k)<0)
             distcheck=0;
 
 
             if(distcheck==1)
 			for(j=0;j<p->knoy;++j)
-			a->solid_dist(i,j,k)=MIN(fabs(Ry-p->YP[JP]),a->solid_dist(i,j,k));
+			dist(i,j,k)=MIN(fabs(Ry-p->YP[JP]),dist(i,j,k));
 			}
 		}
 	}
