@@ -182,7 +182,7 @@ ccpointcount=0;
 	
 	
 	Iarray(solid_gcb,p->M10+1);    
-    Iarray(geodat_gcb,p->M10+1);
+    Iarray(topo_gcb,p->M10+1);
 
 
 cout<<'.'<<endl;

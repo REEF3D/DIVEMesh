@@ -323,3 +323,17 @@ void lexer::createspace()
 
 }
 
+void lexer::tri_space()
+{
+    trinum = trinum_stl+trinum_solid+trinum_topo;
+    
+    // create arrays
+	Darray(tri_x,trinum,3);
+	Darray(tri_y,trinum,3);
+	Darray(tri_z,trinum,3);
+	
+	Darray(trivec_x,trinum);
+	Darray(trivec_y,trinum);
+	Darray(trivec_z,trinum);
+  
+}

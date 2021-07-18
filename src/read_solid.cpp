@@ -27,14 +27,11 @@ void lexer::solid_preproc()
 	double r1,r2,rmax,U,ds;
 	int snum;
 	
-	trinum=0;
-	tricount=0;
-	
 	for(n=0;n<S10;++n)
-	trinum+=12;
+	trinum_solid+=12;
 	
 	for(n=0;n<S11;++n)
-	trinum+=12*S11_ni[n]*S11_nj[n]*S11_nj[n];
+	trinum_solid+=12*S11_ni[n]*S11_nj[n]*S11_nj[n];
     
     for(n=0; n<S32;++n)
 	{
@@ -46,7 +43,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
 	
-	trinum+=6*snum;
+	trinum_solid+=6*snum;
 	}
 	
 	for(n=0; n<S33;++n)
@@ -60,7 +57,7 @@ void lexer::solid_preproc()
 	snum = int(U/ds);
 	
     cout<<"SNUM: "<<snum<<endl;
-	trinum+=6*snum;
+	trinum_solid+=6*snum;
 	}
     
     for(n=0; n<S37;++n)
@@ -76,7 +73,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
 	
-	trinum+=6*snum;
+	trinum_solid+=6*snum;
 	}
 	
 	for(n=0; n<S41;++n)
@@ -92,7 +89,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
 	
-	trinum+=6*snum;
+	trinum_solid+=6*snum;
 	}
 	
 	for(n=0; n<S42;++n)
@@ -108,7 +105,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
 	
-	trinum+=6*snum;
+	trinum_solid+=6*snum;
 	}
 	
 	for(n=0; n<S43;++n)
@@ -124,7 +121,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
 	
-	trinum+=6*snum;
+	trinum_solid+=6*snum;
 	}
     
     for(n=0; n<S51;++n)
@@ -137,7 +134,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
     
-    trinum+=snum*snum*2;
+    trinum_solid+=snum*snum*2;
     }
     
     for(n=0; n<S52;++n)
@@ -154,7 +151,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
     
-    trinum+=snum*snum*2;
+    trinum_solid+=snum*snum*2;
     }
     
     for(n=0; n<S53;++n)
@@ -171,7 +168,7 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
     
-    trinum+=snum*snum*2;
+    trinum_solid+=snum*snum*2;
     }
     
     for(n=0; n<S54;++n)
@@ -188,41 +185,41 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
     
-    trinum+=snum*snum*2;
+    trinum_solid+=snum*snum*2;
     }
 	
 	for(n=0;n<S61;++n)
-	trinum+=10;
+	trinum_solid+=10;
 	
 	for(n=0;n<S62;++n)
-	trinum+=10;
+	trinum_solid+=10;
 	
 	for(n=0;n<S63;++n)
-	trinum+=10;
+	trinum_solid+=10;
     
     for(n=0;n<S81;++n)
-	trinum+=4;
+	trinum_solid+=4;
     
     for(n=0;n<S82;++n)
-	trinum+=6;
+	trinum_solid+=6;
     
     for(n=0;n<S83;++n)
-	trinum+=8;
+	trinum_solid+=8;
     
     for(n=0;n<S84;++n)
-	trinum+=12;
+	trinum_solid+=12;
 	
 	for(n=0;n<S121;++n)
-	trinum+=966;
+	trinum_solid+=966;
     
     for(n=0;n<S201;++n)
-	trinum+=12;
+	trinum_solid+=12;
     
     for(n=0;n<S202;++n)
-	trinum+=12;
+	trinum_solid+=12;
     
     for(n=0;n<S203;++n)
-	trinum+=12;
+	trinum_solid+=12;
 	
 	for(n=0; n<S131;++n)
 	{
@@ -237,11 +234,11 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
 	
-	trinum+=6*snum;
+	trinum_solid+=6*snum;
 	}
 	
 	for(n=0;n<S141;++n)
-	trinum+=10966;
+	trinum_solid+=10966;
     
     if(S300>0)
     {
@@ -282,23 +279,9 @@ void lexer::solid_preproc()
     
     
     S300_ds +=1;
-    trinum+=16*S300_ds;
+    trinum_solid+=16*S300_ds;
     
-    cout<<"fluvial box dsnum_ini: "<<S300_ds<<" trinum: "<<trinum<<endl;
+    cout<<"fluvial box dsnum_ini: "<<S300_ds<<" trinum_solid: "<<trinum_solid<<endl;
     }
-    
-	
-	if(S1==0)
-	{
-	// create arrays
-	Darray(tri_x,trinum,3);
-	Darray(tri_y,trinum,3);
-	Darray(tri_z,trinum,3);
-	
-	Darray(trivec_x,trinum);
-	Darray(trivec_y,trinum);
-	Darray(trivec_z,trinum);
-	}
-	
 }
 

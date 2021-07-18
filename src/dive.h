@@ -100,7 +100,7 @@ class dive : public increment, public resize_class
     double **gcn;
     double *gcd;
 	int *mpi_index, *mpi_edges, mpi_edgenum;
-	int *solid_gcb,*geodat_gcb;
+	int *solid_gcb,*topo_gcb;
 	
 	//polygon objects
 	int vertice_num, polygon_num,vnum;

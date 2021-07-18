@@ -221,6 +221,66 @@ void lexer::ini_default()
     S330 = 0;       // int right bend
     S340 = 0;       // int meander
     
+    T1 = 0;			// int read TTL file
+	T2 = 0;			// int auto margins
+	T3 = 0;			// int set auto margins
+	T4 = 1.0;		// double scaling factor for stl model
+	T5 = 0;			// int solid rotation
+	T5_x=T5_y=T5_z=T5_phi=T5_theta=T5_psi=0.0;
+	T6 = 0;			// int print transformed TTL 
+	T7 = 0;			// move origin of TTL:
+	T8 = 0.0;		// double turn angle in horizontal xy-plane
+	T9 = 1;			// int invert TTL model
+	T10 = 0;		// int solid box
+	T11 = 0;		// int solid box array
+    T15 = 0;        // int rotate solids with geodat
+    T18 = 1;        // int invert solid
+    T19 = 0.1;       // double factor solid resolution
+    T31 = 0;			// int jacket rotation
+    T31_x=T31_y=T31_z=T31_phi=T31_theta=T31_psi=0.0;
+    T32 = 0;       // int solid cylinder_y 
+	T33 = 0;		// int solid cylinder_z 
+    T37 = 0;		// int solid jacketmember_horz
+	T41 = 0;		// int solid cone_x
+	T42 = 0;		// int solid cone_y
+	T43 = 0;		// int solid cone_z
+    T51 = 0;        // int solid sphere    
+    T52 = 0;        // int solid ellipsoid
+    T53 = 0;        // int solid semi-ellipsoid
+    T54 = 0;        // int solid semi-ellipsoid with rotation
+	T61 = 0;		// int solid wedge_x
+	T62 = 0;		// int solid wedge_y
+	T63 = 0;		// int solid wedge_z
+    T81 = 0;		// int solid tetrahedon
+    T82 = 0;		// int solid pyramid
+    T83 = 0;		// int solid wedge
+    T84 = 0;		// int solid hexahedon
+	T121 = 0; 		// int solid ogee weir
+	T122 = 0; 		// int solid ogee weir, K and n
+	T123 = 0; 		// int solid ogee weir, R1 and R2
+	T131 = 0;		// int half cone weir in y-dir
+    T141 = 0;       // int arch
+    T201 = 0;       // int x-plate
+    T202 = 0;       // int y-plate
+    T203 = 0;       // int z-plate
+    T300 = 0;       // int turn fluvial box
+    T301 = 1;       // int fluvial box type
+    T300_ds = 0;    // int fluvial box ds num
+    T305 = 0.5;     // double factor times dx for calculating ds
+    T306 = 1.0;     // double width fluival channel
+    T307_fh = 0.5;     // double flowheight fluvial box
+    T307_bh = 0.2;     // double bed height fluvial box
+    T308_x = 0.0;   // double deltax fluvial box
+    T308_y = 0.0;   // double deltay fluvial box
+    T308_z = 0.0;   // double deltaz fluvial box
+    T309_x = 0.0;   // double extra margin x
+    T309_y = 0.2;   // double extra margin y
+    T309_z = 0.0;   // double extra margin z
+    T310 = 0;       // int straight
+    T320 = 0;       // int left bend
+    T330 = 0;       // int right bend
+    T340 = 0;       // int meander
+    
 	solidprint=0;
 
     xstep=0.0;      // step, x location
@@ -239,7 +299,10 @@ void lexer::ini_default()
 
     P10=1;          // ascii/binary print format
 
-
+    trinum=0;
+    trinum_stl=0;
+    trinum_solid=0;
+    trinum_topo=0;
 }
 
 

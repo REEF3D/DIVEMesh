@@ -38,12 +38,13 @@ lexer::lexer()
     
     createspace();
     
-	
 	solid_preproc();
+    topo_preproc();
+    
+    tri_space();
     
 	if(S1==1)
 	read_stl();
-	
 	
     gridspacing();
 }

@@ -48,8 +48,10 @@ public:
     void pre_read_stl();
 	void clear(char&, int&);
 	void solid_preproc();
+    void topo_preproc();
     void gridspacing();
     void createspace();
+    void tri_space();
     void domain_extend();
     
     void gridspacing_fsf();
@@ -201,6 +203,7 @@ public:
     double *O66_xs,*O66_xe,*O66_ys,*O66_ye,*O66_zs,*O66_ze;
 	
 	
+    // solid
 	int S1,S2,S3,S5,S6,S7,S9,S9_1,S10,S11,S18;
 	double S4,S8;
     double S18_1,S19;
@@ -273,6 +276,81 @@ public:
     double *S330_r,*S330_phi;
     int S340;
     double *S340_teta,*S340_L,*S340_N,*S340_ds;
+    
+    
+    // topo
+    int T1,T2,T3,T5,T6,T7,T9,T9_1,T10,T11,T18;
+	double T4,T8;
+    double T18_1,T19;
+	
+	double T5_x,T5_y,T5_z,T5_phi,T5_theta,T5_psi;
+	double T3_xs,T3_xe,T3_ys,T3_ye,T3_zs,T3_ze;
+	double T7_dx,T7_dy,T7_dz;
+    double *T10_xs,*T10_xe,*T10_ys,*T10_ye,*T10_zs,*T10_ze;
+	double *T11_xs,*T11_ys,*T11_zs,*T11_L,*T11_G;
+	int *T11_ni,*T11_nj,*T11_nk;
+    int T15;
+    int T31;
+    double T31_x,T31_y,T31_z,T31_phi,T31_theta,T31_psi;
+    int T32;
+    double *T32_xm, *T32_zm, *T32_r;
+	int T33;
+    double *T33_xm, *T33_ym, *T33_r;
+    int T37;
+    double *T37_xm1, *T37_ym1, *T37_zm1, *T37_r1, *T37_xm2, *T37_ym2, *T37_zm2, *T37_r2;
+	int T41,T42,T43;
+    double *T41_ym, *T41_zm, *T41_x1, *T41_x2, *T41_r1, *T41_r2;
+	double *T42_xm, *T42_zm, *T42_y1, *T42_y2, *T42_r1, *T42_r2;
+	double *T43_xm, *T43_ym, *T43_z1, *T43_z2, *T43_r1, *T43_r2;
+    int T51;
+    double *T51_xm,*T51_ym,*T51_zm,*T51_r;
+    int T52;
+    double *T52_xm,*T52_ym,*T52_zm,*T52_a,*T52_b,*T52_c;
+    int T53;
+    double *T53_xm,*T53_ym,*T53_zm,*T53_a,*T53_b,*T53_c,*T53_h;
+    int T54;
+    double *T54_xm,*T54_ym,*T54_zm,*T54_a,*T54_b,*T54_c,*T54_h,*T54_phi,*T54_theta,*T54_psi;
+	int T61,T62,T63;
+    double *T61_xs,*T61_xe,*T61_ys,*T61_ye,*T61_zs,*T61_ze;
+    double *T62_xs,*T62_xe,*T62_ys,*T62_ye,*T62_zs,*T62_ze;
+    double *T63_xs,*T63_xe,*T63_ys,*T63_ye,*T63_zs,*T63_ze;
+    int T81;
+    double **T81_xyz;
+    int T82;
+    double **T82_xyz;
+    int T83;
+    double **T83_xyz;
+    int T84;
+    double **T84_xyz;
+	int T121;
+	double *T121_x,*T121_y,*T121_z,*T121_b,*T121_Pd,*T121_H0;
+	double T122;
+	double *T122_K, *T122_n, *T122_xc, *T122_yc;
+	double T123;
+	double *T123_R1, *T123_R2;
+	int T131;
+	double *T131_xm, *T131_zm, *T131_y1, *T131_y2, *T131_r1, *T131_r2;
+	int T141;
+	double *T141_xs,*T141_xe,*T141_ys,*T141_ye,*T141_zs,*T141_ze,*T141_r;
+    int T201;
+    double *T201_x,*T201_ys,*T201_ye,*T201_zs,*T201_ze;
+    int T202;
+    double *T202_y,*T202_xs,*T202_xe,*T202_zs,*T202_ze;
+    int T203;
+    double *T203_z,*T203_xs,*T203_xe,*T203_ys,*T203_ye;
+    
+    int T300,T300_ds;
+    int *T300_ord;
+    int T301;
+    double T305,T306,T307_fh,T307_bh,T308_x,T308_y,T308_z,T309_x,T309_y,T309_z;
+    int T310;
+    double *T310_l;
+    int T320;
+    double *T320_r,*T320_phi;
+    int T330;
+    double *T330_r,*T330_phi;
+    int T340;
+    double *T340_teta,*T340_L,*T340_N,*T340_ds;
 	
 	
 	double xs_stl,xe_stl,ys_stl,ye_stl,zs_stl,ze_stl;
@@ -291,6 +369,7 @@ public:
 	double **tri_x,**tri_y,**tri_z;
 	double *trivec_x,*trivec_y,*trivec_z;
 	int trinum,tricount;
+    int trinum_stl,trinum_solid,trinum_topo;
     
     
     double *XN,*YN,*ZN;
@@ -303,13 +382,10 @@ public:
     double *SN,*RN,*TN;
     double *SP,*RP,*TP;
     
-    
 
 private:
 
     void ini_default();
-    
-    
     
     int ii,jj,kk;
 };

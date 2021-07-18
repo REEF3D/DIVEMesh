@@ -24,7 +24,6 @@ Author: Hans Bihs
 #include"lexer.h"
 #include"dive.h"
 
-
 void print_binary::print_bottom(lexer* p,dive* a)
 {
     char name[100];

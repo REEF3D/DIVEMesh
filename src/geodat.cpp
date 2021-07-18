@@ -124,7 +124,7 @@ void geodat::gcb_estimate(lexer *p, dive *a)
     intfield gd(p);
 	
 	for(qn=0; qn<p->M10;qn++)
-	a->geodat_gcb[qn]=0;
+	a->topo_gcb[qn]=0;
     
     MALOOP
     gd(i,j,k)=-1;
@@ -143,7 +143,7 @@ void geodat::gcb_estimate(lexer *p, dive *a)
 		SUBLOOP
 		{
             if(gd(i,j,k)==1 && (gd(i-1,j,k)==-1 || gd(i+1,j,k)==-1 || gd(i,j-1,k)==-1 || gd(i,j+1,k)==-1 || gd(i,j,k-1)==-1 || gd(i,j,k+1)==-1))
-            ++a->geodat_gcb[n];
+            ++a->topo_gcb[n];
 
 		}
 	++n;

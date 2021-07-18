@@ -29,7 +29,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210717" <<endl<<endl;
+    cout<<endl<<"v_210718" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);

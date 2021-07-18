@@ -275,7 +275,7 @@ NLOOP
     result.write((char*)&iin, sizeof (int));  
     iin = a->k_dir;
     result.write((char*)&iin, sizeof (int));  
-    iin = a->geodat_gcb[count-1];
+    iin = a->topo_gcb[count-1];
     result.write((char*)&iin, sizeof (int));  
     
 

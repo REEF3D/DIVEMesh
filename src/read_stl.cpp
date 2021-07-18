@@ -27,45 +27,11 @@ void lexer::read_stl()
 	string word;
 	int count, vert_count;
 	
-	// read and count number of triangles
-	
-	ifstream stl("solid.stl", ios_base::in);
-	
-	count=trinum;
-	while(!stl.eof())
-	{
-	
-		stl>>word;
-		
-		if(word=="facet")
-		++count;
-	}
-    
-    //cout<<"READ STL :"<<count<<endl;
-	
-	stl.close();
-	stl.clear();
-	
-	trinum+=count;
-	
-	cout<<"STL : "<<trinum<<endl;
-	
-	// create arrays
-	Darray(tri_x,trinum,3);
-	Darray(tri_y,trinum,3);
-	Darray(tri_z,trinum,3);
-	
-	Darray(trivec_x,trinum);
-	Darray(trivec_y,trinum);
-	Darray(trivec_z,trinum);
-	
-	
 	// reopen and read triangles
+    
+    ifstream stl("solid.stl", ios_base::in);
 	
-
-	stl.open("solid.stl", ios_base::in);
-	
-	int chk=0;
+    int chk=0;
 	while(!stl.eof())
 	{
 		stl>>word;
@@ -109,12 +75,8 @@ void lexer::read_stl()
 	
 	stl.close();
 	
-	tricount=count+1;
-    
-    //cout<<"Tricoun_read: "<<tricount<<endl;
-	
 	// scale STL model
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	for(q=0; q<3; ++q)
 	{
 	tri_x[n][q]*=S4;
@@ -124,7 +86,7 @@ void lexer::read_stl()
 	
 	// change orgin
 	if(S7==1)
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	for(q=0; q<3; ++q)
 	{
 	tri_x[n][q]+=S7_dx;
@@ -137,7 +99,7 @@ void lexer::read_stl()
 	S8 = S8*PI/180.0;
 	
 	double xval,yval;
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	for(q=0; q<3; ++q)
 	{
 	xval = tri_x[n][q]*cos(S8) - tri_y[n][q]*sin(S8);
@@ -161,7 +123,7 @@ void lexer::read_stl()
 	ye_stl = -1.0e9;
 	ze_stl = -1.0e9;
 	
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	{
 	Ax = tri_x[n][0];
 	Ay = tri_y[n][0];
@@ -194,9 +156,7 @@ void lexer::read_stl()
 	
 	zs_stl -= S3_zs;
 	ze_stl += S3_ze;
-	
 }
-
 
 void lexer::pre_read_stl()
 {
@@ -211,10 +171,8 @@ void lexer::pre_read_stl()
 	
 	ifstream stl("solid.stl", ios_base::in);
 	
-	count=trinum;
 	while(!stl.eof())
 	{
-	
 		stl>>word;
 		
 		if(word=="facet")
@@ -224,14 +182,14 @@ void lexer::pre_read_stl()
 	stl.close();
 	stl.clear();
 	
-	trinum=count;
+	trinum_stl=count;
 	
-	cout<<"STL : "<<trinum<<endl;
+	cout<<"STL trinum: "<<trinum_stl<<endl;
 	
 	// pre-create arrays
-	Darray(tx,trinum,3);
-	Darray(ty,trinum,3);
-	Darray(tz,trinum,3);
+	Darray(tx,trinum_stl,3);
+	Darray(ty,trinum_stl,3);
+	Darray(tz,trinum_stl,3);
 
 	
 	// pre-reopen and read triangles
@@ -282,11 +240,11 @@ void lexer::pre_read_stl()
 	}
 	
 	stl.close();
+    stl.clear();
 	
-	tricount=count+1;
-	
+
 	// pre-scale STL model
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	for(q=0; q<3; ++q)
 	{
 	tx[n][q]*=S4;
@@ -296,7 +254,7 @@ void lexer::pre_read_stl()
 	
 	// pre-change orgin
 	if(S7==1)
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	for(q=0; q<3; ++q)
 	{
 	tx[n][q]+=S7_dx;
@@ -309,7 +267,7 @@ void lexer::pre_read_stl()
 	preS8 = S8*PI/180.0;
 	
 	double xval,yval;
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	for(q=0; q<3; ++q)
 	{
 	xval = tx[n][q]*cos(preS8) - ty[n][q]*sin(preS8);
@@ -333,7 +291,7 @@ void lexer::pre_read_stl()
 	ye_stl = -1.0e9;
 	ze_stl = -1.0e9;
 	
-	for(n=0; n<trinum; ++n)
+	for(n=0; n<trinum_stl; ++n)
 	{
 	Ax = tx[n][0];
 	Ay = ty[n][0];
@@ -369,8 +327,8 @@ void lexer::pre_read_stl()
     
     
     
-    del_Darray(tx,trinum,3);
-	del_Darray(ty,trinum,3);
-	del_Darray(tz,trinum,3);
+    del_Darray(tx,trinum_stl,3);
+	del_Darray(ty,trinum_stl,3);
+	del_Darray(tz,trinum_stl,3);
 	
 }

@@ -609,6 +609,171 @@ void lexer::read_control()
 						 break;
 				}
 				break;
+                
+        case 'T': 
+        control>>numint;
+				switch(numint)
+				{
+				case 1: control>>T1;
+						 clear(c,numint);
+						 break;
+				case 2: control>>T2;
+						 clear(c,numint);
+						 break;
+				case 3: control>>T3_xs>>T3_xe>>T3_ys>>T3_ye>>T3_zs>>T3_ze;
+						T3=1;
+						 clear(c,numint);
+						 break;
+				case 4: control>>T4;
+						 clear(c,numint);
+						 break;
+				case 5: control>>T5_x>>T5_y>>T5_z>>T5_phi>>T5_theta>>T5_psi;
+                          T5=1;
+						 clear(c,numint);
+						 break;
+				case 6: control>>T6;
+						 clear(c,numint);
+						 break;
+				case 7: control>>T7_dx>>T7_dy>>T7_dz;
+						T7=1;
+						 clear(c,numint);
+						 break;
+				case 8: control>>T8;
+						 clear(c,numint);
+						 break;
+				case 9: control>>T9;
+						 clear(c,numint);
+						 break;
+				case 10: ++T10;
+						 clear(c,numint);
+						 break;
+				case 11: ++T11;
+						 clear(c,numint);
+						 break;
+               case 15: control>>T15;
+						 clear(c,numint);
+						 break;
+               case 18: control>>T18;
+						 clear(c,numint);
+						 break;
+               case 19: control>>T19;
+						 clear(c,numint);
+						 break;
+               case 31: control>>T31_x>>T31_y>>T31_z>>T31_phi>>T31_theta>>T31_psi;
+                          T31=1;
+						 clear(c,numint);
+						 break;
+				case 32: ++T32;
+						 clear(c,numint);
+						 break;
+               case 33: ++T33;
+						 clear(c,numint);
+						 break;
+               case 37: ++T37;
+						 clear(c,numint);
+						 break;
+				case 41: ++T41;
+						 clear(c,numint);
+						 break;
+				case 42: ++T42;
+						 clear(c,numint);
+						 break;
+				case 43: ++T43;
+						 clear(c,numint);
+						 break;
+                case 51: ++T51;
+						 clear(c,numint);
+						 break;
+                case 52: ++T52;
+						 clear(c,numint);
+						 break;
+                case 53: ++T53;
+						 clear(c,numint);
+						 break;
+               case 54: ++T54;
+						 clear(c,numint);
+						 break;
+				case 61: ++T61;
+						 clear(c,numint);
+						 break;
+				case 62: ++T62;
+						 clear(c,numint);
+						 break;
+				case 63: ++T63;
+						 clear(c,numint);
+						 break;
+               case 81: ++T81;
+						 clear(c,numint);
+						 break;
+               case 82: ++T82;
+						 clear(c,numint);
+						 break;
+               case 83: ++T83;
+						 clear(c,numint);
+						 break;
+               case 84: ++T84;
+						 clear(c,numint);
+						 break;
+				case 121: ++T121;
+						 clear(c,numint);
+						 break;
+				case 122: ++T122;
+						 clear(c,numint);
+						 break;
+				case 123: ++T123;
+						 clear(c,numint);
+						 break;
+				case 131: ++T131;
+						 clear(c,numint);
+						 break;
+                case 141: ++T141;
+						 clear(c,numint);
+						 break;
+                case 201: ++T201;
+						 clear(c,numint);
+						 break;
+                case 202: ++T202;
+						 clear(c,numint);
+						 break;
+                case 203: ++T203;
+						 clear(c,numint);
+						 break;
+                case 301: control>>T301;
+						 clear(c,numint);
+						 break;
+                case 305: control>>T305;
+						 clear(c,numint);
+						 break;
+                case 306: control>>T306;
+						 clear(c,numint);
+						 break;
+                case 307: control>>T307_fh>>T307_bh;
+						 clear(c,numint);
+						 break;
+                case 308: control>>T308_x>>T308_y;
+						 clear(c,numint);
+						 break;
+                case 309: control>>T309_x>>T309_y>>T309_z;
+						 clear(c,numint);
+						 break;
+                case 310: ++T310;
+						 clear(c,numint);
+                        ++T300;
+						 break;
+                case 320: ++T320;
+						 clear(c,numint);
+                        ++T300;
+						 break;
+                case 330: ++T330;
+						 clear(c,numint);
+                        ++T300;
+						 break;
+                case 340: ++T340;
+						 clear(c,numint);
+                        ++T300;
+						 break;
+				}
+				break;
 
 
 		}
@@ -939,6 +1104,185 @@ void lexer::read_control()
     Darray(S340_L,S340);
     Darray(S340_N,S340);
     Darray(S340_ds,S340);
+    
+    
+    T10_xs = new double[T10];
+	T10_xe = new double[T10];
+	T10_ys = new double[T10];
+	T10_ye = new double[T10];
+	T10_zs = new double[T10];
+	T10_ze = new double[T10];
+	
+	T11_xs = new double[T11];
+	T11_ys = new double[T11];
+	T11_zs = new double[T11];
+	T11_L = new double[T11];
+	T11_G = new double[T11];
+	T11_ni = new int[T11];
+	T11_nj = new int[T11];
+	T11_nk = new int[T11];
+	
+    T32_xm = new double[T32];
+	T32_zm = new double[T32];
+	T32_r  = new double[T32];
+    
+	T33_xm = new double[T33];
+	T33_ym = new double[T33];
+	T33_r  = new double[T33];
+    
+    T37_xm1 = new double[T37];
+	T37_ym1 = new double[T37];
+    T37_zm1 = new double[T37];
+    T37_r1 = new double[T37];
+	T37_xm2 = new double[T37];
+	T37_ym2 = new double[T37];
+    T37_zm2 = new double[T37];
+    T37_r2 = new double[T37];
+	
+	T41_ym = new double[T41];
+	T41_zm = new double[T41];
+	T41_x1 = new double[T41];
+	T41_x2 = new double[T41];
+	T41_r1 = new double[T41];
+	T41_r2 = new double[T41];
+	
+	T42_xm = new double[T42];
+	T42_zm = new double[T42];
+	T42_y1 = new double[T42];
+	T42_y2 = new double[T42];
+	T42_r1 = new double[T42];
+	T42_r2 = new double[T42];
+	
+	T43_xm = new double[T43];
+	T43_ym = new double[T43];
+	T43_z1 = new double[T43];
+	T43_z2 = new double[T43];
+	T43_r1 = new double[T43];
+	T43_r2 = new double[T43];
+    
+    Darray(T51_xm,T51);
+    Darray(T51_ym,T51);
+    Darray(T51_zm,T51);
+    Darray(T51_r,T51);
+    
+    Darray(T52_xm,T52);
+    Darray(T52_ym,T52);
+    Darray(T52_zm,T52);
+    Darray(T52_a,T52);
+    Darray(T52_b,T52);
+    Darray(T52_c,T52);
+    
+    Darray(T53_xm,T53);
+    Darray(T53_ym,T53);
+    Darray(T53_zm,T53);
+    Darray(T53_a,T53);
+    Darray(T53_b,T53);
+    Darray(T53_c,T53);
+    Darray(T53_h,T53);
+    
+    Darray(T54_xm,T54);
+    Darray(T54_ym,T54);
+    Darray(T54_zm,T54);
+    Darray(T54_a,T54);
+    Darray(T54_b,T54);
+    Darray(T54_c,T54);
+    Darray(T54_h,T54);
+    Darray(T54_phi,T54);
+    Darray(T54_theta,T54);
+    Darray(T54_psi,T54);
+    
+	
+	T61_xs = new double[T61];
+	T61_xe = new double[T61];
+	T61_ys = new double[T61];
+	T61_ye = new double[T61];
+	T61_zs = new double[T61];
+	T61_ze = new double[T61];
+	
+	T62_xs = new double[T62];
+	T62_xe = new double[T62];
+	T62_ys = new double[T62];
+	T62_ye = new double[T62];
+	T62_zs = new double[T62];
+	T62_ze = new double[T62];
+	
+	T63_xs = new double[T63];
+	T63_xe = new double[T63];
+	T63_ys = new double[T63];
+	T63_ye = new double[T63];
+	T63_zs = new double[T63];
+	T63_ze = new double[T63];
+    
+    Darray(T81_xyz,T81,12);
+    
+    Darray(T82_xyz,T82,15);
+    
+    Darray(T83_xyz,T83,18);
+    
+    Darray(T84_xyz,T84,24);
+	
+	T131_xm = new double[T131];
+	T131_zm = new double[T131];
+	T131_y1 = new double[T131];
+	T131_y2 = new double[T131];
+	T131_r1 = new double[T131];
+	T131_r2 = new double[T131];
+    
+    T141_xs = new double[T141];
+	T141_xe = new double[T141];
+	T141_ys = new double[T141];
+	T141_ye = new double[T141];
+	T141_zs = new double[T141];
+	T141_ze = new double[T141];
+    T141_r = new double[T141];
+    
+    T201_x  = new double[T201];
+	T201_ys = new double[T201];
+	T201_ye = new double[T201];
+	T201_zs = new double[T201];
+	T201_ze = new double[T201];
+    
+    T202_y  = new double[T202];
+	T202_xs = new double[T202];
+	T202_xe = new double[T202];
+	T202_zs = new double[T202];
+	T202_ze = new double[T202];
+    
+    T203_z  = new double[T203];
+	T203_xs = new double[T203];
+	T203_xe = new double[T203];
+	T203_ys = new double[T203];
+	T203_ye = new double[T203];
+	
+	Darray(T121_x,T121);
+	Darray(T121_y,T121);
+	Darray(T121_z,T121);
+	Darray(T121_b,T121);
+	Darray(T121_Pd,T121);
+	Darray(T121_H0,T121);
+	
+	Darray(T122_K,T121);
+	Darray(T122_n,T121);
+	Darray(T122_xc,T121);
+	Darray(T122_yc,T121);
+	
+	Darray(T123_R1,T121);
+	Darray(T123_R2,T121);
+    
+    Iarray(T300_ord,T300);
+    
+    Darray(T310_l,T310);
+    
+    Darray(T320_r,T320);
+    Darray(T320_phi,T320);
+    
+    Darray(T330_r,T330);
+    Darray(T330_phi,T330);
+    
+    Darray(T340_teta,T340);
+    Darray(T340_L,T340);
+    Darray(T340_N,T340);
+    Darray(T340_ds,T340);
 
     int countB10=0;
     int countB22=0;
@@ -991,6 +1335,38 @@ void lexer::read_control()
     int countS320=0;
     int countS330=0;
     int countS340=0;
+    int countT10=0;
+	int countT11=0;
+	int countT32=0;
+    int countT33=0;
+    int countT37=0;
+	int countT41=0;
+	int countT42=0;
+	int countT43=0;
+    int countT51=0;
+    int countT52=0;
+    int countT53=0;
+    int countT54=0;
+	int countT61=0;
+	int countT62=0;
+	int countT63=0;
+    int countT81=0;
+    int countT82=0;
+    int countT83=0;
+    int countT84=0;
+	int countT121=0;
+	int countT122=0;
+	int countT123=0;
+	int countT131=0;
+    int countT141=0;
+    int countT201=0;
+    int countT202=0;
+    int countT203=0;
+    int countT300=0;
+    int countT310=0;
+    int countT320=0;
+    int countT330=0;
+    int countT340=0;
 	
 	control.open("control.txt", ios_base::in);
 	while(!control.eof())
@@ -1242,6 +1618,150 @@ void lexer::read_control()
                         ++countS340;
                         S300_ord[countS300]=4;
                         ++countS300;
+                        clear(c,numint);
+                        break;
+                
+				}
+				break;
+                
+            case 'T': 
+            control>>numint;
+				switch(numint)
+				{
+                case 10: control>>T10_xs[countT10]>>T10_xe[countT10]>>T10_ys[countT10]>>T10_ye[countT10]>>T10_zs[countT10]>>T10_ze[countT10];
+                        ++countT10;
+						 clear(c,numint);
+						 break;
+				case 11: control>>T11_xs[countT11]>>T11_ys[countT11]>>T11_zs[countT11]>>T11_L[countT11]>>T11_G[countT11]>>T11_ni[countT11]>>T11_nj[countT11]>>T11_nk[countT11];
+                        ++countT11;
+						 clear(c,numint);
+						 break;
+				case 32: control>>T32_xm[countT32]>>T32_zm[countT32]>>T32_r[countT32];
+                        ++countT32;
+						 clear(c,numint);
+						 break;
+               case 33: control>>T33_xm[countT33]>>T33_ym[countT33]>>T33_r[countT33];
+                        ++countT33;
+						 clear(c,numint);
+						 break;
+               case 37: control>>T37_xm1[countT37]>>T37_ym1[countT37]>>T37_zm1[countT37]>>T37_r1[countT37]>>T37_xm2[countT37]>>T37_ym2[countT37]>>T37_zm2[countT37]>>T37_r2[countT37];
+                        ++countT37;
+						 clear(c,numint);
+						 break;
+				case 41: control>>T41_ym[countT41]>>T41_zm[countT41]>>T41_x1[countT41]>>T41_x2[countT41]>>T41_r1[countT41]>>T41_r2[countT41];
+                        ++countT41;
+						 clear(c,numint);
+						 break;
+				case 42: control>>T42_xm[countT42]>>T42_zm[countT42]>>T42_y1[countT42]>>T42_y2[countT42]>>T42_r1[countT42]>>T42_r2[countT42];
+                        ++countT42;
+						 clear(c,numint);
+						 break;
+				case 43: control>>T43_xm[countT43]>>T43_ym[countT43]>>T43_z1[countT43]>>T43_z2[countT43]>>T43_r1[countT43]>>T43_r2[countT43];
+                        ++countT43;
+						 clear(c,numint);
+						 break;
+                case 51: control>>T51_xm[countT51]>>T51_ym[countT51]>>T51_zm[countT51]>>T51_r[countT51];
+                        ++countT51;
+						 clear(c,numint);
+						 break;
+                case 52: control>>T52_xm[countT52]>>T52_ym[countT52]>>T52_zm[countT52]>>T52_a[countT52]>>T52_b[countT52]>>T52_c[countT52];
+                        ++countT52;
+						 clear(c,numint);
+						 break;
+                case 53: control>>T53_xm[countT53]>>T53_ym[countT53]>>T53_zm[countT53]>>T53_a[countT53]>>T53_b[countT53]>>T53_c[countT53]>>T53_h[countT53];
+                        ++countT53;
+						 clear(c,numint);
+						 break;
+               case 54: control>>T54_xm[countT54]>>T54_ym[countT54]>>T54_zm[countT54]>>T54_a[countT54]>>T54_b[countT54]>>T54_c[countT54]>>T54_h[countT54]>>T54_phi[countT54]>>T54_theta[countT54]>>T54_psi[countT54];
+                        ++countT54;
+						 clear(c,numint);
+						 break;
+				case 61: control>>T61_xs[countT61]>>T61_xe[countT61]>>T61_ys[countT61]>>T61_ye[countT61]>>T61_zs[countT61]>>T61_ze[countT61];
+                        ++countT61;
+						 clear(c,numint);
+						 break;
+				case 62: control>>T62_xs[countT62]>>T62_xe[countT62]>>T62_ys[countT62]>>T62_ye[countT62]>>T62_zs[countT62]>>T62_ze[countT62];
+                        ++countT62;
+						 clear(c,numint);
+						 break;
+				case 63: control>>T63_xs[countT63]>>T63_xe[countT63]>>T63_ys[countT63]>>T63_ye[countT63]>>T63_zs[countT63]>>T63_ze[countT63];
+                        ++countT63;
+						 clear(c,numint);
+						 break;
+               case 81: for(int qn=0;qn<12;++qn)
+                        control>>T81_xyz[countT81][qn];
+                        ++countT81;
+						 clear(c,numint);
+						 break;
+               case 82: for(int qn=0;qn<15;++qn)
+                        control>>T82_xyz[countT82][qn];
+                        ++countT82;
+						 clear(c,numint);
+						 break;
+               case 83: for(int qn=0;qn<18;++qn)
+                        control>>T83_xyz[countT83][qn];
+                        ++countT83;
+						 clear(c,numint);
+						 break;
+               case 84: for(int qn=0;qn<24;++qn)
+                        control>>T84_xyz[countT84][qn];
+                        ++countT84;
+						 clear(c,numint);
+						 break;
+				case 121: control>>T121_x[countT121]>>T121_y[countT121]>>T121_z[countT121]>>T121_b[countT121]>>T121_Pd[countT121]>>T121_H0[countT121];
+                        ++countT121;
+						 clear(c,numint);
+						 break;
+				case 122: control>>T122_K[countT122]>>T122_n[countT122]>>T122_xc[countT122]>>T122_yc[countT122];
+                        ++countT122;
+						 clear(c,numint);
+						 break;
+				case 123: control>>T123_R1[countT123]>>T123_R2[countT123];
+                        ++countT123;
+						 clear(c,numint);
+						 break;
+				case 131: control>>T131_xm[countT131]>>T131_zm[countT131]>>T131_y1[countT131]>>T131_y2[countT131]>>T131_r1[countT131]>>T131_r2[countT131];
+                        ++countT131;
+						 clear(c,numint);
+						 break;
+               case 141: control>>T141_xs[countT141]>>T141_xe[countT141]>>T141_ys[countT141]>>T141_ye[countT141]>>T141_zs[countT141]>>T141_ze[countT141]>>T141_r[countT141];
+                        ++countT141;
+						 clear(c,numint);
+						 break;
+                case 201: control>>T201_x[countT201]>>T201_ys[countT201]>>T201_ye[countT201]>>T201_zs[countT201]>>T201_ze[countT201];
+                        ++countT201;
+						 clear(c,numint);
+						 break;
+                case 202: control>>T202_y[countT202]>>T202_xs[countT202]>>T202_xe[countT202]>>T202_zs[countT202]>>T202_ze[countT202];
+                        ++countT202;
+						 clear(c,numint);
+						 break;
+                case 203: control>>T203_z[countT203]>>T203_xs[countT203]>>T203_xe[countT203]>>T203_ys[countT203]>>T203_ye[countT203];
+                        ++countT203;
+						 clear(c,numint);
+						 break;
+                case 310: control>>T310_l[countT310];
+                        ++countT310;
+                        T300_ord[countT300]=1;
+                        ++countT300;
+                        clear(c,numint);
+                        break;
+                case 320: control>>T320_r[countT320]>>T320_phi[countT320];
+                        ++countT320;
+                        T300_ord[countT300]=2;
+                        ++countT300;
+                        clear(c,numint);
+                        break;
+                case 330: control>>T330_r[countT330]>>T330_phi[countT330];
+                        ++countT330;
+                        T300_ord[countT300]=3;
+                        ++countT300;
+                        clear(c,numint);
+                        break;
+                case 340: control>>T340_teta[countT340]>>T340_L[countT340]>>T340_N[countT340]>>T340_ds[countT340];
+                        ++countT340;
+                        T300_ord[countT300]=4;
+                        ++countT300;
                         clear(c,numint);
                         break;
                 
