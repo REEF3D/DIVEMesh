@@ -320,7 +320,6 @@ void lexer::createspace()
 	
 	cout<<"field: "<<(knox+2*xma)*(knoy+2*yma)*(knoz+2*zma)<<endl;
     cout<<"slice: "<<(knox+2*xma)*(knoy+2*yma)<<endl<<endl;
-
 }
 
 void lexer::tri_space()

@@ -301,7 +301,7 @@
       <File Name="ini.cpp"/>
       <File Name="lexer.cpp"/>
       <VirtualDirectory Name="Lexer">
-        <File Name="read_topoc.cpp"/>
+        <File Name="read_topo.cpp"/>
         <File Name="read_stl.cpp"/>
         <VirtualDirectory Name="Grid Spacing">
           <File Name="lexer_gridspacing_print.cpp"/>

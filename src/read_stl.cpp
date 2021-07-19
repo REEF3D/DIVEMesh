@@ -326,7 +326,6 @@ void lexer::pre_read_stl()
 	ze_stl += S3_ze;
     
     
-    
     del_Darray(tx,trinum_stl,3);
 	del_Darray(ty,trinum_stl,3);
 	del_Darray(tz,trinum_stl,3);
