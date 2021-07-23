@@ -37,8 +37,10 @@ class print_stl :  public increment
 public:
 	print_stl(lexer*,dive*);
 	virtual ~print_stl();
-	virtual void start(lexer*,dive*);
-	virtual void start_stl(lexer*,dive*);
+	virtual void solid_vtp(lexer*,dive*);
+	virtual void solid_stl(lexer*,dive*);
+    virtual void topo_vtp(lexer*,dive*);
+	virtual void topo_stl(lexer*,dive*);
 
 private:
 

@@ -38,6 +38,7 @@ Author: Hans Bihs
 #include"surface.h"
 #include"box.h"
 #include"solid.h"
+#include"topo.h"
 
 #include"freecoor.h"
 #include"objects.h"

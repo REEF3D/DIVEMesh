@@ -25,6 +25,7 @@ Author: Hans Bihs
 class lexer;
 class dive;
 class interpolation;
+class field2d;
 
 using namespace std;
 
@@ -37,8 +38,8 @@ public:
     geodat(lexer*,dive*);
     virtual ~geodat();
 
-    virtual void start(lexer*,dive*);
-    virtual void gcb_estimate(lexer*,dive*);
+    virtual void start(lexer*,dive*,field2d&);
+    virtual void gcb_estimate(lexer*,dive*,field2d&);
     virtual void print(lexer*,dive*);
 
 private:
@@ -49,7 +50,7 @@ private:
     void remove_bounds(lexer*,dive*);
     void holecheck(lexer*,dive*,double*,double*,double*);
     
-    void dryside(lexer*,dive*);
+    void dryside(lexer*,dive*,field2d&);
     void coarsen(lexer*,dive*);
     void prolong(lexer*,dive*);
     

@@ -50,7 +50,9 @@ class dive : public increment, public resize_class
     intfield confac;       // connects facet index to ijk
     intfield xdir,ydir,zdir;
 	intfield onnode;
-    field2d topobed,solidbed,data,bedlevel;
+    field2d topobed,solidbed; 
+    field2d bedlevel;      // combined bedlevel
+    field2d data;
     intfield2d flagslice,subslice;
 
     int knox,knoy,knoz;

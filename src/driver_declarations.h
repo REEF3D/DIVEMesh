@@ -36,6 +36,7 @@ class data;
 class objects_geometry;
 class print_objects;
 class solid;
+class topo;
 class slice;
 class bedlevel;
 class hdc;

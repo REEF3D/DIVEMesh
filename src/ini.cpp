@@ -92,7 +92,8 @@ void lexer::ini_default()
     F42=0;
     F43=0;
 
-    G10=0;            // int geodata off/on
+    G9=1;            // int geodat either topo or solid
+    G10=0;           // int geodata off/on
     G11_x=0.0;       // double dx
     G11_y=0.0;       // double dy
     G11_z=0.0;       // double dz
@@ -282,6 +283,7 @@ void lexer::ini_default()
     T340 = 0;       // int meander
     
 	solidprint=0;
+    topoprint=0;
 
     xstep=0.0;      // step, x location
     zstep=0.0;      // step, step height

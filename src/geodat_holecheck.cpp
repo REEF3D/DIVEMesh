@@ -24,6 +24,8 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
+class field2d;
+
 void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
 {
     double dist, maxdist,meandist,zmean;

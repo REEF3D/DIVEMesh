@@ -29,7 +29,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210718" <<endl<<endl;
+    cout<<endl<<"v_210722" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -73,31 +73,49 @@ void driver::mainloop()
         // geodat
         // STL
         // solids
+        
+// Geodata
+    if(p->G10>0 && p->G9==1)
+    pgeo->start(p,a,a->topobed);
+    
+    if(p->G10>0 && p->G9==2)
+    pgeo->start(p,a,a->solidbed);
 
+	if(p->D10>0)
+    pdata->start(p,a);
+
+// Topo
+	if(p->topo_count>0)
+	ptopo->start(p,a);
+
+    if(p->topo_count>0)
+	{
+	print_stl print_topo(p,a);
+
+	print_topo.topo_vtp(p,a);
+	if(p->S6==1)
+	print_topo.topo_stl(p,a);
+	}
+    
 // Solid
 	if(p->solid_count>0||p->S1==1)
 	psolid->start(p,a);
 
 	if(p->solid_count>0||p->S1==1)
 	{
-	print_stl printer_stl(p,a);
+	print_stl print_solid(p,a);
 
-	printer_stl.start(p,a);
+	print_solid.solid_vtp(p,a);
 	if(p->S6==1)
-	printer_stl.start_stl(p,a);
+	print_solid.solid_stl(p,a);
 	}
-
-// Geodata
-    if(p->G10>0)
-    pgeo->start(p,a);
-
-	if(p->D10>0)
-    pdata->start(p,a);
-
+    
 // Slice
     pslice->start(p,a);
 
 // Bedlevel
+    // bedlevel calc
+    // .....
     pbed->start(p,a);
 
 // Post-Proc
@@ -114,8 +132,8 @@ void driver::mainloop()
 	if(p->solid_count>0||p->S1==1)
 	psolid->gcb_estimate(p,a);
 
-    if(p->G10>0)
-	pgeo->gcb_estimate(p,a);
+    if(p->G10>0 && p->G9==2)
+	pgeo->gcb_estimate(p,a,a->topobed);
 
 // Hydrodynamic Coupling
     if(p->H10==4)

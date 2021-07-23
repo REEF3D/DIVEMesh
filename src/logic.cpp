@@ -33,6 +33,11 @@ void driver::logic(lexer* p)
             + p->S51 + p->S52 + p->S53 + p->S54 + p->S61 
             + p->S62 + p->S81 + p->S82 + p->S83 + p->S84 + p->S63 + p->S121 + p->S131 + p->S141
             + p->S201 + p->S202 + p->S203 + p->S300;
+    p->topo_count = p->T10 + p->T11 + p->T32 + p->T33 + p->T37
+            + p->T41 + p->T42 + p->T43
+            + p->T51 + p->T52 + p->T53 + p->T54 + p->T61 
+            + p->T62 + p->T81 + p->T82 + p->T83 + p->T84 + p->T63 + p->T121 + p->T131 + p->T141
+            + p->T201 + p->T202 + p->T203 + p->T300;
 
     pini=new initialize;
 
@@ -71,6 +76,12 @@ void driver::logic(lexer* p)
 	{
 	psolid = new solid(p,a);
 	p->solidprint=1;
+	}
+    
+    if(p->topo_count>0||p->G10>0)
+	{
+	ptopo = new topo(p,a);
+	p->topoprint=1;
 	}
 
     cout<<"."<<endl;

@@ -75,7 +75,7 @@ geodat::~geodat()
 {
 }
 
-void geodat::start(lexer* p, dive* a)
+void geodat::start(lexer* p, dive* a, field2d &bed)
 {
     cout<<"geodat  Np_0: "<<p->G10<<endl;
     p->Np=p->G10;
@@ -110,13 +110,13 @@ void geodat::start(lexer* p, dive* a)
     
     prolong(p,a);
     
-    dryside(p,a);
+    dryside(p,a,bed);
 	
 	XYLOOP
-	a->bedlevel(i,j) = MAX(a->bedlevel(i,j),a->topobed(i,j));
+	a->bedlevel(i,j) = MAX(a->bedlevel(i,j),bed(i,j));
 }
 
-void geodat::gcb_estimate(lexer *p, dive *a)
+void geodat::gcb_estimate(lexer *p, dive *a, field2d &bed)
 {
 	int qn;
     double zval;
@@ -133,7 +133,7 @@ void geodat::gcb_estimate(lexer *p, dive *a)
     {
     zval = p->ZP[KP] + p->zmin;
  
-    if(zval>=a->topobed(i,j))
+    if(zval>=bed(i,j))
     gd(i,j,k)=1;
     }
 
@@ -150,17 +150,17 @@ void geodat::gcb_estimate(lexer *p, dive *a)
 	}	
 }
 
-void geodat::dryside(lexer *p, dive *a)
+void geodat::dryside(lexer *p, dive *a, field2d &bed)
 {
     if(p->G24==1)
     XYLOOP
-    if(a->topobed(i,j)>p->G24_h)
-    a->topobed(i,j) += p->G24_dz;
+    if(bed(i,j)>p->G24_h)
+    bed(i,j) += p->G24_dz;
     
     if(p->G25==1)
     XYLOOP
-    if(a->topobed(i,j)>p->G25_h)
-    a->topobed(i,j) *= p->G25_fz;  
+    if(bed(i,j)>p->G25_h)
+    bed(i,j) *= p->G25_fz;  
     
     // smoothing
     k=0;
@@ -169,23 +169,23 @@ void geodat::dryside(lexer *p, dive *a)
 	{
 	
 		if(a->flag(i-1,j,k)<0)
-		a->topobed(i-1,j) = a->topobed(i,j);
+		bed(i-1,j) = bed(i,j);
 		
 		if(a->flag(i+1,j,k)<0)
-		a->topobed(i+1,j) = a->topobed(i,j);
+		bed(i+1,j) = bed(i,j);
 		
 		if(a->flag(i,j-1,k)<0)
-		a->topobed(i,j-1) = a->topobed(i,j);
+		bed(i,j-1) = bed(i,j);
 		
 		if(a->flag(i,j+1,k)<0)
-		a->topobed(i,j+1) = a->topobed(i,j);
+		bed(i,j+1) = bed(i,j);
 	}
     
     k=0;
 	for(n=0;n<p->G31;++n)
 	XYLOOP
 	if(a->flag(i,j,k)>0)
-    a->topobed(i,j) = p->G32*a->topobed(i,j) + 0.25*(1.0-p->G32)*(a->topobed(i-1,j) + a->topobed(i+1,j) + a->topobed(i,j-1) + a->topobed(i,j+1)); 
+    bed(i,j) = p->G32*bed(i,j) + 0.25*(1.0-p->G32)*(bed(i-1,j) + bed(i+1,j) + bed(i,j-1) + bed(i,j+1)); 
 }
 
 

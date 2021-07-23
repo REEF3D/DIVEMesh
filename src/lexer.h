@@ -152,7 +152,7 @@ public:
 	double **F31_x,**F31_y;
 	double **F41_x,**F41_y;
 
-    int G10,G13,G14;
+    int G9,G10,G13,G14;
     double *G10_x, *G10_y, *G10_z;
     double G11_x, G11_y, G11_z;
     double G12_x, G12_y, G12_z;
@@ -355,13 +355,13 @@ public:
 	
 	double xs_stl,xe_stl,ys_stl,ye_stl,zs_stl,ze_stl;
 	
-	int solidprint;
+	int solidprint,topoprint;
 
     double xstart,xend,ystart,yend,zstart,zend;
     double xstep,zstep;
     int knox,knoy,knoz;
     int numlinsurf;
-	int bl_count, obj_count, fc_count, solid_count;
+	int bl_count, obj_count, fc_count, solid_count, topo_count;
     double xm,ym,radius;
 
     int *i0,*j0,*k0,*i1,*j1,*k1;

@@ -261,11 +261,11 @@ NLOOP
     iin = a->periodicX[count][5];
     result.write((char*)&iin, sizeof (int));
 
-    iin = p->G10;
+    iin = p->topoprint; //write topo
     result.write((char*)&iin, sizeof (int));
     iin = p->D10;
     result.write((char*)&iin, sizeof (int));  
-    iin = p->solidprint;
+    iin = p->solidprint;    // write solid
     result.write((char*)&iin, sizeof (int));  
     iin = a->solid_gcb[count-1];
     result.write((char*)&iin, sizeof (int));  
@@ -899,9 +899,18 @@ NLOOP
 // ---------------------------------------------------------------------------------------------------------------------
 //GEODAT
 // *********************
-    k=0;
-	if(p->G10>0)
+    if(p->solidprint>0)
     XYLOOP
+    if(a->subgrid(i,j,k)==count)
+    if(a->subgrid(i,j,k)==count)
+    {
+    ddn = a->solidbed(i,j);
+    result.write((char*)&ddn, sizeof (double)); 
+    }
+    
+    if(p->topoprint>0)
+    XYLOOP
+    if(a->subgrid(i,j,k)==count)
     if(a->subgrid(i,j,k)==count)
     {
     ddn = a->topobed(i,j);
@@ -921,7 +930,6 @@ NLOOP
     
 //Bedlevels
 // *********************
-    k=0;
     XYLOOP
     if(a->subgrid(i,j,k)==count)
     if(a->subgrid(i,j,k)==count)
@@ -929,6 +937,8 @@ NLOOP
     ddn = a->bedlevel(i,j);
     result.write((char*)&ddn, sizeof (double)); 
     }
+    
+    
     
 result.close();
 

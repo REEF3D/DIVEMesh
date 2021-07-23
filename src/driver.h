@@ -59,6 +59,7 @@ public:
 	objects_geometry *objgeo;
 	print_objects *objprint;
 	solid *psolid;
+    topo *ptopo;
     slice *pslice;
     bedlevel *pbed;
     hdc *phdc;
