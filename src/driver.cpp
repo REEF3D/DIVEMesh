@@ -29,7 +29,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210722" <<endl<<endl;
+    cout<<endl<<"v_210730" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -76,10 +76,10 @@ void driver::mainloop()
         
 // Geodata
     if(p->G10>0 && p->G9==1)
-    pgeo->start(p,a,a->topobed);
+    pgeo->start(p,a,a->topobed,a->topo_dist);
     
     if(p->G10>0 && p->G9==2)
-    pgeo->start(p,a,a->solidbed);
+    pgeo->start(p,a,a->solidbed,a->solid_dist);
 
 	if(p->D10>0)
     pdata->start(p,a);
@@ -139,7 +139,7 @@ void driver::mainloop()
     if(p->H10==4)
     phdc->start(p,a);
 
-
+    pvtu->start(p,a);
     pprint->start(p,a);
 
     analytics(p,a);

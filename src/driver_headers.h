@@ -35,6 +35,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"printer.h"
 #include"print_binary.h"
+#include"print_vtu.h"
 #include"surface.h"
 #include"box.h"
 #include"solid.h"

@@ -46,6 +46,7 @@ public:
 	dive *a;
 	box_bl *pbox_bl;
     printer *pprint;
+    printer *pvtu;
     surface *psurf;
     decomp *pdd;
     initialize *pini;

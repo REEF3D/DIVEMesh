@@ -45,6 +45,8 @@ void driver::logic(lexer* p)
     psurf= new surface();
     pdd=new decomp();
     pprint=new print_binary(p);
+    
+    pvtu = new print_vtu(p);
 
     if(p->fc_count>0)
     pfree = new freecoor(p,a);

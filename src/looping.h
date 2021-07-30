@@ -101,5 +101,10 @@ Author: Hans Bihs
 
 #define ICFLAG if(ic>=-3 && ic<kx+3 && jc>=-3 && jc<ky+3)
 #define ICBOUNDS if(ic<-3 || ic>=kx+3 || jc<-3 || jc>=ky+3)
+    
+#define ITPLOOP for(i=-1; i<p->knox; ++i)
+#define JTPLOOP for(j=-1; j<p->knoy; ++j)
+#define KTPLOOP for(k=-1; k<p->knoz; ++k)
+#define TPLOOP ITPLOOP JTPLOOP KTPLOOP 
 
 

@@ -365,9 +365,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
       <File Name="solid_fluvial_box.cpp"/>
-      <VirtualDirectory Name="Fluvial Box"/>
       <File Name="solid.cpp"/>
-      <VirtualDirectory Name="Ray Casting"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Executable">

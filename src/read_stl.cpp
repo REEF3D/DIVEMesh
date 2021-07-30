@@ -49,6 +49,8 @@ void lexer::read_stl()
 	}
 	
 	stl.close();
+    stl.clear();
+    
 	stl.open("solid.stl", ios_base::in);
 	
 	count=-1;
@@ -74,6 +76,10 @@ void lexer::read_stl()
 	}
 	
 	stl.close();
+    
+    tricount=count+1;
+    
+    //cout<<"Tricoun_read: "<<tricount<<endl;
 	
 	// scale STL model
 	for(n=0; n<trinum_stl; ++n)
@@ -170,7 +176,8 @@ void lexer::pre_read_stl()
 	// pre-read and count number of triangles
 	
 	ifstream stl("solid.stl", ios_base::in);
-	
+    
+	count=0;
 	while(!stl.eof())
 	{
 		stl>>word;
@@ -211,7 +218,7 @@ void lexer::pre_read_stl()
 	{
 	cout<<"Please convert STL file to ASCII format!"<<endl<<endl;
 	cout<<"See User's Guide for more information!"<<endl<<endl<<endl;
-	//exit(0);
+	exit(0);
 	}
 	
 	stl.close();

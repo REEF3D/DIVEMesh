@@ -342,6 +342,15 @@ NLOOP
     ddn = a->solid_dist(i,j,k);
     result.write((char*)&ddn, sizeof (double));
     }
+    
+// topo_dist
+	
+    if(p->topoprint==1)
+    SUBLOOP
+    {
+    ddn = a->topo_dist(i,j,k);
+    result.write((char*)&ddn, sizeof (double));
+    }
 
 // ---------------------------------------------------------------------------------------------------------------------
 //CCSTATE:
@@ -377,9 +386,6 @@ NLOOP
         result.write((char*)&iin, sizeof (int)); 
         iin = a->surf[q][4]; // group
         result.write((char*)&iin, sizeof (int)); 
-        
-        //if(a->surf[q][4]==21)
-        //cout<<n<<" . "<<i-a->xnode[aa-1]<<" "<<j-a->ynode[bb-1]<<" "<<k-a->znode[cc-1]<<" | "<<a->surf[q][3]<<" "<<a->surf[q][4]<<endl;
         }
     }
 
@@ -897,6 +903,16 @@ NLOOP
 
 
 // ---------------------------------------------------------------------------------------------------------------------
+//Bedlevels
+// *********************
+    XYLOOP
+    if(a->subgrid(i,j,k)==count)
+    if(a->subgrid(i,j,k)==count)
+    {
+    ddn = a->bedlevel(i,j);
+    result.write((char*)&ddn, sizeof (double)); 
+    }
+
 //GEODAT
 // *********************
     if(p->solidprint>0)
@@ -927,18 +943,6 @@ NLOOP
     ddn = a->data(i,j);
     result.write((char*)&ddn, sizeof (double)); 
     }
-    
-//Bedlevels
-// *********************
-    XYLOOP
-    if(a->subgrid(i,j,k)==count)
-    if(a->subgrid(i,j,k)==count)
-    {
-    ddn = a->bedlevel(i,j);
-    result.write((char*)&ddn, sizeof (double)); 
-    }
-    
-    
     
 result.close();
 

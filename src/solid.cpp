@@ -127,7 +127,7 @@ void solid::start(lexer* p, dive* a)
     ts_stl=tri_start;
     te_stl=tri_end;
     tricount_stl=p->tricount;
-
+    
     for(rayiter=0; rayiter<2; ++rayiter)
     {
     tri_start=ts_stl;

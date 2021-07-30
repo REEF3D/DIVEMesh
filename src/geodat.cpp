@@ -75,7 +75,7 @@ geodat::~geodat()
 {
 }
 
-void geodat::start(lexer* p, dive* a, field2d &bed)
+void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
 {
     cout<<"geodat  Np_0: "<<p->G10<<endl;
     p->Np=p->G10;
@@ -108,9 +108,12 @@ void geodat::start(lexer* p, dive* a, field2d &bed)
 
     pipol->start(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);
     
-    prolong(p,a);
+    prolong(p,a,bed);
     
     dryside(p,a,bed);
+    
+    LOOP
+    dist(i,j,k) = -bed(i,j) + p->ZP[KP];
 	
 	XYLOOP
 	a->bedlevel(i,j) = MAX(a->bedlevel(i,j),bed(i,j));

@@ -85,7 +85,7 @@ void geodat::coarsen(lexer *p, dive *a)
     
 }
 
-void geodat::prolong(lexer *p, dive *a)
+void geodat::prolong(lexer *p, dive *a, field2d& bed)
 {
     double xc,yc,val;
 
@@ -98,7 +98,7 @@ void geodat::prolong(lexer *p, dive *a)
     
     val = ccipol(p,topof,xc,yc);   
 
-    a->topobed(i,j) = val;    
+    bed(i,j) = val;    
     }
 }
 
