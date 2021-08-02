@@ -58,7 +58,6 @@ class dive : public increment, public resize_class
     int knox,knoy,knoz;
     int maxknox;
     int incount,utcount,fsfcount,bedcount,surfcount,surfcount_solid,surfnum_solid;
-    int facetcount,ccpointcount;
     int **surf,**surf_solid;
     int *in,*ut,*fsf,*bed,*wall;                                // surface counter
     int *subknox,*subknoy,*subknoz;
@@ -91,12 +90,6 @@ class dive : public increment, public resize_class
     int **periodicX,*periodicXall;
 
     //ibm
-    int **facet,**dirfac;
-    double **ccpoint;
-    int *ccmem;
-    double ***ccloc;
-    int *ccptnum, *facetnum, *ccstatenum;
-    int *ccstate;
     int maxsurf;
     int **surfdir;
     double **gcn;

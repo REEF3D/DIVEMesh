@@ -24,8 +24,7 @@ Author: Hans Bihs
 
 class lexer;
 class dive;
-class entity;
-class cce3D;
+class box_bl;
 
 using namespace std;
 
@@ -43,8 +42,7 @@ public:
 private:
 
     int n, count, ival;
-    entity **pent;
-    cce3D *pcce;
+     box_bl *pent;
 
 };
 

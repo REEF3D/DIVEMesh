@@ -60,7 +60,6 @@ private:
     void paraslicesurface(lexer*,dive*);
     void paraslicecosurface(lexer*,dive*);
     void neighbors(lexer*,dive*);
-    void ccsurf(lexer*,dive*);
     void cornercount(lexer*,dive*);
     void slicesurfcount(lexer*,dive*);
     void slicecornercount(lexer*,dive*);

@@ -138,19 +138,6 @@ public:
     double D11_x, D11_y, D11_z;
     double D12_x, D12_y, D12_z;
 	double D16,D17,D18,D24;
-    
-
-
-    double F3_zs, F3_ze;
-    int F11, F12, F13;
-    int F21, F22, F23;
-    int F31, F32, F33;
-    int F41, F42, F43;
-    double *F11_xs,*F11_xe,*F11_ys,*F11_ye;
-    double *F21_xs,*F21_xe,*F21_ys,*F21_ye;
-	int *F31_num, *F41_num;	
-	double **F31_x,**F31_y;
-	double **F41_x,**F41_y;
 
     int G9,G10,G13,G14;
     double *G10_x, *G10_y, *G10_z;
@@ -181,28 +168,6 @@ public:
 	
 	int P10;
 
-    int O10;
-    double *O10_xs,*O10_xe,*O10_ys,*O10_ye,*O10_zs,*O10_ze;
-    int O32;
-    double *O32_xm, *O32_zm, *O32_r;
-    int O33;
-    double *O33_xm, *O33_ym, *O33_r;
-	int O43;
-    double *O43_xm, *O43_ym, *O43_z1, *O43_z2, *O43_r1, *O43_r2;
-    int O61;
-    double *O61_xs,*O61_xe,*O61_ys,*O61_ye,*O61_zs,*O61_ze;
-    int O62;
-    double *O62_xs,*O62_xe,*O62_ys,*O62_ye,*O62_zs,*O62_ze;
-    int O63;
-    double *O63_xs,*O63_xe,*O63_ys,*O63_ye,*O63_zs,*O63_ze;
-    int O64;
-    double *O64_xs,*O64_xe,*O64_ys,*O64_ye,*O64_zs,*O64_ze;
-    int O65;
-    double *O65_xs,*O65_xe,*O65_ys,*O65_ye,*O65_zs,*O65_ze;
-    int O66;
-    double *O66_xs,*O66_xe,*O66_ys,*O66_ye,*O66_zs,*O66_ze;
-	
-	
     // solid
 	int S1,S2,S3,S5,S6,S7,S9,S9_1,S10,S11,S18;
 	double S4,S8;
@@ -361,7 +326,7 @@ public:
     double xstep,zstep;
     int knox,knoy,knoz;
     int numlinsurf;
-	int bl_count, obj_count, fc_count, solid_count, topo_count;
+	int solid_count, topo_count;
     double xm,ym,radius;
 
     int *i0,*j0,*k0,*i1,*j1,*k1;

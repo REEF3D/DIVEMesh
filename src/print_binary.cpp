@@ -149,11 +149,6 @@ NLOOP
     
     iin = a->wall[count];
     result.write((char*)&iin, sizeof (int));
-    iin = a->ccptnum[count];
-    result.write((char*)&iin, sizeof (int));
-    iin = a->facetnum[count];
-    result.write((char*)&iin, sizeof (int));
-
 
     iin = a->para1[count];
     result.write((char*)&iin, sizeof (int));
@@ -278,8 +273,6 @@ NLOOP
     iin = a->topo_gcb[count-1];
     result.write((char*)&iin, sizeof (int));  
     
-
-    
 // ---------------------------------------------------------------------------------------------------------------------
 // FLAG
 
@@ -351,19 +344,7 @@ NLOOP
     ddn = a->topo_dist(i,j,k);
     result.write((char*)&ddn, sizeof (double));
     }
-
-// ---------------------------------------------------------------------------------------------------------------------
-//CCSTATE:
-// *********************
-
-    LOOP
-    if(a->subgrid(i,j,k)==count && a->numfac(i,j,k)>0)
-    {
-    q=a->confac(i,j,k);
-    iin = a->ccstate[q];
-    result.write((char*)&iin, sizeof (int));  
-    }
-
+    
 // ---------------------------------------------------------------------------------------------------------------------
 //SURFACES
 
@@ -386,73 +367,6 @@ NLOOP
         result.write((char*)&iin, sizeof (int)); 
         iin = a->surf[q][4]; // group
         result.write((char*)&iin, sizeof (int)); 
-        }
-    }
-
-// ------------
-// GCD
-    for(q=0;q<a->surfcount;q++)
-    {
-    i=a->surf[q][0];
-    j=a->surf[q][1];
-    k=a->surf[q][2];
-    n=a->subgrid(i,j,k);
-    
-        if(n==count)
-        {
-        ddn = a->gcd[q];
-        result.write((char*)&ddn, sizeof (double));
-        }
-    }
-    
-// --------------------------------------------------------------------------------------------------------------
-// CC POINTS
-    for(q=0;q<a->ccptnum[count];q++)
-    {
-    ddn = a->ccloc[count][q][0];
-    result.write((char*)&ddn, sizeof (double));
-    ddn = a->ccloc[count][q][1];
-    result.write((char*)&ddn, sizeof (double));
-    ddn = a->ccloc[count][q][2];
-    result.write((char*)&ddn, sizeof (double));
-    }
-
-// --------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------
-// CC FACETS
-
-    LOOP
-    if(a->subgrid(i,j,k)==count && a->numfac(i,j,k)>0)
-    {
-    q=a->confac(i,j,k);
-    iin = i-a->xnode[aa-1];
-    result.write((char*)&iin, sizeof (int));  
-    iin = j-a->ynode[bb-1];
-    result.write((char*)&iin, sizeof (int));  
-    iin = k-a->znode[cc-1];
-    result.write((char*)&iin, sizeof (int));  
-    
-    iin = a->surfdir[q][0];
-    result.write((char*)&iin, sizeof (int));  
-    iin = a->surfdir[q][1];
-    result.write((char*)&iin, sizeof (int));  
-    iin = a->surfdir[q][2];
-    result.write((char*)&iin, sizeof (int)); 
-    
-    ddn = a->gcn[q][0];
-    result.write((char*)&ddn, sizeof (double));
-    ddn = a->gcn[q][1];
-    result.write((char*)&ddn, sizeof (double));
-    ddn = a->gcn[q][2];
-    result.write((char*)&ddn, sizeof (double));
-    
-    iin = a->numfac(i,j,k);
-    result.write((char*)&iin, sizeof (int));  
-
-        for(qq=0;qq<a->numfac(i,j,k);qq++)
-        {
-        iin = a->facet[q][qq];
-        result.write((char*)&iin, sizeof (int));  
         }
     }
 

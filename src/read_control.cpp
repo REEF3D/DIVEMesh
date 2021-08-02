@@ -34,13 +34,6 @@ void lexer::read_control()
     B22=0;
     B31=0;
     B33=0;
-	O10=0;
-	O32=0;
-	O33=0;
-	O43=0;
-	O61=O62=O63=O64=O65=O66=0;
-	F11=0;
-	F21=0;
 	S10=0;
 	
 	cout<<"read control"<<endl;
@@ -247,28 +240,6 @@ void lexer::read_control()
 				}
 				break;
 
-        case 'F': control>>numint;
-				switch(numint)
-				{
-                case 3: control>>F3_zs>>F3_ze;
-                         clear(c,numint);
-						 break;
-				case 11: ++F11;
-                         clear(c,numint);
-						 break;
-                case 21: ++F21;
-                         clear(c,numint);
-						 break;
-			    case 31: ++F31;
-                         clear(c,numint);
-						 break;
-                case 41: ++F41;
-                         clear(c,numint);
-						 break;
-
-				}
-				break;
-
         case 'G': control>>numint;
 				switch(numint)
 				{
@@ -418,30 +389,6 @@ void lexer::read_control()
 						 clear(c,numint);
 						 break;
                case 35: control>>M35;
-						 clear(c,numint);
-						 break;
-				}
-				break;
-
-        case 'OO': control>>numint;
-				switch(numint)
-				{
-				case 10: ++O10;
-						 clear(c,numint);
-						 break;
-                case 32: ++O32;
-						 clear(c,numint);
-						 break;
-                case 33: ++O33;
-						 clear(c,numint);
-						 break;
-				case 43: ++O43;
-						 clear(c,numint);
-						 break;
-                case 61: ++O61;
-						 clear(c,numint);
-						 break;
-				case 62: ++O62;
 						 clear(c,numint);
 						 break;
 				}
@@ -826,110 +773,6 @@ void lexer::read_control()
 	Darray(B33_ym,B33);
 	Darray(B33_r,B33);
 	
-	Darray(F11_xs,F11);
-	Darray(F11_xe,F11);
-	Darray(F11_ys,F11);
-	Darray(F11_ye,F11);
-	
-	Darray(F21_xs,F21);
-	Darray(F21_xe,F21);
-	Darray(F21_ys,F21);
-	Darray(F21_ye,F21);
-	
-	
-	if(F31>0)
-	{
-	F31_x= new double*[F31];
-	F31_y= new double*[F31];
-	}
-	
-	if(F41>0)
-	{
-	F41_x= new double*[F41];
-	F41_y= new double*[F41];
-	}
-		
-	Iarray(F31_num,F31);
-	Iarray(F41_num,F41);
-
-
-	Darray(O10_xs,O10);
-	Darray(O10_xe,O10);
-	Darray(O10_ys,O10);
-	Darray(O10_ye,O10);
-	Darray(O10_zs,O10);
-	Darray(O10_ze,O10);
-
-	O32_xm = new double[O32];
-	O32_zm= new double[O32];
-	O32_r = new double[O32];
-
-	O33_xm = new double[O33];
-	O33_ym= new double[O33];
-	O33_r = new double[O33];
-	
-	O43_xm = new double[O43];
-	O43_ym = new double[O43];
-	O43_z1 = new double[O43];
-	O43_z2 = new double[O43];
-	O43_r1 = new double[O43];
-	O43_r2 = new double[O43];
-
-	O61_xs = new double[O61];
-	O61_xe = new double[O61];
-
-	O61_ys = new double[O61];
-	O61_ye = new double[O61];
-
-	O61_zs = new double[O61];
-	O61_ze = new double[O61];
-
-	O62_xs = new double[O62];
-	O62_xe = new double[O62];
-
-	O62_ys = new double[O62];
-	O62_ye = new double[O62];
-
-	O62_zs = new double[O62];
-	O62_ze = new double[O62];
-
-	O63_xs = new double[O63];
-	O63_xe = new double[O63];
-
-	O63_ys = new double[O63];
-	O63_ye = new double[O63];
-
-	O63_zs = new double[O63];
-	O63_ze = new double[O63];
-
-	O64_xs = new double[O64];
-	O64_xe = new double[O64];
-
-	O64_ys = new double[O64];
-	O64_ye = new double[O64];
-
-	O64_zs = new double[O64];
-	O64_ze = new double[O64];
-
-	O65_xs = new double[O65];
-	O65_xe = new double[O65];
-
-	O65_ys = new double[O65];
-	O65_ye = new double[O65];
-
-	O65_zs = new double[O65];
-	O65_ze = new double[O65];
-
-	O66_xs = new double[O66];
-	O66_xe = new double[O66];
-
-	O66_ys = new double[O66];
-	O66_ye = new double[O66];
-
-	O66_zs = new double[O66];
-	O66_ze = new double[O66];
-	
-	
 	S10_xs = new double[S10];
 	S10_xe = new double[S10];
 	S10_ys = new double[S10];
@@ -1292,20 +1135,6 @@ void lexer::read_control()
     int countB31=0;
     int countB32=0;
     int countB33=0;
-    int countF11=0;
-    int countF21=0;
-	int countF31=0;
-    int countF41=0;
-    int countO10=0;
-    int countO32=0;
-    int countO33=0;
-	int countO43=0;
-    int countO61=0;
-    int countO62=0;
-    int countO63=0;
-    int countO64=0;
-    int countO65=0;
-    int countO66=0;
 	int countS10=0;
 	int countS11=0;
 	int countS32=0;
@@ -1399,84 +1228,6 @@ void lexer::read_control()
 						 break;
                 case 33: control>>B33_zs[countB33]>>B33_ze[countB33]>>B33_xm[countB33]>>B33_ym[countB33]>>B33_r[countB33];
                         ++countB33;
-						 clear(c,numint);
-						 break;
-				}
-				break;
-
-            case 'F': control>>numint;
-				switch(numint)
-				{
-
-                case 11: control>>F11_xs[countF11]>>F11_xe[countF11]>>F11_ys[countF11]>>F11_ye[countF11];
-                        ++countF11;
-						 clear(c,numint);
-						 break;
-                case 21: control>>F21_xs[countF21]>>F21_xe[countF21]>>F21_ys[countF21]>>F21_ye[countF21];
-                        ++countF21;
-						 clear(c,numint);
-						 break;
-			    case 31: control>>F31_num[countF31];
-						F31_x[countF31] = new double[F31_num[countF31]];
-						F31_y[countF31] = new double[F31_num[countF31]];
-						for(n=0;n<F31_num[countF31];++n)
-						control>>F31_x[countF31][n]>>F31_y[countF31][n];
-                        ++countF31;
-						 clear(c,numint);
-						 break;
-                case 41: control>>F41_num[countF31];
-						F41_x[countF41] = new double[F41_num[countF41]];
-						F41_y[countF41] = new double[F41_num[countF41]];
-						for(n=0;n<F41_num[countF41];++n)
-						control>>F41_x[countF41][n]>>F41_y[countF41][n];
-                        ++countF41;
-						 clear(c,numint);
-						 break;
-				}
-				break;
-
-		    case 'OO': control>>numint;
-				switch(numint)
-				{
-
-                case 10: control>>O10_xs[countO10]>>O10_xe[countO10]>>O10_ys[countO10]>>O10_ye[countO10]>>O10_zs[countO10]>>O10_ze[countO10];
-                        ++countO10;
-						 clear(c,numint);
-						 break;
-				case 32: control>>O32_xm[countO32]>>O32_zm[countO32]>>O32_r[countO32];
-                        ++countO32;
-						 clear(c,numint);
-						 break;
-                case 33: control>>O33_xm[countO33]>>O33_ym[countO33]>>O33_r[countO33];
-                        ++countO33;
-						 clear(c,numint);
-						 break;
-				case 43: control>>O43_xm[countO43]>>O43_ym[countO43]>>O43_z1[countO43]>>O43_z2[countO43]>>O43_r1[countO43]>>O43_r2[countO43];
-                        ++countO43;
-						 clear(c,numint);
-						 break;
-                case 61: control>>O61_xs[countO61]>>O61_xe[countO61]>>O61_ys[countO61]>>O61_ye[countO61]>>O61_zs[countO61]>>O61_ze[countO61];
-                        ++countO61;
-						 clear(c,numint);
-						 break;
-                case 62: control>>O62_xs[countO62]>>O62_xe[countO62]>>O62_ys[countO62]>>O62_ye[countO62]>>O62_zs[countO62]>>O62_ze[countO62];
-                        ++countO62;
-						 clear(c,numint);
-						 break;
-                case 63: control>>O63_xs[countO63]>>O63_xe[countO63]>>O63_ys[countO63]>>O63_ye[countO63]>>O63_zs[countO63]>>O63_ze[countO63];
-                        ++countO63;
-						 clear(c,numint);
-						 break;
-                case 64: control>>O64_xs[countO64]>>O64_xe[countO64]>>O64_ys[countO64]>>O64_ye[countO64]>>O64_zs[countO64]>>O64_ze[countO64];
-                        ++countO64;
-						 clear(c,numint);
-						 break;
-                case 65: control>>O65_xs[countO65]>>O65_xe[countO65]>>O65_ys[countO65]>>O65_ye[countO65]>>O65_zs[countO65]>>O65_ze[countO65];
-                        ++countO65;
-						 clear(c,numint);
-						 break;
-                case 66: control>>O66_xs[countO66]>>O66_xe[countO66]>>O66_ys[countO66]>>O66_ye[countO66]>>O66_zs[countO66]>>O66_ze[countO66];
-                        ++countO66;
 						 clear(c,numint);
 						 break;
 				}

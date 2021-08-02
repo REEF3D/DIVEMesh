@@ -101,40 +101,6 @@ void lexer::createspace()
     zmax=MAX(zmax,B33_zs[qn]);
     zmax=MAX(zmax,B33_ze[qn]);
     }
-
-    for(qn=0;qn<F11;++qn)
-    {
-    xmin=MIN(xmin,F11_xs[qn]);
-    ymin=MIN(ymin,F11_ys[qn]);
-    zmin=MIN(zmin,F3_zs);
-    xmin=MIN(xmin,F11_xe[qn]);
-    ymin=MIN(ymin,F11_ye[qn]);
-    zmin=MIN(zmin,F3_ze);
-
-    xmax=MAX(xmax,F11_xs[qn]);
-    ymax=MAX(ymax,F11_ys[qn]);
-    zmax=MAX(zmax,F3_zs);
-    xmax=MAX(xmax,F11_xe[qn]);
-    ymax=MAX(ymax,F11_ye[qn]);
-    zmax=MAX(zmax,F3_ze);
-    }
-
-    for(qn=0;qn<F21;++qn)
-    {
-    xmin=MIN(xmin,F21_xs[qn]);
-    ymin=MIN(ymin,F21_ys[qn]);
-    zmin=MIN(zmin,F3_zs);
-    xmin=MIN(xmin,F21_xe[qn]);
-    ymin=MIN(ymin,F21_ye[qn]);
-    zmin=MIN(zmin,F3_ze);
-
-    xmax=MAX(xmax,F21_xs[qn]);
-    ymax=MAX(ymax,F21_ys[qn]);
-    zmax=MAX(zmax,F3_zs);
-    xmax=MAX(xmax,F21_xe[qn]);
-    ymax=MAX(ymax,F21_ye[qn]);
-    zmax=MAX(zmax,F3_ze);
-    }
     
     if(S1==1 && S2==1)
     {

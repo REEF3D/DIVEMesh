@@ -77,21 +77,6 @@ void lexer::ini_default()
 	D24=-10.0;
     D100=0;        // int FNPF state file merge
 
-    F3_zs=0.0;         // double z-start
-    F3_ze=0.0;         // double z-end
-    F11=0;
-    F12=0;
-    F13=0;
-    F21=0;
-    F22=0;
-    F23=0;
-    F31=0;
-    F32=0;
-    F33=0;
-    F41=0;
-    F42=0;
-    F43=0;
-
     G9=1;            // int geodat either topo or solid
     G10=0;           // int geodata off/on
     G11_x=0.0;       // double dx
@@ -151,17 +136,6 @@ void lexer::ini_default()
 	M31=0.1;		// double variance percentage parameter
     M35=5.0;       // double xvar factor
 
-	O10 = 0;
-	O32 = 0;
-	O33 = 0;
-	O43 = 0;
-	O61 = 0;
-	O62 = 0;
-	O63 = 0;
-	O64 = 0;
-	O65 = 0;
-	O66 = 0;
-	
 	S1 = 0;			// int read STL file
 	S2 = 0;			// int auto margins
 	S3 = 0;			// int set auto margins
@@ -296,8 +270,6 @@ void lexer::ini_default()
     zend=0.0;       // pier, z end
     numlinsurf=10;  // number of linear surfaces
 	
-	bl_count=0;
-	obj_count=0;
 
     P10=1;          // ascii/binary print format
 

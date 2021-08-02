@@ -43,7 +43,6 @@ public:
     void makesurf(lexer*,dive*);
     void makedist(lexer*,dive*);
     void direction(lexer*,dive*);
-    void ccactive(lexer*,dive*);
 	void mem_alloc(lexer*,dive*);
     void make_solidsurf(lexer*,dive*);
     void makesurfsolid(lexer*,dive*);
@@ -51,12 +50,10 @@ public:
     
     void mem_alloc_plate(lexer*,dive*);
     void makesurf_plate(lexer*,dive*);
-    
-    
+
 
 private:
-    void normalvec(lexer*,dive*);
-    double distcalc(lexer*,dive*,int,int,int,int,int,int,int);
+
     
     int surfnum;
 };

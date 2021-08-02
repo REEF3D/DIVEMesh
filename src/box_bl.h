@@ -20,8 +20,6 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
- 
-#include"entity.h"
 #include"increment.h"
 
 class lexer;
@@ -32,7 +30,7 @@ using namespace std;
 #ifndef BOX_BL_H_
 #define BOX_BL_H_
 
-class box_bl : public entity, public increment
+class box_bl : public increment
 {
 public:
     box_bl(lexer*,int,int);

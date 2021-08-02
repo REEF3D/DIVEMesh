@@ -29,7 +29,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210730" <<endl<<endl;
+    cout<<endl<<"v_210802" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -49,26 +49,13 @@ void driver::mainloop()
 // BASELAYER
 
 // baselayer new
-    if(p->bl_count>0)
     pbase->start(p,a);
-
-// Freecoor
-    if(p->fc_count>0)
-    pfree->start(p,a);
-
-// Objects
-    if(p->obj_count>0)
-	{
-    pobj->start(p,a);
-	objgeo->start(p,a);
-	objprint->start(p,a);
-	}
     
 // Geometry Pipeline
     //Solid
         // geodat
         // STL
-        // solids
+        // s÷olids
     //Topo
         // geodat
         // STL

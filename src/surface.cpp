@@ -35,12 +35,9 @@ surface::~surface()
 void surface::start(lexer* p, dive* a)
 {
 	mem_alloc(p,a);
-    normalvec(p,a);
     direction(p,a);
     makesurf(p,a);
     makesurf_plate(p,a);
-    makedist(p,a);
-    ccactive(p,a);
     makesurfsolid(p,a);
 }
 
@@ -166,25 +163,4 @@ void surface::makesurf(lexer* p, dive* a)
     a->wall[n]++;
     }
 
-}
-
-void surface::ccactive(lexer* p, dive* a)
-{
-    cout<<"\t ccactive"<<endl;
-
-    LOOP
-    {
-        n=a->confac(i,j,k);
-
-        if(n>0)
-        {
-
-            if(a->flag(i,j,k)<0)
-            a->ccstate[n]=0;
-
-            if(a->flag(i,j,k)>0)
-            a->ccstate[n]=1;
-
-        }
-    }
 }

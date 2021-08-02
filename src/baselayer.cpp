@@ -24,59 +24,14 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 #include"box_bl.h"
-#include"sphere_bl.h"
-#include"pipe_x_bl.h"
-#include"pipe_y_bl.h"
-#include"pipe_z_bl.h"
-#include"cce3D.h"
 
 baselayer::baselayer(lexer *p, dive *a)
 {
     cout<<"baselayer_ini "<<endl;
 
-
-
-    int delta;
-
-    pcce = new cce3D(p,a);
-
-    pent = new entity*[p->bl_count];
-
-
-    count=0;
-
-	delta=count;
 	for(n=0;n<p->B10;++n)
     {
-    pent[n+delta] = new box_bl(p,n,1);
-    ++count;
-    }
-
-	delta=count;
-    for(n=0;n<p->B22;++n)
-    {
-    pent[n+delta] = new sphere_bl(p,n,1);
-    ++count;
-    }
-
-    delta=count;
-    for(n=0;n<p->B31;++n)
-    {
-    pent[n+delta] = new pipe_x_bl(p,n,1);
-    ++count;
-    }
-
-    delta=count;
-    for(n=0;n<p->B32;++n)
-    {
-    pent[n+delta] = new pipe_y_bl(p,n,1);
-    ++count;
-    }
-
-    delta=count;
-    for(n=0;n<p->B33;++n)
-    {
-    pent[n+delta] = new pipe_z_bl(p,n,1);
+    pent = new box_bl(p,n,1);
     ++count;
     }
 }
@@ -90,22 +45,10 @@ void baselayer::start(lexer* p, dive* a)
     cout<<"baselayer"<<endl;
 
     MALOOP
-    a->flag(i,j,k)=1;
-
-    for(n=0;n<p->bl_count;++n)
-    pcce->start(p,a,pent[n]);
-
-    MALOOP
     a->flag(i,j,k)=-21;
 
     LOOP
-    for(n=0;n<p->bl_count;++n)
     {
-    ival=pent[n]->flag_val(i,j,k);
-    if(ival<0)
-    a->flag(i,j,k)=-21;
-
-    if(ival>0)
     a->flag(i,j,k)=1;
     }
 }

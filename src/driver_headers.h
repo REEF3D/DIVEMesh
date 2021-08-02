@@ -26,9 +26,6 @@ Author: Hans Bihs
 
 #include"baselayer.h"
 #include"box_bl.h"
-#include"box.h"
-#include"cylinder_y.h"
-#include"cylinder_z.h"
 #include"bc.h"
 #include<iostream>
 #include"lexer.h"
@@ -37,12 +34,9 @@ Author: Hans Bihs
 #include"print_binary.h"
 #include"print_vtu.h"
 #include"surface.h"
-#include"box.h"
 #include"solid.h"
 #include"topo.h"
 
-#include"freecoor.h"
-#include"objects.h"
 #include"baselayer.h"
 
 #include"geodat.h"
@@ -50,8 +44,6 @@ Author: Hans Bihs
 #include"data.h"
 #include"slice.h"
 
-#include"objects_geometry.h"
-#include"print_objects.h"
 #include"print_stl.h"
 
 #include"hdc.h"

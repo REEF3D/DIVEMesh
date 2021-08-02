@@ -44,36 +44,32 @@ dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
 	p->Iarray(znode,p->M10+10);
 
 
- knox=p->knox;
- knoy=p->knoy;
- knoz=p->knoz;
+     knox=p->knox;
+     knoy=p->knoy;
+     knoz=p->knoz;
 
- maxknox=0;
- maxknox=MAX(maxknox,p->knox);
- maxknox=MAX(maxknox,p->knoy);
- maxknox=MAX(maxknox,p->knoz);
+     maxknox=0;
+     maxknox=MAX(maxknox,p->knox);
+     maxknox=MAX(maxknox,p->knoy);
+     maxknox=MAX(maxknox,p->knoz);
 	
 	p->Iarray(subknox,p->M10+1);
 	p->Iarray(subknoy,p->M10+1);
 	p->Iarray(subknoz,p->M10+1);
 
-incount=0;
-utcount=0;
-fsfcount=0;
-surfcount=0;
-surfcount_solid=0;
-bedcount=0;
+    incount=0;
+    utcount=0;
+    fsfcount=0;
+    surfcount=0;
+    surfcount_solid=0;
+    bedcount=0;
 
-para1count=0;
-para2count=0;
-para3count=0;
-para4count=0;
-para5count=0;
-para6count=0;
-
-facetcount=0;
-ccpointcount=0;
-
+    para1count=0;
+    para2count=0;
+    para3count=0;
+    para4count=0;
+    para5count=0;
+    para6count=0;
 
 	Iarray(mpi_index,p->M10+1);
 	Iarray(mpi_edges,(p->M10+1)*6);
@@ -147,19 +143,8 @@ ccpointcount=0;
     }
 
 //ibm
-    maxsurf =int((knox*knoy + knox*knoz + knoy*knoz)); // just in time? pre count in cce3d
-	
-	//cout<<"MAXSURF: "<<maxsurf<<endl;
-
-	
-    Iarray(facet,maxsurf,6);
-    Darray(ccpoint,maxsurf,3);
-    Iarray(ccptnum,p->M10+1);
-    Iarray(facetnum,p->M10+1);
-    Iarray(ccstate,maxsurf);
-    Iarray(ccstatenum,p->M10+1);
-    Iarray(ccmem,maxsurf);
-    
+    maxsurf =int((knox*knoy + knox*knoz + knoy*knoz)); 
+	 
 	
 	i_dir=j_dir=k_dir=0;
 	

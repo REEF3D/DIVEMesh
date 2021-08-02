@@ -29,17 +29,10 @@
     <VirtualDirectory Name="Baselayer">
       <File Name="baselayer.h"/>
       <File Name="box_bl.h"/>
-      <File Name="sphere_bl.h"/>
-      <File Name="pipe_x_bl.h"/>
-      <File Name="pipe_y_bl.h"/>
-      <File Name="pipe_z_bl.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Boundary">
       <File Name="bc.h"/>
-      <File Name="cce.h"/>
-      <File Name="cce3D.h"/>
       <File Name="surface.h"/>
-      <File Name="boundary_geometry.h"/>
       <File Name="slice.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
@@ -55,36 +48,6 @@
       </VirtualDirectory>
       <File Name="module.h"/>
       <File Name="module_void.h"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Freecoor">
-      <VirtualDirectory Name="DXF">
-        <File Name="dxf.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Container">
-        <File Name="entity.h"/>
-        <File Name="line.h"/>
-        <File Name="spline.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Flag">
-        <File Name="flag_indicate.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Surfdir">
-        <File Name="surface_dir.h"/>
-        <File Name="surfdir_indicate.h"/>
-      </VirtualDirectory>
-      <File Name="freecoor.h"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Objects">
-      <File Name="box.h"/>
-      <File Name="cylinder_y.h"/>
-      <File Name="cylinder_z.h"/>
-      <File Name="objects.h"/>
-      <File Name="wedge_x.h"/>
-      <File Name="conical.h"/>
-      <File Name="wedge_y.h"/>
-      <VirtualDirectory Name="Geometry">
-        <File Name="objects_geometry.h"/>
-      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Geodat">
       <VirtualDirectory Name="Interpolation">
@@ -105,7 +68,6 @@
         <File Name="print_vtu.h"/>
         <File Name="print_binary.h"/>
         <File Name="printer.h"/>
-        <File Name="print_objects.h"/>
         <File Name="print_stl.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Grid">
@@ -197,18 +159,8 @@
     <VirtualDirectory Name="Baselayer">
       <File Name="baselayer.cpp"/>
       <File Name="box_bl.cpp"/>
-      <File Name="pipe_x_bl.cpp"/>
-      <File Name="pipe_y_bl.cpp"/>
-      <File Name="pipe_z_bl.cpp"/>
-      <File Name="sphere_bl.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Boundary">
-      <VirtualDirectory Name="CCE">
-        <File Name="cce.cpp"/>
-        <File Name="cce3D.cpp"/>
-        <File Name="cce3D_addcell.cpp"/>
-        <File Name="cce3D_ini.cpp"/>
-      </VirtualDirectory>
       <VirtualDirectory Name="BC">
         <File Name="bc.cpp"/>
       </VirtualDirectory>
@@ -216,12 +168,7 @@
         <File Name="surface_plate.cpp"/>
         <File Name="surface.cpp"/>
         <File Name="surface_dir.cpp"/>
-        <File Name="surface_dist.cpp"/>
-        <File Name="surface_normal.cpp"/>
         <File Name="surface_solid.cpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Geometry">
-        <File Name="boundary_geometry.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Slice">
         <File Name="slice.cpp"/>
@@ -252,27 +199,6 @@
         <File Name="data.cpp"/>
       </VirtualDirectory>
       <File Name="module_void.cpp"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Freecoor">
-      <VirtualDirectory Name="Container">
-        <File Name="line.cpp"/>
-        <File Name="line_util.cpp"/>
-        <File Name="spline.cpp"/>
-        <File Name="spline_util.cpp"/>
-        <File Name="spline_coeff.cpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="DXF">
-        <File Name="dxf.cpp"/>
-        <File Name="dxf_reader.cpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Surfdir">
-        <File Name="surfdir_indicate.cpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Flag">
-        <File Name="flag_indicate.cpp"/>
-      </VirtualDirectory>
-      <File Name="freecoor.cpp"/>
-      <File Name="freecoor_sort.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Main">
       <File Name="driver.cpp"/>
@@ -322,20 +248,9 @@
         <File Name="print_vtu.cpp"/>
         <File Name="print_binary.cpp"/>
         <File Name="print_debug.cpp"/>
-        <File Name="print_objects.cpp"/>
         <File Name="print_solid.cpp"/>
         <File Name="print_bottom.cpp"/>
       </VirtualDirectory>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Objects">
-      <File Name="objects_geometry.cpp"/>
-      <File Name="objects.cpp"/>
-      <File Name="object_conical.cpp"/>
-      <File Name="object_cylinder_y.cpp"/>
-      <File Name="object_cylinder_z.cpp"/>
-      <File Name="object_box.cpp"/>
-      <File Name="object_wedge_x.cpp"/>
-      <File Name="object_wedge_y.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Geodat">
       <File Name="geodat_holecheck.cpp"/>
