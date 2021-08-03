@@ -287,10 +287,6 @@ NLOOP
     SNODEILOOP
     {
     ddn = p->XN[IP];
-    
-    //if(count==4)
-    //cout<<"##  "<<ddn<<" "<<p->XN[a->xnode[aa-1]+marge]<<" "<<a->xorig[aa-1]<<" | "<<a->xnode[aa-1]+marge<<" "<<IP<<endl;
-    
     result.write((char*)&ddn, sizeof (double));
     }
     
