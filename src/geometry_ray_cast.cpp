@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-void geometry::ray_cast(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist) 
+void geometry::ray_cast(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist, field2d &bedlevel) 
 {
     if(rayiter==0)
     {
@@ -37,6 +37,6 @@ void geometry::ray_cast(lexer* p, dive* a, int ts, int te, intfield &flag, field
     {
 	ray_cast_x(p,a,tri_start,tri_end,flag,dist);
 	ray_cast_y(p,a,tri_start,tri_end,flag,dist);
-	ray_cast_z(p,a,tri_start,tri_end,flag,dist);
+	ray_cast_z(p,a,tri_start,tri_end,flag,dist,bedlevel);
     }
 }

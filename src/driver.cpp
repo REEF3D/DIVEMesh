@@ -29,7 +29,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210802" <<endl<<endl;
+    cout<<endl<<"v_210810" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -55,7 +55,7 @@ void driver::mainloop()
     //Solid
         // geodat
         // STL
-        // s÷olids
+        // solids
     //Topo
         // geodat
         // STL
@@ -101,20 +101,13 @@ void driver::mainloop()
     pslice->start(p,a);
 
 // Bedlevel
-    // bedlevel calc
-    // .....
     pbed->start(p,a);
-
-// Post-Proc
-    //pbc->makebc(p,a);
-    //psurf->start(p,a);
 
 // Decomp
     pdd->start(p,a);
 
     pbc->makebc(p,a);
     psurf->start(p,a);
-    //pdd->surfcount(p,a);
 
 	if(p->solid_count>0||p->S1==1)
 	psolid->gcb_estimate(p,a);

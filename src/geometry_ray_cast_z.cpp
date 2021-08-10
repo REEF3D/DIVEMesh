@@ -25,7 +25,7 @@ Author: Hans Bihs
 #include"lexer.h"
 
 
-void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
+void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist, field2d &bedlevel)
 {
 	double ys,ye,zs,ze;
 	double Px,Py,Pz;
@@ -171,7 +171,7 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
             if(Rz>p->zmin && Rz<p->zmax)
             {
             if(Rz<p->zmax-1.0e-10)
-            a->bedlevel(i,j) = MAX(a->bedlevel(i,j),Rz);
+            bedlevel(i,j) = MAX(bedlevel(i,j),Rz);
 			 }
 
             }
