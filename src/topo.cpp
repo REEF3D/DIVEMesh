@@ -340,7 +340,7 @@ void topo::start(lexer* p, dive* a)
 
     LOOP
     if(a->topo_dist(i,j,k)!=a->topo_dist(i,j,k))
-    cout<<"SOLID NAN: "<<a->topo_dist(i,j,k)<<endl;
+    cout<<"TOPO NAN: "<<a->topo_dist(i,j,k)<<endl;
 
 
 

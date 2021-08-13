@@ -112,8 +112,11 @@ void driver::mainloop()
 	if(p->solid_count>0||p->S1==1)
 	psolid->gcb_estimate(p,a);
 
-    if(p->G10>0 && p->G9==2)
+    if(p->G10>0 && p->G9==1)
 	pgeo->gcb_estimate(p,a,a->topobed);
+    
+    if(p->G10>0 && p->G9==2)
+	pgeo->gcb_estimate(p,a,a->solidbed);
 
 // Hydrodynamic Coupling
     if(p->H10==4)
