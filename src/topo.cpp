@@ -353,8 +353,8 @@ void topo::gcb_estimate(lexer *p, dive *a)
 
     LOOP
     {
-		if(a->topo(i,j,k)==1)
-		if(a->topo(i-1,j,k)==-1 || a->topo(i+1,j,k)==-1 || a->topo(i,j-1,k)==-1 || a->topo(i,j+1,k)==-1 || a->topo(i,j,k-1)==-1 || a->topo(i,j,k+1)==-1)
+		if(a->topo_dist(i,j,k)>=0.0)
+		if(a->topo_dist(i-1,j,k)<0.0 || a->topo_dist(i+1,j,k)<0.0 || a->topo_dist(i,j-1,k)<0.0 || a->topo_dist(i,j+1,k)<0.0 || a->topo_dist(i,j,k-1)<0.0 || a->topo_dist(i,j,k+1)<0.0)
 		++n;
     }
 
@@ -368,8 +368,8 @@ void topo::gcb_estimate(lexer *p, dive *a)
 	{
 		SUBLOOP
 		{
-		if(a->topo(i,j,k)==1)
-		if(a->topo(i-1,j,k)==-1 || a->topo(i+1,j,k)==-1 || a->topo(i,j-1,k)==-1 || a->topo(i,j+1,k)==-1 || a->topo(i,j,k-1)==-1 || a->topo(i,j,k+1)==-1)
+		if(a->topo_dist(i,j,k)>=0.0)
+		if(a->topo_dist(i-1,j,k)<0.0 || a->topo_dist(i+1,j,k)<0.0 || a->topo_dist(i,j-1,k)<0.0 || a->topo_dist(i,j+1,k)<0.0 || a->topo_dist(i,j,k-1)<0.0 || a->topo_dist(i,j,k+1)<0.0)
 		++a->topo_gcb[n];
 		}
 	++n;

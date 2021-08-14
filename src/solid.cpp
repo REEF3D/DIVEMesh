@@ -354,10 +354,11 @@ void solid::gcb_estimate(lexer *p, dive *a)
 
     LOOP
     {
-		if(a->solid(i,j,k)==1)
-		if(a->solid(i-1,j,k)==-1 || a->solid(i+1,j,k)==-1 || a->solid(i,j-1,k)==-1 || a->solid(i,j+1,k)==-1 || a->solid(i,j,k-1)==-1 || a->solid(i,j,k+1)==-1)
+		if(a->solid_dist(i,j,k)>=0.0)
+		if(a->solid_dist(i-1,j,k)<0.0 || a->solid_dist(i+1,j,k)<0.0 || a->solid_dist(i,j-1,k)<0.0 || a->solid_dist(i,j+1,k)<0.0 || a->solid_dist(i,j,k-1)<0.0 || a->solid_dist(i,j,k+1)<0.0)
 		++n;
     }
+
 
 	int qn;
 
@@ -369,8 +370,8 @@ void solid::gcb_estimate(lexer *p, dive *a)
 	{
 		SUBLOOP
 		{
-		if(a->solid(i,j,k)==1)
-		if(a->solid(i-1,j,k)==-1 || a->solid(i+1,j,k)==-1 || a->solid(i,j-1,k)==-1 || a->solid(i,j+1,k)==-1 || a->solid(i,j,k-1)==-1 || a->solid(i,j,k+1)==-1)
+		if(a->solid_dist(i,j,k)>=0.0)
+		if(a->solid_dist(i-1,j,k)<0.0 || a->solid_dist(i+1,j,k)<0.0 || a->solid_dist(i,j-1,k)<0.0 || a->solid_dist(i,j+1,k)<0.0 || a->solid_dist(i,j,k-1)<0.0 || a->solid_dist(i,j,k+1)<0.0)
 		++a->solid_gcb[n];
 		}
 	++n;

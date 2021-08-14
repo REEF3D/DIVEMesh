@@ -59,13 +59,13 @@ void driver::logic(lexer* p)
     
     pslice = new slice(p,a);
 	
-	if(p->solid_count>0||p->S1==1)
+	if(p->solid_count>0 || p->S1==1 || (p->G10>0&&p->G9==2))
 	{
 	psolid = new solid(p,a);
 	p->solidprint=1;
 	}
     
-    if(p->topo_count>0||p->G10>0)
+    if(p->topo_count>0 || (p->G10>0&&p->G9==1))
 	{
 	ptopo = new topo(p,a);
 	p->topoprint=1;

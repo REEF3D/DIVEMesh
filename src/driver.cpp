@@ -29,7 +29,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_210810" <<endl<<endl;
+    cout<<endl<<"v_210814" <<endl<<endl;
 
 	p = new lexer();
 	a = new dive(p);
@@ -109,14 +109,12 @@ void driver::mainloop()
     pbc->makebc(p,a);
     psurf->start(p,a);
 
-	if(p->solid_count>0||p->S1==1)
+	if(p->topo_count>0 || (p->G10>0&&p->G9==1))
+	ptopo->gcb_estimate(p,a);
+    
+    if(p->solid_count>0 || p->S1==1 || (p->G10>0&&p->G9==2))
 	psolid->gcb_estimate(p,a);
 
-    if(p->G10>0 && p->G9==1)
-	pgeo->gcb_estimate(p,a,a->topobed);
-    
-    if(p->G10>0 && p->G9==2)
-	pgeo->gcb_estimate(p,a,a->solidbed);
 
 // Hydrodynamic Coupling
     if(p->H10==4)

@@ -273,8 +273,10 @@ NLOOP
     iin = a->topo_gcb[count-1];
     result.write((char*)&iin, sizeof (int));  
     
+    /*cout<<"topoprint: "<<p->topoprint<<" solidprint: "<<p->solidprint<<endl;
+    
     cout<<count<<" topo_gcb: "<<a->topo_gcb[count-1]<<endl;
-    cout<<count<<" solid_gcb: "<<a->solid_gcb[count-1]<<endl<<endl;
+    cout<<count<<" solid_gcb: "<<a->solid_gcb[count-1]<<endl<<endl;*/
     
 // ---------------------------------------------------------------------------------------------------------------------
 // FLAG
