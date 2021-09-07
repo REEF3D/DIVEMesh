@@ -1,0 +1,2 @@
+-I/Users/cpa/Documents/GitHub/DIVEMesh_dev
+-DVERSION="$(GIT_VERSION)"
