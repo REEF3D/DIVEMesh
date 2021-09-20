@@ -175,19 +175,19 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
+      <File Name="decomp.cpp"/>
+      <File Name="decomp_print.cpp"/>
+      <File Name="decomp_count.cpp"/>
+      <File Name="decomp_correction.cpp"/>
       <File Name="decomp_periodic_surfco.cpp"/>
       <File Name="decomp_surfco.cpp"/>
       <File Name="decomp_periodic_surf.cpp"/>
       <File Name="decomp_periodic.cpp"/>
       <File Name="decomp_surface.cpp"/>
       <File Name="decomp_partition.cpp"/>
-      <File Name="decomposition.cpp"/>
       <File Name="decomp_analyse.cpp"/>
       <File Name="decomp_costfunc.cpp"/>
-      <File Name="decomposition_correction.cpp"/>
       <File Name="decomp_paraslice.cpp"/>
-      <File Name="decomposition_print.cpp"/>
-      <File Name="decomposition_count.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="DIVE">
       <File Name="dive.cpp"/>
