@@ -175,6 +175,7 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
+      <File Name="decomp_partition_manual.cpp"/>
       <File Name="decomp.cpp"/>
       <File Name="decomp_print.cpp"/>
       <File Name="decomp_count.cpp"/>

@@ -68,7 +68,9 @@ void decomp::start(lexer* p, dive* a)
 	partition_voidcheck(p,a);
 	}
     
-	
+	if(p->M20==3)
+    partition_manual(p,a);
+    
 	neighbors(p,a);
 	knoxcalc(p,a);
     periodic_ini(p,a);

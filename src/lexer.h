@@ -164,7 +164,9 @@ public:
 
     int M10,M11,M12,M13;
 	int M20;
-	double M31, M35;
+    int M30,M30_x,M30_y,M30_z;
+    int *M31,*M32,*M33;
+	double M41, M45;
 	
 	int P10;
 

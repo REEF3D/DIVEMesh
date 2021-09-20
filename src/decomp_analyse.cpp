@@ -114,19 +114,19 @@ void decomp::partition_analyse(lexer *p, dive *a)
     //cout<<"xvar_per: "<<xvar_per<<" yvar_per: "<<yvar_per<<" zvar_per: "<<zvar_per<<endl;
 	
 	// turn off partition directions
-	if((xvar_per>=p->M31 && yvar_per<p->M31 && zvar_per<p->M31) 
-	|| (xvar_per<p->M31 && yvar_per>=p->M31 && zvar_per<p->M31)
-	|| (xvar_per<p->M31 && yvar_per<p->M31 && zvar_per>=p->M31))
+	if((xvar_per>=p->M41 && yvar_per<p->M41 && zvar_per<p->M41) 
+	|| (xvar_per<p->M41 && yvar_per>=p->M41 && zvar_per<p->M41)
+	|| (xvar_per<p->M41 && yvar_per<p->M41 && zvar_per>=p->M41))
 	{
-		if(xvar>=p->M35*yvar && xvar>=p->M35*zvar)
+		if(xvar>=p->M45*yvar && xvar>=p->M45*zvar)
         if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
 		p->M11=0;
 		
-		if(yvar>p->M35*xvar && yvar>=p->M35*zvar)
+		if(yvar>p->M45*xvar && yvar>=p->M45*zvar)
         if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10))   
 		p->M12=0;
 		
-		if(zvar>p->M35*xvar && zvar>p->M35*yvar)
+		if(zvar>p->M45*xvar && zvar>p->M45*yvar)
         if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10))   
 		p->M13=0;
 	}
@@ -134,7 +134,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	
 	//---
 	
-	if(xvar_per>=p->M31 && yvar_per>=p->M31 && zvar_per<p->M31)
+	if(xvar_per>=p->M41 && yvar_per>=p->M41 && zvar_per<p->M41)
 	{
 		if(xvar>yvar)
         if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
@@ -159,7 +159,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	}
     
 	
-	if(xvar_per>=p->M31 && yvar_per<p->M31 && zvar_per>=p->M31)
+	if(xvar_per>=p->M41 && yvar_per<p->M41 && zvar_per>=p->M41)
 	{
 		if(xvar>zvar)
         if((p->M12==1 && p->knoy>p->M10) || (p->M13==1 && p->knoz>p->M10))  
@@ -181,7 +181,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 		}
 	}
 	
-	if(xvar_per<p->M31 && yvar_per>=p->M31 && zvar_per>=p->M31)
+	if(xvar_per<p->M41 && yvar_per>=p->M41 && zvar_per>=p->M41)
 	{
 		if(yvar>zvar)
         if((p->M11==1 && p->knox>p->M10) || (p->M13==1 && p->knoz>p->M10))  
@@ -205,7 +205,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
 	}
 	
 	int check=0;
-	if(xvar_per>=p->M31 && yvar_per>=p->M31 && zvar_per>=p->M31)
+	if(xvar_per>=p->M41 && yvar_per>=p->M41 && zvar_per>=p->M41)
 	{
 		if(xcross_m<=ycross_m && xcross_m<=zcross_m)
         if(p->M11==1 && p->knox>p->M10)

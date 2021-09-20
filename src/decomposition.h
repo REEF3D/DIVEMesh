@@ -51,6 +51,7 @@ private:
 	void partition_correct_y(lexer*, dive*);
 	void partition_correct_z(lexer*, dive*);
 	void partition_voidcheck(lexer*, dive*);
+    void partition_manual(lexer*,dive*);
     void print_partition(lexer*, dive*);
     void rank(lexer*,dive*,int&,int&,int&,int&,int&,int&);
 

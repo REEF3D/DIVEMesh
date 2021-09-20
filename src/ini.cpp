@@ -133,8 +133,12 @@ void lexer::ini_default()
 	M12=1;          // int decompose in y-dir
 	M13=0;          // int decompose in z-dir
 	M20=1;          // int decompossition method
-	M31=0.1;		// double variance percentage parameter
-    M35=5.0;       // double xvar factor
+    M30=0;          // int manual partition distribution
+    M31=0;          // int manual partition x-dir
+    M32=0;          // int manual partition y-dir
+    M33=0;          // int manual partition z-dir
+	M41=0.1;		// double variance percentage parameter
+    M45=5.0;       // double xvar factor
 
 	S1 = 0;			// int read STL file
 	S2 = 0;			// int auto margins

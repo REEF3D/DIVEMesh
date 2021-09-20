@@ -385,10 +385,13 @@ void lexer::read_control()
 				case 20: control>>M20;
 						 clear(c,numint);
 						 break;
-				case 31: control>>M31;
+                case 30: control>>M30_x>>M30_y>>M30_z;
 						 clear(c,numint);
 						 break;
-               case 35: control>>M35;
+				case 41: control>>M41;
+						 clear(c,numint);
+						 break;
+               case 45: control>>M45;
 						 clear(c,numint);
 						 break;
 				}
@@ -772,6 +775,10 @@ void lexer::read_control()
 	Darray(B33_xm,B33);
 	Darray(B33_ym,B33);
 	Darray(B33_r,B33);
+    
+    Iarray(M31,M30_x);
+    Iarray(M32,M30_y);
+    Iarray(M33,M30_z);
 	
 	S10_xs = new double[S10];
 	S10_xe = new double[S10];
@@ -1230,6 +1237,29 @@ void lexer::read_control()
                         ++countB33;
 						 clear(c,numint);
 						 break;
+				}
+				break;
+                
+                
+                case 'M': control>>numint;
+				switch(numint)
+				{
+                case 31: 
+                    for(int qn=0;qn<M30_x-1;++qn)
+                    control>>M31[qn];
+						 clear(c,numint);
+						 break;
+                case 32: 
+                    for(int qn=0;qn<M30_y-1;++qn)
+                    control>>M32[qn];
+						 clear(c,numint);
+						 break;
+                case 33: 
+                    for(int qn=0;qn<M30_z-1;++qn)
+                    control>>M33[qn];
+						 clear(c,numint);
+						 break;
+   
 				}
 				break;
 				
