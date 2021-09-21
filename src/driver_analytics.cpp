@@ -29,9 +29,9 @@ void driver::analytics(lexer *p, dive *a)
 {
     ofstream nugout;
     
-    mkdir("./DIVEMesh",0777);
+    mkdir("./DIVEMesh_log",0777);
     
-    nugout.open("./DIVEMesh/DIVEMesh-Non-Uniform-Mesh.txt");
+    nugout.open("./DIVEMesh_Log/DIVEMesh-Non-Uniform-Mesh.txt");
     
     
 	// Number of Cells

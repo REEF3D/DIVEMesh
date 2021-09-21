@@ -29,9 +29,9 @@ void print_binary::print_bottom(lexer* p,dive* a)
 {
     char name[100];
     
-    mkdir("./DIVEMesh",0777);
+    mkdir("./DIVEMesh_log",0777);
     
-    sprintf(name,"./DIVEMesh/bottom_file.dat",count);
+    sprintf(name,"./DIVEMesh_Log/bottom_file.dat",count);
     
     ofstream result;
 	result.open(name);

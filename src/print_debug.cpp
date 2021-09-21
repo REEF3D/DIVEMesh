@@ -25,10 +25,10 @@ Author: Hans Bihs
 
 void print_binary::print_debug(lexer* p, dive* a)
 {
-    mkdir("./DIVEMesh",0777);
+    mkdir("./DIVEMesh_log",0777);
 
     char name[20];
-    sprintf(name,"./DIVEMesh/DIVE_MESH_debug.txt");
+    sprintf(name,"./DIVEMesh_Log/DIVE_MESH_debug.txt");
 	ofstream result;
 	result.open(name);
 

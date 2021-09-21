@@ -26,9 +26,9 @@ Author: Hans Bihs
 
 decomp::decomp()
 {
-    mkdir("./DIVEMesh",0777);
+    mkdir("./DIVEMesh_Decomp",0777);
     
-    ddout.open("./DIVEMesh/DIVEMesh-Decomposition.txt");
+    ddout.open("./DIVEMesh_Decomp/DIVEMesh-Decomposition.txt");
 }
 
 decomp::~decomp()

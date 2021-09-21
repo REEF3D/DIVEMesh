@@ -22,6 +22,7 @@ Author: Hans Bihs
 
 #include"driver.h"
 #include"driver_headers.h"
+#include<sys/stat.h>
 
 driver::driver()
 {
@@ -30,6 +31,8 @@ driver::driver()
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
     cout<<endl<<"v_210921" <<endl<<endl;
+    
+    mkdir("./DIVEMesh_Log",0777);
 
 	p = new lexer();
 	a = new dive(p);
