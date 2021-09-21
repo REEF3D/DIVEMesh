@@ -73,6 +73,15 @@ void decomp::start(lexer* p, dive* a)
     
 	if(p->M20==3)
     {
+    a->mx=p->M30_x;
+    a->my=p->M30_y;
+    a->mz=p->M30_z;
+    partition(p,a);
+    print_partition(p,a);
+    }
+    
+    if(p->M20==4)
+    {
     partition_manual(p,a);
     print_partition(p,a);
     }
@@ -100,6 +109,10 @@ void decomp::start(lexer* p, dive* a)
     slicecornercount(p,a);
 	
 	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
+    
+    // print partition planes
+    partition_planes(p,a);
+    decomp_vtp(p,a);
     
     
     /*for(n=1;n<=p->M10;++n)

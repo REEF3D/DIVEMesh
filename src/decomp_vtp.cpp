@@ -26,6 +26,7 @@ Author: Hans Bihs
 void decomp::decomp_vtp(lexer* p, dive* a)
 {
     
+    
     mkdir("./DIVEMesh_Paraview",0777);
 	sprintf(name,"./DIVEMesh_Paraview/DIVEMesh_Partition.vtp");
 
@@ -39,18 +40,18 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 	offset[n]=0;
 	++n;
 
-    offset[n]=offset[n-1]+4*p->tricount*3*3 + 4;
+    offset[n]=offset[n-1]+4*tricount*3*3 + 4;
     ++n;
-    offset[n]=offset[n-1]+4*p->tricount*3 + 4;
+    offset[n]=offset[n-1]+4*tricount*3 + 4;
     ++n;
-    offset[n]=offset[n-1]+4*p->tricount*3 + 4;
+    offset[n]=offset[n-1]+4*tricount*3 + 4;
     ++n;
 	//---------------------------------------------
 
 	result<<"<?xml version=\"1.0\"?>"<<endl;
 	result<<"<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\">"<<endl;
 	result<<"<PolyData>"<<endl;
-	result<<"<Piece NumberOfPoints=\""<<p->tricount*3<<"\" NumberOfPolys=\""<<p->tricount<<"\">"<<endl;
+	result<<"<Piece NumberOfPoints=\""<<tricount*3<<"\" NumberOfPolys=\""<<tricount<<"\">"<<endl;
 
     n=0;
     result<<"<Points>"<<endl;
@@ -75,26 +76,26 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 
 
 //  XYZ
-	iin=4*p->tricount*3*3;
+	iin=4*tricount*3*3;
 	result.write((char*)&iin, sizeof (int));
-    for(n=0;n<p->tricount;++n)
+    for(n=0;n<tricount;++n)
 	for(q=0;q<3;++q)
 	{
-	ffn=p->tri_x[n][q];
+	ffn=trix[n][q];
 	result.write((char*)&ffn, sizeof (float));
 
-	ffn=p->tri_y[n][q];
+	ffn=triy[n][q];
 	result.write((char*)&ffn, sizeof (float));
 
-	ffn=p->tri_z[n][q];
+	ffn=triz[n][q];
 	result.write((char*)&ffn, sizeof (float));
 	}
 
 //  Connectivity POLYGON
 	int count=0;
-    iin=4*p->tricount*3;
+    iin=4*tricount*3;
     result.write((char*)&iin, sizeof (int));
-    for(n=0;n<p->tricount;++n)
+    for(n=0;n<tricount;++n)
 	for(q=0;q<3;++q)
 	{
 	iin=count;
@@ -103,19 +104,19 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 	}
 
 //  Offset of Connectivity
-    iin=4*p->tricount;
+    iin=4*tricount;
     result.write((char*)&iin, sizeof (int));
 	iin=0;
-	for(n=0;n<p->tricount;++n)
+	for(n=0;n<tricount;++n)
 	{
 	iin+= 3;//a->polygon_offset[n];
 	result.write((char*)&iin, sizeof (int));
 	}
 
 //  Cell types
-    iin=4*p->tricount;
+    iin=4*tricount;
     result.write((char*)&iin, sizeof (int));
-	for(n=0;n<p->tricount;++n)
+	for(n=0;n<tricount;++n)
 	{
 	iin=7;
 	result.write((char*)&iin, sizeof (int));
