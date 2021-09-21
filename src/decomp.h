@@ -101,7 +101,11 @@ private:
 	int xcount_sum,ycount_sum,zcount_sum,cellnum,paverage;
   
     
+    char name[100],pname[100],epsvar[100];
+    int n,iin,offset[100];
+    float ffn;
     
+    double **trix,**triy,**triz;
 	
 	ofstream ddout;
 

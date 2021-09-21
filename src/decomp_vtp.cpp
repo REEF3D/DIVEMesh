@@ -21,17 +21,18 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"decomp.h"
+#include<sys/stat.h>
 
 void decomp::decomp_vtp(lexer* p, dive* a)
 {
-    /*
+    
     mkdir("./DIVEMesh_Paraview",0777);
-	sprintf(name,"./DIVEMesh_Paraview/REEF3D_Solid.vtp");
+	sprintf(name,"./DIVEMesh_Paraview/DIVEMesh_Partition.vtp");
 
 	ofstream result;
 	result.open(name, ios::binary);
 	
-	cout<<"print_solid"<<endl;
+	cout<<"print_partition_vtp"<<endl;
 
     n=0;
 
@@ -123,5 +124,5 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 	result<<endl<<"</AppendedData>"<<endl;
     result<<"</VTKFile>"<<endl;
 
-	result.close();	*/
+	result.close();	
 }
