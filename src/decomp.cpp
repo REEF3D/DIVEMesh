@@ -20,13 +20,15 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomposition.h"
+#include"decomp.h"
 #include"field2d.h"
+#include<sys/stat.h>
 
 decomp::decomp()
 {
-
-    ddout.open("DIVEMesh-Decomposition.txt");
+    mkdir("./DIVEMesh",0777);
+    
+    ddout.open("./DIVEMesh/DIVEMesh-Decomposition.txt");
 }
 
 decomp::~decomp()
@@ -66,10 +68,14 @@ void decomp::start(lexer* p, dive* a)
     partition(p,a);
 	partition_correction(p,a);
 	partition_voidcheck(p,a);
+    print_partition(p,a);
 	}
     
 	if(p->M20==3)
+    {
     partition_manual(p,a);
+    print_partition(p,a);
+    }
     
 	neighbors(p,a);
 	knoxcalc(p,a);

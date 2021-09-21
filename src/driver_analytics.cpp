@@ -23,12 +23,15 @@ Author: Tobias Martin
 #include"driver.h"
 #include"lexer.h"
 #include"dive.h"
+#include<sys/stat.h>
 
 void driver::analytics(lexer *p, dive *a)
 {
     ofstream nugout;
     
-    nugout.open("DIVEMesh-Non-Uniform-Mesh.txt");
+    mkdir("./DIVEMesh",0777);
+    
+    nugout.open("./DIVEMesh/DIVEMesh-Non-Uniform-Mesh.txt");
     
     
 	// Number of Cells

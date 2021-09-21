@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomposition.h"
+#include"decomp.h"
 
 void decomp::paraslicesurface(lexer* p, dive* a)
 {

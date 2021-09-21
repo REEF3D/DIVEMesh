@@ -36,7 +36,7 @@
       <File Name="slice.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
-      <File Name="decomposition.h"/>
+      <File Name="decomp.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="DIVE">
       <VirtualDirectory Name="Data">
@@ -175,6 +175,7 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
+      <File Name="decomp_vtp.cpp"/>
       <File Name="decomp_partition_manual.cpp"/>
       <File Name="decomp.cpp"/>
       <File Name="decomp_print.cpp"/>

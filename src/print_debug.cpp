@@ -21,12 +21,14 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"print_binary.h"
+#include<sys/stat.h>
 
 void print_binary::print_debug(lexer* p, dive* a)
 {
+    mkdir("./DIVEMesh",0777);
 
     char name[20];
-    sprintf(name,"DIVE.MESH_debug.txt");
+    sprintf(name,"./DIVEMesh/DIVE_MESH_debug.txt");
 	ofstream result;
 	result.open(name);
 

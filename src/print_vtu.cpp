@@ -60,7 +60,8 @@ void print_vtu::start(lexer* p,dive* a)
 	++tpcellnum;
 	}
 
-    sprintf(name,"DIVEMesh_grid-preview.vtu");
+    mkdir("./DIVEMesh_Paraview",0777);
+    sprintf(name,"./DIVEMesh_Paraview/DIVEMesh_grid-preview.vtu");
     
 	// Open File
 	ofstream result;

@@ -35,8 +35,9 @@ void geodat::print_sampled(lexer* p, dive* a)
     float ffn;
     int count;
     
-	
-    sprintf(name,"geo_sampled.dat");
+	mkdir("./DIVEMesh_Geo",0777);
+    
+    sprintf(name,"./DIVEMesh_Geo/geo_sampled.dat");
     
     ofstream result;
 	result.open(name);

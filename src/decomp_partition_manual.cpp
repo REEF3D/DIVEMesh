@@ -20,10 +20,46 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomposition.h"
+#include"decomp.h"
 
 void decomp::partition_manual(lexer* p,dive* a)
 {	
+    a->mx=p->M30_x;
+    a->my=p->M30_y;
+    a->mz=p->M30_z;
     
+    a->xorig[0]=p->xmin;
+    a->yorig[0]=p->ymin;
+    a->zorig[0]=p->zmin;
+    a->xnode[0]=0;
+    a->ynode[0]=0;
+    a->znode[0]=0;
+
+    a->xorig[a->mx]=p->xmax;
+    a->yorig[a->my]=p->ymax;
+    a->zorig[a->mz]=p->zmax;
+    a->xnode[a->mx]=p->knox;
+    a->ynode[a->my]=p->knoy;
+    a->znode[a->mz]=p->knoz;
+    
+    // partition
+    for(n=1;n<a->mx;n++)
+    {
+    a->xnode[n]=p->M31[n];
+    a->xorig[n]=p->XN[a->xnode[n]+marge];
+	}
+
+    for(n=1;n<a->my;n++)
+    {
+    a->ynode[n]=p->M32[n];
+    a->yorig[n]=p->YN[a->ynode[n]+marge];
+    }
+    
+
+    for(n=1;n<a->mz;n++)
+    {	
+    a->znode[n]=p->M33[n];
+    a->zorig[n]=p->ZN[a->znode[n]+marge];
+    }
     
 }

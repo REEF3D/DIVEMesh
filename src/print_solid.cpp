@@ -23,7 +23,7 @@ Author: Hans Bihs
 #include"print_stl.h"
 #include"lexer.h"
 #include"dive.h"
-
+#include<sys/stat.h>
 
 print_stl::print_stl(lexer* p, dive *a)
 {
@@ -35,7 +35,8 @@ print_stl::~print_stl()
 
 void print_stl::solid_stl(lexer* p, dive* a)
 {
-	sprintf(name,"REEF3D_Solid.stl");
+    mkdir("./DIVEMesh_Paraview",0777);
+	sprintf(name,"./DIVEMesh_Paraview/REEF3D_Solid.stl");
 
 	ofstream result;
 	result.open(name, ios::binary);
@@ -63,7 +64,8 @@ void print_stl::solid_stl(lexer* p, dive* a)
 
 void print_stl::topo_stl(lexer* p, dive* a)
 {
-	sprintf(name,"REEF3D_Topo.stl");
+    mkdir("./DIVEMesh_Paraview",0777);
+	sprintf(name,"./DIVEMesh_Paraview/REEF3D_Topo.stl");
 
 	ofstream result;
 	result.open(name, ios::binary);
@@ -92,7 +94,8 @@ void print_stl::topo_stl(lexer* p, dive* a)
 
 void print_stl::solid_vtp(lexer* p, dive* a)
 {
-	sprintf(name,"REEF3D_Solid.vtp");
+    mkdir("./DIVEMesh_Paraview",0777);
+	sprintf(name,"./DIVEMesh_Paraview/REEF3D_Solid.vtp");
 
 	ofstream result;
 	result.open(name, ios::binary);
@@ -194,7 +197,8 @@ void print_stl::solid_vtp(lexer* p, dive* a)
 
 void print_stl::topo_vtp(lexer* p, dive* a)
 {
-	sprintf(name,"REEF3D_Topo.vtp");
+    mkdir("./DIVEMesh_Paraview",0777);
+	sprintf(name,"./DIVEMesh_Paraview/REEF3D_Topo.vtp");
 
 	ofstream result;
 	result.open(name, ios::binary);

@@ -73,7 +73,8 @@ private:
     void periodic_surfco(lexer*,dive*);
     void periodic_nb(lexer*,dive*);
     void periodic_count(lexer*,dive*);
-
+    
+    void decomp_vtp(lexer*,dive*);
 
     int numfactor;
     int active,nonactive,nodes,partqual,maxel;

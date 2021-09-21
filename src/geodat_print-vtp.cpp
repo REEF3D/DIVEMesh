@@ -35,8 +35,9 @@ void geodat::print(lexer* p, dive* a)
     float ffn;
     int count;
     
-	
-    sprintf(name,"REEF3D_geodat-%i.vtu",printcount);
+	mkdir("./DIVEMesh_Geo",0777);
+    
+    sprintf(name,"./DIVEMesh_Geo/REEF3D_geodat-%i.vtu",printcount);
     
     ++printcount;
 

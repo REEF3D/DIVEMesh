@@ -23,12 +23,15 @@ Author: Hans Bihs
 #include"print_binary.h"
 #include"lexer.h"
 #include"dive.h"
+#include<sys/stat.h>
 
 void print_binary::print_bottom(lexer* p,dive* a)
 {
     char name[100];
     
-    sprintf(name,"bottom_file.dat",count);
+    mkdir("./DIVEMesh",0777);
+    
+    sprintf(name,"./DIVEMesh/bottom_file.dat",count);
     
     ofstream result;
 	result.open(name);
