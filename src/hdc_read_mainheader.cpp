@@ -33,7 +33,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     ifstream mainhead;
     int ii1,ii2;
     
-    sprintf(name,"./REEF3D_FNPF_State/REEF3D-FNPF_State_Mainheader.r3d");
+    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
     
 	mainhead.open(name, ios::binary);
     
