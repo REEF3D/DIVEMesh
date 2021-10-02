@@ -1,4 +1,14 @@
 
+21.09
+x added decomp partition vtp print out
+x added topo section
+x added geodat for either topo or solid
+x added grid preview vtu file
+x removed objects, fully replaced with solids
+x removed freecoor
+x removed S34,S35,S36 and S38
+x fixed origin_xyx bug for M 20 1 decomposition
+
 21.02
 x fixed kriging 
 x added support for periodic boundary conditions
