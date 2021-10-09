@@ -22,7 +22,7 @@ Author: Hans Bihs
 
 #include"geometry.h"
 #include"dive.h"
-#include"lexer.h"
+#include"lexer.h"#include"field2d.h"
 
 void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {

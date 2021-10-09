@@ -143,7 +143,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S11;++qn)
         {
-        box_array(p,a,qn,tri_start,tri_end,p->S11_xs[qn],p->S11_ys[qn],p->S11_zs[qn],
+        box_array(p,a,a->solid,a->solid_dist,a->solidbed,qn,tri_start,tri_end,p->S11_xs[qn],p->S11_ys[qn],p->S11_zs[qn],
                 p->S11_L[qn],p->S11_G[qn],p->S11_ni[qn],p->S11_nj[qn],p->S11_nk[qn]);
         }
 

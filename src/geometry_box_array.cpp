@@ -25,8 +25,8 @@ Author: Hans Bihs
 #include"lexer.h"
 
 
-void geometry::box_array(lexer* p, dive* a,int rank, int &ts, int &te,
-            double xorig, double yorig, double zorig, double L, double G, int ni, int nj, int nk)
+void geometry::box_array(lexer* p, dive* a,intfield &gsio,field &gs_dist,field2d &gsbed,
+            int rank, int &ts, int &te, double xorig, double yorig, double zorig, double L, double G, int ni, int nj, int nk)
 {	
 	int aa,bb,cc;
 	/*
@@ -289,6 +289,7 @@ void geometry::box_array(lexer* p, dive* a,int rank, int &ts, int &te,
 		rotate_triangle(p,a,ts,te);
 		
 		//ray_cast(p,a,ts,te);
+        ray_cast(p,a,tri_start,tri_end,gsio,gs_dist,gsbed);
 	}
 	
 	

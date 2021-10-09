@@ -23,6 +23,8 @@ Author: Hans Bihs
 #include"geometry.h"
 #include"dive.h"
 #include"lexer.h"
+#include"field.h"
+#include"intfield.h"
 
 void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
