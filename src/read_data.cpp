@@ -54,7 +54,7 @@ void lexer::read_data()
 
         D10_x = new double[countD10];
         D10_y = new double[countD10];
-        D10_data = new double[countD10];
+        D10_dataset = new double[countD10];
 
 
         dataset.open("gmdataset.dat", ios_base::in);
@@ -73,7 +73,7 @@ void lexer::read_data()
 			{
 			D10_x[countD10]=val1;
 			D10_y[countD10]=val2;
-			D10_data[countD10]=val3;
+			D10_dataset[countD10]=val3;
 
 			++countD10;
 			}
