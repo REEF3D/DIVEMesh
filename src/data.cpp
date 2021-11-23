@@ -20,12 +20,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"data.h"
+#include"dataset.h"
 #include"dive.h"
 #include"lexer.h"
 #include"kriging.h"
 
-data::data(lexer *p, dive *a) 
+dataset::dataset(lexer *p, dive *a) 
 {
 
     for(n=0; n<p->D10; ++n)
@@ -42,30 +42,30 @@ data::data(lexer *p, dive *a)
 	
 	if(p->D23==1)
 	for(n=0; n<p->D10; ++n)
-	p->D10_data[n] *= -1.0;
+	p->D10_dataset[n] *= -1.0;
 }
 
-data::~data()
+dataset::~dataset()
 {
 }
 
-void data::start(lexer* p, dive* a)
+void dataset::start(lexer* p, dive* a)
 {
-    cout<<"data"<<endl;
+    cout<<"dataset"<<endl;
 	
 	if(p->D14==1)
 	{
 	cout<<"inverse distance"<<endl;	
 		
     XYLOOP
-    a->data(i,j) = inverse_dist_2D(p,a);
+    a->dataset(i,j) = inverse_dist_2D(p,a);
 	}
 	
 	if(p->D14==2)
 	{
-	kriging krig(p,a,p->D10,p->D10_x,p->D10_y,p->D10_data);
+	kriging krig(p,a,p->D10,p->D10_x,p->D10_y,p->D10_dataset);
 	
-	//krig.start(p,a,p->D10,p->D10_x,p->D10_y,p->D10_data,p->XP,p->YP,p->knox,p->knoy,a->data);
+	//krig.start(p,a,p->D10,p->D10_x,p->D10_y,p->D10_dataset,p->XP,p->YP,p->knox,p->knoy,a->dataset);
 	}
 	
 	k=0;
@@ -74,16 +74,16 @@ void data::start(lexer* p, dive* a)
 	{
 	
 		if(a->flag(i-1,j,k)<0)
-		a->data(i-1,j) = a->data(i,j);
+		a->dataset(i-1,j) = a->dataset(i,j);
 		
 		if(a->flag(i+1,j,k)<0)
-		a->data(i+1,j) = a->data(i,j);
+		a->dataset(i+1,j) = a->dataset(i,j);
 		
 		if(a->flag(i,j-1,k)<0)
-		a->data(i,j-1) = a->data(i,j);
+		a->dataset(i,j-1) = a->dataset(i,j);
 		
 		if(a->flag(i,j+1,k)<0)
-		a->data(i,j+1) = a->data(i,j);
+		a->dataset(i,j+1) = a->dataset(i,j);
 	}
 	
 	
@@ -91,7 +91,7 @@ void data::start(lexer* p, dive* a)
 	for(n=0;n<p->D15;++n)
 	XYLOOP
 	if(a->flag(i,j,k)>0)
-    a->data(i,j) = p->D16*a->data(i,j) + 0.25*(1.0-p->D16)*(a->data(i-1,j) + a->data(i+1,j) + a->data(i,j-1) + a->data(i,j+1)); 
+    a->dataset(i,j) = p->D16*a->dataset(i,j) + 0.25*(1.0-p->D16)*(a->dataset(i-1,j) + a->dataset(i+1,j) + a->dataset(i,j-1) + a->dataset(i,j+1)); 
 	
 }
 

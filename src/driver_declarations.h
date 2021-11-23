@@ -32,7 +32,7 @@ class objects;
 class box;
 class baselayer;
 class geodat;
-class data;
+class dataset;
 class objects_geometry;
 class print_objects;
 class solid;

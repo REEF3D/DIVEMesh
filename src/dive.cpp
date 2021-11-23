@@ -26,7 +26,7 @@ dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
                    cellside(p),subgrid(p),
                    numfac(p), confac(p),
                    xdir(p),ydir(p),zdir(p),onnode(p),
-                   topobed(p),solidbed(p),data(p),
+                   topobed(p),solidbed(p),dataset(p),
                    bedlevel(p),
                    flagslice(p),subslice(p)
 {

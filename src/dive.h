@@ -52,7 +52,7 @@ class dive : public increment, public resize_class
 	intfield onnode;
     field2d topobed,solidbed; 
     field2d bedlevel;      // combined bedlevel
-    field2d data;
+    field2d dataset;
     intfield2d flagslice,subslice;
 
     int knox,knoy,knoz;

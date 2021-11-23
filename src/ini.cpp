@@ -59,7 +59,7 @@ void lexer::ini_default()
     C22=0;          // Periodic BC in y-dir
     C23=0;          // Periodic BC in z-dir
 	
-	D10=0;            // int data off/on
+	D10=0;            // int dataset off/on
     D11_x=0.0;       // double dx
     D11_y=0.0;       // double dy
     D11_z=0.0;       // double dz

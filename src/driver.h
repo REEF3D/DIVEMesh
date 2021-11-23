@@ -56,7 +56,7 @@ public:
     box *pbox;
     baselayer *pbase;
     geodat *pgeo;
-	data *pdata;
+	dataset *pdata;
 	objects_geometry *objgeo;
 	print_objects *objprint;
 	solid *psolid;

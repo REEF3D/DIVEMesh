@@ -32,16 +32,16 @@ void lexer::read_data()
 	{
         double val;
         char cval;
-        ifstream data("gmdata.dat", ios_base::in);
+        ifstream dataset("gmdataset.dat", ios_base::in);
 
-        while(!data.eof())
+        while(!dataset.eof())
         {
 			
         if(D19==0)
-        data>>val>>val>>val;
+        dataset>>val>>val>>val;
 
         if(D19==1)
-        data>>cval>>val>>val>>val;
+        dataset>>cval>>val>>val>>val;
 		
 		if(count%D13==0)
         ++countD10;
@@ -50,24 +50,24 @@ void lexer::read_data()
         }
         D10=countD10;
         cout<<"DATA INTERPOLATION  "<<D10<<endl;
-        data.close();
+        dataset.close();
 
         D10_x = new double[countD10];
         D10_y = new double[countD10];
         D10_data = new double[countD10];
 
 
-        data.open("gmdata.dat", ios_base::in);
+        dataset.open("gmdataset.dat", ios_base::in);
 		
 		count=0;
         countD10=0;
-        while(!data.eof())
+        while(!dataset.eof())
         {
 			if(D19==0)
-			data>>val1>>val2>>val3;
+			dataset>>val1>>val2>>val3;
 
 			if(D19==1)
-			data>>cval>>val1>>val2>>val3;
+			dataset>>cval>>val1>>val2>>val3;
 
 			if(count%D13==0)
 			{
@@ -81,7 +81,7 @@ void lexer::read_data()
 		++count;
         }
 
-        data.close();
+        dataset.close();
 
         
 	}

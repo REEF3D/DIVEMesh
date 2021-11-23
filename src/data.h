@@ -27,14 +27,14 @@ class dive;
 
 using namespace std;
 
-#ifndef DATA_H_
-#define DATA_H_
+#ifndef DATASET_H_
+#define DATASET_H_
 
-class data : public increment
+class dataset : public increment
 {
 public:
-    data(lexer*,dive*);
-    virtual ~data();
+    dataset(lexer*,dive*);
+    virtual ~dataset();
 
     virtual void start(lexer*,dive*);
 	double inverse_dist_2D(lexer*, dive*);

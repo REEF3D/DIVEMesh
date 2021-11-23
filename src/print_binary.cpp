@@ -855,7 +855,7 @@ NLOOP
     XYLOOP
     if(a->subgrid(i,j,k)==count)
     {
-    ddn = a->data(i,j);
+    ddn = a->dataset(i,j);
     result.write((char*)&ddn, sizeof (double)); 
     }
     

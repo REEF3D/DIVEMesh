@@ -20,11 +20,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"data.h"
+#include"dataset.h"
 #include"dive.h"
 #include"lexer.h"
 
-double data::inverse_dist_2D(lexer *p, dive *a)
+double dataset::inverse_dist_2D(lexer *p, dive *a)
 {	
     xc = p->XP[IP];
     yc = p->YP[JP];
@@ -36,7 +36,7 @@ double data::inverse_dist_2D(lexer *p, dive *a)
     wsum += inverse_dist_w(p);
 
     for(n=0; n<p->D10; ++n)
-    g += (inverse_dist_w(p)*p->D10_data[n]);
+    g += (inverse_dist_w(p)*p->D10_dataset[n]);
 	
 	g/=wsum;
 	
@@ -45,7 +45,7 @@ double data::inverse_dist_2D(lexer *p, dive *a)
 }
 
 
-double data::inverse_dist_w(lexer *p)
+double dataset::inverse_dist_w(lexer *p)
 {
     dist = sqrt(pow(xc-p->D10_x[n],2.0) + pow(yc-p->D10_y[n],2.0));
 	

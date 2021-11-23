@@ -55,7 +55,7 @@ void driver::logic(lexer* p)
     phdc = new hdc(p,a);
 	
 	if(p->D10>0)
-    pdata = new data(p,a);
+    pdata = new dataset(p,a);
     
     pslice = new slice(p,a);
 	
