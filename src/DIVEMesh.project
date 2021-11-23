@@ -39,8 +39,8 @@
       <File Name="decomp.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="DIVE">
-      <VirtualDirectory Name="Data">
-        <File Name="data.h"/>
+      <VirtualDirectory Name="Dataset">
+        <File Name="dataset.h"/>
       </VirtualDirectory>
       <File Name="dive.h"/>
       <VirtualDirectory Name="Initialize">
@@ -197,9 +197,9 @@
       <VirtualDirectory Name="Initialize">
         <File Name="initialize.cpp"/>
       </VirtualDirectory>
-      <VirtualDirectory Name="Data">
-        <File Name="data_inversedist.cpp"/>
-        <File Name="data.cpp"/>
+      <VirtualDirectory Name="Dataset">
+        <File Name="dataset_inversedist.cpp"/>
+        <File Name="dataset.cpp"/>
       </VirtualDirectory>
       <File Name="module_void.cpp"/>
     </VirtualDirectory>
