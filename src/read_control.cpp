@@ -292,6 +292,14 @@ void lexer::read_control()
                         G25=1;
                          clear(c,numint);
 						 break;
+                case 26: control>>G26_zh;
+                        G26=1;
+                         clear(c,numint);
+						 break;
+                case 27: control>>G27_zh;
+                        G27=1;
+                         clear(c,numint);
+						 break;
 				 case 31: control>>G31;
                          clear(c,numint);
 						 break;

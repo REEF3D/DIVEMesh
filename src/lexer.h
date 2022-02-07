@@ -146,9 +146,10 @@ public:
 	double G13_phi;
 	double G14_x, G14_y;
     int G15,G17,G19;
-    int G20,G23,G24,G25;
+    int G20,G23,G24,G25,G26,G27;
     double G24_h,G24_dz;
     double G25_h,G25_fz;
+    double G26_zh,G27_zh;
     double G21_x, G21_y, G21_z;
     double G22_x, G22_y, G22_z;
     int G31,G37,G38,G41;

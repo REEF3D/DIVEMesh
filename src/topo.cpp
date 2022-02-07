@@ -26,7 +26,7 @@ Author: Hans Bihs
 
 topo::topo(lexer *p, dive *a) : geometry(p,a)
 {
-	cout<<"topo ini %%%";
+	cout<<"topo ini";
 
 	a->vnum=0;
 

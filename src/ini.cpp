@@ -103,6 +103,8 @@ void lexer::ini_default()
 	G23=0;			// int reverse sign of vertical coordinate in geo.dat file
     G24=0;          // int raise dry side by a dz
     G25=0;          // int increase dry side by multiplication factor
+    G26=0;          // int remove all points below a threshold zh
+    G27=0;          // int remove all points above a threshold zh
     G31=0;          // int number of smoothing iterations
     G32=0.5;        // double smoothing factor
 	G35=16.0;		// double inverse distance factor
