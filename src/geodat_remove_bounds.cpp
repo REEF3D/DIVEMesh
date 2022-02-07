@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2021 Hans Bihs
+Copyright 2008-2022 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -54,7 +54,16 @@ void geodat::remove_bounds(lexer *p, dive *a)
             p->G10_z[n] = p->G10_z[p->Np-1];
             -- p->Np;
             --n;
-            }       
+            }
+
+            if(p->G10_x[n]<xs || p->G10_x[n]>xe || p->G10_y[n]<ys || p->G10_y[n]>ye)
+            {
+            p->G10_x[n] = p->G10_x[p->Np-1];
+            p->G10_y[n] = p->G10_y[p->Np-1];
+            p->G10_z[n] = p->G10_z[p->Np-1];
+            -- p->Np;
+            --n;
+            } 
 
         }
 }

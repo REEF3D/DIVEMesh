@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2021 Hans Bihs
+Copyright 2008-2022 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -30,7 +30,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_211123" <<endl<<endl;
+    cout<<endl<<"v_220207" <<endl<<endl;
     
     mkdir("./DIVEMesh_Log",0777);
 
