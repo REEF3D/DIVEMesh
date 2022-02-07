@@ -27,7 +27,7 @@ Author: Hans Bihs
 driver::driver()
 {
 	cout<<endl<<endl;
-	cout<<"DIVEMesh (c) 2008-2021 Hans Bihs"<<endl<<endl;
+	cout<<"DIVEMesh (c) 2008-2022 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
     cout<<endl<<"v_220207" <<endl<<endl;
