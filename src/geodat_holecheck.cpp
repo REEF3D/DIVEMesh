@@ -46,8 +46,9 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
 
     kx = p->knox;
     ky = p->knoy;
-    cout<<"PCOUNT: "<<pcount<<endl;
+    cout<<"PCOUNT: "<<pcount<<" dij: "<<dij<<endl;
     
+    if(p->G53_flag==0)
     for(n=0;n<p->Np;++n)
     {
         i = p->poscgen_i(X[n],p->XP,kx);
@@ -81,11 +82,13 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
                     ++pcount;
                     ++count;
                         
-                    //cout<<"DIST: "<<dist<<" X[n]: "<<X[n]<<" X[q]: "<<X[q]<<" Y[n]: "<<Y[n]<<" Y[q]: "<<Y[q]<<"  ptnum[r+dd][s+dd]: "<<ptnum[r+dd][s+dd]<<" t: "<<t<<" |  n: "<<n<<" q: "<<q
-                    //<<"   | i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" |  count: "<<count<<endl;
+                    cout<<"DIST: "<<dist<<" X[n]: "<<X[n]<<" X[q]: "<<X[q]<<" Y[n]: "<<Y[n]<<" Y[q]: "<<Y[q]<<"  ptnum[r+dd][s+dd]: "<<ptnum[r+dd][s+dd]<<" t: "<<t<<" |  n: "<<n<<" q: "<<q
+                    <<"   | i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" |  count: "<<count<<endl;
                 }
 
             }
+            
+            
             
         //cout<<n<<"  "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
         
