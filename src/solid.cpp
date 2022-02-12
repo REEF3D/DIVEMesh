@@ -363,8 +363,12 @@ void solid::gcb_estimate(lexer *p, dive *a)
 	int qn;
 
 	for(qn=0; qn<p->M10;qn++)
+    {
 	a->solid_gcb[qn]=0;
-
+    a->solid_gcbextra[qn]=0;
+    }
+    
+    // gcb_est
 	n=0;
 	NLOOP
 	{
@@ -373,6 +377,41 @@ void solid::gcb_estimate(lexer *p, dive *a)
 		if(a->solid_dist(i,j,k)>=0.0)
 		if(a->solid_dist(i-1,j,k)<0.0 || a->solid_dist(i+1,j,k)<0.0 || a->solid_dist(i,j-1,k)<0.0 || a->solid_dist(i,j+1,k)<0.0 || a->solid_dist(i,j,k-1)<0.0 || a->solid_dist(i,j,k+1)<0.0)
 		++a->solid_gcb[n];
+		}
+	++n;
+	}
+    
+    // gcbextra_est
+    int cc;
+	n=0;
+	NLOOP
+	{
+		SUBLOOP
+		{
+            cc=0;
+            if(a->solid_dist(i,j,k)<0.0)
+            {
+                if(a->solid_dist(i-1,j,k)>0.0) 
+                ++cc;
+                
+                if(a->solid_dist(i+1,j,k)>0.0)
+                ++cc;
+                
+                if(a->solid_dist(i,j-1,k)>0.0)
+                ++cc;
+                
+                if(a->solid_dist(i,j+1,k)>0.0)
+                ++cc;
+                
+                if(a->solid_dist(i,j,k-1)>0.0)
+                ++cc;
+                
+                if(a->solid_dist(i,j,k+1)>0.0)
+                ++cc;
+            
+            if(cc>=2)
+            ++a->solid_gcbextra[n];
+            }
 		}
 	++n;
 	}

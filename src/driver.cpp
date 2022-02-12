@@ -30,7 +30,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2022 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_220208" <<endl<<endl;
+    cout<<endl<<"v_220212" <<endl<<endl;
     
     mkdir("./DIVEMesh_Log",0777);
 
@@ -117,6 +117,8 @@ void driver::mainloop()
     
     if(p->solid_count>0 || p->S1==1 || (p->G10>0&&p->G9==2))
 	psolid->gcb_estimate(p,a);
+    
+    psurf->gcb_estimate(p,a);
 
 
 // Hydrodynamic Coupling

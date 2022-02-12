@@ -20,43 +20,49 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include<iostream>
-#include"increment.h"
+#include"surface.h"
+#include"lexer.h"
+#include"dive.h"
 
-class lexer;
-class dive;
-class field;
-
-using namespace std;
-
-#ifndef SURFACE_H_
-#define SURFACE_H_
-
-class surface : public increment
+void surface::gcb_estimate(lexer* p, dive* a)
 {
-public:
-
-    surface();
-    virtual ~surface();
-    void start(lexer*,dive*);
-
-    void makesurf(lexer*,dive*);
-    void makedist(lexer*,dive*);
-    void direction(lexer*,dive*);
-	void mem_alloc(lexer*,dive*);
-    void make_solidsurf(lexer*,dive*);
-    void makesurfsolid(lexer*,dive*);
+    for(qn=0; qn<p->M10;qn++)
+    {
+    a->tot_gcbextra[qn]=0;
+    }
     
-    
-    void mem_alloc_plate(lexer*,dive*);
-    void makesurf_plate(lexer*,dive*);
-    void gcb_estimate(lexer*,dive*);
-
-
-private:
-
-    
-    int surfnum;
-};
-
-#endif
+    // gcbextra_est
+    int cc;
+	n=0;
+	NLOOP
+	{
+		SUBLOOP
+		{
+            cc=0;
+            if(a->flag(i,j,k)<0)
+            {
+                if(a->flag(i-1,j,k)>0) 
+                ++cc;
+                
+                if(a->flag(i+1,j,k)>0)
+                ++cc;
+                
+                if(a->flag(i,j-1,k)>0)
+                ++cc;
+                
+                if(a->flag(i,j+1,k)>0)
+                ++cc;
+                
+                if(a->flag(i,j,k-1)>0)
+                ++cc;
+                
+                if(a->flag(i,j,k+1)>0)
+                ++cc;
+            
+            if(cc>=2)
+            ++a->solid_gcbextra[n];
+            }
+		}
+	++n;
+	}
+}

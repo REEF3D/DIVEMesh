@@ -165,6 +165,7 @@
         <File Name="bc.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Surface">
+        <File Name="surface_gcbest.cpp"/>
         <File Name="surface_plate.cpp"/>
         <File Name="surface.cpp"/>
         <File Name="surface_dir.cpp"/>

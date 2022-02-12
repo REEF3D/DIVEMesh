@@ -361,8 +361,12 @@ void topo::gcb_estimate(lexer *p, dive *a)
 	int qn;
 
 	for(qn=0; qn<p->M10;qn++)
+    {
 	a->topo_gcb[qn]=0;
-
+    a->topo_gcbextra[qn]=0;
+    }
+    
+    // gcb_est
 	n=0;
 	NLOOP
 	{
@@ -371,6 +375,41 @@ void topo::gcb_estimate(lexer *p, dive *a)
 		if(a->topo_dist(i,j,k)>=0.0)
 		if(a->topo_dist(i-1,j,k)<0.0 || a->topo_dist(i+1,j,k)<0.0 || a->topo_dist(i,j-1,k)<0.0 || a->topo_dist(i,j+1,k)<0.0 || a->topo_dist(i,j,k-1)<0.0 || a->topo_dist(i,j,k+1)<0.0)
 		++a->topo_gcb[n];
+		}
+	++n;
+	}
+    
+    // gcbextra_est
+    int cc;
+	n=0;
+	NLOOP
+	{
+		SUBLOOP
+		{
+            cc=0;
+            if(a->topo_dist(i,j,k)<0.0)
+            {
+                if(a->topo_dist(i-1,j,k)>0.0) 
+                ++cc;
+                
+                if(a->topo_dist(i+1,j,k)>0.0)
+                ++cc;
+                
+                if(a->topo_dist(i,j-1,k)>0.0)
+                ++cc;
+                
+                if(a->topo_dist(i,j+1,k)>0.0)
+                ++cc;
+                
+                if(a->topo_dist(i,j,k-1)>0.0)
+                ++cc;
+                
+                if(a->topo_dist(i,j,k+1)>0.0)
+                ++cc;
+            
+            if(cc>=2)
+            ++a->topo_gcbextra[n];
+            }
 		}
 	++n;
 	}

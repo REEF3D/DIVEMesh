@@ -62,6 +62,7 @@ class dive : public increment, public resize_class
     int *in,*ut,*fsf,*bed,*wall;                                // surface counter
     int *subknox,*subknoy,*subknoz;
 	int i_dir,j_dir,k_dir;
+    int *solid_gcbextra,*topo_gcbextra,*tot_gcbextra;
 
 	//domain decomp
 	int *mpx,*mpy,*mpz;                                         // possible subgrids in each directions
