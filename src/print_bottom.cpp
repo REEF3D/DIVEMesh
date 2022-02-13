@@ -20,12 +20,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"print_binary.h"
+#include"print_grid.h"
 #include"lexer.h"
 #include"dive.h"
 #include<sys/stat.h>
 
-void print_binary::print_bottom(lexer* p,dive* a)
+void print_grid::print_bottom(lexer* p,dive* a)
 {
     char name[100];
     

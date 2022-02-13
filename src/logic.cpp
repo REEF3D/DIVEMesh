@@ -40,7 +40,7 @@ void driver::logic(lexer* p)
     pbc=new bc();
     psurf= new surface();
     pdd=new decomp();
-    pprint=new print_binary(p);
+    pprint=new print_grid(p);
     
     pvtu = new print_vtu(p);
 

@@ -65,8 +65,8 @@
         <File Name="driver_declarations.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Printer">
+        <File Name="print_grid.h"/>
         <File Name="print_vtu.h"/>
-        <File Name="print_binary.h"/>
         <File Name="printer.h"/>
         <File Name="print_stl.h"/>
       </VirtualDirectory>
@@ -249,8 +249,8 @@
       <File Name="logic.cpp"/>
       <File Name="main.cpp"/>
       <VirtualDirectory Name="Printer">
+        <File Name="print_grid.cpp"/>
         <File Name="print_vtu.cpp"/>
-        <File Name="print_binary.cpp"/>
         <File Name="print_debug.cpp"/>
         <File Name="print_solid.cpp"/>
         <File Name="print_bottom.cpp"/>

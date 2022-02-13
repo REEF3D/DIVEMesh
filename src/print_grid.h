@@ -31,11 +31,11 @@ using namespace std;
 #ifndef PRINT_BINARY_H_
 #define PRINT_BINARY_H_
 
-class print_binary : public printer, public increment
+class print_grid : public printer, public increment
 {
 public:
-    print_binary(lexer*);
-    virtual ~print_binary();
+    print_grid(lexer*);
+    virtual ~print_grid();
 
     virtual void start(lexer*,dive*);
     void print_debug(lexer*,dive*);

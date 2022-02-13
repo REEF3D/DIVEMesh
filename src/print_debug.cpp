@@ -20,10 +20,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"print_binary.h"
+#include"print_grid.h"
 #include<sys/stat.h>
 
-void print_binary::print_debug(lexer* p, dive* a)
+void print_grid::print_debug(lexer* p, dive* a)
 {
     mkdir("./DIVEMesh_log",0777);
 

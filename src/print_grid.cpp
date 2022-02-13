@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"print_binary.h"
+#include"print_grid.h"
 #include"lexer.h"
 #include"dive.h"
 #include<iostream>
@@ -29,15 +29,15 @@ Author: Hans Bihs
 #include<sys/types.h>
 #include <iomanip>
 
-print_binary::print_binary(lexer* p)
+print_grid::print_grid(lexer* p)
 {
 }
 
-print_binary::~print_binary()
+print_grid::~print_grid()
 {
 }
 
-void print_binary::start(lexer* p,dive* a)
+void print_grid::start(lexer* p,dive* a)
 {
     int iin;
     double ddn;
