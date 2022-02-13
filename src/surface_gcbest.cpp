@@ -40,24 +40,24 @@ void surface::gcb_estimate(lexer* p, dive* a)
 		SUBLOOP
 		{
             count=0;
-            if(a->flag(i,j,k)<0)
+            if(a->solid_dist(i,j,k)<0.0 && a->topo_dist(i,j,k)<0.0) 
             {
-                if(a->flag(i-1,j,k)>0) 
+                if(a->solid_dist(i-1,j,k)>0.0 && a->topo_dist(i-1,j,k)>0.0) 
                 ++count;
                 
-                if(a->flag(i+1,j,k)>0)
+                if(a->solid_dist(i+1,j,k)>0.0 && a->topo_dist(i+1,j,k)>0.0)
                 ++count;
                 
-                if(a->flag(i,j-1,k)>0)
+                if(a->solid_dist(i,j-1,k)>0.0 && a->topo_dist(i,j-1,k)>0.0)
                 ++count;
                 
-                if(a->flag(i,j+1,k)>0)
+                if(a->solid_dist(i,j+1,k)>0.0 && a->topo_dist(i,j+1,k)>0.0)
                 ++count;
                 
-                if(a->flag(i,j,k-1)>0)
+                if(a->solid_dist(i,j,k-1)>0.0 && a->topo_dist(i,j,k-1)>0.0)
                 ++count;
                 
-                if(a->flag(i,j,k+1)>0)
+                if(a->solid_dist(i,j,k+1)>0.0 && a->topo_dist(i,j,k+1)>0.0)
                 ++count;
             
             if(count>=2)
