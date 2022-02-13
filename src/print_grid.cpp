@@ -255,23 +255,46 @@ NLOOP
     result.write((char*)&iin, sizeof (int));
     iin = a->periodicX[count][5];
     result.write((char*)&iin, sizeof (int));
-
-    iin = p->topoprint; //write topo
-    result.write((char*)&iin, sizeof (int));
-    iin = p->D10;
-    result.write((char*)&iin, sizeof (int));  
-    iin = p->solidprint;    // write solid
-    result.write((char*)&iin, sizeof (int));  
-    iin = a->solid_gcb[count-1];
-    result.write((char*)&iin, sizeof (int));  
+    
     iin = a->i_dir;
     result.write((char*)&iin, sizeof (int));  
     iin = a->j_dir;
     result.write((char*)&iin, sizeof (int));  
     iin = a->k_dir;
     result.write((char*)&iin, sizeof (int));  
+    
+    iin = p->D10;
+    result.write((char*)&iin, sizeof (int));  
+    
+    
+    iin = p->solidprint;    // write solid
+    result.write((char*)&iin, sizeof (int));  
+    iin = p->topoprint; //write topo
+    result.write((char*)&iin, sizeof (int));
+    iin = a->solid_gcb[count-1];
+    result.write((char*)&iin, sizeof (int));    
     iin = a->topo_gcb[count-1];
     result.write((char*)&iin, sizeof (int));  
+    
+    iin = a->solid_gcbextra[count-1];
+    result.write((char*)&iin, sizeof (int));  
+    iin = a->topo_gcbextra[count-1];
+    result.write((char*)&iin, sizeof (int));  
+    iin = a->tot_gcbextra[count-1];
+    result.write((char*)&iin, sizeof (int));  
+    
+    
+    iin = 0;
+    result.write((char*)&iin, sizeof (int)); 
+    iin = 0;
+    result.write((char*)&iin, sizeof (int));  
+    iin = 0;
+    result.write((char*)&iin, sizeof (int)); 
+    iin = 0;
+    result.write((char*)&iin, sizeof (int)); 
+    iin = 0;
+    result.write((char*)&iin, sizeof (int)); 
+    
     
     /*cout<<"topoprint: "<<p->topoprint<<" solidprint: "<<p->solidprint<<endl;
     

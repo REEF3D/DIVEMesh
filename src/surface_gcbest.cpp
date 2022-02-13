@@ -31,36 +31,37 @@ void surface::gcb_estimate(lexer* p, dive* a)
     a->tot_gcbextra[qn]=0;
     }
     
+    
     // gcbextra_est
-    int cc;
+    int count;
 	n=0;
 	NLOOP
 	{
 		SUBLOOP
 		{
-            cc=0;
+            count=0;
             if(a->flag(i,j,k)<0)
             {
                 if(a->flag(i-1,j,k)>0) 
-                ++cc;
+                ++count;
                 
                 if(a->flag(i+1,j,k)>0)
-                ++cc;
+                ++count;
                 
                 if(a->flag(i,j-1,k)>0)
-                ++cc;
+                ++count;
                 
                 if(a->flag(i,j+1,k)>0)
-                ++cc;
+                ++count;
                 
                 if(a->flag(i,j,k-1)>0)
-                ++cc;
+                ++count;
                 
                 if(a->flag(i,j,k+1)>0)
-                ++cc;
+                ++count;
             
-            if(cc>=2)
-            ++a->solid_gcbextra[n];
+            if(count>=2)
+            ++a->tot_gcbextra[n];
             }
 		}
 	++n;

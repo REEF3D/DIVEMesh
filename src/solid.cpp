@@ -382,34 +382,34 @@ void solid::gcb_estimate(lexer *p, dive *a)
 	}
     
     // gcbextra_est
-    int cc;
+    int count;
 	n=0;
 	NLOOP
 	{
 		SUBLOOP
 		{
-            cc=0;
+            count=0;
             if(a->solid_dist(i,j,k)<0.0)
             {
                 if(a->solid_dist(i-1,j,k)>0.0) 
-                ++cc;
+                ++count;
                 
                 if(a->solid_dist(i+1,j,k)>0.0)
-                ++cc;
+                ++count;
                 
                 if(a->solid_dist(i,j-1,k)>0.0)
-                ++cc;
+                ++count;
                 
                 if(a->solid_dist(i,j+1,k)>0.0)
-                ++cc;
+                ++count;
                 
                 if(a->solid_dist(i,j,k-1)>0.0)
-                ++cc;
+                ++count;
                 
                 if(a->solid_dist(i,j,k+1)>0.0)
-                ++cc;
+                ++count;
             
-            if(cc>=2)
+            if(count>=2)
             ++a->solid_gcbextra[n];
             }
 		}
