@@ -548,7 +548,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
     
 
 	for(bb=0;bb<=a->my;++bb)
-	a->yorig[bb] = p->YN[a->ynode[bb]+marge]+p->ymin;
+	a->yorig[bb] = p->YN[a->ynode[bb]+marge];
 	
 
 	ycount_sum=0;

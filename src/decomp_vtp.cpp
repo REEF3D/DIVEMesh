@@ -25,7 +25,7 @@ Author: Hans Bihs
 
 void decomp::decomp_vtp(lexer* p, dive* a)
 {
-    
+    double ddn;
     
     mkdir("./DIVEMesh_Paraview",0777);
 	sprintf(name,"./DIVEMesh_Paraview/DIVEMesh_Partition.vtp");
@@ -40,7 +40,7 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 	offset[n]=0;
 	++n;
 
-    offset[n]=offset[n-1]+4*tricount*3*3 + 4;
+    offset[n]=offset[n-1]+8*tricount*3*3 + 4;
     ++n;
     offset[n]=offset[n-1]+4*tricount*3 + 4;
     ++n;
@@ -55,7 +55,7 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 
     n=0;
     result<<"<Points>"<<endl;
-    result<<"<DataArray type=\"Float32\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<DataArray type=\"Float64\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
     ++n;
     result<<"</Points>"<<endl;
 
@@ -76,19 +76,22 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 
 
 //  XYZ
-	iin=4*tricount*3*3;
+	iin=8*tricount*3*3;
 	result.write((char*)&iin, sizeof (int));
     for(n=0;n<tricount;++n)
 	for(q=0;q<3;++q)
 	{
-	ffn=trix[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	ffn=float(trix[n][q]);
+    ddn=trix[n][q];
+	result.write((char*)&ddn, sizeof (double));
 
-	ffn=triy[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	ffn=float(triy[n][q]);
+    ddn=triy[n][q];
+	result.write((char*)&ddn, sizeof (double));
 
-	ffn=triz[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	ffn=float(triz[n][q]);
+    ddn=triz[n][q];
+	result.write((char*)&ddn, sizeof (double));
 	}
 
 //  Connectivity POLYGON
