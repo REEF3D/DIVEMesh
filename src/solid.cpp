@@ -108,14 +108,14 @@ void solid::start(lexer* p, dive* a)
 
     ts_stl=tri_start;
     te_stl=tri_end;
-    tricount_stl=p->tricount;
+    p->tricount=p->trinum_stl;
 
 	if(p->S1==1)
     for(rayiter=0; rayiter<2; ++rayiter)
     {
     tri_start=ts_stl;
     tri_end=te_stl;
-    p->tricount=tricount_stl;
+    
 
     stl_preproc(p,a,tri_start,tri_end);
 	ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -395,44 +395,44 @@ void solid::gcb_estimate(lexer *p, dive *a)
 	{
 		SUBLOOP
 		{
-            if(a->solid_dist(i,j,k)<0.0)
+            if(a->solid_dist(i,j,k)>0.0)
             {
-                if(a->solid_dist(i-1,j,k)>0.0) 
+                if(a->solid_dist(i-1,j,k)<0.0) 
                 {
                 ++fgc(i-1,j,k);
                 ++fgc(i-2,j,k);
                 ++fgc(i-3,j,k);
                 }
                 
-                if(a->solid_dist(i+1,j,k)>0.0)
+                if(a->solid_dist(i+1,j,k)<0.0)
                 {
                 ++fgc(i+1,j,k);
                 ++fgc(i+2,j,k);
                 ++fgc(i+3,j,k);
                 }
                 
-                if(a->solid_dist(i,j-1,k)>0.0)
+                if(a->solid_dist(i,j-1,k)<0.0)
                 {
                 ++fgc(i,j-1,k);
                 ++fgc(i,j-2,k);
                 ++fgc(i,j-3,k);
                 }
                 
-                if(a->solid_dist(i,j+1,k)>0.0)
+                if(a->solid_dist(i,j+1,k)<0.0)
                 {
                 ++fgc(i,j+1,k);
                 ++fgc(i,j+2,k);
                 ++fgc(i,j+3,k);
                 }
                 
-                if(a->solid_dist(i,j,k-1)>0.0)
+                if(a->solid_dist(i,j,k-1)<0.0)
                 {
                 ++fgc(i,j,k-1);
                 ++fgc(i,j,k-2);
                 ++fgc(i,j,k-3);
                 }
                 
-                if(a->solid_dist(i,j,k+1)>0.0)
+                if(a->solid_dist(i,j,k+1)<0.0)
                 {
                 ++fgc(i,j,k+1);
                 ++fgc(i,j,k+2);

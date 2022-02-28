@@ -43,8 +43,7 @@ lexer::lexer()
     
     tri_space();
     
-	if(S1==1)
-	read_stl();
+	
 	
     gridspacing();
 }

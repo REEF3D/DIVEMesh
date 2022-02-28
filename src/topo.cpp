@@ -380,12 +380,65 @@ void topo::gcb_estimate(lexer *p, dive *a)
 	}
     
     // gcbextra_est
+    intfield fgc(p);
+    
+    MALOOP
+    fgc(i,j,k)=0;
+    
+    
+    
     int count;
 	n=0;
 	NLOOP
 	{
 		SUBLOOP
 		{
+            if(a->topo_dist(i,j,k)>0.0)
+            {
+                if(a->topo_dist(i-1,j,k)<0.0) 
+                {
+                ++fgc(i-1,j,k);
+                ++fgc(i-2,j,k);
+                ++fgc(i-3,j,k);
+                }
+                
+                if(a->topo_dist(i+1,j,k)<0.0)
+                {
+                ++fgc(i+1,j,k);
+                ++fgc(i+2,j,k);
+                ++fgc(i+3,j,k);
+                }
+                
+                if(a->topo_dist(i,j-1,k)<0.0)
+                {
+                ++fgc(i,j-1,k);
+                ++fgc(i,j-2,k);
+                ++fgc(i,j-3,k);
+                }
+                
+                if(a->topo_dist(i,j+1,k)<0.0)
+                {
+                ++fgc(i,j+1,k);
+                ++fgc(i,j+2,k);
+                ++fgc(i,j+3,k);
+                }
+                
+                if(a->topo_dist(i,j,k-1)<0.0)
+                {
+                ++fgc(i,j,k-1);
+                ++fgc(i,j,k-2);
+                ++fgc(i,j,k-3);
+                }
+                
+                if(a->topo_dist(i,j,k+1)<0.0)
+                {
+                ++fgc(i,j,k+1);
+                ++fgc(i,j,k+2);
+                ++fgc(i,j,k+3);
+                }
+            
+            }
+            /*
             count=0;
             if(a->topo_dist(i,j,k)<0.0)
             {
@@ -409,8 +462,24 @@ void topo::gcb_estimate(lexer *p, dive *a)
             
             if(count>=2)
             ++a->topo_gcbextra[n];
-            }
+            }*/
 		}
 	++n;
 	}
+    
+    
+    n=0;
+	NLOOP
+	{
+		SUBLOOP
+		{
+            
+        if(fgc(i,j,k)>=2)
+        ++a->topo_gcbextra[n];
+        }
+	++n;
+	}
+    
+    //for(n=0;n<p->M10;++n)
+    //cout<<n<<" a->topo_gcbextra[n]: "<<a->topo_gcbextra[n]<<endl;
 }

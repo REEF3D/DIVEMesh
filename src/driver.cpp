@@ -30,7 +30,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2022 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_220227" <<endl<<endl;
+    cout<<endl<<"v_220228" <<endl<<endl;
     
     mkdir("./DIVEMesh_Log",0777);
 
@@ -88,6 +88,10 @@ void driver::mainloop()
 	}
     
 // Solid
+
+    if(p->S1==1)
+	p->read_stl();
+    
 	if(p->solid_count>0||p->S1==1)
 	psolid->start(p,a);
 

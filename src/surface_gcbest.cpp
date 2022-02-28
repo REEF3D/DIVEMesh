@@ -26,11 +26,13 @@ Author: Hans Bihs
 
 void surface::gcb_estimate(lexer* p, dive* a)
 {
-    for(qn=0; qn<p->M10;qn++)
-    {
-    a->tot_gcbextra[qn]=0;
-    }
+    intfield fgc(p);
     
+    MALOOP
+    fgc(i,j,k)=0;
+    
+    for(qn=0; qn<p->M10;qn++)
+    a->tot_gcbextra[qn]=0;
     
     // gcbextra_est
     int count;
@@ -40,30 +42,64 @@ void surface::gcb_estimate(lexer* p, dive* a)
 		SUBLOOP
 		{
             count=0;
-            if(a->solid_dist(i,j,k)<0.0 && a->topo_dist(i,j,k)<0.0) 
+            if(a->solid_dist(i,j,k)>0.0 && a->topo_dist(i,j,k)>0.0) 
             {
-                if(a->solid_dist(i-1,j,k)>0.0 && a->topo_dist(i-1,j,k)>0.0) 
-                ++count;
+                if(a->solid_dist(i-1,j,k)<0.0 || a->topo_dist(i-1,j,k)<0.0) 
+                {
+                ++fgc(i-1,j,k);
+                ++fgc(i-2,j,k);
+                ++fgc(i-3,j,k);
+                }
                 
-                if(a->solid_dist(i+1,j,k)>0.0 && a->topo_dist(i+1,j,k)>0.0)
-                ++count;
+                if(a->solid_dist(i+1,j,k)<0.0 || a->topo_dist(i+1,j,k)<0.0)
+                {
+                ++fgc(i+1,j,k);
+                ++fgc(i+2,j,k);
+                ++fgc(i+3,j,k);
+                }
                 
-                if(a->solid_dist(i,j-1,k)>0.0 && a->topo_dist(i,j-1,k)>0.0)
-                ++count;
+                if(a->solid_dist(i,j-1,k)<0.0 || a->topo_dist(i,j-1,k)<0.0)
+                {
+                ++fgc(i,j-1,k);
+                ++fgc(i,j-2,k);
+                ++fgc(i,j-3,k);
+                }
                 
-                if(a->solid_dist(i,j+1,k)>0.0 && a->topo_dist(i,j+1,k)>0.0)
-                ++count;
+                if(a->solid_dist(i,j+1,k)<0.0 || a->topo_dist(i,j+1,k)<0.0)
+                {
+                ++fgc(i,j+1,k);
+                ++fgc(i,j+2,k);
+                ++fgc(i,j+3,k);
+                }
                 
-                if(a->solid_dist(i,j,k-1)>0.0 && a->topo_dist(i,j,k-1)>0.0)
-                ++count;
+                if(a->solid_dist(i,j,k-1)<0.0 || a->topo_dist(i,j,k-1)<0.0)
+                {
+                ++fgc(i,j,k-1);
+                ++fgc(i,j,k-2);
+                ++fgc(i,j,k-3);
+                }
                 
-                if(a->solid_dist(i,j,k+1)>0.0 && a->topo_dist(i,j,k+1)>0.0)
-                ++count;
+                if(a->solid_dist(i,j,k+1)<0.0 || a->topo_dist(i,j,k+1)<0.0)
+                {
+                ++fgc(i,j,k+1);
+                ++fgc(i,j,k+2);
+                ++fgc(i,j,k+3);
+                }
             
-            if(count>=2)
-            ++a->tot_gcbextra[n];
             }
 		}
+	++n;
+	}
+    
+    n=0;
+	NLOOP
+	{
+		SUBLOOP
+		{
+            
+        if(fgc(i,j,k)>=2)
+        ++a->tot_gcbextra[n];
+        }
 	++n;
 	}
 }
