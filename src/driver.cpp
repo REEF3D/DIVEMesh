@@ -30,7 +30,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2022 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_220228" <<endl<<endl;
+    cout<<endl<<"v_220326" <<endl<<endl;
     
     mkdir("./DIVEMesh_Log",0777);
 
@@ -116,6 +116,7 @@ void driver::mainloop()
     pbc->makebc(p,a);
     psurf->start(p,a);
 
+// GCB Estimate
 	if(p->topo_count>0 || (p->G10>0&&p->G9==1))
 	ptopo->gcb_estimate(p,a);
     

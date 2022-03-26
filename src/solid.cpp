@@ -350,6 +350,7 @@ void solid::start(lexer* p, dive* a)
 
 void solid::gcb_estimate(lexer *p, dive *a)
 {
+    int qn;
     n=0;
 
     LOOP
@@ -358,9 +359,6 @@ void solid::gcb_estimate(lexer *p, dive *a)
 		if(a->solid_dist(i-1,j,k)<0.0 || a->solid_dist(i+1,j,k)<0.0 || a->solid_dist(i,j-1,k)<0.0 || a->solid_dist(i,j+1,k)<0.0 || a->solid_dist(i,j,k-1)<0.0 || a->solid_dist(i,j,k+1)<0.0)
 		++n;
     }
-
-
-	int qn;
 
 	for(qn=0; qn<p->M10;qn++)
     {
@@ -386,8 +384,6 @@ void solid::gcb_estimate(lexer *p, dive *a)
     
     MALOOP
     fgc(i,j,k)=0;
-    
-    
     
     int count;
 	n=0;
