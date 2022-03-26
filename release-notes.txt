@@ -1,4 +1,11 @@
 
+22.03
+x fixed combined solid.vtp and topo.vtp print out
+x added RAM usage optimizaiton suport for solid and topo
+x improved geodat holecheck
+x fixed partition paraview printout
+x fixed decomposition for y-dominat partition
+
 21.11
 x renamed data to dataset for gcc compatibility
 
