@@ -98,6 +98,7 @@
   </VirtualDirectory>
   <VirtualDirectory Name="Sources">
     <VirtualDirectory Name="Topo">
+      <File Name="topo_gcbest.cpp"/>
       <File Name="topo.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Geometry">
@@ -283,6 +284,7 @@
       <File Name="bedlevel.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
+      <File Name="solid_gcbest.cpp"/>
       <File Name="solid_fluvial_box.cpp"/>
       <File Name="solid.cpp"/>
     </VirtualDirectory>

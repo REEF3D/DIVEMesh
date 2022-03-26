@@ -114,17 +114,22 @@ void driver::mainloop()
     pdd->start(p,a);
 
     pbc->makebc(p,a);
+    cout<<" SURF: 001"<<endl;
     psurf->start(p,a);
+    
+    cout<<" SURF: 002"<<endl;
 
 // GCB Estimate
 	if(p->topo_count>0 || (p->G10>0&&p->G9==1))
 	ptopo->gcb_estimate(p,a);
     
+    cout<<" SURF: 003"<<endl;
+    
     if(p->solid_count>0 || p->S1==1 || (p->G10>0&&p->G9==2))
 	psolid->gcb_estimate(p,a);
-    
+    cout<<" SURF: 004"<<endl;
     psurf->gcb_estimate(p,a);
-
+cout<<" SURF: 005"<<endl;
 
 // Hydrodynamic Coupling
     if(p->H10==4)
