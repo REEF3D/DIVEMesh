@@ -167,12 +167,12 @@ dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
 	Darray(vertice,5*polyval,3);
 	
 	
-	Iarray(solid_gcb,p->M10+1);    
-    Iarray(topo_gcb,p->M10+1);
+	Iarray(solid_gcb,p->M10+2);    
+    Iarray(topo_gcb,p->M10+2);
     
-    Iarray(solid_gcbextra,p->M10+1);
-    Iarray(topo_gcbextra,p->M10+1);
-    Iarray(tot_gcbextra,p->M10+1);
+    Iarray(solid_gcbextra,p->M10+2);
+    Iarray(topo_gcbextra,p->M10+2);
+    Iarray(tot_gcbextra,p->M10+2);
 
 
 cout<<'.'<<endl;

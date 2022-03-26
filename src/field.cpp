@@ -32,8 +32,6 @@ field::field(lexer *p)
 	dz=zma;
 }
 
-
-
 double& field::operator()(int ii, int jj, int kk)
 {
 	return feld[ii+dx][jj+dy][kk+dz];

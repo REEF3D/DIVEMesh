@@ -24,9 +24,9 @@ Author: Hans Bihs
 
 increment::increment()
 {
-    xma=1;
-    yma=1;
-    zma=1;
+    xma=3;
+    yma=3;
+    zma=3;
     
     marge=5;
     margin=3;
