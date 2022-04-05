@@ -94,7 +94,7 @@ void surface::gcb_estimate(lexer* p, dive* a)
 		}
 	++n;
 	}
-    
+    /*
     for(q=0;q<a->para1count;q++)
     {
     i=a->para1sf[q][0];
@@ -159,7 +159,7 @@ void surface::gcb_estimate(lexer* p, dive* a)
     ++fgc(i,j,k+1);
     ++fgc(i,j,k+2);
     ++fgc(i,j,k+3);
-    }
+    }*/
     
     n=0;
 	NLOOP
