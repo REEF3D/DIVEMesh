@@ -99,7 +99,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     
     // allocate simtime
-    p->Darray(simtime,numiter);
+    p->Darray(simtime,numiter+1);
     
 // ------------
     
