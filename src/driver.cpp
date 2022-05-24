@@ -30,8 +30,8 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2022 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_220424" <<endl<<endl;
-    
+    cout<<endl<<"v_220524" <<endl<<endl;
+
     mkdir("./DIVEMesh_Log",0777);
 
 	p = new lexer();
@@ -53,7 +53,7 @@ void driver::mainloop()
 
 // baselayer new
     pbase->start(p,a);
-    
+
 // Geometry Pipeline
     //Solid
         // geodat
@@ -63,11 +63,11 @@ void driver::mainloop()
         // geodat
         // STL
         // solids
-        
+
 // Geodata
     if(p->G10>0 && p->G9==1)
     pgeo->start(p,a,a->topobed,a->topo_dist);
-    
+
     if(p->G10>0 && p->G9==2)
     pgeo->start(p,a,a->solidbed,a->solid_dist);
 
@@ -86,12 +86,12 @@ void driver::mainloop()
 	if(p->S6==1)
 	print_topo.topo_stl(p,a);
 	}
-    
+
 // Solid
 
     if(p->S1==1)
 	p->read_stl();
-    
+
 	if(p->solid_count>0||p->S1==1)
 	psolid->start(p,a);
 
@@ -103,7 +103,7 @@ void driver::mainloop()
 	if(p->S6==1)
 	print_solid.solid_stl(p,a);
 	}
-    
+
 // Slice
     pslice->start(p,a);
 
