@@ -31,8 +31,15 @@ void hdc::allocate(lexer *p, dive *a)
     p->Darray(X,NGx);
     p->Darray(Y,NGy);
     p->Darray(Z,NGz);
+
+    p->Darray(eta,NGx,NGy);
+    p->Darray(Fifsf,NGx,NGy);
     p->Darray(bed,NGx,NGy);
-        
+    
+    p->Darray(U,NGx,NGy,NGz);
+    p->Darray(V,NGx,NGy,NGz);
+    p->Darray(W,NGx,NGy,NGz);
+    
     p->Iarray(orig_i,numprocs);
     p->Iarray(orig_j,numprocs);
     p->Iarray(orig_k,numprocs);
@@ -49,19 +56,5 @@ void hdc::allocate(lexer *p, dive *a)
     p->Iarray(NLx,numprocs);
     p->Iarray(NLy,numprocs);
     p->Iarray(NLz,numprocs);
-    
-    
-    // allocate arrays
-    p->Darray(X,NGx);
-    p->Darray(Y,NGy);
-    p->Darray(Z,NGz);
-    p->Darray(eta,NGx,NGy);
-    p->Darray(Fifsf,NGx,NGy);
-    p->Darray(bed,NGx,NGy);
-    p->Darray(U,NGx,NGy,NGz);
-    p->Darray(V,NGx,NGy,NGz);
-    p->Darray(W,NGx,NGy,NGz);
-    
-    
     
 }

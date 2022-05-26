@@ -28,12 +28,9 @@ Author: Hans Bihs
 #include<sys/types.h>
 
 void hdc::write(lexer *p, dive *a)
-{
-    
+{    
     // header
-    
-    
-        
+  
     ofstream wfile;
     
     // write result
