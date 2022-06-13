@@ -143,7 +143,7 @@ void topo::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->T11;++qn)
         {
-        box_array(p,a,a->solid,a->solid_dist,a->solidbed,qn,tri_start,tri_end,p->T11_xs[qn],p->T11_ys[qn],p->T11_zs[qn],
+        box_array(p,a,a->topo,a->topo_dist,a->topobed,qn,tri_start,tri_end,p->T11_xs[qn],p->T11_ys[qn],p->T11_zs[qn],
                 p->T11_L[qn],p->T11_G[qn],p->T11_ni[qn],p->T11_nj[qn],p->T11_nk[qn]);
         }
 
