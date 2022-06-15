@@ -342,9 +342,7 @@ void solid::start(lexer* p, dive* a)
     cout<<"SOLID NAN: "<<a->solid_dist(i,j,k)<<endl;
 
 
-
 	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
-
 
 }
 
