@@ -200,10 +200,10 @@ void lexer::gridspacing_fsf()
     XN[IP] = lx1 * ex1 * double(i) + xmin;
     
     for(i=B121_N1;i<B121_N2+B121_N1;++i)
-    XN[IP] = lx2 * ex2 * double(i-B121_N1) + B121_x1 + xmin;
+    XN[IP] = lx2 * ex2 * double(i-B121_N1) + B121_x1;
     
     for(i=B121_N2+B121_N1;i<knox;++i)
-    XN[IP] = lx3 * ex3 * double(i-B121_N2-B121_N1) + B121_x2 + xmin;
+    XN[IP] = lx3 * ex3 * double(i-B121_N2-B121_N1) + B121_x2;
     }
     
     
@@ -535,10 +535,10 @@ void lexer::gridspacing_fsf()
     YN[JP] = ly1 * ey1 * double(j) + ymin;
     
     for(j=B122_N1;j<B122_N2+B122_N1;++j)
-    YN[JP] = ly2 * ey2 * double(j-B122_N1) + B122_y1 + ymin;
+    YN[JP] = ly2 * ey2 * double(j-B122_N1) + B122_y1;
     
     for(j=B122_N2+B122_N1;j<knoy;++j)
-    YN[JP] = ly3 * ey3 * double(j-B122_N2-B122_N1) + B122_y2 + ymin;
+    YN[JP] = ly3 * ey3 * double(j-B122_N2-B122_N1) + B122_y2;
     }
     
     
@@ -896,10 +896,10 @@ void lexer::gridspacing_fsf()
     ZN[KP] = lz1 * ez1 * double(k) + zmin;
     
     for(k=B123_N1;k<B123_N2+B123_N1;++k)
-    ZN[KP] = lz2 * ez2 * double(k-B123_N1) + B123_z1 + zmin;
+    ZN[KP] = lz2 * ez2 * double(k-B123_N1) + B123_z1;
     
     for(k=B123_N2+B123_N1;k<knoz;++k)
-    ZN[KP] = lz3 * ez3 * double(k-B123_N2-B123_N1) + B123_z2 + zmin;
+    ZN[KP] = lz3 * ez3 * double(k-B123_N2-B123_N1) + B123_z2;
     }
     
     if(B103==9)

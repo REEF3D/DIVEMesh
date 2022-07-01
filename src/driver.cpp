@@ -30,7 +30,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2022 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_220617" <<endl<<endl;
+    cout<<endl<<"v_220701" <<endl<<endl;
 
     mkdir("./DIVEMesh_Log",0777);
 
