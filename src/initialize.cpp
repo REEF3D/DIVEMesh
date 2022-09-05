@@ -37,12 +37,6 @@ void initialize::start(lexer* p, dive* a)
     a->flag(i,j,k)=-21;
 	a->solid(i,j,k)=-10;
     a->subgrid(i,j,k)=0;
-    a->cellside(i,j,k)=0;
-    a->numfac(i,j,k)=0;
-    a->confac(i,j,k)=0;
-    a->xdir(i,j,k)=0;
-    a->ydir(i,j,k)=0;
-    a->zdir(i,j,k)=0;
     a->solid_dist(i,j,k)=0.0;
     }
 
@@ -51,12 +45,6 @@ void initialize::start(lexer* p, dive* a)
     a->flag(i,j,k)=1;
 	a->solid(i,j,k)=1;
 	}
-
-    MALOOP
-    {
-    a->confac(i,j,k)=0;
-    a->numfac(i,j,k)=0;
-    }
 
 	XYLOOP
     {
