@@ -35,6 +35,7 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco5count=0;
     a->paraco6count=0;
 	
+    cout << "coucou de paracosurface" << endl;
 	
 	
     LOOP
@@ -44,35 +45,78 @@ void decomp::paracosurface(lexer* p, dive* a)
 		for(q=0;q<3;++q)
 		for(r=0;r<3;++r)
 		paracell[n][q][r]=0;
+
+     //cout << "i " << i << " j " << j << " k " << k << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " flag(i,j,k) " << a->flag(i,j,k) << endl; 
 	
 //  1
     if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j-1,k)<0  && a->flag(i-1,j-1,k)<0)
-        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k))))
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k)))){
 	paracell[0][0][1]+=1;
+        // cout << "paracell[0][0][1] " << paracell[0][0][1] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << endl;
+    }
 
     if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j+1,k)<0  && a->flag(i-1,j+1,k)<0)
-        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k))))
-    paracell[0][2][1]+=1;
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k)))){
+        paracell[0][2][1]+=1;
+        // cout << "paracell[0][2][1] " << paracell[0][2][1] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << endl;
+    }
 
     if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j,k-1)<0  && a->flag(i-1,j,k-1)<0)
-        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k))))
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k)))){
 	paracell[0][1][0]+=1;
+        // cout << "paracell[0][1][0] " << paracell[0][1][0] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << endl;
+    }
 
     if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j,k+1)<0  && a->flag(i-1,j,k+1)<0)
-        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k))))
-    paracell[0][1][2]+=1;
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k)))){
+        paracell[0][1][2]+=1;
+        // cout << "paracell[0][1][2] " << paracell[0][1][2] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << endl;
+    }
+
+    if(p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j-1,k)<0  && a->flag(i-1,j-1,k)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][0][1] += 1;
+    }
+
+    if(p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i-1,j+1,k)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][2][1] += 1;
+    }
+
+    if(p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i-1,j,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][1][0] += 1;
+    }
+
+    if(p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i-1,j,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][1][2] += 1;
+    }
+
 
 //  4
     if(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)   // ok
@@ -103,6 +147,39 @@ void decomp::paracosurface(lexer* p, dive* a)
         ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k))))
 	paracell[2][1][2]+=1;
 
+    if(p->C21 == 2   // ok
+    && a->flag(i+1,j,k) == -21 //ok
+    && ((a->flag(i,j-1,k)<0  && a->flag(i+1,j-1,k)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][0][1] += 1;
+    }
+
+
+    if(p->C21 == 2
+    && a->flag(i+1,j,k) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i+1,j+1,k)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][2][1] += 1;
+    }
+
+    if(p->C21 == 2
+    && a->flag(i+1,j,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i+1,j,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][1][0] += 1;
+    }
+
+    if(p->C21 == 2
+    && a->flag(i+1,j,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i+1,j,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][1][2] += 1;
+    }
+
 //  3
     if(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
@@ -132,9 +209,40 @@ void decomp::paracosurface(lexer* p, dive* a)
         ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k))))
     paracell[1][0][2]+=1;
 
+    if(p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j-1,k)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][0][1] += 1;
+    }
+
+    if(p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j-1,k)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][0][1] += 1;
+    }
+
+    if(p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i,j-1,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][0][0] += 1;
+    }
+
+    if(p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i,j-1,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][0][2] += 1;
+    }
+
 //  2
     if(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
-
     && a->flag(i,j,k)>0
     && a->flag(i,j+1,k)>0
     && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j+1,k)<0)
@@ -161,6 +269,38 @@ void decomp::paracosurface(lexer* p, dive* a)
     && ((a->flag(i,j,k+1)<0  && a->flag(i,j+1,k+1)<0)
         ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k))))
     paracell[1][2][2]+=1;
+
+    if(p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j+1,k)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][2][1] += 1;
+    }
+
+    if(p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j+1,k)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][2][1] += 1;
+    }
+
+    if(p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i,j+1,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][2][0] += 1;
+    }
+
+    if(p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i,j+1,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][2][2] += 1;
+    }
 
 //  5
     if(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
@@ -191,6 +331,38 @@ void decomp::paracosurface(lexer* p, dive* a)
         ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1))))
     paracell[1][2][0]+=1;
 
+    if(p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j,k-1)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][1][0] += 1;
+    }
+
+    if(p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j,k-1)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][1][0] += 1;
+    }
+
+    if(p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i,j-1,k)<0  && a->flag(i,j-1,k-1)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][0][0] += 1;
+    }
+
+    if(p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i,j+1,k-1)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][2][0] += 1;
+    }
+
 //  6
     if(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
@@ -219,14 +391,50 @@ void decomp::paracosurface(lexer* p, dive* a)
     && ((a->flag(i,j+1,k)<0  && a->flag(i,j+1,k+1)<0)
         ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1))))
     paracell[1][2][2]+=1;
+
+    if(p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j,k+1)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[0][1][2] += 1;
+    }
+
+    if(p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j,k+1)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[2][1][2] += 1;
+    }
+
+    if(p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i,j-1,k)<0  && a->flag(i,j-1,k+1)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][0][2] += 1;
+    }
+
+    if(p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i,j+1,k+1)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) )))
+    {
+    paracell[1][2][2] += 1;
+    }
 		
 //-----------------------------------------------------------------------------------------------
 //  1
-    if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j-1,k)<0  && a->flag(i-1,j-1,k)<0)
         ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k))))
+    || (p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j-1,k)<0  && a->flag(i-1,j-1,k)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) ))))
     {
     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j-1;
@@ -235,13 +443,18 @@ void decomp::paracosurface(lexer* p, dive* a)
 	a->para1co[a->paraco1count][4]=3;
 	a->para1co[a->paraco1count][6]=paracell[0][0][1];
 	++a->paraco1count;
+        // cout << "paracell[0][0][1] " << paracell[0][0][1] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << " a->paraco1count " << a->paraco1count << endl;
     }
 
-    if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j+1,k)<0  && a->flag(i-1,j+1,k)<0)
         ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k))))
+    || (p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i-1,j+1,k)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) ))))
     {
     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j+1;
@@ -250,13 +463,18 @@ void decomp::paracosurface(lexer* p, dive* a)
 	a->para1co[a->paraco1count][4]=2;
 	a->para1co[a->paraco1count][6]=paracell[0][2][1];
     a->paraco1count++;
+       // cout << "paracell[0][2][1] " << paracell[0][2][1] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << " a->paraco1count " << a->paraco1count << endl;
     }
 
-    if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j,k-1)<0  && a->flag(i-1,j,k-1)<0)
         ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k))))
+    || (p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i-1,j,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) ))))
     {
     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j;
@@ -265,13 +483,18 @@ void decomp::paracosurface(lexer* p, dive* a)
 	a->para1co[a->paraco1count][4]=5;
 	a->para1co[a->paraco1count][6]=paracell[0][1][0];
     a->paraco1count++;
+       // cout << "paracell[0][1][0] " << paracell[0][1][0] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << " a->paraco1count " << a->paraco1count << endl;
     }
 
-    if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i-1,j,k)>0
     && ((a->flag(i,j,k+1)<0  && a->flag(i-1,j,k+1)<0)
         ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k))))
+    || (p->C21 == 2
+    && a->flag(i-1,j,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i-1,j,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  ))))
     {
     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j;
@@ -280,14 +503,19 @@ void decomp::paracosurface(lexer* p, dive* a)
 	a->para1co[a->paraco1count][4]=6;
 	a->para1co[a->paraco1count][6]=paracell[0][1][2];
     a->paraco1count++;
+      // cout << "paracell[0][1][2] " << paracell[0][1][2] << " subgrid(i,j,k) " << a->subgrid(i,j,k) << " i " << i << " j " << j << " k " << k << " a->paraco1count " << a->paraco1count << endl;
     }
 
 //  4
-    if(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)   // ok
+    if((a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)   // ok
     && a->flag(i,j,k)>0 //ok
     && a->flag(i+1,j,k)>0 //ok
     && ((a->flag(i,j-1,k)<0  && a->flag(i+1,j-1,k)<0)
         ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i+1,j,k))))
+    || (p->C21 == 2   // ok
+    && a->flag(i+1,j,k) == -21 //ok
+    && ((a->flag(i,j-1,k)<0  && a->flag(i+1,j-1,k)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) ))))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j-1;
@@ -299,11 +527,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     }
 
 
-    if(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i+1,j,k)>0
     && ((a->flag(i,j+1,k)<0  && a->flag(i+1,j+1,k)<0)
         ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i+1,j,k))))
+    || (p->C21 == 2
+    && a->flag(i+1,j,k) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i+1,j+1,k)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) ))))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j+1;
@@ -314,11 +546,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco4count++;
     }
 
-    if(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i+1,j,k)>0
     && ((a->flag(i,j,k-1)<0  && a->flag(i+1,j,k-1)<0)
         ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i+1,j,k))))
+    || (p->C21 == 2
+    && a->flag(i+1,j,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i+1,j,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) ))))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j;
@@ -329,11 +565,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco4count++;
     }
 
-    if(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i+1,j,k)>0
     && ((a->flag(i,j,k+1)<0  && a->flag(i+1,j,k+1)<0)
         ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k))))
+    || (p->C21 == 2
+    && a->flag(i+1,j,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i+1,j,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) ))))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j;
@@ -345,11 +585,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     }
 
 //  3
-    if(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j-1,k)>0
     && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j-1,k)<0)
         ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i,j-1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j-1,k)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para3co[a->paraco3count][0]=i-1;
     a->para3co[a->paraco3count][1]=j;
@@ -360,11 +604,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco3count++;
     }
 
-    if(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j-1,k)>0
     && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j-1,k)<0)
         ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i,j-1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j-1,k)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para3co[a->paraco3count][0]=i+1;
     a->para3co[a->paraco3count][1]=j;
@@ -375,11 +623,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco3count++;
     }
 
-    if(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j-1,k)>0
     && ((a->flag(i,j,k-1)<0  && a->flag(i,j-1,k-1)<0)
         ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j-1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i,j-1,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) ))))
     {
     a->para3co[a->paraco3count][0]=i;
     a->para3co[a->paraco3count][1]=j;
@@ -390,11 +642,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco3count++;
     }
 
-    if(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j-1,k)>0
     && ((a->flag(i,j,k+1)<0  && a->flag(i,j-1,k+1)<0)
         ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j-1,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i,j-1,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) ))))
     {
     a->para3co[a->paraco3count][0]=i;
     a->para3co[a->paraco3count][1]=j;
@@ -406,12 +662,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     }
 
 //  2
-    if(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
-
+    if((a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j+1,k)>0
     && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j+1,k)<0)
         ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i,j+1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j+1,k)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para2co[a->paraco2count][0]=i-1;
     a->para2co[a->paraco2count][1]=j;
@@ -422,11 +681,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco2count++;
     }
 
-    if(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j+1,k)>0
     && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j+1,k)<0)
         ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i,j+1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j+1,k)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para2co[a->paraco2count][0]=i+1;
     a->para2co[a->paraco2count][1]=j;
@@ -437,11 +700,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco2count++;
     }
 
-    if(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j+1,k)>0
     && ((a->flag(i,j,k-1)<0  && a->flag(i,j+1,k-1)<0)
         ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j+1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i,j,k-1)<0  && a->flag(i,j+1,k-1)<0)
+        ||(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k) ))))
     {
     a->para2co[a->paraco2count][0]=i;
     a->para2co[a->paraco2count][1]=j;
@@ -452,11 +719,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco2count++;
     }
 
-    if(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j+1,k)>0
     && ((a->flag(i,j,k+1)<0  && a->flag(i,j+1,k+1)<0)
         ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k))))
+    || (p->C22 == 2
+    && a->flag(i,j+1,k) == -21
+    && ((a->flag(i,j,k+1)<0  && a->flag(i,j+1,k+1)<0)
+        ||(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k) ))))
     {
     a->para2co[a->paraco2count][0]=i;
     a->para2co[a->paraco2count][1]=j;
@@ -468,11 +739,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     }
 
 //  5
-    if(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k-1)>0
     && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j,k-1)<0)
         ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i,j,k-1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j,k-1)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para5co[a->paraco5count][0]=i-1;
     a->para5co[a->paraco5count][1]=j;
@@ -483,11 +758,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco5count++;
     }
 
-    if(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k-1)>0
     && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j,k-1)<0)
         ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i,j,k-1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j,k-1)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para5co[a->paraco5count][0]=i+1;
     a->para5co[a->paraco5count][1]=j;
@@ -498,11 +777,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco5count++;
     }
 
-    if(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k-1)>0
     && ((a->flag(i,j-1,k)<0  && a->flag(i,j-1,k-1)<0)
         ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j,k-1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i,j-1,k)<0  && a->flag(i,j-1,k-1)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) )))) 
     {
     a->para5co[a->paraco5count][0]=i;
     a->para5co[a->paraco5count][1]=j-1;
@@ -513,11 +796,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco5count++;
     }
 
-    if(a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k-1)>0
     && ((a->flag(i,j+1,k)<0  && a->flag(i,j+1,k-1)<0)
         ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k-1) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i,j+1,k-1)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) )))) 
     {
     a->para5co[a->paraco5count][0]=i;
     a->para5co[a->paraco5count][1]=j+1;
@@ -529,11 +816,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     }
 
 //  6
-    if(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k+1)>0
     && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j,k+1)<0)
         ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i,j,k+1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i-1,j,k)<0  && a->flag(i-1,j,k+1)<0)
+        ||(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para6co[a->paraco6count][0]=i-1;
     a->para6co[a->paraco6count][1]=j;
@@ -544,11 +835,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco6count++;
     }
 
-    if(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k+1)>0
     && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j,k+1)<0)
         ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i,j,k+1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i+1,j,k)<0  && a->flag(i+1,j,k+1)<0)
+        ||(a->subgrid(i+1,j,k)!=a->subgrid(i,j,k) ))))
     {
     a->para6co[a->paraco6count][0]=i+1;
     a->para6co[a->paraco6count][1]=j;
@@ -559,11 +854,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco6count++;
     }
 
-    if(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k+1)>0
     && ((a->flag(i,j-1,k)<0  && a->flag(i,j-1,k+1)<0)
         ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j,k+1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i,j-1,k)<0  && a->flag(i,j-1,k+1)<0)
+        ||(a->subgrid(i,j-1,k)!=a->subgrid(i,j,k) ))))
     {
     a->para6co[a->paraco6count][0]=i;
     a->para6co[a->paraco6count][1]=j-1;
@@ -574,11 +873,15 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco6count++;
     }
 
-    if(a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
+    if((a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)
     && a->flag(i,j,k)>0
     && a->flag(i,j,k+1)>0
     && ((a->flag(i,j+1,k)<0  && a->flag(i,j+1,k+1)<0)
         ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1))))
+    || (p->C23 == 2
+    && a->flag(i,j,k+1) == -21
+    && ((a->flag(i,j+1,k)<0  && a->flag(i,j+1,k+1)<0)
+        ||(a->subgrid(i,j+1,k)!=a->subgrid(i,j,k) ))))
     {
     a->para6co[a->paraco6count][0]=i;
     a->para6co[a->paraco6count][1]=j+1;
@@ -596,7 +899,10 @@ void decomp::paracosurface(lexer* p, dive* a)
 void decomp::cornersurface(lexer* p, dive* a)
 {	
 	int paraconum=2;
-	
+	bool condition = 0;
+        bool condperiod = 0;
+        bool isupper, isright, islower, isleft;
+        bool isupperperiod, isrightperiod, islowerperiod, isleftperiod;
 	int r;
 	int paracell[3][3][3];
 	
@@ -607,133 +913,164 @@ void decomp::cornersurface(lexer* p, dive* a)
 		for(r=0;r<3;++r)
 		paracell[n][q][r]=0;
 //  1
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k))
-	paracell[0][2][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)				
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k))
+    condition =  a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k);
+    isright   = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k);
+    isleft    = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k); 
+    
+    condperiod       = ( p->C21 == 2) && (a->flag(i-1,j,k) == -21);
+    isupperperiod    = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isrightperiod    = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod    = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleftperiod     = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+
+    if((condition && isright && islower)||(condperiod && isrightperiod && islowerperiod))
+    paracell[0][2][0]+=1;
+
+    if((condition && isright && isupper)||(condperiod && isrightperiod && isupperperiod))
     paracell[0][2][2]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)				
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k))
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     paracell[0][0][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)				
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     paracell[0][0][2]+=1;
 
 //  4
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)			
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i+1,j,k))
+
+    condition = a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k);
+    isright   = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i+1,j,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i+1,j,k);
+    isleft    = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i+1,j,k);
+
+    condperiod = (p->C21 == 2) && (a->flag(i+1,j,k) == -21);
+    isupperperiod   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isrightperiod   = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleftperiod    = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+
+    if((condition && isright && islower)||(condperiod && isrightperiod && islowerperiod))
     paracell[2][2][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k))
+    if((condition && isright && isupper)||(condperiod && isrightperiod && isupperperiod))
     paracell[2][2][2]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i+1,j,k))
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     paracell[2][0][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     paracell[2][0][2]+=1;
 
 //  3		
-	if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j-1,k))
+
+    condition = a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k);
+    isright   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i,j-1,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j-1,k);
+    isleft    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i,j-1,k);
+
+    condperiod = (p->C22 == 2) && (a->flag(i,j-1,k) == -21);
+    isupperperiod   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isrightperiod   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
+    islowerperiod   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleftperiod    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+
+
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     paracell[0][0][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     paracell[0][0][2]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j-1,k))
+    if((condition && isright && islower)||(condperiod && isrightperiod && islowerperiod))
     paracell[2][0][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k))
+    if((condition && isright && isupper)||(condperiod && isrightperiod && isupperperiod))
     paracell[2][0][2]+=1;
 
 //  2
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j+1,k))
+    condition = a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k);
+    isright   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i,j+1,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j+1,k);
+    isleft    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i,j+1,k);
+
+    condperiod = (p->C22 == 2) && (a->flag(i,j+1,k) == -21);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isright   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleft    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+
+
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     paracell[0][2][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     paracell[0][2][2]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j+1,k))
+    if((condition && isright && islower)||(condperiod && isrightperiod && islowerperiod))
     paracell[2][2][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k))
+    if((condition && isright && isupper)||(condperiod && isrightperiod && isupperperiod))
     paracell[2][2][2]+=1;
 
+    
 //  5
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i,j,k-1))
+    condition = a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1);
+    isupper = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1);
+    islower  = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j,k-1);
+    isleft  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i,j,k-1);
+    isright = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i,j,k-1);
+
+    condperiod = (p->C23 == 2) && (a->flag(i,j,k-1) == -21);
+    isupperperiod = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+    isleftperiod  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+    isrightperiod = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
+
+
+    if((condition && islower && isleft)||(condperiod && islowerperiod && isleftperiod))
     paracell[0][0][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i,j,k-1))
+    if((condition && isupper && isleft)||(condperiod && isupperperiod && isleftperiod))					
     paracell[0][2][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i,j,k-1))
+    if((condition && islower && isright)||(condperiod && islowerperiod && isrightperiod))					
     paracell[2][0][0]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i,j,k-1))
+    if((condition && isupper && isright)||(condperiod && isupperperiod && isrightperiod))
     paracell[2][2][0]+=1;
 
 //  6
+    condition = a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1);
+    isupper = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1);
+    islower  = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j,k+1);
+    isleft  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i,j,k+1);
+    isright = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i,j,k+1);
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i,j,k+1))
+    condperiod = (p->C23 == 2) && (a->flag(i,j,k+1) == -21);
+    isupperperiod = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+    isleftperiod  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+    isrightperiod = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
+
+    if((condition && islower && isleft)||(condperiod && islowerperiod && isleftperiod))
     paracell[0][0][2]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i,j,k+1))
+    if((condition && isupper && isleft)||(condperiod && isupperperiod && isleftperiod))
     paracell[0][2][2]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i,j,k+1))
+    if((condition && islower && isright)||(condperiod && islowerperiod && isrightperiod))
     paracell[2][0][2]+=1;
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i,j,k+1))
+    if((condition && isupper && isright)||(condperiod && isupperperiod && isrightperiod))
     paracell[2][2][2]+=1;
-	
+
+
 		for(n=0;n<3;++n)
 		for(q=0;q<3;++q)
 		for(r=0;r<3;++r)
@@ -742,350 +1079,376 @@ void decomp::cornersurface(lexer* p, dive* a)
 
 //---------------------------------------------------------------------------------------------
 //  1
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k))
+    condition =  a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k);
+    isright   = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k);
+    isleft    = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k);
+
+    condperiod = (p->C21 == 2) && (a->flag(i-1,j,k) == -21);
+    isupperperiod   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isrightperiod    = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod    = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleftperiod     = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+
+    if((condition && isright && islower)|(condperiod && isrightperiod && islowerperiod))
     {
     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j+1;
     a->para1co[a->paraco1count][2]=k-1;
     a->para1co[a->paraco1count][3]=a->subgrid(i,j,k);
-	a->para1co[a->paraco1count][4]=2;
-	a->para1co[a->paraco1count][5]=5;
-	a->para1co[a->paraco1count][6]=paracell[0][2][0];
-    a->paraco1count++;
-    }
+        a->para1co[a->paraco1count][4]=2;
+        a->para1co[a->paraco1count][5]=5;
+        a->para1co[a->paraco1count][6]=paracell[0][2][0];
+    a->paraco1count++;}
 
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)				
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k))
+    if((condition && isright && isupper)||(condperiod && isrightperiod && isupperperiod))
     {
-    a->para1co[a->paraco1count][0]=i;
+     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j+1;
     a->para1co[a->paraco1count][2]=k+1;
     a->para1co[a->paraco1count][3]=a->subgrid(i,j,k);
-	a->para1co[a->paraco1count][4]=2;
-	a->para1co[a->paraco1count][5]=6;
-	a->para1co[a->paraco1count][6]=paracell[0][2][2];
-    a->paraco1count++;
-    }
+        a->para1co[a->paraco1count][4]=2;
+        a->para1co[a->paraco1count][5]=6;
+        a->para1co[a->paraco1count][6]=paracell[0][2][2];
+    a->paraco1count++;}
 
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)				
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i-1,j,k))
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     {
     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j-1;
     a->para1co[a->paraco1count][2]=k-1;
     a->para1co[a->paraco1count][3]=a->subgrid(i,j,k);
-	a->para1co[a->paraco1count][4]=3;
-	a->para1co[a->paraco1count][5]=5;
-	a->para1co[a->paraco1count][6]=paracell[0][0][0];
+        a->para1co[a->paraco1count][4]=3;
+        a->para1co[a->paraco1count][5]=5;
+        a->para1co[a->paraco1count][6]=paracell[0][0][0];
     a->paraco1count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i-1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i-1,j,k)				
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i-1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i-1,j,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     {
     a->para1co[a->paraco1count][0]=i;
     a->para1co[a->paraco1count][1]=j-1;
     a->para1co[a->paraco1count][2]=k+1;
     a->para1co[a->paraco1count][3]=a->subgrid(i,j,k);
-	a->para1co[a->paraco1count][4]=3;
-	a->para1co[a->paraco1count][5]=6;
-	a->para1co[a->paraco1count][6]=paracell[0][0][2];
+        a->para1co[a->paraco1count][4]=3;
+        a->para1co[a->paraco1count][5]=6;
+        a->para1co[a->paraco1count][6]=paracell[0][0][2];
     a->paraco1count++;
     }
+
 
 //  4
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)			
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i+1,j,k))
+    condition = a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k);
+    isright   = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i+1,j,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i+1,j,k);
+    isleft    = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i+1,j,k);
+
+    condperiod = (p->C21 == 2) && (a->flag(i+1,j,k) == -21);
+    isupperperiod   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isrightperiod   = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleftperiod    = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+
+    if((condition && isright && islower)||(condperiod && isrightperiod && islowerperiod))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j+1;
     a->para4co[a->paraco4count][2]=k-1;
     a->para4co[a->paraco4count][3]=a->subgrid(i,j,k);
-	a->para4co[a->paraco4count][4]=2;
-	a->para4co[a->paraco4count][5]=5;
-	a->para4co[a->paraco4count][6]=paracell[2][2][0];
+        a->para4co[a->paraco4count][4]=2;
+        a->para4co[a->paraco4count][5]=5;
+        a->para4co[a->paraco4count][6]=paracell[2][2][0];
     a->paraco4count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k))
+    if((condition && isright && isupper)||(condperiod && isrightperiod && islowerperiod))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j+1;
     a->para4co[a->paraco4count][2]=k+1;
     a->para4co[a->paraco4count][3]=a->subgrid(i,j,k);
-	a->para4co[a->paraco4count][4]=2;
-	a->para4co[a->paraco4count][5]=6;
-	a->para4co[a->paraco4count][6]=paracell[2][2][2];
+        a->para4co[a->paraco4count][4]=2;
+        a->para4co[a->paraco4count][5]=6;
+        a->para4co[a->paraco4count][6]=paracell[2][2][2];
     a->paraco4count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i+1,j,k))
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j-1;
     a->para4co[a->paraco4count][2]=k-1;
     a->para4co[a->paraco4count][3]=a->subgrid(i,j,k);
-	a->para4co[a->paraco4count][4]=3;
-	a->para4co[a->paraco4count][5]=5;
-	a->para4co[a->paraco4count][6]=paracell[2][0][0];
+        a->para4co[a->paraco4count][4]=3;
+        a->para4co[a->paraco4count][5]=5;
+        a->para4co[a->paraco4count][6]=paracell[2][0][0];
     a->paraco4count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i+1,j,k)>0 && a->subgrid(i,j,k) != a->subgrid(i+1,j,k)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i+1,j,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i+1,j,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     {
     a->para4co[a->paraco4count][0]=i;
     a->para4co[a->paraco4count][1]=j-1;
     a->para4co[a->paraco4count][2]=k+1;
     a->para4co[a->paraco4count][3]=a->subgrid(i,j,k);
-	a->para4co[a->paraco4count][4]=3;
-	a->para4co[a->paraco4count][5]=6;
-	a->para4co[a->paraco4count][6]=paracell[2][0][2];
+        a->para4co[a->paraco4count][4]=3;
+        a->para4co[a->paraco4count][5]=6;
+        a->para4co[a->paraco4count][6]=paracell[2][0][2];
     a->paraco4count++;
     }
 
-//  3		
-	if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j-1,k))
+
+//  3
+     condition = a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k);
+    isright   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i,j-1,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j-1,k);
+    isleft    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i,j-1,k);
+
+    condperiod = (p->C22 == 2) && (a->flag(i,j-1,k) == -21);
+    isupperperiod   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isrightperiod   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
+    islowerperiod   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleftperiod    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+
+
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     {
     a->para3co[a->paraco3count][0]=i-1;
     a->para3co[a->paraco3count][1]=j;
     a->para3co[a->paraco3count][2]=k-1;
     a->para3co[a->paraco3count][3]=a->subgrid(i,j,k);
-	a->para3co[a->paraco3count][4]=1;
-	a->para3co[a->paraco3count][5]=5;
-	a->para3co[a->paraco3count][6]=paracell[0][0][0];
+        a->para3co[a->paraco3count][4]=1;
+        a->para3co[a->paraco3count][5]=5;
+        a->para3co[a->paraco3count][6]=paracell[0][0][0];
     a->paraco3count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     {
     a->para3co[a->paraco3count][0]=i-1;
     a->para3co[a->paraco3count][1]=j;
     a->para3co[a->paraco3count][2]=k+1;
     a->para3co[a->paraco3count][3]=a->subgrid(i,j,k);
-	a->para3co[a->paraco3count][4]=1;
-	a->para3co[a->paraco3count][5]=6;
-	a->para3co[a->paraco3count][6]=paracell[0][0][2];
+        a->para3co[a->paraco3count][4]=1;
+        a->para3co[a->paraco3count][5]=6;
+        a->para3co[a->paraco3count][6]=paracell[0][0][2];
     a->paraco3count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j-1,k))
+    if((condition && isright && islower)||(condperiod && isrightperiod && islowerperiod))
     {
     a->para3co[a->paraco3count][0]=i+1;
     a->para3co[a->paraco3count][1]=j;
     a->para3co[a->paraco3count][2]=k-1;
     a->para3co[a->paraco3count][3]=a->subgrid(i,j,k);
-	a->para3co[a->paraco3count][4]=4;
-	a->para3co[a->paraco3count][5]=5;
-	a->para3co[a->paraco3count][6]=paracell[2][0][0];
+        a->para3co[a->paraco3count][4]=4;
+        a->para3co[a->paraco3count][5]=5;
+        a->para3co[a->paraco3count][6]=paracell[2][0][0];
     a->paraco3count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j-1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j-1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j-1,k)!=a->subgrid(i,j-1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j-1,k))
+    if((condition && isright && isupper)||(condperiod && isrightperiod && isupperperiod))
     {
     a->para3co[a->paraco3count][0]=i+1;
     a->para3co[a->paraco3count][1]=j;
     a->para3co[a->paraco3count][2]=k+1;
     a->para3co[a->paraco3count][3]=a->subgrid(i,j,k);
-	a->para3co[a->paraco3count][4]=4;
-	a->para3co[a->paraco3count][5]=6;
-	a->para3co[a->paraco3count][6]=paracell[2][0][2];
+        a->para3co[a->paraco3count][4]=4;
+        a->para3co[a->paraco3count][5]=6;
+        a->para3co[a->paraco3count][6]=paracell[2][0][2];
     a->paraco3count++;
     }
 
 //  2
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j+1,k))
+    condition = a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k);
+    isright   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i,j+1,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j+1,k);
+    isleft    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i,j+1,k);
+
+    condperiod = (p->C22 == 2) && (a->flag(i,j+1,k) == -21);
+    isupper   = a->subgrid(i,j,k+1)!=a->subgrid(i,j,k);
+    isright   = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
+    islower   = a->subgrid(i,j,k-1)!=a->subgrid(i,j,k);
+    isleft    = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+
+    if((condition && isleft && islower)||(condperiod && isleftperiod && islowerperiod))
     {
     a->para2co[a->paraco2count][0]=i-1;
     a->para2co[a->paraco2count][1]=j;
     a->para2co[a->paraco2count][2]=k-1;
     a->para2co[a->paraco2count][3]=a->subgrid(i,j,k);
-	a->para2co[a->paraco2count][4]=1;
-	a->para2co[a->paraco2count][5]=5;
-	a->para2co[a->paraco2count][6]=paracell[0][2][0];
+        a->para2co[a->paraco2count][4]=1;
+        a->para2co[a->paraco2count][5]=5;
+        a->para2co[a->paraco2count][6]=paracell[0][2][0];
     a->paraco2count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k))
+    if((condition && isleft && isupper)||(condperiod && isleftperiod && isupperperiod))
     {
     a->para2co[a->paraco2count][0]=i-1;
     a->para2co[a->paraco2count][1]=j;
     a->para2co[a->paraco2count][2]=k+1;
     a->para2co[a->paraco2count][3]=a->subgrid(i,j,k);
-	a->para2co[a->paraco2count][4]=1;
-	a->para2co[a->paraco2count][5]=6;
-	a->para2co[a->paraco2count][6]=paracell[0][2][2];
+        a->para2co[a->paraco2count][4]=1;
+        a->para2co[a->paraco2count][5]=6;
+        a->para2co[a->paraco2count][6]=paracell[0][2][2];
     a->paraco2count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k-1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j+1,k))
+    if((condition && isright && islower)||(condperiod && isrightperiod && islowerperiod))
     {
     a->para2co[a->paraco2count][0]=i+1;
     a->para2co[a->paraco2count][1]=j;
     a->para2co[a->paraco2count][2]=k-1;
     a->para2co[a->paraco2count][3]=a->subgrid(i,j,k);
-	a->para2co[a->paraco2count][4]=4;
-	a->para2co[a->paraco2count][5]=5;
-	a->para2co[a->paraco2count][6]=paracell[2][2][0];
+        a->para2co[a->paraco2count][4]=4;
+        a->para2co[a->paraco2count][5]=5;
+        a->para2co[a->paraco2count][6]=paracell[2][2][0];
     a->paraco2count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j+1,k)>0 && a->subgrid(i,j,k) != a->subgrid(i,j+1,k)					
-	&& a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j+1,k)!=a->subgrid(i,j+1,k)
-    && a->subgrid(i,j,k+1)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j+1,k))
+    if((condition && isright && isupper)||(condperiod && isrightperiod && isupperperiod))
     {
     a->para2co[a->paraco2count][0]=i+1;
     a->para2co[a->paraco2count][1]=j;
     a->para2co[a->paraco2count][2]=k+1;
     a->para2co[a->paraco2count][3]=a->subgrid(i,j,k);
-	a->para2co[a->paraco2count][4]=4;
-	a->para2co[a->paraco2count][5]=6;
-	a->para2co[a->paraco2count][6]=paracell[2][2][2];
+        a->para2co[a->paraco2count][4]=4;
+        a->para2co[a->paraco2count][5]=6;
+        a->para2co[a->paraco2count][6]=paracell[2][2][2];
     a->paraco2count++;
     }
 
 //  5
+    condition = a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1);
+    isupper = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1);
+    islower  = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j,k-1);
+    isleft  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i,j,k-1);
+    isright = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i,j,k-1);
+   
+    condperiod = (p->C23 == 2) && (a->flag(i,j,k-1) == -21);
+    isupperperiod = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+    isleftperiod  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+    isrightperiod = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i,j,k-1))
+    if((condition && islower && isleft)||(condperiod && islowerperiod && isleftperiod))
     {
     a->para5co[a->paraco5count][0]=i-1;
     a->para5co[a->paraco5count][1]=j-1;
     a->para5co[a->paraco5count][2]=k;
     a->para5co[a->paraco5count][3]=a->subgrid(i,j,k);
-	a->para5co[a->paraco5count][4]=1;
-	a->para5co[a->paraco5count][5]=3;
-	a->para5co[a->paraco5count][6]=paracell[0][0][0];
+        a->para5co[a->paraco5count][4]=1;
+        a->para5co[a->paraco5count][5]=3;
+        a->para5co[a->paraco5count][6]=paracell[0][0][0];
     a->paraco5count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k-1)!=a->subgrid(i,j,k-1))
+    if((condition && isupper && isleft)||(condperiod && isupperperiod && isleftperiod))
     {
     a->para5co[a->paraco5count][0]=i-1;
     a->para5co[a->paraco5count][1]=j+1;
     a->para5co[a->paraco5count][2]=k;
     a->para5co[a->paraco5count][3]=a->subgrid(i,j,k);
-	a->para5co[a->paraco5count][4]=1;
-	a->para5co[a->paraco5count][5]=2;
-	a->para5co[a->paraco5count][6]=paracell[0][2][0];
+        a->para5co[a->paraco5count][4]=1;
+        a->para5co[a->paraco5count][5]=2;
+        a->para5co[a->paraco5count][6]=paracell[0][2][0];
     a->paraco5count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i,j,k-1))
-    {
+    if((condition && islower && isright)||(condperiod && islowerperiod && isrightperiod))
+     {
     a->para5co[a->paraco5count][0]=i+1;
     a->para5co[a->paraco5count][1]=j-1;
     a->para5co[a->paraco5count][2]=k;
     a->para5co[a->paraco5count][3]=a->subgrid(i,j,k);
-	a->para5co[a->paraco5count][4]=4;
-	a->para5co[a->paraco5count][5]=3;
-	a->para5co[a->paraco5count][6]=paracell[2][0][0];
+        a->para5co[a->paraco5count][4]=4;
+        a->para5co[a->paraco5count][5]=3;
+        a->para5co[a->paraco5count][6]=paracell[2][0][0];
     a->paraco5count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k-1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k-1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k-1)!=a->subgrid(i,j,k-1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k-1)!=a->subgrid(i,j,k-1))
-    {
+    if((condition && isupper && isright)||(condperiod && isupperperiod && isrightperiod))
+     {
     a->para5co[a->paraco5count][0]=i+1;
     a->para5co[a->paraco5count][1]=j+1;
     a->para5co[a->paraco5count][2]=k;
     a->para5co[a->paraco5count][3]=a->subgrid(i,j,k);
-	a->para5co[a->paraco5count][4]=4;
-	a->para5co[a->paraco5count][5]=2;
-	a->para5co[a->paraco5count][6]=paracell[2][2][0];
+        a->para5co[a->paraco5count][4]=4;
+        a->para5co[a->paraco5count][5]=2;
+        a->para5co[a->paraco5count][6]=paracell[2][2][0];
     a->paraco5count++;
     }
+
 
 //  6
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i,j,k+1))
+    condition = a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1);
+    isupper = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1);
+    islower  = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j,k+1);
+    isleft  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i,j,k+1);
+    isright = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i,j,k+1);
+
+    condperiod = (p->C23 == 2) && (a->flag(i,j,k+1) == -21);
+    isupperperiod = a->subgrid(i,j+1,k)!=a->subgrid(i,j,k);
+    islowerperiod = a->subgrid(i,j-1,k)!=a->subgrid(i,j,k);
+    isleftperiod  = a->subgrid(i-1,j,k)!=a->subgrid(i,j,k);
+    isrightperiod = a->subgrid(i+1,j,k)!=a->subgrid(i,j,k);
+
+    if((condition && islower && isleft)||(condperiod && islowerperiod && isleftperiod))
     {
     a->para6co[a->paraco6count][0]=i-1;
     a->para6co[a->paraco6count][1]=j-1;
     a->para6co[a->paraco6count][2]=k;
     a->para6co[a->paraco6count][3]=a->subgrid(i,j,k);
-	a->para6co[a->paraco6count][4]=1;
-	a->para6co[a->paraco6count][5]=3;
-	a->para6co[a->paraco6count][6]=paracell[0][0][2];
+        a->para6co[a->paraco6count][4]=1;
+        a->para6co[a->paraco6count][5]=3;
+        a->para6co[a->paraco6count][6]=paracell[0][0][2];
     a->paraco6count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i-1,j,k+1)!=a->subgrid(i,j,k+1))
-    {
+    if((condition && isupper && isleft)||(condperiod && isupperperiod && isleftperiod))
+     {
     a->para6co[a->paraco6count][0]=i-1;
     a->para6co[a->paraco6count][1]=j+1;
     a->para6co[a->paraco6count][2]=k;
     a->para6co[a->paraco6count][3]=a->subgrid(i,j,k);
-	a->para6co[a->paraco6count][4]=1;
-	a->para6co[a->paraco6count][5]=2;
-	a->para6co[a->paraco6count][6]=paracell[0][2][2];
+        a->para6co[a->paraco6count][4]=1;
+        a->para6co[a->paraco6count][5]=2;
+        a->para6co[a->paraco6count][6]=paracell[0][2][2];
     a->paraco6count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j-1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j-1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i,j,k+1))
+    if((condition && islower && isright)||(condperiod && islowerperiod && isrightperiod))
     {
     a->para6co[a->paraco6count][0]=i+1;
     a->para6co[a->paraco6count][1]=j-1;
     a->para6co[a->paraco6count][2]=k;
     a->para6co[a->paraco6count][3]=a->subgrid(i,j,k);
-	a->para6co[a->paraco6count][4]=4;
-	a->para6co[a->paraco6count][5]=3;
-	a->para6co[a->paraco6count][6]=paracell[2][0][2];
+        a->para6co[a->paraco6count][4]=4;
+        a->para6co[a->paraco6count][5]=3;
+        a->para6co[a->paraco6count][6]=paracell[2][0][2];
     a->paraco6count++;
     }
 
-    if( a->flag(i,j,k)>0 && a->flag(i,j,k+1)>0 && a->subgrid(i,j,k) != a->subgrid(i,j,k+1)					
-	&& a->subgrid(i,j+1,k)!=a->subgrid(i,j,k)  && a->subgrid(i,j+1,k+1)!=a->subgrid(i,j,k+1)
-    && a->subgrid(i+1,j,k)!=a->subgrid(i,j,k)  && a->subgrid(i+1,j,k+1)!=a->subgrid(i,j,k+1))
+    if((condition && isupper && isright)||(condperiod && isupperperiod && isrightperiod))
     {
     a->para6co[a->paraco6count][0]=i+1;
     a->para6co[a->paraco6count][1]=j+1;
     a->para6co[a->paraco6count][2]=k;
     a->para6co[a->paraco6count][3]=a->subgrid(i,j,k);
-	a->para6co[a->paraco6count][4]=4;
-	a->para6co[a->paraco6count][5]=2;
-	a->para6co[a->paraco6count][6]=paracell[2][2][2];
+        a->para6co[a->paraco6count][4]=4;
+        a->para6co[a->paraco6count][5]=2;
+        a->para6co[a->paraco6count][6]=paracell[2][2][2];
     a->paraco6count++;
     }
 
-    }
+
+    } // END LOOP
 	
 	ddout<<"co1: "<<a->paraco1count<<" co2: "<<a->paraco2count<<" co3: "<<a->paraco3count<<" co4: "<<a->paraco4count<<" co5: "<<a->paraco5count<<" co6: "<<a->paraco6count<<endl;
 }
