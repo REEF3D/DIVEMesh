@@ -37,12 +37,5 @@ void surface::makesurfsolid(lexer* p, dive* a)
         count++;
     }
 
-    count=a->surfcount;
-    for(qn=0;qn<a->surfcount_solid;++qn)
-    {
-        a->gcd[count] = 0.5*p->dx;
-        ++count;
-    }
-
     a->surfcount +=a->surfcount_solid;
 }
