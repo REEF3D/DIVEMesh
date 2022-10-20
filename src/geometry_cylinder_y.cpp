@@ -53,6 +53,8 @@ void geometry::cylinder_y(lexer *p, dive *a, int rank, int &ts, int &te,
 	ds = p->S19*(U*p->DXM);
 	
 	snum = int(U/ds);
+    
+    //cout<<"SNUM_solid: "<<p->DXM<<" "<<U<<" "<<ds<<" "<<snum<<endl;
 	
 	//ds = U/double(snum);
 

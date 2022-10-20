@@ -96,6 +96,10 @@ void solid::start(lexer* p, dive* a)
     }
 
     cout<<"solid "<<endl;
+    
+    
+    
+    cout<<"solid 001"<<endl;
 
     MALOOP
 	{
@@ -127,6 +131,8 @@ void solid::start(lexer* p, dive* a)
     ts_stl=tri_start;
     te_stl=tri_end;
     tricount_stl=p->tricount;
+    
+    cout<<"solid 002"<<endl;
     
     for(rayiter=0; rayiter<2; ++rayiter)
     {
@@ -315,6 +321,9 @@ void solid::start(lexer* p, dive* a)
             }
         }
     }
+    
+    
+    cout<<"solid 003"<<endl;
 
     // finalize solid_dist
     LOOP

@@ -38,14 +38,14 @@ lexer::lexer()
     
     createspace();
     
+    gridspacing();
+    
 	solid_preproc();
     topo_preproc();
     
     tri_space();
     
 	
-	
-    gridspacing();
 }
 
 lexer::~lexer()

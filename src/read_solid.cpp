@@ -42,7 +42,7 @@ void lexer::solid_preproc()
 	ds = S19*(U*DXM);
 	
 	snum = int(U/ds);
-	
+	//cout<<"SNUM_read: "<<DXM<<" "<<U<<" "<<ds<<" "<<snum<<endl;
 	trinum_solid+=6*snum;
 	}
 	
@@ -56,7 +56,6 @@ void lexer::solid_preproc()
 	
 	snum = int(U/ds);
 	
-    cout<<"SNUM: "<<snum<<endl;
 	trinum_solid+=6*snum;
 	}
     
