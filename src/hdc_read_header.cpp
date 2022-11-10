@@ -30,9 +30,10 @@ Author: Hans Bihs
 
 void hdc::read_header(lexer *p, dive *a)
 {
+    cout<<"HDC read header "<<endl;
+    
     ifstream header;
     
-
     for(q=0; q<numprocs; ++q)
     if(flag_all[q]==1)
     {
@@ -56,14 +57,14 @@ void hdc::read_header(lexer *p, dive *a)
         orig_k[q]=iin;
         
         // orig_xyz
-        header.read((char*)&ffn, sizeof (float)); 
-        orig_x[q] = ffn;
+        header.read((char*)&ddn, sizeof (double)); 
+        orig_x[q] = ddn;
         
-        header.read((char*)&ffn, sizeof (float)); 
-        orig_y[q] = ffn;
+        header.read((char*)&ddn, sizeof (double)); 
+        orig_y[q] = ddn;
         
-        header.read((char*)&ffn, sizeof (float)); 
-        orig_z[q] = ffn;
+        header.read((char*)&ddn, sizeof (double)); 
+        orig_z[q] = ddn;
         
 
         
@@ -112,28 +113,28 @@ void hdc::read_header(lexer *p, dive *a)
           // read coordinates
         for(i=0;i<NLx[q];++i)
         {
-        header.read((char*)&ffn, sizeof (float)); 
-        X[i+orig_i[q]] = double(ffn)-p->H21;
+        header.read((char*)&ddn, sizeof (double)); 
+        X[i+orig_i[q]] = ddn-p->H21;
         }
         
         for(j=0;j<NLy[q];++j)
         {
-        header.read((char*)&ffn, sizeof (float)); 
-        Y[j+orig_j[q]] = double(ffn)-p->H22;
+        header.read((char*)&ddn, sizeof (double)); 
+        Y[j+orig_j[q]] = ddn-p->H22;
         }
         
         for(k=0;k<NLz[q];++k)
         {
-        header.read((char*)&ffn, sizeof (float)); 
-        Z[k+orig_k[q]] = double(ffn)-p->H23;
+        header.read((char*)&ddn, sizeof (double)); 
+        Z[k+orig_k[q]] = ddn-p->H23;
         }
         
         
         for(i=0;i<NLx[q];++i)
         for(j=0;j<NLy[q];++j)
         {
-        header.read((char*)&ffn, sizeof (float)); 
-        bed[i+orig_i[q]][j+orig_j[q]] = ffn;
+        header.read((char*)&ddn, sizeof (double)); 
+        bed[i+orig_i[q]][j+orig_j[q]] = ddn;
         }
         
         

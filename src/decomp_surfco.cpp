@@ -35,7 +35,7 @@ void decomp::paracosurface(lexer* p, dive* a)
     a->paraco5count=0;
     a->paraco6count=0;
 	
-    cout << "coucou de paracosurface" << endl;
+    //cout << "coucou de paracosurface" << endl;
 	
 	
     LOOP

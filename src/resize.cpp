@@ -30,7 +30,6 @@ resize_class::~resize_class()
 {
 }
 
-
 void resize_class::Darray(double *& field, int numi)
 {
     int n;
@@ -95,6 +94,78 @@ void resize_class::Darray(double ****& field, int numi, int numj, int numk, int 
 	for(m=0; m<numj; ++m)
 	for(q=0; q<numk; ++q)
 	field[n][m][q] = new double[numl];
+
+	for(n=0;n<numi;++n)
+	for(m=0;m<numj;++m)
+	for(q=0;q<numk;++q)
+	for(l=0;l<numk;++l)
+	field[n][m][q][l]=0.0;
+}
+
+void resize_class::Farray(float *& field, int numi)
+{
+    int n;
+	
+	if(numi>0)
+	field = new float[numi];
+
+	for(n=0; n<numi;++n)
+	field[n]=0.0;
+}
+
+void resize_class::Farray(float **& field, int numi, int numj)
+{
+	int n,m;
+	
+	if(numi>0)
+	field=new float*[numi];
+
+	for(n=0;n<numi;++n)
+	field[n]=new float[numj];
+
+	for(n=0;n<numi;++n)
+	for(m=0;m<numj;++m)
+	field[n][m]=0.0;
+}
+
+void resize_class::Farray(float ***& field, int numi, int numj, int numk)
+{
+	int n,m,q;
+	
+	if(numi>0)
+	field = new float**[numi];
+
+	for(n=0; n<numi; ++n)
+	field[n] = new float*[numj];
+
+	for(n=0; n<numi; ++n)
+	for(m=0; m<numj; ++m)
+	field[n][m] = new float[numk];
+
+	for(n=0; n<numi;++n)
+	for(m=0;m<numj;++m)
+	for(q=0;q<numk;++q)
+	field[n][m][q]=0.0;
+}
+
+void resize_class::Farray(float ****& field, int numi, int numj, int numk, int numl)
+{
+	int n,m,l,q;
+	
+	if(numi>0)
+	field = new float***[numi];
+
+	for(n=0; n<numi; ++n)
+	field[n] = new float**[numj];
+
+	for(n=0; n<numi; ++n)
+	for(m=0; m<numj; ++m)
+	field[n][m] = new float*[numk];
+	
+	for(n=0; n<numi; ++n)
+	for(m=0; m<numj; ++m)
+	for(q=0; q<numk; ++q)
+	field[n][m][q] = new float[numl];
 
 	for(n=0;n<numi;++n)
 	for(m=0;m<numj;++m)

@@ -23,7 +23,7 @@ Author: Hans Bihs
 #include"hdc.h"
 #include"lexer.h"
 
-void hdc::filename_in(lexer *p, dive *a,int num, int rank)
+void hdc::filename_single_in(lexer *p, dive *a,int num, int rank)
 {
     
 	if(rank<9)
@@ -159,6 +159,24 @@ void hdc::filename_in(lexer *p, dive *a,int num, int rank)
         if(num>9999999)
 		sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-%i-%i.r3d",num,rank+1);
 	}
+}
+
+void hdc::filename_continuous_in(lexer *p, dive *a, int rank)
+{
+	if(rank<9)
+    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-0000%i.r3d",rank+1);
+
+	if(rank<99&&rank>8)
+    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-000%i.r3d",rank+1);
+    
+	if(rank<999&&rank>98)
+    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-00%i.r3d",rank+1);
+
+	if(rank<9999&&rank>998)
+    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-%i.r3d",rank+1);
+
+	if(rank>9998)
+    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-%i.r3d",rank+1);
 }
 
 void hdc::filename_in_header(lexer *p, dive *a,int rank)

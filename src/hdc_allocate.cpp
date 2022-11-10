@@ -26,19 +26,21 @@ Author: Hans Bihs
 
 void hdc::allocate(lexer *p, dive *a)
 {
-    
     // allocated arrays
+    result = new ifstream[numprocs];
+    wfile  = new ofstream[p->M10];
+    
     p->Darray(X,NGx);
     p->Darray(Y,NGy);
     p->Darray(Z,NGz);
-
-    p->Darray(eta,NGx,NGy);
-    p->Darray(Fifsf,NGx,NGy);
     p->Darray(bed,NGx,NGy);
+
+    p->Farray(eta,NGx,NGy);
+    p->Farray(Fifsf,NGx,NGy);
     
-    p->Darray(U,NGx,NGy,NGz);
-    p->Darray(V,NGx,NGy,NGz);
-    p->Darray(W,NGx,NGy,NGz);
+    p->Farray(U,NGx,NGy,NGz);
+    p->Farray(V,NGx,NGy,NGz);
+    p->Farray(W,NGx,NGy,NGz);
     
     p->Iarray(orig_i,numprocs);
     p->Iarray(orig_j,numprocs);

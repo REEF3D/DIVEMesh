@@ -29,61 +29,61 @@ Author: Hans Bihs
 
 void hdc::write(lexer *p, dive *a)
 {    
-    // header
-  
-    ofstream wfile;
-    
     // write result
     count=0;
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
-    {    
+    {   
+        // Open single file
+        if(file_type==1)
+        {
+        filename_single_out(p,a,n,count);
+        wfile[count].open(name, ios::binary);
+        }
         
-        // filename
-        filename_out(p,a,n,count);
-        
-        // file open
-        wfile.open(name, ios::binary);
-        
+        // write iter
+        iin = n;
+        wfile[count].write((char*)&iin, sizeof (iin));
         
         //ijk loop
         // ->write
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=float(eta[i][j]);
-        //cout<<q<<" it: "<<n<<" W ETA: "<<ffn<<endl;
-        wfile.write((char*)&ffn, sizeof (float));
+        ffn=eta[i][j];
+        wfile[count].write((char*)&ffn, sizeof (float));
         }
             
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
-        ffn=float(U[i][j][k]);
-        wfile.write((char*)&ffn, sizeof (float));
+        ffn=U[i][j][k];
+        wfile[count].write((char*)&ffn, sizeof (float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
-        ffn=float(V[i][j][k]);
-        wfile.write((char*)&ffn, sizeof (float));
+        ffn=V[i][j][k];
+        wfile[count].write((char*)&ffn, sizeof (float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
-        ffn=float(W[i][j][k]);
-        wfile.write((char*)&ffn, sizeof (float));
+        ffn=W[i][j][k];
+        wfile[count].write((char*)&ffn, sizeof (float));
         } 
         ++count;
-        
-        // file close
-        wfile.close();
     }
+    
+    // file close
+    if(file_type==1)
+    for(q=0;q<p->M10;++q)
+    wfile[q].close();
 }
 
 

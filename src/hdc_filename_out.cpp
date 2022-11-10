@@ -23,7 +23,7 @@ Author: Hans Bihs
 #include"hdc.h"
 #include"lexer.h"
 
-void hdc::filename_out(lexer *p, dive *a,int num, int rank)
+void hdc::filename_single_out(lexer *p, dive *a,int num, int rank)
 {
     
 	if(rank<9)
@@ -79,6 +79,7 @@ void hdc::filename_out(lexer *p, dive *a,int num, int rank)
         if(num>9999999)
 		sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-%i-000%i.r3d",num,rank+1);
 	}
+    
 	if(rank<999&&rank>98)
 	{
 		if(num<10)
@@ -159,6 +160,24 @@ void hdc::filename_out(lexer *p, dive *a,int num, int rank)
         if(num>9999999)
 		sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-%i-%i.r3d",num,rank+1);
 	}
+}
+
+void hdc::filename_continuous_out(lexer *p, dive *a, int rank)
+{
+	if(rank<9)
+	sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-0000%i.r3d",rank+1);
+
+	if(rank<99&&rank>8)
+	sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-000%i.r3d",rank+1);
+    
+	if(rank<999&&rank>98)
+	sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-00%i.r3d",rank+1);
+
+	if(rank<9999&&rank>998)
+    sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-0%i.r3d",rank+1);
+
+	if(rank>9998)
+    sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-%i.r3d",rank+1);
 }
 
 void hdc::filename_out_header(lexer *p, dive *a, int rank)
