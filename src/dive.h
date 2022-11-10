@@ -44,12 +44,7 @@ class dive : public increment, public resize_class
     intfield flag;         // water/soC12/empty  +  which bc
 	intfield solid,topo;
     field solid_dist,topo_dist;
-    intfield cellside;     // cellside
     intfield subgrid;      // for all water cells: number of subgrid
-    intfield numfac;       // number of points per facet
-    intfield confac;       // connects facet index to ijk
-    intfield xdir,ydir,zdir;
-	intfield onnode;
     field2d topobed,solidbed; 
     field2d bedlevel;      // combined bedlevel
     field2d dataset;
@@ -92,9 +87,6 @@ class dive : public increment, public resize_class
 
     //ibm
     int maxsurf;
-    int **surfdir;
-    double **gcn;
-    double *gcd;
 	int *mpi_index, *mpi_edges, mpi_edgenum;
 	int *solid_gcb,*topo_gcb;
 	

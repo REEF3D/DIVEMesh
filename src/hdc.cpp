@@ -40,14 +40,34 @@ void hdc::start(lexer* p, dive* a)
 {
     cout<<endl<<"Hydrodynamic Coupling (HDC) procedure "<<endl<<endl;
 
+    // headers & decomp
     read_mainheader(p,a);
     allocate(p,a);
     read_header(p,a);
     decomp(p,a);
     write_header(p,a);
     
+    // open contiuous file pointer
+    if(file_type==2)
+    {
+        for(q=0; q<numprocs; ++q)
+        {
+        filename_continuous_in(p,a,q); 
+        result[q].open(name);
+        }
+        
+        for(q=0; q<p->M10; ++q)
+        {
+        filename_continuous_out(p,a,q); 
+        wfile[q].open(name);
+        }
+    }
+
+    cout<<"HDC read/write "<<endl;
     
+    // read/write result files
     
+    if(file_type==1)
     for(n=0; n<numiter; ++n)
     if(simtime[n]>=p->H31 && simtime[n]<p->H32)
     if(n>=p->H33 && n<p->H34)
@@ -58,6 +78,31 @@ void hdc::start(lexer* p, dive* a)
     cout<<"HDC I/O iter: "<<n<<"   simtime: "<<simtime[n]<<endl;
     }
     
+    if(file_type==2)
+    for(n=0; n<numiter; ++n)
+    {
+        read(p,a);
+        
+        if(simtime[n]>=p->H31 && simtime[n]<p->H32)
+        if(n>=p->H33 && n<p->H34)
+        {
+            
+            write(p,a);
+        
+        cout<<"HDC I/O iter: "<<n<<"   simtime: "<<simtime[n]<<endl;
+        }
+    }
     
+    // close continuous file pointer
+    if(file_type==2)
+    {
+        for(q=0; q<numprocs; ++q)
+        {
+        result[q].close();
+        wfile[q].close();
+        }
+    }
     
+    delete [] result;
+    delete [] wfile;
 }

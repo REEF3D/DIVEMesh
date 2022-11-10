@@ -30,6 +30,8 @@ Author: Hans Bihs
 
 void hdc::decomp(lexer *p, dive *a)
 {
+    cout<<"HDC decomp "<<endl;
+    
     int istart,iend,jstart,jend;
     double xstart,xend,ystart,yend;
     

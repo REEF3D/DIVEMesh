@@ -56,6 +56,9 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&iin, sizeof (int));
 	file_version=iin;
     
+    mainhead.read((char*)&iin, sizeof (int));
+	file_type=iin;
+    
     
     cout<<"HDC numprocs: "<<numprocs<<endl;
     cout<<"HDC NGx: "<<NGx<<endl;
@@ -63,6 +66,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     cout<<"HDC NGz: "<<NGz<<endl;
     cout<<"HDC jdir: "<<jdir<<endl;
     cout<<"HDC file_version: "<<file_version<<endl;
+    cout<<"HDC file_type: "<<file_type<<endl;
     
     // read flag
     p->Iarray(flag_all,numprocs);
@@ -99,7 +103,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     
     // allocate simtime
-    p->Darray(simtime,numiter);
+    p->Darray(simtime,numiter+1);
     
 // ------------
     
@@ -123,6 +127,9 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.read((char*)&iin, sizeof (int));
 	file_version=iin;
+    
+    mainhead.read((char*)&iin, sizeof (int));
+	file_type=iin;
 
     // read flag    
     for(qn=0;qn<numprocs;++qn)

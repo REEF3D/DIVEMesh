@@ -24,76 +24,76 @@ Author: Hans Bihs
 #include"lexer.h"
 #include"dive.h"
 #include<iostream>
-#include<fstream>
 #include<sys/stat.h>
 #include<sys/types.h>
 
 void hdc::read(lexer *p, dive *a)
 {
-    ifstream result;
-
     // result
     for(q=0; q<numprocs; ++q)
     if(flag_all[q]==1)
     {
-    // Open File
-	filename_in(p,a,n,q); 
-	
-	result.open(name, ios::binary);
+        // Open Single File
+        if(file_type==1)
+        {
+        filename_single_in(p,a,n,q); 
+        result[q].open(name, ios::binary);
+        }
     
-    // head section
-        result.read((char*)&iin, sizeof (int));
-        result.read((char*)&iin, sizeof (int));
-        result.read((char*)&iin, sizeof (int));
+    // header section
+        result[q].read((char*)&iin, sizeof (int));
+        result[q].read((char*)&iin, sizeof (int));
+        result[q].read((char*)&iin, sizeof (int));
 
-        result.read((char*)&ddn, sizeof (double)); 
-        result.read((char*)&ddn, sizeof (double)); 
-        result.read((char*)&ddn, sizeof (double)); 
-        result.read((char*)&ddn, sizeof (double)); 
-        result.read((char*)&ddn, sizeof (double)); 
-        result.read((char*)&ddn, sizeof (double)); 
+        result[q].read((char*)&ddn, sizeof (double)); 
+        result[q].read((char*)&ddn, sizeof (double)); 
+        result[q].read((char*)&ddn, sizeof (double)); 
+        result[q].read((char*)&ddn, sizeof (double)); 
+        result[q].read((char*)&ddn, sizeof (double)); 
+        result[q].read((char*)&ddn, sizeof (double)); 
 	
     // read eta and bed
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     {
-    result.read((char*)&ffn, sizeof (float)); 
-    eta[i+orig_i[q]][j+orig_j[q]] = double(ffn);
+    result[q].read((char*)&ffn, sizeof (float)); 
+    eta[i+orig_i[q]][j+orig_j[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     {
-    result.read((char*)&ffn, sizeof (float)); 
-    Fifsf[i+orig_i[q]][j+orig_j[q]] = double(ffn);
-    }
-    
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    for(k=0;k<NLz[q];++k)
-    {
-    result.read((char*)&ffn, sizeof (float)); 
-    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = double(ffn);
+    result[q].read((char*)&ffn, sizeof (float)); 
+    Fifsf[i+orig_i[q]][j+orig_j[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     for(k=0;k<NLz[q];++k)
     {
-    result.read((char*)&ffn, sizeof (float)); 
-    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = double(ffn);
+    result[q].read((char*)&ffn, sizeof (float)); 
+    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     for(k=0;k<NLz[q];++k)
     {
-    result.read((char*)&ffn, sizeof (float)); 
-    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = double(ffn);
+    result[q].read((char*)&ffn, sizeof (float)); 
+    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
     }
     
-    
-    result.close();
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
+    for(k=0;k<NLz[q];++k)
+    {
+    result[q].read((char*)&ffn, sizeof (float)); 
+    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
     }
+    }
+    
+    if(file_type==1)
+    for(q=0; q<numprocs; ++q)
+    result[q].close();
 }
 

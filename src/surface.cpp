@@ -80,9 +80,6 @@ void surface::mem_alloc(lexer* p, dive* a)
 
 
 	a->Iarray(a->surf,surfnum+a->surfcount_solid,5);
-	a->Iarray(a->surfdir,surfnum+a->surfcount_solid,3);
-	a->Darray(a->gcn,surfnum+a->surfcount_solid,3);
-	a->Darray(a->gcd,surfnum+a->surfcount_solid);
 }
 
 void surface::makesurf(lexer* p, dive* a)

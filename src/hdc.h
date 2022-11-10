@@ -21,6 +21,7 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"increment.h"
+#include<fstream>
 
 class lexer;
 class dive;
@@ -45,10 +46,12 @@ public:
     void read_header(lexer*, dive*);
     void read_result(lexer*, dive*);
     
-    void filename_in(lexer*, dive*,int,int);
+    void filename_single_in(lexer*, dive*,int,int);
+    void filename_continuous_in(lexer*, dive*,int);
     void filename_in_header(lexer*, dive*,int);
     
-    void filename_out(lexer*, dive*,int,int);
+    void filename_single_out(lexer*, dive*,int,int);
+    void filename_continuous_out(lexer*, dive*,int);
     void filename_out_header(lexer*, dive*,int);
     
     void merge(lexer*,dive*);
@@ -67,13 +70,14 @@ private:
     int n,q,count;
     int numprocs, jdir, numiter;
     int NGx,NGy,NGz;
-    int file_version;
+    int file_version,file_type;
     
     
 	double g,wsum,dist;
     double xc,yc;
     
-    
+    ifstream *result;
+    ofstream *wfile;
     
     // arrays
     double *orig_x, *orig_y, *orig_z;
@@ -82,8 +86,8 @@ private:
     int *NLx,*NLy,*NLz;
     
     double *simtime;
-    double *X,*Y,*Z;
-    double ***U,***V,***W,**eta,**Fifsf,**bed;
+    double *X,*Y,*Z,**bed;
+    float ***U,***V,***W,**eta,**Fifsf;
     
     int *is,*ie,*js,*je;
     double *xs,*xe,*ys,*ye;

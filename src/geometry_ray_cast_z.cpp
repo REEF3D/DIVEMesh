@@ -141,7 +141,6 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 			{
 			denom = 1.0/(u+v+w);
 
-            //cout<<"u: "<<u<<" v: "<<v<<" w: "<<w<<" denom: "<<denom<<endl;
 			u *= denom;
 			v *= denom;
 			w *= denom;
@@ -151,7 +150,7 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 
 			k = p->posf_k(Rz);
 
-            //cout<<"k: "<<k<<" Rz: "<<Rz<<endl;
+
             int distcheck=1;
 
             if(Rz<p->ZP[KP])

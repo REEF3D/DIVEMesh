@@ -30,6 +30,8 @@ Author: Hans Bihs
 
 void hdc::write_header(lexer *p, dive *a)
 {
+    cout<<"HDC write header "<<endl;
+    
     ofstream header;
     
     // write header
@@ -37,9 +39,13 @@ void hdc::write_header(lexer *p, dive *a)
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {
-        //cout<<"HDC write_header: "<<count<<endl;
         filename_out_header(p,a,count);
         header.open(name, ios::binary);
+        
+        
+        // file_type
+        iin=file_type;
+        header.write((char*)&iin, sizeof (int));
         
         // jdir
         iin=jdir;
@@ -69,8 +75,7 @@ void hdc::write_header(lexer *p, dive *a)
         iin=NGz;
         header.write((char*)&iin, sizeof (int));
         
-        //cout<<count<<" Nx: "<<ie[aa]-is[aa]<<" Ny: "<<je[bb]-js[bb]<<" orig_i: "<<is[aa]<<" orig_j: "<<js[bb]<<endl;
-        
+
         // write coordinates
         for(i=is[aa]; i<ie[aa]; ++i)
         {
