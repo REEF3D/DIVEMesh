@@ -19,7 +19,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 Author: Hans Bihs
 --------------------------------------------------------------------*/
-#include"hdc.h"
+
+#include"hdc.h"
 #include"lexer.h"
 #include"dive.h"
 #include<iostream>
@@ -27,7 +28,7 @@ Author: Hans Bihs
 #include<sys/stat.h>
 #include<sys/types.h>
 
-void hdc::write(lexer *p, dive *a)
+void hdc::write_sflow(lexer *p, dive *a)
 {    
     // write result
     count=0;

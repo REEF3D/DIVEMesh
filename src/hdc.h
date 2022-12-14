@@ -59,6 +59,12 @@ public:
 	void write(lexer*,dive*);
     void write_header(lexer*,dive*);
     void filename_out(lexer*, dive*);
+    
+    void read_fnpf(lexer*, dive*);
+    void write_fnpf(lexer*,dive*);
+    
+    void read_sflow(lexer*, dive*);
+    void write_sflow(lexer*,dive*);
 
 private:
     int iin;

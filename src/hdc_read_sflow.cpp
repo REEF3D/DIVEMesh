@@ -27,7 +27,7 @@ Author: Hans Bihs
 #include<sys/stat.h>
 #include<sys/types.h>
 
-void hdc::read(lexer *p, dive *a)
+void hdc::read_sflow(lexer *p, dive *a)
 {
     // result
     for(q=0; q<numprocs; ++q)

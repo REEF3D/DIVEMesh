@@ -146,11 +146,13 @@
       <File Name="geometry.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Hydrodynamic Coupling">
+      <File Name="hdc_write_sflow.cpp"/>
+      <File Name="hdc_read_sflow.cpp"/>
+      <File Name="hdc_write_fnpf.cpp"/>
+      <File Name="hdc_read_fnpf.cpp"/>
       <File Name="hdc_write_header.cpp"/>
-      <File Name="hdc_write.cpp"/>
       <File Name="hdc_read_mainheader.cpp"/>
       <File Name="hdc_read_header.cpp"/>
-      <File Name="hdc_read.cpp"/>
       <File Name="hdc_filename_out.cpp"/>
       <File Name="hdc_filename_in.cpp"/>
       <File Name="hdc_decomp.cpp"/>
