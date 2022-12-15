@@ -127,7 +127,7 @@ void driver::mainloop()
 
 
 // Hydrodynamic Coupling
-    if(p->H10==4)
+    if(p->H10==2 || p->H10==4)
     phdc->start(p,a);
 
     pvtu->start(p,a);

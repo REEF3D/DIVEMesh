@@ -50,6 +50,14 @@ public:
     void filename_continuous_in(lexer*, dive*,int);
     void filename_in_header(lexer*, dive*,int);
     
+    void filename_sflow_single_in(lexer*, dive*,int,int);
+    void filename_sflow_continuous_in(lexer*, dive*,int);
+    void filename_sflow_in_header(lexer*, dive*,int);
+    
+    void filename_fnpf_single_in(lexer*, dive*,int,int);
+    void filename_fnpf_continuous_in(lexer*, dive*,int);
+    void filename_fnpf_in_header(lexer*, dive*,int);
+    
     void filename_single_out(lexer*, dive*,int,int);
     void filename_continuous_out(lexer*, dive*,int);
     void filename_out_header(lexer*, dive*,int);

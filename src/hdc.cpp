@@ -114,15 +114,14 @@ void hdc::read(lexer *p, dive *a)
     
     if(p->H10==4)
     read_fnpf(p,a);
-    
 }
 
 void hdc::write(lexer *p, dive *a)
 {  
     if(p->H10==2)
-    read_sflow(p,a);
+    write_sflow(p,a);
     
     if(p->H10==4)
-    read_fnpf(p,a);    
+    write_fnpf(p,a);    
 }
 
