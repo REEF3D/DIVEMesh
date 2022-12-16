@@ -64,31 +64,28 @@ void hdc::read_sflow(lexer *p, dive *a)
     for(j=0;j<NLy[q];++j)
     {
     result[q].read((char*)&ffn, sizeof (float)); 
-    Fifsf[i+orig_i[q]][j+orig_j[q]] = ffn;
+    bed[i+orig_i[q]][j+orig_j[q]] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
-    for(k=0;k<NLz[q];++k)
     {
     result[q].read((char*)&ffn, sizeof (float)); 
-    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+    U[i+orig_i[q]][j+orig_j[q]][0] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
-    for(k=0;k<NLz[q];++k)
     {
     result[q].read((char*)&ffn, sizeof (float)); 
-    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+    V[i+orig_i[q]][j+orig_j[q]][0] = ffn;
     }
     
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
-    for(k=0;k<NLz[q];++k)
     {
     result[q].read((char*)&ffn, sizeof (float)); 
-    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+    W[i+orig_i[q]][j+orig_j[q]][0] = ffn;
     }
     }
     

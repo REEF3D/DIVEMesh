@@ -37,6 +37,8 @@ void hdc::read_header(lexer *p, dive *a)
     for(q=0; q<numprocs; ++q)
     if(flag_all[q]==1)
     {
+        cout<<"HDC read header 001 "<<NLz[q]<<endl;
+        
         // filename
         filename_in_header(p,a,q);
         
