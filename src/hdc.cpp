@@ -43,13 +43,9 @@ void hdc::start(lexer* p, dive* a)
     // headers & decomp
     read_mainheader(p,a);
     allocate(p,a);
-    cout<<"HDC 001 "<<endl;
     read_header(p,a);
-    cout<<"HDC 002 "<<endl;
     decomp(p,a);
-    cout<<"HDC 003 "<<endl;
     write_header(p,a);
-    cout<<"HDC 004 "<<endl;
     
     // open contiuous file pointer
     if(file_type==2)

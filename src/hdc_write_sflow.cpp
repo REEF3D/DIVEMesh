@@ -54,26 +54,26 @@ void hdc::write_sflow(lexer *p, dive *a)
         ffn=eta[i][j];
         wfile[count].write((char*)&ffn, sizeof (float));
         }
-            
+        
+        k=0;
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
-        for(k=0; k<NGz; ++k)
         {
         ffn=U[i][j][k];
         wfile[count].write((char*)&ffn, sizeof (float));
         } 
         
+        k=0;
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
-        for(k=0; k<NGz; ++k)
         {
         ffn=V[i][j][k];
         wfile[count].write((char*)&ffn, sizeof (float));
         } 
         
+        k=0;
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
-        for(k=0; k<NGz; ++k)
         {
         ffn=W[i][j][k];
         wfile[count].write((char*)&ffn, sizeof (float));
