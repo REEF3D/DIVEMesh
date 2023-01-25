@@ -17,6 +17,9 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="Headers">
+    <VirtualDirectory Name="Porous Structures">
+      <File Name="porous.h"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Topo">
       <File Name="topo.h"/>
     </VirtualDirectory>
@@ -97,6 +100,9 @@
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="Sources">
+    <VirtualDirectory Name="Porous Structures">
+      <File Name="porous.cpp"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Topo">
       <File Name="topo_gcbest.cpp"/>
       <File Name="topo.cpp"/>

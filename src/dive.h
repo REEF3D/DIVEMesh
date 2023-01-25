@@ -42,7 +42,7 @@ class dive : public increment, public resize_class
     void initialize();
 
     intfield flag;         // water/soC12/empty  +  which bc
-	intfield solid,topo;
+	intfield solid,topo,porous;
     field solid_dist,topo_dist;
     intfield subgrid;      // for all water cells: number of subgrid
     field2d topobed,solidbed; 
@@ -91,7 +91,7 @@ class dive : public increment, public resize_class
 	int *solid_gcb,*topo_gcb;
 	
 	//polygon objects
-	int vertice_num, polygon_num,vnum;
+	int vertice_num, polygon_num;
 	int **polygon,*numvert,*polygon_offset,polygon_sum;
 	double **vertice;
 	

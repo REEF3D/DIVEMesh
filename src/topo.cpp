@@ -28,8 +28,6 @@ topo::topo(lexer *p, dive *a) : geometry(p,a)
 {
 	cout<<"topo ini";
 
-	a->vnum=0;
-
 	cout<<"."<<endl;
 
 	if(p->T9==1)

@@ -262,6 +262,38 @@ void lexer::ini_default()
     T330 = 0;       // int right bend
     T340 = 0;       // int meander
     
+    V1 = 0;			// int read STL file
+	V4 = 1.0;		// double scaling factor for stl model
+	V5 = 0;			// int porous rotation
+	V5_x=V5_y=V5_z=V5_phi=V5_theta=V5_psi=0.0;
+	V6 = 0;			// int print transformed STL 
+	V7 = 0;			// move origin of STL:
+	V8 = 0.0;		// double turn angle in horizontal xy-plane
+	V9 = 1;			// int invert STL model
+	V10 = 0;		// int porous box
+	V11 = 0;		// int porous box array
+    V15 = 0;        // int rotate porouss with geodat
+    V18 = 1;        // int invert porous
+    V19 = 0.1;       // double factor porous resolution
+    V31 = 0;			// int jacket rotation
+    V31_x=V31_y=V31_z=V31_phi=V31_theta=V31_psi=0.0;
+    V32 = 0;       // int porous cylinder_y 
+	V33 = 0;		// int porous cylinder_z 
+    V37 = 0;		// int porous jacketmember_horz
+	V41 = 0;		// int porous cone_x
+	V42 = 0;		// int porous cone_y
+	V43 = 0;		// int porous cone_z
+    V51 = 0;        // int porous sphere    
+	V61 = 0;		// int porous wedge_x
+	V62 = 0;		// int porous wedge_y
+	V63 = 0;		// int porous wedge_z
+    V81 = 0;		// int porous tetrahedon
+    V82 = 0;		// int porous pyramid
+    V83 = 0;		// int porous wedge
+    V84 = 0;		// int porous hexahedon
+	V131 = 0;		// int half cone weir in y-dir
+   
+    
 	solidprint=0;
     topoprint=0;
 

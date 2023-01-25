@@ -284,7 +284,7 @@ NLOOP
     result.write((char*)&iin, sizeof (int));  
     
     
-    iin = 0;
+    iin = p->porousprint;    // write porous
     result.write((char*)&iin, sizeof (int)); 
     iin = 0;
     result.write((char*)&iin, sizeof (int));  

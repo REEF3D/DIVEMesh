@@ -170,6 +170,7 @@ public:
 	double M41, M45;
 	
 	int P10;
+    
 
     // solid
 	int S1,S2,S3,S5,S6,S7,S9,S9_1,S10,S11,S18;
@@ -319,11 +320,52 @@ public:
     double *T330_r,*T330_phi;
     int T340;
     double *T340_teta,*T340_L,*T340_N,*T340_ds;
+    
+    // VRANS porous structures
+	int V1,V5,V6,V7,V9,V9_1,V10,V11,V18;
+	double V4,V8;
+    double V18_1,V19;
+	
+	double V5_x,V5_y,V5_z,V5_phi,V5_theta,V5_psi;
+	double V3_xs,V3_xe,V3_ys,V3_ye,V3_zs,V3_ze;
+	double V7_dx,V7_dy,V7_dz;
+    double *V10_xs,*V10_xe,*V10_ys,*V10_ye,*V10_zs,*V10_ze;
+	double *V11_xs,*V11_ys,*V11_zs,*V11_L,*V11_G;
+	int *V11_ni,*V11_nj,*V11_nk;
+    int V15;
+    int V31;
+    double V31_x,V31_y,V31_z,V31_phi,V31_theta,V31_psi;
+    int V32;
+    double *V32_xm, *V32_zm, *V32_r;
+	int V33;
+    double *V33_xm, *V33_ym, *V33_r;
+    int V37;
+    double *V37_xm1, *V37_ym1, *V37_zm1, *V37_r1, *V37_xm2, *V37_ym2, *V37_zm2, *V37_r2;
+	int V41,V42,V43;
+    double *V41_ym, *V41_zm, *V41_x1, *V41_x2, *V41_r1, *V41_r2;
+	double *V42_xm, *V42_zm, *V42_y1, *V42_y2, *V42_r1, *V42_r2;
+	double *V43_xm, *V43_ym, *V43_z1, *V43_z2, *V43_r1, *V43_r2;
+    int V51;
+    double *V51_xm,*V51_ym,*V51_zm,*V51_r;
+	int V61,V62,V63;
+    double *V61_xs,*V61_xe,*V61_ys,*V61_ye,*V61_zs,*V61_ze;
+    double *V62_xs,*V62_xe,*V62_ys,*V62_ye,*V62_zs,*V62_ze;
+    double *V63_xs,*V63_xe,*V63_ys,*V63_ye,*V63_zs,*V63_ze;
+    int V81;
+    double **V81_xyz;
+    int V82;
+    double **V82_xyz;
+    int V83;
+    double **V83_xyz;
+    int V84;
+    double **V84_xyz;
+	int V131;
+	double *V131_xm, *V131_zm, *V131_y1, *V131_y2, *V131_r1, *V131_r2;
 	
 	
 	double xs_stl,xe_stl,ys_stl,ye_stl,zs_stl,ze_stl;
 	
-	int solidprint,topoprint;
+	int solidprint,topoprint,porousprint;
 
     double xstart,xend,ystart,yend,zstart,zend;
     double xstep,zstep;
