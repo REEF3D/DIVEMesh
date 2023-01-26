@@ -26,7 +26,7 @@ Author: Hans Bihs
 void lexer::read_control()
 {
 	char c;
-	int numint;
+	int numint,numval;
     int count;
 	numlinsurf=0;
 
@@ -741,7 +741,7 @@ void lexer::read_control()
         control>>numint;
 				switch(numint)
 				{
-				case 1: control>>V1;
+				case 1:  ++V1;
 						 clear(c,numint);
 						 break;
 				case 4: control>>V4;
