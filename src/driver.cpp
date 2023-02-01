@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -27,10 +27,10 @@ Author: Hans Bihs
 driver::driver()
 {
 	cout<<endl<<endl;
-	cout<<"DIVEMesh (c) 2008-2022 Hans Bihs"<<endl<<endl;
+	cout<<"DIVEMesh (c) 2008-2023 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_221110" <<endl<<endl;
+    cout<<endl<<"v_230126" <<endl<<endl;
 
     mkdir("./DIVEMesh_Log",0777);
 
@@ -88,7 +88,6 @@ void driver::mainloop()
 	}
 
 // Solid
-
     if(p->S1==1)
 	p->read_stl();
 
@@ -127,7 +126,7 @@ void driver::mainloop()
 
 
 // Hydrodynamic Coupling
-    if(p->H10==4)
+    if(p->H10==2 || p->H10==4)
     phdc->start(p,a);
 
     pvtu->start(p,a);

@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -33,6 +33,10 @@ void hdc::read_mainheader(lexer *p, dive *a)
     ifstream mainhead;
     int ii1,ii2;
     
+    if(p->H10==2)
+    sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D-SFLOW_State_Mainheader.r3d");
+    
+    if(p->H10==4)
     sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
     
 	mainhead.open(name, ios::binary);

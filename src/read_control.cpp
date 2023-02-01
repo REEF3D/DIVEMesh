@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -26,7 +26,7 @@ Author: Hans Bihs
 void lexer::read_control()
 {
 	char c;
-	int numint;
+	int numint,numval;
     int count;
 	numlinsurf=0;
 
@@ -732,6 +732,101 @@ void lexer::read_control()
                 case 340: ++T340;
 						 clear(c,numint);
                         ++T300;
+						 break;
+				}
+				break;
+                
+
+        case 'V': 
+        control>>numint;
+				switch(numint)
+				{
+				case 1:  ++V1;
+						 clear(c,numint);
+						 break;
+				case 4: control>>V4;
+						 clear(c,numint);
+						 break;
+				case 5: control>>V5_x>>V5_y>>V5_z>>V5_phi>>V5_theta>>V5_psi;
+                          V5=1;
+						 clear(c,numint);
+						 break;
+				case 6: control>>V6;
+						 clear(c,numint);
+						 break;
+				case 7: control>>V7_dx>>V7_dy>>V7_dz;
+						V7=1;
+						 clear(c,numint);
+						 break;
+				case 8: control>>V8;
+						 clear(c,numint);
+						 break;
+				case 9: control>>V9;
+						 clear(c,numint);
+						 break;
+				case 10: ++V10;
+						 clear(c,numint);
+						 break;
+				case 11: ++V11;
+						 clear(c,numint);
+						 break;
+               case 15: control>>V15;
+						 clear(c,numint);
+						 break;
+               case 18: control>>V18;
+						 clear(c,numint);
+						 break;
+               case 19: control>>V19;
+						 clear(c,numint);
+						 break;
+               case 31: control>>V31_x>>V31_y>>V31_z>>V31_phi>>V31_theta>>V31_psi;
+                          V31=1;
+						 clear(c,numint);
+						 break;
+				case 32: ++V32;
+						 clear(c,numint);
+						 break;
+               case 33: ++V33;
+						 clear(c,numint);
+						 break;
+               case 37: ++V37;
+						 clear(c,numint);
+						 break;
+				case 41: ++V41;
+						 clear(c,numint);
+						 break;
+				case 42: ++V42;
+						 clear(c,numint);
+						 break;
+				case 43: ++V43;
+						 clear(c,numint);
+						 break;
+                case 51: ++V51;
+						 clear(c,numint);
+						 break;
+				case 61: ++V61;
+						 clear(c,numint);
+						 break;
+				case 62: ++V62;
+						 clear(c,numint);
+						 break;
+				case 63: ++V63;
+						 clear(c,numint);
+						 break;
+               case 81: ++V81;
+						 clear(c,numint);
+						 break;
+               case 82: ++V82;
+						 clear(c,numint);
+						 break;
+               case 83: ++V83;
+						 clear(c,numint);
+						 break;
+               case 84: ++V84;
+						 clear(c,numint);
+						 break;
+				case 131: ++V131;
+						 clear(c,numint);
 						 break;
 				}
 				break;

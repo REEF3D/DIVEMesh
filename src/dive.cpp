@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -22,7 +22,7 @@ Author: Hans Bihs
 #include "dive.h"
 
 dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
-                   topo(p),topo_dist(p),
+                   topo(p),topo_dist(p),porous(p),
                    subgrid(p),
                    topobed(p),solidbed(p),dataset(p),
                    bedlevel(p),

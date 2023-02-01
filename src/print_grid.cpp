@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -284,7 +284,7 @@ NLOOP
     result.write((char*)&iin, sizeof (int));  
     
     
-    iin = 0;
+    iin = p->porousprint;    // write porous
     result.write((char*)&iin, sizeof (int)); 
     iin = 0;
     result.write((char*)&iin, sizeof (int));  

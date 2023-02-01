@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -30,8 +30,6 @@ Author: Hans Bihs
 
 void hdc::read_header(lexer *p, dive *a)
 {
-    cout<<"HDC read header "<<endl;
-    
     ifstream header;
     
     for(q=0; q<numprocs; ++q)

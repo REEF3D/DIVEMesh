@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -42,6 +42,9 @@ void hdc::write_header(lexer *p, dive *a)
         filename_out_header(p,a,count);
         header.open(name, ios::binary);
         
+        // file_version
+        iin=file_version;
+        header.write((char*)&iin, sizeof (int));
         
         // file_type
         iin=file_type;

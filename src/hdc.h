@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -50,6 +50,14 @@ public:
     void filename_continuous_in(lexer*, dive*,int);
     void filename_in_header(lexer*, dive*,int);
     
+    void filename_sflow_single_in(lexer*, dive*,int,int);
+    void filename_sflow_continuous_in(lexer*, dive*,int);
+    void filename_sflow_in_header(lexer*, dive*,int);
+    
+    void filename_fnpf_single_in(lexer*, dive*,int,int);
+    void filename_fnpf_continuous_in(lexer*, dive*,int);
+    void filename_fnpf_in_header(lexer*, dive*,int);
+    
     void filename_single_out(lexer*, dive*,int,int);
     void filename_continuous_out(lexer*, dive*,int);
     void filename_out_header(lexer*, dive*,int);
@@ -59,6 +67,12 @@ public:
 	void write(lexer*,dive*);
     void write_header(lexer*,dive*);
     void filename_out(lexer*, dive*);
+    
+    void read_fnpf(lexer*, dive*);
+    void write_fnpf(lexer*,dive*);
+    
+    void read_sflow(lexer*, dive*);
+    void write_sflow(lexer*,dive*);
 
 private:
     int iin;

@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -27,8 +27,6 @@ Author: Hans Bihs
 topo::topo(lexer *p, dive *a) : geometry(p,a)
 {
 	cout<<"topo ini";
-
-	a->vnum=0;
 
 	cout<<"."<<endl;
 

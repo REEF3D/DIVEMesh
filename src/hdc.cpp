@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
 DIVEMesh
-Copyright 2008-2022 Hans Bihs
+Copyright 2008-2023 Hans Bihs
 
 This file is part of DIVEMesh.
 
@@ -106,3 +106,22 @@ void hdc::start(lexer* p, dive* a)
     delete [] result;
     delete [] wfile;
 }
+
+void hdc::read(lexer *p, dive *a)
+{  
+    if(p->H10==2)
+    read_sflow(p,a);
+    
+    if(p->H10==4)
+    read_fnpf(p,a);
+}
+
+void hdc::write(lexer *p, dive *a)
+{  
+    if(p->H10==2)
+    write_sflow(p,a);
+    
+    if(p->H10==4)
+    write_fnpf(p,a);    
+}
+
