@@ -2,7 +2,7 @@ BUILD    := ./build
 BIN    	 := ./bin
 TARGET   := DiveMESH
 CXX      := -g++
-CXXFLAGS := -w -O3 -march=native
+CXXFLAGS := -w -O3
 LDFLAGS  := 
 
 OBJ_DIR  := $(BUILD)
