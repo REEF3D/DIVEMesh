@@ -96,7 +96,9 @@ void geodat::prolong(lexer *p, dive *a, field2d& bed)
     xc = p->XP[IP];
     yc = p->YP[JP];
     
-    val = ccipol(p,topof,xc,yc);   
+    val = ccipol(p,topof,xc,yc); 
+
+    //cout<<" PROLONG: "<<topof[i+3][j+3]<<" val: "<<val<<endl;  
 
     bed(i,j) = val;    
     }

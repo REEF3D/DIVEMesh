@@ -41,13 +41,13 @@ void geodat::remove_bounds(lexer *p, dive *a)
             j=p->knoy+3;
             ye=p->YN[JP];
             
-            cout<<" xs: "<<xs<<" xe: "<<xe<<" ys: "<<ys<<" ye: "<<ye<<endl;
+        
             
         for(n=0;n<p->Np;++n)
         {   
             
             
-            if(p->G10_x[n]<xs || p->G10_x[n]>xe || p->G10_y[n]<ys || p->G10_y[n]>ye)
+            if(p->G10_x[n]<xs || p->G10_x[n]>xe || p->G10_y[n]<ys || p->G10_y[n]>ye )
             {
             p->G10_x[n] = p->G10_x[p->Np-1];
             p->G10_y[n] = p->G10_y[p->Np-1];
@@ -56,6 +56,8 @@ void geodat::remove_bounds(lexer *p, dive *a)
             --n;
             } 
         }
+        
+        //cout<<"geodat - xs: "<<xs<<" xe: "<<xe<<" ys: "<<ys<<" ye: "<<ye<<" |  Np: "<<p->Np<<endl;
         
         
         for(n=0;n<p->Np;++n)

@@ -69,6 +69,8 @@ geodat::geodat(lexer *p, dive *a)
      
     p->Darray(XC,p->knox+14);
     p->Darray(YC,p->knoy+14);
+    
+    //cout<<"geodat  |  G10: "<<p->G10<<" Np: "<<p->Np<<endl;    
 }
 
 geodat::~geodat()

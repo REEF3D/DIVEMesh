@@ -57,6 +57,7 @@ private:
     
     double ccipol(lexer*, double**, double, double);
     double lint(lexer*, double**, int&,int&, double, double);
+    double lint2D(lexer*, double**, int&,int&, double, double);
     
     void print_sampled(lexer*,dive*);
     
@@ -76,7 +77,6 @@ private:
     double v1,v2,v3,v4,c1,c2,c3,c4;
     double x1,x2;
     
-    int Np;
     int Nx,Ny;
     int r,s,t,ic,jc,kp,dd;
     int is,ie,js,je;
