@@ -1,4 +1,8 @@
 
+23.03
+x fixed 2D geodat 
+x fixed wedge in z-dir
+
 23.01
 x added SFLOW HDC 
 
