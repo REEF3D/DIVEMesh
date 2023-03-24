@@ -53,9 +53,9 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
-	p->tri_z[p->tricount][1] = zs;
+	p->tri_z[p->tricount][1] = ze;
 
-	p->tri_x[p->tricount][2] = xe;
+	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
@@ -70,9 +70,9 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
-	p->tri_z[p->tricount][1] = zs;
+	p->tri_z[p->tricount][1] = ze;
 
-	p->tri_x[p->tricount][2] = xe;
+	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
@@ -88,11 +88,11 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
-	p->tri_z[p->tricount][1] = zs;
+	p->tri_z[p->tricount][1] = ze;
 
 	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ye;
-	p->tri_z[p->tricount][2] = zs;
+	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
 
 	p->trivec_x[p->tricount] = 0.0;
@@ -105,7 +105,7 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
-	p->tri_z[p->tricount][1] = zs;
+	p->tri_z[p->tricount][1] = ze;
 
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
@@ -117,15 +117,15 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xe;
+	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
 
-	p->tri_x[p->tricount][1] = xe;
+	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = zs;
 
-	p->tri_x[p->tricount][2] = xe;
+	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
@@ -134,15 +134,15 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xe;
+	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ye;
 	p->tri_z[p->tricount][0] = zs;
 
-	p->tri_x[p->tricount][1] = xe;
+	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = ze;
 
-	p->tri_x[p->tricount][2] = xe;
+	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
@@ -154,7 +154,7 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ys;
-	p->tri_z[p->tricount][0] = zs;
+	p->tri_z[p->tricount][0] = ze;
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
@@ -171,7 +171,7 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ys;
-	p->tri_z[p->tricount][0] = zs;
+	p->tri_z[p->tricount][0] = ze;
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
@@ -179,7 +179,7 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
-	p->tri_z[p->tricount][2] = zs;
+	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
 
 
@@ -194,13 +194,13 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ys;
-	p->tri_z[p->tricount][0] = ze;
+	p->tri_z[p->tricount][0] = zs;
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
 	p->tri_z[p->tricount][1] = ze;
 
-	p->tri_x[p->tricount][2] = xs;
+	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
@@ -211,13 +211,13 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ye;
-	p->tri_z[p->tricount][0] = ze;
+	p->tri_z[p->tricount][0] = zs;
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = ze;
 
-	p->tri_x[p->tricount][2] = xs;
+	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
@@ -229,7 +229,7 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ys;
-	p->tri_z[p->tricount][0] = ze;
+	p->tri_z[p->tricount][0] = zs;
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
@@ -246,7 +246,7 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ys;
-	p->tri_z[p->tricount][0] = ze;
+	p->tri_z[p->tricount][0] = zs;
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
@@ -254,7 +254,7 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
-	p->tri_z[p->tricount][2] = ze;
+	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
 
 	// front
@@ -262,15 +262,15 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 	p->trivec_y[p->tricount] = -1.0;
 	p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xs;
+	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
 
-	p->tri_x[p->tricount][1] = xs;
+	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
 	p->tri_z[p->tricount][1] = ze;
 
-	p->tri_x[p->tricount][2] = xs;
+	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
@@ -279,15 +279,15 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 	p->trivec_y[p->tricount] = 1.0;
 	p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xs;
+	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ye;
 	p->tri_z[p->tricount][0] = ze;
 
-	p->tri_x[p->tricount][1] = xs;
+	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = zs;
 
-	p->tri_x[p->tricount][2] = xs;
+	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
@@ -303,27 +303,27 @@ void geometry::wedge_z(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
-	p->tri_z[p->tricount][1] = ze;
+	p->tri_z[p->tricount][1] = zs;
 
 	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ye;
-	p->tri_z[p->tricount][2] = ze;
+	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
 
 	p->trivec_x[p->tricount] = 1.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xe;
-	p->tri_y[p->tricount][0] = ye;
-	p->tri_z[p->tricount][0] = ze;
+	p->tri_x[p->tricount][0] = xs;
+	p->tri_y[p->tricount][0] = ys;
+	p->tri_z[p->tricount][0] = zs;
 
 	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = zs;
 
-	p->tri_x[p->tricount][2] = xs;
-	p->tri_y[p->tricount][2] = ys;
+	p->tri_x[p->tricount][2] = xe;
+	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
 
