@@ -43,6 +43,7 @@ public:
     // entities
 	void box(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
 	void box_array(lexer*,dive*,intfield&,field&,field2d&,int,int&,int&, double, double, double, double, double, int, int, int);
+    void beam(lexer*,dive*,int,int&,int&,double,double,double,double,double,double,double,double);
 	void cylinder_y(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
     void cylinder_z(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
 	void cone_x(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);

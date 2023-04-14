@@ -446,6 +446,9 @@ void lexer::read_control()
 				case 11: ++S11;
 						 clear(c,numint);
 						 break;
+                case 12: ++S12;
+						 clear(c,numint);
+						 break;
                case 15: control>>S15;
 						 clear(c,numint);
 						 break;
@@ -898,6 +901,15 @@ void lexer::read_control()
 	S11_ni = new int[S11];
 	S11_nj = new int[S11];
 	S11_nk = new int[S11];
+    
+    Darray(S12_xs,S12);
+    Darray(S12_ys,S12);
+    Darray(S12_zs,S12);
+    Darray(S12_xe,S12);
+    Darray(S12_ye,S12);
+    Darray(S12_ze,S12);
+    Darray(S12_b,S12);
+    Darray(S12_h,S12);
 	
     S32_xm = new double[S32];
 	S32_zm = new double[S32];

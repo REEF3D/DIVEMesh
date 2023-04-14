@@ -154,6 +154,7 @@ void lexer::ini_default()
 	S9 = 1;			// int invert STL model
 	S10 = 0;		// int solid box
 	S11 = 0;		// int solid box array
+    S12 = 0;		// int solid beam
     S15 = 0;        // int rotate solids with geodat
     S18 = 1;        // int invert solid
     S19 = 0.1;       // double factor solid resolution

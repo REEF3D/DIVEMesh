@@ -108,6 +108,7 @@
       <File Name="topo.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Geometry">
+      <File Name="geometry_beam.cpp"/>
       <VirtualDirectory Name="Fluvial Box">
         <File Name="geometry_fluvial_box_v2.cpp"/>
         <File Name="geometry_fluvial_box_v1.cpp"/>

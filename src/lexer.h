@@ -173,7 +173,7 @@ public:
     
 
     // solid
-	int S1,S2,S3,S5,S6,S7,S9,S9_1,S10,S11,S18;
+	int S1,S2,S3,S5,S6,S7,S9,S9_1,S10,S11,S12,S18;
 	double S4,S8;
     double S18_1,S19;
 	
@@ -182,6 +182,7 @@ public:
 	double S7_dx,S7_dy,S7_dz;
     double *S10_xs,*S10_xe,*S10_ys,*S10_ye,*S10_zs,*S10_ze;
 	double *S11_xs,*S11_ys,*S11_zs,*S11_L,*S11_G;
+    double *S12_xs,*S12_xe,*S12_ys,*S12_ye,*S12_zs,*S12_ze,*S12_b,*S12_h;
 	int *S11_ni,*S11_nj,*S11_nk;
     int S15;
     int S31;

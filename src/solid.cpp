@@ -146,6 +146,14 @@ void solid::start(lexer* p, dive* a)
         box_array(p,a,a->solid,a->solid_dist,a->solidbed,qn,tri_start,tri_end,p->S11_xs[qn],p->S11_ys[qn],p->S11_zs[qn],
                 p->S11_L[qn],p->S11_G[qn],p->S11_ni[qn],p->S11_nj[qn],p->S11_nk[qn]);
         }
+        
+        for(qn=0;qn<p->S12;++qn)
+        {
+        beam(p,a,qn,tri_start,tri_end,p->S12_xs[qn],
+                p->S12_ys[qn],p->S12_zs[qn],p->S12_xe[qn],p->S12_ye[qn],p->S12_ze[qn],p->S12_b[qn],p->S12_h[qn]);
+        rotate_triangle(p,a,tri_start,tri_end);
+        ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
+        }
 
         for(qn=0;qn<p->S32;++qn)
         {
