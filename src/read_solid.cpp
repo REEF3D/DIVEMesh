@@ -33,6 +33,9 @@ void lexer::solid_preproc()
 	for(n=0;n<S11;++n)
 	trinum_solid+=12*S11_ni[n]*S11_nj[n]*S11_nj[n];
     
+    for(n=0;n<S12;++n)
+	trinum_solid+=12;
+    
     for(n=0; n<S32;++n)
 	{
 	rmax = S32_r[n];

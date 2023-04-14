@@ -24,7 +24,7 @@ Author: Hans Bihs
 
 void driver::logic(lexer* p)
 {
-	p->solid_count = p->S10 + p->S11 + p->S32 + p->S33 + p->S37
+	p->solid_count = p->S10 + p->S12 + p->S11 + p->S32 + p->S33 + p->S37
             + p->S41 + p->S42 + p->S43
             + p->S51 + p->S52 + p->S53 + p->S54 + p->S61 
             + p->S62 + p->S81 + p->S82 + p->S83 + p->S84 + p->S63 + p->S121 + p->S131 + p->S141

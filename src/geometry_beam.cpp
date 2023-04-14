@@ -47,22 +47,18 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
     double x2,y2,z2;
     double a1,b1,c1;
     double a2,b2,c2;
+    double off_x,off_y,off_z;
     
-
-
-    dX = xm2-xm1;
-    dY = ym2-ym1;
-    dZ = zm2-zm1;
+    dX = xe-xs;
+    dY = ye-ys;
+    dZ = ze-zs;
 
     length = sqrt(dX*dX + dY*dY + dZ*dZ);
 
     alpha=beta=gamma=0.0;
 
-
     // alpha
     angle_calc(dX,dY,dZ,alpha,beta,gamma);
-
-
 
     a1=0.0;
     b1=0.0;
@@ -109,25 +105,23 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
     cout<<"x1: "<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl;
 
 
-
-	rmax = MAX(r1,r2);
-
-	U = 2.0 * PI * rmax;
-
-	ds = p->S19*(U*p->DXM);
-
-	snum = int(U/ds);
-
-	//ds = U/double(snum);
-
-// Vertices
-	ds = (2.0*PI)/double(snum);
-
-	eta=0.0;
-
 	ts=p->tricount;
 
 	// Vert
+    
+    
+    // redefine xs,xe
+    off_x = xs;
+    off_y = ys;
+    off_z = zs;
+    
+    xs = 0.0 + off_x;
+    xe = length + off_x;
+    ys = -0.5*b + off_y;
+    ye = 0.5*b + off_y;
+    zs = -0.5*h + off_z;
+    ze = 0.5*h + off_z;
+    
 
 // Face 3
 	// Tri 1
@@ -355,9 +349,9 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
     te=p->tricount;
 
 
-    xrot=xm1;
-	yrot=ym1;
-	zrot=zm1;
+    xrot=xs;
+	yrot=ys;
+	zrot=zs;
 
     psi=c1;
     theta=b1;

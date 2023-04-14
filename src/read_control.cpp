@@ -1259,6 +1259,7 @@ void lexer::read_control()
     int countB33=0;
 	int countS10=0;
 	int countS11=0;
+    int countS12=0;
 	int countS32=0;
     int countS33=0;
     int countS37=0;
@@ -1389,6 +1390,10 @@ void lexer::read_control()
 						 break;
 				case 11: control>>S11_xs[countS11]>>S11_ys[countS11]>>S11_zs[countS11]>>S11_L[countS11]>>S11_G[countS11]>>S11_ni[countS11]>>S11_nj[countS11]>>S11_nk[countS11];
                         ++countS11;
+						 clear(c,numint);
+						 break;
+                case 12: control>>S12_xs[countS12]>>S12_xe[countS12]>>S12_ys[countS12]>>S12_ye[countS12]>>S12_zs[countS12]>>S12_ze[countS12]>>S12_b[countS12]>>S12_h[countS12];
+                        ++countS12;
 						 clear(c,numint);
 						 break;
 				case 32: control>>S32_xm[countS32]>>S32_zm[countS32]>>S32_r[countS32];

@@ -66,11 +66,8 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
 
     alpha=beta=gamma=0.0;
 
-
     // alpha
     angle_calc(dX,dY,dZ,alpha,beta,gamma);
-
-
 
     a1=0.0;
     b1=0.0;
