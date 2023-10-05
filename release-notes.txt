@@ -1,4 +1,7 @@
 
+23.08
+ x added solid beam
+
 23.03
 x fixed 2D geodat 
 x fixed wedge in z-dir
