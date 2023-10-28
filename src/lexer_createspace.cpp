@@ -21,7 +21,6 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include "lexer.h"
-
 #include<iomanip>
 
 void lexer::createspace()
@@ -222,6 +221,7 @@ void lexer::createspace()
         char name[100];
         int count;
         double val,val0;
+        
         
         sprintf(name,"z-spacing.dat");
 

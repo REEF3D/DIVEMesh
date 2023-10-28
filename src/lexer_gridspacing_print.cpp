@@ -21,11 +21,15 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include "lexer.h"
+#include<sys/stat.h>
+#include<iostream>
+#include<fstream>
 
 void lexer::gridspacing_print()
 {
+    mkdir("./DIVEMesh_Paraview",0777);
     ofstream gridPrint;
-    gridPrint.open("gridSpacing.vtk", ios::binary);
+    gridPrint.open("./DIVEMesh_Paraview/gridSpacing.vtk", ios::binary);
 
     gridPrint << "# vtk DataFile Version 2.0" << endl;
     gridPrint << "Grid spacing" << endl;
