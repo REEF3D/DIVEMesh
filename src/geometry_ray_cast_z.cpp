@@ -167,6 +167,8 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 						for(k=0;k<p->knoz;++k)
 							{					
 								dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]),dist(i,j,k));
+								if(a->topo(i,j,k)==-1)
+									dist(i,j,k)=-fabs(Rz-p->ZP[KP])<dist(i,j,k)?fabs(Rz-p->ZP[KP]):dist(i,j,k);
 							}
 					if(Rz>p->zmin && Rz<p->zmax-1.0e-10)
 						bedlevel(i,j) = MAX(bedlevel(i,j),Rz);
