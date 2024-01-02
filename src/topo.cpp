@@ -90,10 +90,10 @@ void topo::start(lexer* p, dive* a)
 	theta=0.0;
 	psi=p->G13_phi;
 
-    cout<<"SOLID psi: "<<psi<<endl;
+    cout<<"TOPO psi: "<<psi<<endl;
     }
 
-    cout<<"solid "<<endl;
+    cout<<"topo "<<endl;
 
     MALOOP
 	{
@@ -315,7 +315,7 @@ void topo::start(lexer* p, dive* a)
         }*/
     }
 
-    // finalize solid_dist
+    // finalize topo_dist
     LOOP
     {
         if(a->topo(i,j,k)==-1)
@@ -342,5 +342,5 @@ void topo::start(lexer* p, dive* a)
 
 
 
-	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
+	cout<<"topo_trinum: "<<p->trinum<<"  topo_tricount: "<<p->tricount<<endl;
 }
