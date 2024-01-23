@@ -171,7 +171,7 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
             {
             if(Rz<p->zmax-1.0e-10)
             bedlevel(i,j) = MAX(bedlevel(i,j),Rz);
-			 }
+            }
 
             }
 		}

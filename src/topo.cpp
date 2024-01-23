@@ -342,5 +342,5 @@ void topo::start(lexer* p, dive* a)
 
 
 
-	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
+	cout<<"topo_trinum: "<<p->trinum<<"  topo_tricount: "<<p->tricount<<endl;
 }
