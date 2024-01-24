@@ -54,6 +54,8 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
     dZ = ze-zs;
 
     length = sqrt(dX*dX + dY*dY + dZ*dZ);
+    
+    cout<<"beam length: "<<length<<endl;
 
     alpha=beta=gamma=0.0;
 
@@ -66,7 +68,6 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
     a2=0.0;
     b2=0.0;
     c2=0.0;
-    //LOOP
 
     double ee=0.000001;
     int count=0;
@@ -95,20 +96,18 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
       break;
 
      ++count;
-    }while(count<500);
+    }while(count<1500);
 
     cout<<"iteration: "<<count<<endl;
     cout<<"alpha: "<<alpha*(180.0/PI)<<" beta: "<<beta*(180.0/PI)<<" gamma: "<<gamma*(180.0/PI)<<endl;
     cout<<"a1: "<<a1*(180.0/PI)<<" b1: "<<b1*(180.0/PI)<<" c1: "<<c1*(180.0/PI)<<endl;
 
     cout<<"dX: "<<dX<<" dY: "<<dY<<" dZ: "<<dZ<<endl;
-    cout<<"x1: "<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl;
+    cout<<"x1: "<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl<<endl;
 
 
 	ts=p->tricount;
 
-	// Vert
-    
     
     // redefine xs,xe
     off_x = xs;
@@ -350,8 +349,8 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
 
 
     xrot=xs;
-	yrot=ys;
-	zrot=zs;
+	yrot=ys+0.5*b;
+	zrot=zs+0.5*h;
 
     psi=c1;
     theta=b1;

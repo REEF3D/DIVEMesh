@@ -47,6 +47,7 @@ private:
     char name[100],pname[100],epsvar[100];
     int n,iin,offset[100];
     float ffn;
+    double ddn;
 };
 
 #endif

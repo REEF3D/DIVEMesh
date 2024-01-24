@@ -172,7 +172,7 @@ void solid::start(lexer* p, dive* a)
         for(qn=0;qn<p->S37;++qn)
         {
         jacket_member_norm(p,a,qn,tri_start,tri_end,p->S37_xm1[qn],
-                p->S37_ym1[qn],p->S37_ym1[qn],p->S37_r1[qn],p->S37_xm2[qn],p->S37_ym2[qn],p->S37_ym2[qn],p->S37_r1[qn]);
+                p->S37_ym1[qn],p->S37_ym1[qn],p->S37_r1[qn],p->S37_xm2[qn],p->S37_ym2[qn],p->S37_zm2[qn],p->S37_r2[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
         }

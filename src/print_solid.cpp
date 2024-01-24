@@ -107,7 +107,7 @@ void print_stl::solid_vtp(lexer* p, dive* a)
 	offset[n]=0;
 	++n;
 
-    offset[n]=offset[n-1]+4*p->tricount*3*3 + 4;
+    offset[n]=offset[n-1]+8*p->tricount*3*3 + 4;
     ++n;
     offset[n]=offset[n-1]+4*p->tricount*3 + 4;
     ++n;
@@ -122,7 +122,7 @@ void print_stl::solid_vtp(lexer* p, dive* a)
 
     n=0;
     result<<"<Points>"<<endl;
-    result<<"<DataArray type=\"Float32\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<DataArray type=\"Float64\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
     ++n;
     result<<"</Points>"<<endl;
 
@@ -143,19 +143,19 @@ void print_stl::solid_vtp(lexer* p, dive* a)
 
 
 //  XYZ
-	iin=4*p->tricount*3*3;
+	iin=8*p->tricount*3*3;
 	result.write((char*)&iin, sizeof (int));
     for(n=0;n<p->tricount;++n)
 	for(q=0;q<3;++q)
 	{
-	ffn=p->tri_x[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	ddn=p->tri_x[n][q];
+	result.write((char*)&ddn, sizeof (double));
 
-	ffn=p->tri_y[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	ddn=p->tri_y[n][q];
+	result.write((char*)&ddn, sizeof (double));
 
-	ffn=p->tri_z[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	ddn=p->tri_z[n][q];
+	result.write((char*)&ddn, sizeof (double));
 	}
 
 //  Connectivity POLYGON

@@ -47,23 +47,12 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     double a1,b1,c1;
     double a2,b2,c2;
     
-    /*
-    xm1=p->S37_xm1[rank];
-    ym1=p->S37_ym1[rank];
-	zm1=p->S37_zm1[rank];
-    r1=p->S37_r1[rank];
-
-	xm2=p->S37_xm1[rank]+length;
-    ym2=p->S37_ym1[rank];
-	zm2=p->S37_zm1[rank];
-    r2=p->S37_r2[rank];*/
-
     dX = xm2-xm1;
     dY = ym2-ym1;
     dZ = zm2-zm1;
 
     length = sqrt(dX*dX + dY*dY + dZ*dZ);
-
+    
     alpha=beta=gamma=0.0;
 
     // alpha
@@ -75,8 +64,7 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     a2=0.0;
     b2=0.0;
     c2=0.0;
-    //LOOP
-
+ 
     double ee=0.000001;
     int count=0;
     do
@@ -104,15 +92,14 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
       break;
 
      ++count;
-    }while(count<500);
+    }while(count<1500);
 
     cout<<"iteration: "<<count<<endl;
     cout<<"alpha: "<<alpha*(180.0/PI)<<" beta: "<<beta*(180.0/PI)<<" gamma: "<<gamma*(180.0/PI)<<endl;
     cout<<"a1: "<<a1*(180.0/PI)<<" b1: "<<b1*(180.0/PI)<<" c1: "<<c1*(180.0/PI)<<endl;
 
     cout<<"dX: "<<dX<<" dY: "<<dY<<" dZ: "<<dZ<<endl;
-    cout<<"x1: "<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl;
-
+    cout<<"x1: "<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl<<endl;
 
 
 	rmax = MAX(r1,r2);
@@ -124,6 +111,17 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
 	snum = int(U/ds);
 
 	//ds = U/double(snum);
+    
+    dX = xm2-xm1;
+    dY = ym2-ym1;
+    dZ = zm2-zm1;
+    
+    //xm1
+    xm2=xm1+length;
+    //ym1=0.0;
+    ym2=ym1;
+    //zm1=0.0;
+    zm2=zm1;
 
 // Vertices
 	ds = (2.0*PI)/double(snum);

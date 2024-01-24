@@ -81,15 +81,12 @@ void decomp::decomp_vtp(lexer* p, dive* a)
     for(n=0;n<tricount;++n)
 	for(q=0;q<3;++q)
 	{
-	ffn=float(trix[n][q]);
     ddn=trix[n][q];
 	result.write((char*)&ddn, sizeof (double));
 
-	ffn=float(triy[n][q]);
     ddn=triy[n][q];
 	result.write((char*)&ddn, sizeof (double));
 
-	ffn=float(triz[n][q]);
     ddn=triz[n][q];
 	result.write((char*)&ddn, sizeof (double));
 	}

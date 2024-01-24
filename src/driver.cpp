@@ -27,10 +27,10 @@ Author: Hans Bihs
 driver::driver()
 {
 	cout<<endl<<endl;
-	cout<<"DIVEMesh (c) 2008-2023 Hans Bihs"<<endl<<endl;
+	cout<<"DIVEMesh (c) 2008-2024 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_231028" <<endl<<endl;
+    cout<<endl<<"v_240124" <<endl<<endl;
 
     mkdir("./DIVEMesh_Log",0777);
 
