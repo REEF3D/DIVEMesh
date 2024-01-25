@@ -1392,7 +1392,7 @@ void lexer::read_control()
                         ++countS11;
 						 clear(c,numint);
 						 break;
-                case 12: control>>S12_xs[countS12]>>S12_xe[countS12]>>S12_ys[countS12]>>S12_ye[countS12]>>S12_zs[countS12]>>S12_ze[countS12]>>S12_b[countS12]>>S12_h[countS12];
+                case 12: control>>S12_xs[countS12]>>S12_ys[countS12]>>S12_zs[countS12]>>S12_xe[countS12]>>S12_ye[countS12]>>S12_ze[countS12]>>S12_b[countS12]>>S12_h[countS12];
                         ++countS12;
 						 clear(c,numint);
 						 break;
