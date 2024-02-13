@@ -31,11 +31,30 @@ void decomp::nodecalc(lexer *p, dive *a)
     for(k=1;k<=p->M10;k++)
     if(i*j*k==p->M10)
     {
+     numfactor++;
+     //cout<<"numfactor: "<<numfactor<<endl;
+    }
+    
+    
+    p->Iarray(a->mpx,numfactor+1);
+	p->Iarray(a->mpy,numfactor+1);
+	p->Iarray(a->mpz,numfactor+1);
+    
+    numfactor=0;
+
+    for(i=1;i<=p->M10;i++)
+    for(j=1;j<=p->M10;j++)
+    for(k=1;k<=p->M10;k++)
+    if(i*j*k==p->M10)
+    {
      a->mpx[numfactor]=i;
      a->mpy[numfactor]=j;
      a->mpz[numfactor]=k;
      numfactor++;
+     //cout<<"numfactor: "<<numfactor<<endl;
     }
+    
+    
 }
 
 void decomp::costfunc(lexer* p, dive* a)

@@ -93,7 +93,7 @@ void decomp::start(lexer* p, dive* a)
     parasurface(p,a);	
     paracosurface(p,a);
     cornersurface(p,a);
-    
+
     // periodicBC
     periodic_nb(p,a);
     periodic_surf(p,a);
@@ -102,7 +102,6 @@ void decomp::start(lexer* p, dive* a)
     surfcount(p,a);
     cornercount(p,a);
 
-    
     paraslicesurface(p,a);
     paraslicecosurface(p,a);
     slicesurfcount(p,a);

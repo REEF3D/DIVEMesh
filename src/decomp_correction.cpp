@@ -34,7 +34,6 @@ void decomp::partition_correction(lexer* p, dive* a)
 	
 	if(maindir==3)
 	partition_correct_z(p,a);
-	
 }
 	
 void decomp::partition_correct_x(lexer* p, dive* a)

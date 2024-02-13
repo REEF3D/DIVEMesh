@@ -29,10 +29,6 @@ dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
                    flagslice(p),subslice(p)
 {
 
-	p->Iarray(mpx,p->M10*p->M10*p->M10);
-	p->Iarray(mpy,p->M10*p->M10*p->M10);
-	p->Iarray(mpz,p->M10*p->M10*p->M10);
-	
 	p->Darray(xorig,p->M10+10);
 	p->Darray(yorig,p->M10+10);
 	p->Darray(zorig,p->M10+10);
