@@ -112,13 +112,6 @@ void decomp::start(lexer* p, dive* a)
     // print partition planes
     partition_planes(p,a);
     decomp_vtp(p,a);
-    
-    
-    /*for(n=1;n<=p->M10;++n)
-    cout<<n<<" | "<<a->periodicX[n][0]<<" "<<a->para1[n]<<" . "<<a->periodicX[n][3]<<" "<<a->para4[n]<<endl;
-    
-    cout<<"C21: "<<p->C21<<" C22: "<<p->C22<<" C23: "<<p->C23<<endl;*/
-    
 }
 
 int decomp::partition_check(lexer* p, dive* a)
