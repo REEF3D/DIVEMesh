@@ -23,7 +23,7 @@ Author: Hans Bihs
 
 void decomp::partition_correction(lexer* p, dive* a)
 {
-    cout<<" maindir: "<<maindir<<endl;
+    cout<<"maindir: "<<maindir<<endl;
     
 	if(maindir==1)
 	partition_correct_x(p,a);
