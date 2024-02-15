@@ -31,7 +31,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	
 	xcount[0]=0;
 
-	
+	cout<<"starting x-dir partition correction"<<endl;
 	// x-partition
 	for(aa=1;aa<=a->mx;++aa)
 	{
@@ -65,17 +65,17 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	
 	xaverage/=a->mx;
 	
-	cout<<"xaverage: "<<xaverage<<endl;
-	cout<<"xcross_m: "<<xcross_m<<endl;
+	ddout<<"xaverage: "<<xaverage<<endl;
+	ddout<<"xcross_m: "<<xcross_m<<endl;
 	
 	xcount_sum=0;
 	for(aa=1;aa<=a->mx;++aa)
 	xcount_sum+=xcount[aa];
 	
 	for(aa=0;aa<=a->mx;++aa)
-	cout<<"old xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
+	ddout<<"old xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 	
-	cout<<"xcount_sum: "<<xcount_sum<<endl;
+	ddout<<"xcount_sum: "<<xcount_sum<<endl;
 	
 	for(q=0;q<p->M10;++q)
 	subcell[q]=0;
@@ -92,7 +92,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	}
 	
 	for(q=0;q<p->M10;++q)
-	cout<<"old subcell_count: "<<subcell[q]<<endl;
+	ddout<<"old subcell_count: "<<subcell[q]<<endl;
 	
 	// re-partition
 	for(aa=1;aa<=a->mx;++aa)
@@ -143,12 +143,12 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	{
 	
 		for(aa=0;aa<=a->mx;++aa)
-		cout<<"inter xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
+		ddout<<"inter xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 	
 		diff = xcount[a->mx]-xaverage;
 		fac = diff/xcross_m;
 		
-		cout<<xcount[a->mx]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
+		ddout<<xcount[a->mx]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
 		
 		count=0;
 		do{
@@ -161,7 +161,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 			mincell=xcount[aa];
 			}
 			
-			cout<<"Mincell: "<<mincell<<"  iloc: "<<iloc<<endl;
+			ddout<<"Mincell: "<<mincell<<"  iloc: "<<iloc<<endl;
 			
 			for(ii=iloc;ii<a->mx;++ii)
 			++a->xnode[ii];
@@ -183,10 +183,13 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 		++count;
 		
 		}while(xcount[a->mx]>xaverage+xcross_m/2);
+        
+        int maxiter = MAX(a->mx,a->my);
 		
-		// 
+		// ----------------------------------------------------------
 		count=0;
 		do{
+            // find mincell
 			mincell=1e9;
 			for(aa=1;aa<=a->mx;++aa)
 			if(xcount[aa]<mincell)
@@ -195,6 +198,7 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 			mincell=MIN(mincell,xcount[aa]);
 			}
 			
+            // find maxcell
 			maxcell=-1e9;
 			for(aa=1;aa<=a->mx;++aa)
 			if(xcount[aa]>maxcell)
@@ -203,8 +207,9 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 			maxcell=MAX(maxcell,xcount[aa]);
 			}
 			
-			cout<<"count: "<<count<<" Maxcell: "<<maxcell<<" xaverage+xcross_m/2: "<<xaverage+xcross_m/2<<"  iloc_max: "<<iloc_max<<"  Mincell: "<<mincell<<"  iloc_min: "<<iloc_min<<endl;
+			ddout<<"count: "<<count<<" Maxcell: "<<maxcell<<" xaverage+xcross_m/2: "<<xaverage+xcross_m/2<<"  iloc_max: "<<iloc_max<<"  Mincell: "<<mincell<<"  iloc_min: "<<iloc_min<<endl;
 			
+            
 			if(iloc_max<iloc_min)
 			for(ii=iloc_max;ii<iloc_min;++ii)
 			--a->xnode[ii];
@@ -235,7 +240,9 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 
 		++count;
 		
-		}while(maxcell>xaverage+xcross_m/2 && count<p->M10*5);
+		}while(maxcell>xaverage+xcross_m/2 && count<maxiter);
+        
+        // ----------------------------------------------------------
 	}
 	
 	//count again
@@ -259,9 +266,9 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	
 	
 	for(aa=0;aa<=a->mx;++aa)
-	cout<<"new xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
+	ddout<<"new xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 	
-	cout<<"xcount_sum: "<<xcount_sum<<endl;
+	ddout<<"xcount_sum: "<<xcount_sum<<endl;
 	
 	
 	MALOOP
@@ -289,8 +296,19 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 	++q;
 	}
 	
-	for(q=0;q<p->M10;++q)
-	cout<<q<<" new subcell_count: "<<subcell[q]<<endl;
+    q=0;
+	ALOOP
+    {   
+    cout<<aa<<" new subcell_count: ";
+        BLOOP
+        CLOOP
+        {
+        cout<<subcell[q]<<" ";
+        //ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
+        }
+    cout<<endl;
+    ++q;
+    }
 	
 
 }

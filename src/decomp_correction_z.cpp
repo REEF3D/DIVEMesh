@@ -63,17 +63,17 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	
 	zaverage/=a->mz;
 	
-	cout<<"zaverage: "<<zaverage<<endl;
-	cout<<"zcross_m: "<<zcross_m<<endl;
+	ddout<<"zaverage: "<<zaverage<<endl;
+	ddout<<"zcross_m: "<<zcross_m<<endl;
 	
 	zcount_sum=0;
 	for(cc=1;cc<=a->mz;++cc)
 	zcount_sum+=zcount[cc];
 	
 	for(cc=1;cc<=a->mz;++cc)
-	cout<<"old zcount"<<cc<<" :"<<zcount[cc]<<"  znode: "<<a->znode[cc]<<"  zorig: "<<a->zorig[cc]<<endl;
+	ddout<<"old zcount"<<cc<<" :"<<zcount[cc]<<"  znode: "<<a->znode[cc]<<"  zorig: "<<a->zorig[cc]<<endl;
 	
-	cout<<"zcount_sum: "<<zcount_sum<<endl;
+	ddout<<"zcount_sum: "<<zcount_sum<<endl;
 	
 	for(q=0;q<p->M10;++q)
 	subcell[q]=0;
@@ -90,7 +90,7 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	}
 	
 	for(q=0;q<p->M10;++q)
-	cout<<"old subcell_count: "<<subcell[q]<<endl;
+	ddout<<"old subcell_count: "<<subcell[q]<<endl;
 	
 	// re-partition
 	for(cc=1;cc<=a->mz;++cc)
@@ -144,12 +144,12 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	{
 	
 		for(cc=1;cc<=a->mz;++cc)
-		cout<<"inter zcount"<<cc<<" :"<<zcount[cc]<<"  znode: "<<a->znode[cc]<<"  zorig: "<<a->zorig[cc]<<endl;
+		ddout<<"inter zcount"<<cc<<" :"<<zcount[cc]<<"  znode: "<<a->znode[cc]<<"  zorig: "<<a->zorig[cc]<<endl;
 	
 		diff = zcount[a->mz]-zaverage;
 		fac = diff/zcross_m;
 		
-		cout<<zcount[a->mz]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
+		ddout<<zcount[a->mz]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
 		
 		count=0;
 		do{
@@ -161,7 +161,7 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 			mincell=zcount[aa];
 			}
 			
-			cout<<"Mincell: "<<mincell<<"  kloc: "<<kloc<<endl;
+			ddout<<"Mincell: "<<mincell<<"  kloc: "<<kloc<<endl;
 			
 			for(kk=kloc;kk<a->mz;++kk)
 			++a->znode[kk];
@@ -205,7 +205,7 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 			maxcell=zcount[cc];
 			}
 			
-			cout<<"Maxcell: "<<maxcell<<"  kloc: "<<kloc_max<<"  Mincell: "<<mincell<<"  kloc: "<<kloc_min<<endl;
+			ddout<<"Maxcell: "<<maxcell<<"  kloc: "<<kloc_max<<"  Mincell: "<<mincell<<"  kloc: "<<kloc_min<<endl;
 			
 			if(kloc_max<kloc_min)
 			for(kk=kloc_max;kk<kloc_min;++kk)
@@ -259,9 +259,9 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	
 	
 	for(cc=1;cc<=a->mz;++cc)
-	cout<<"new zcount"<<cc<<" :"<<zcount[cc]<<"  znode: "<<a->znode[cc]<<"  zorig: "<<a->zorig[cc]<<endl;
+	ddout<<"new zcount"<<cc<<" :"<<zcount[cc]<<"  znode: "<<a->znode[cc]<<"  zorig: "<<a->zorig[cc]<<endl;
 	
-	cout<<"ccount_sum: "<<zcount_sum<<endl;
+	ddout<<"ccount_sum: "<<zcount_sum<<endl;
 	
 	
 	MALOOP
@@ -290,11 +290,11 @@ void decomp::partition_correct_z(lexer* p, dive* a)
 	}
 	
 	for(q=0;q<p->M10;++q)
-	cout<<q<<" new subcell_count: "<<subcell[q]<<endl;
+	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 	
     
     for(bb=0;bb<=a->my;++bb)
-	cout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  xnode: "<<a->ynode[bb]<<"  xorig: "<<a->yorig[bb]<<endl;
+	ddout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  xnode: "<<a->ynode[bb]<<"  xorig: "<<a->yorig[bb]<<endl;
 	
-	cout<<"ycount_sum: "<<ycount_sum<<endl;
+	ddout<<"ycount_sum: "<<ycount_sum<<endl;
 }

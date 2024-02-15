@@ -28,7 +28,9 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	double diff_p;
 	
 	ycount[0]=0;
-	
+    
+	cout<<"starting y-dir partition correction"<<endl;
+    
 	// y-partition
 	for(bb=1;bb<=a->my;++bb)
 	{
@@ -64,8 +66,8 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	
 	yaverage/=a->my;
 
-	cout<<"yaverage: "<<yaverage<<endl;
-	cout<<"ycross_m: "<<ycross_m<<endl;
+	ddout<<"yaverage: "<<yaverage<<endl;
+	ddout<<"ycross_m: "<<ycross_m<<endl;
 	
 	ycount_sum=0;
 	for(bb=1;bb<=a->my;++bb)
@@ -73,9 +75,9 @@ void decomp::partition_correct_y(lexer* p, dive* a)
     
 
 	for(bb=1;bb<=a->my;++bb)
-	cout<<"old ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
+	ddout<<"old ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
 	
-	cout<<"ycount_sum: "<<xcount_sum<<endl;
+	ddout<<"ycount_sum: "<<xcount_sum<<endl;
 	
 	for(q=0;q<p->M10;++q)
 	subcell[q]=0;
@@ -92,7 +94,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	}
     
 	for(q=0;q<p->M10;++q)
-	cout<<"old subcell_count: "<<subcell[q]<<endl;
+	ddout<<"old subcell_count: "<<subcell[q]<<endl;
 
 	// re-partition
 	for(bb=1;bb<=a->my;++bb)
@@ -132,7 +134,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 		for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
 		for(i=0;i<a->knox;++i)
 		for(k=0;k<a->knoz;++k)
-        //cout<<j<<" "<<bb<<endl;
+        //ddout<<j<<" "<<bb<<endl;
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++ycount[bb];
 	}
@@ -150,12 +152,12 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	{
 	
 		for(bb=0;bb<=a->my;++bb)
-		cout<<"inter ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
+		ddout<<"inter ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
 	
 		diff = ycount[a->my]-yaverage;
 		fac = diff/ycross_m;
 		
-		cout<<ycount[a->my]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
+		ddout<<ycount[a->my]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
 		
 		count=0;
 		do{
@@ -167,7 +169,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 			mincell=ycount[bb];
 			}
 			
-			cout<<"Mincell: "<<mincell<<"  jloc: "<<jloc<<endl;
+			ddout<<"Mincell: "<<mincell<<"  jloc: "<<jloc<<endl;
 			
 			for(jj=jloc;jj<a->my;++jj)
 			++a->ynode[jj];
@@ -191,6 +193,8 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	}
 	
 	// 
+    int maxiter = MAX(a->mx,a->my);
+    
 	int maxcell,jloc_max,jloc_min;
 		count=0;
 		do{
@@ -210,7 +214,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 			maxcell=ycount[bb];
 			}
 			
-			cout<<"Maxcell: "<<maxcell<<"  jloc: "<<jloc_max<<"  Mincell: "<<mincell<<"  jloc: "<<jloc_min<<endl;
+			ddout<<"Maxcell: "<<maxcell<<"  jloc: "<<jloc_max<<"  Mincell: "<<mincell<<"  jloc: "<<jloc_min<<endl;
 			
 			if(jloc_max<jloc_min)
 			for(jj=jloc_max;jj<jloc_min;++jj)
@@ -242,7 +246,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 
 		++count;
 		
-		}while(maxcell>yaverage+ycross_m/2 && count<p->M10*5);
+		}while(maxcell>yaverage+ycross_m/2 && count<maxiter);
 
 
 	//count again
@@ -267,9 +271,9 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	
     
 	for(bb=0;bb<=a->my;++bb)
-	cout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
+	ddout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
 	
-	cout<<"ycount_sum: "<<ycount_sum<<endl;
+	ddout<<"ycount_sum: "<<ycount_sum<<endl;
 
 
 	MALOOP
@@ -297,6 +301,6 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 	}
 
 	for(q=0;q<p->M10;++q)
-	cout<<q<<" new subcell_count: "<<subcell[q]<<endl;
+	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 }
 
