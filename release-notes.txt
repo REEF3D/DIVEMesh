@@ -1,4 +1,9 @@
 
+24.02
+x improved decomposition correction
+x fixed decomposition seg fault for large core counts
+x fixed beam and jacket member geometry
+
 23.08
  x added solid beam
 
