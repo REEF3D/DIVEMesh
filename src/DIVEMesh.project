@@ -26,7 +26,7 @@
     <VirtualDirectory Name="Geometry">
       <File Name="geometry.h"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="Hydrodynamic Coupling">
+    <VirtualDirectory Name="HDC">
       <File Name="hdc.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Baselayer">
@@ -152,7 +152,7 @@
       <File Name="geometry_arch.cpp"/>
       <File Name="geometry.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="Hydrodynamic Coupling">
+    <VirtualDirectory Name="HDC">
       <File Name="hdc_write_sflow.cpp"/>
       <File Name="hdc_read_sflow.cpp"/>
       <File Name="hdc_write_fnpf.cpp"/>
