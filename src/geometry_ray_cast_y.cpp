@@ -66,11 +66,11 @@ void geometry::ray_cast_y(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 	zs = MIN3(Az,Bz,Cz);
 	ze = MAX3(Az,Bz,Cz);
 
-	is = p->posf_i(xs);
-	ie = p->posf_i(xe);
+	is = p->posc_i(xs);
+	ie = p->posc_i(xe);
 
-	ks = p->posf_k(zs);
-    ke = p->posf_k(ze);
+	ks = p->posc_k(zs);
+    ke = p->posc_k(ze);
 
     xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is +marge];
 	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie +marge];
@@ -78,11 +78,11 @@ void geometry::ray_cast_y(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks +marge];
 	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke +marge];
 
-	is = p->posf_i(xs);
-	ie = p->posf_i(xe);
+	is = p->posc_i(xs);
+	ie = p->posc_i(xe);
 
-	ks = p->posf_k(zs);
-    ke = p->posf_k(ze);
+	ks = p->posc_k(zs);
+    ke = p->posc_k(ze);
 
 	is = MAX(is,0);
 	ie = MIN(ie,p->knox);
@@ -151,7 +151,7 @@ void geometry::ray_cast_y(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 
 			Ry = u*Ay + v*By + w*Cy;
 
-            j = p->posf_j(Ry);
+            j = p->posc_j(Ry);
 
             int distcheck=1;
 
