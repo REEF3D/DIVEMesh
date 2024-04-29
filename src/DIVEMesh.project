@@ -153,6 +153,10 @@
       <File Name="geometry.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="HDC">
+      <File Name="hdc_write_cfd.cpp"/>
+      <File Name="hdc_read_cfd.cpp"/>
+      <File Name="hdc_write_nhflow.cpp"/>
+      <File Name="hdc_read_nhflow.cpp"/>
       <File Name="hdc_write_sflow.cpp"/>
       <File Name="hdc_read_sflow.cpp"/>
       <File Name="hdc_write_fnpf.cpp"/>
