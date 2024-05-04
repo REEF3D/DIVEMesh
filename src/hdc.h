@@ -85,6 +85,7 @@ private:
     int numprocs, jdir, numiter;
     int NGx,NGy,NGz;
     int file_version,file_type;
+    double SWL;
     
     
 	double g,wsum,dist;

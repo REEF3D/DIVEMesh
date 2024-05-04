@@ -39,6 +39,9 @@ void hdc::read_mainheader(lexer *p, dive *a)
     if(p->H10==4)
     sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
     
+    if(p->H10==5)
+    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-NHFLOW_State_Mainheader.r3d");
+    
 	mainhead.open(name, ios::binary);
     
     // count numiter
@@ -62,6 +65,9 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.read((char*)&iin, sizeof (int));
 	file_type=iin;
+    
+    mainhead.read((char*)&ddn, sizeof (double));
+	SWL=ddn;
     
     
     cout<<"HDC numprocs: "<<numprocs<<endl;
