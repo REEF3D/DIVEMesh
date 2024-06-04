@@ -32,6 +32,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
 {
     ifstream mainhead;
     int ii1,ii2;
+    double val;
     
     if(p->H10==2)
     sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D-SFLOW_State_Mainheader.r3d");
@@ -68,6 +69,12 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.read((char*)&ddn, sizeof (double));
 	SWL=ddn;
+    
+    mainhead.read((char*)&ddn, sizeof (double));
+	val=ddn;
+    
+    mainhead.read((char*)&ddn, sizeof (double));
+	val=ddn;
     
     
     cout<<"HDC numprocs: "<<numprocs<<endl;
