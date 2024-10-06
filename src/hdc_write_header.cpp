@@ -83,7 +83,6 @@ void hdc::write_header(lexer *p, dive *a)
         for(i=is[aa]; i<ie[aa]; ++i)
         {
         ffn=float(X[i]);
-        //cout<<i<<" "<<X[i]<<endl;
         header.write((char*)&ffn, sizeof (float));
         }
             
@@ -98,6 +97,7 @@ void hdc::write_header(lexer *p, dive *a)
         ffn=float(Z[k]);
         header.write((char*)&ffn, sizeof (float));
         }
+        
         
         // write bed
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -128,7 +128,6 @@ void hdc::write_header(lexer *p, dive *a)
         break;
         }
         
-        //cout<<"DELTA ITERATION: "<<qn<<endl;
         
         iin=qn;
         header.write((char*)&iin, sizeof (int));

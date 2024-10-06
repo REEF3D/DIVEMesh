@@ -30,7 +30,7 @@ driver::driver()
 	cout<<"DIVEMesh (c) 2008-2024 Hans Bihs"<<endl<<endl;
 
 	cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_240526" <<endl<<endl;
+    cout<<endl<<"v_241006" <<endl<<endl;
 
     mkdir("./DIVEMesh_Log",0777);
 
@@ -126,7 +126,7 @@ void driver::mainloop()
 
 
 // Hydrodynamic Coupling
-    if(p->H10==2 || p->H10==4)
+    if(p->H10>0)
     phdc->start(p,a);
 
     pvtu->start(p,a);

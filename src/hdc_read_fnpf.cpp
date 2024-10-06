@@ -52,7 +52,7 @@ void hdc::read_fnpf(lexer *p, dive *a)
         result[q].read((char*)&ddn, sizeof (double)); 
         result[q].read((char*)&ddn, sizeof (double)); 
 	
-    // read eta and bed
+    // read eta
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     {
@@ -67,6 +67,7 @@ void hdc::read_fnpf(lexer *p, dive *a)
     Fifsf[i+orig_i[q]][j+orig_j[q]] = ffn;
     }
     
+    // read velocities
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
     for(k=0;k<NLz[q];++k)

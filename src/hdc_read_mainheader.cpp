@@ -41,7 +41,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
     
     if(p->H10==5)
-    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-NHFLOW_State_Mainheader.r3d");
+    sprintf(name,"./REEF3D_NHFLOW_STATE/REEF3D-NHFLOW_State_Mainheader.r3d");
     
 	mainhead.open(name, ios::binary);
     
@@ -77,14 +77,6 @@ void hdc::read_mainheader(lexer *p, dive *a)
 	val=ddn;
     
     
-    cout<<"HDC numprocs: "<<numprocs<<endl;
-    cout<<"HDC NGx: "<<NGx<<endl;
-    cout<<"HDC NGy: "<<NGy<<endl;
-    cout<<"HDC NGz: "<<NGz<<endl;
-    cout<<"HDC jdir: "<<jdir<<endl;
-    cout<<"HDC file_version: "<<file_version<<endl;
-    cout<<"HDC file_type: "<<file_type<<endl;
-    
     // read flag
     p->Iarray(flag_all,numprocs);
     
@@ -116,7 +108,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.close();
     
-    cout<<"HDC numiter: "<<numiter<<endl<<endl;
+    cout<<"HDC numiter: "<<numiter<<endl;
     
     
     // allocate simtime
@@ -147,6 +139,14 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     mainhead.read((char*)&iin, sizeof (int));
 	file_type=iin;
+    
+    cout<<"HDC numprocs: "<<numprocs<<endl;
+    cout<<"HDC NGx: "<<NGx<<endl;
+    cout<<"HDC NGy: "<<NGy<<endl;
+    cout<<"HDC NGz: "<<NGz<<endl;
+    cout<<"HDC jdir: "<<jdir<<endl;
+    cout<<"HDC file_version: "<<file_version<<endl;
+    cout<<"HDC file_type: "<<file_type<<endl<<endl;
 
     // read flag    
     for(qn=0;qn<numprocs;++qn)
@@ -162,6 +162,9 @@ void hdc::read_mainheader(lexer *p, dive *a)
  
     mainhead.read((char*)&ddn, sizeof (double)); 
     simtime[count] = ddn;
+    
+    cout<<"simtime: "<<simtime[count]<<endl;
+    
     ++count;
     }
     

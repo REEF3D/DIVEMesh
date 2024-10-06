@@ -66,7 +66,6 @@ void hdc::start(lexer* p, dive* a)
     cout<<"HDC read/write "<<endl;
     
     // read/write result files
-    
     if(file_type==1)
     for(n=0; n<numiter; ++n)
     if(simtime[n]>=p->H31 && simtime[n]<p->H32)
@@ -86,6 +85,7 @@ void hdc::start(lexer* p, dive* a)
         if(simtime[n]>=p->H31 && simtime[n]<p->H32)
         if(n>=p->H33 && n<p->H34)
         {
+            
             
             write(p,a);
         
@@ -114,6 +114,9 @@ void hdc::read(lexer *p, dive *a)
     
     if(p->H10==4)
     read_fnpf(p,a);
+    
+    if(p->H10==5)
+    read_nhflow(p,a);
 }
 
 void hdc::write(lexer *p, dive *a)
@@ -122,6 +125,9 @@ void hdc::write(lexer *p, dive *a)
     write_sflow(p,a);
     
     if(p->H10==4)
-    write_fnpf(p,a);    
+    write_fnpf(p,a); 
+
+    if(p->H10==5)
+    write_nhflow(p,a);    
 }
 

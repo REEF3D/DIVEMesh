@@ -45,10 +45,6 @@ void hdc::decomp(lexer *p, dive *a)
     p->Darray(ys,a->my+2);
     p->Darray(ye,a->my+2);
     
-    p->Iarray(Nx,a->mx+2);
-    p->Iarray(Ny,a->mx+2);
-    p->Iarray(Nz,a->my+2);
-    
     // ini ijnode start and end
     is[0]=0;
     js[0]=0;
@@ -62,7 +58,6 @@ void hdc::decomp(lexer *p, dive *a)
         xstart = a->xorig[aa];
         xend  = a->xorig[aa+1];
         
-        //cout<<" HDC decomp x_se: "<<xstart<<" "<<xend<<endl;
         
         for(i=0;i<NGx;++i)
         {
@@ -125,18 +120,5 @@ void hdc::decomp(lexer *p, dive *a)
     
     je[bb] = 1;
     ye[bb] = Y[0];
-    }
-            
-    
-    /*
-    for(aa=0;aa<a->mx;++aa)
-    for(bb=0;bb<a->my;++bb)
-    {
-    cout<<"jdir: "<<jdir<<endl;
-    cout<<"HDC xorig["<<aa<<"]: "<<a->xorig[aa]<<" yorig["<<bb<<"]: "<<a->yorig[bb]<<endl;
-    cout<<"HDC is: "<<is[aa]<<" ie: "<<ie[aa]<<" js: "<<js[bb]<<" je: "<<je[bb]<<endl;
-    cout<<"HDC xs: "<<xs[aa]<<" xe: "<<xe[aa]<<" ys: "<<ys[bb]<<" ye: "<<ye[bb]<<endl<<endl;
-    }
-    */
-    
+    }    
 }
