@@ -140,6 +140,15 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&iin, sizeof (int));
 	file_type=iin;
     
+    mainhead.read((char*)&ddn, sizeof (double));
+	SWL=ddn;
+    
+    mainhead.read((char*)&ddn, sizeof (double));
+	val=ddn;
+    
+    mainhead.read((char*)&ddn, sizeof (double));
+	val=ddn;
+    
     cout<<"HDC numprocs: "<<numprocs<<endl;
     cout<<"HDC NGx: "<<NGx<<endl;
     cout<<"HDC NGy: "<<NGy<<endl;
