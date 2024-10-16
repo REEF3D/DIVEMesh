@@ -172,7 +172,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&ddn, sizeof (double)); 
     simtime[count] = ddn;
     
-    cout<<"simtime: "<<simtime[count]<<endl;
+    //cout<<"simtime: "<<simtime[count]<<endl;
     
     ++count;
     }
