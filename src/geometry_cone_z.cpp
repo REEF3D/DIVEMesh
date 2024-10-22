@@ -54,8 +54,6 @@ void geometry::cone_z(lexer *p, dive *a, int rank, int &ts, int &te,
 	
 	snum = int(U/ds);
 	
-	cout<<"SOLID 001"<<endl;
-
 // Vertices	
 	ds = (2.0*PI)/double(snum);
 	
