@@ -162,7 +162,7 @@ void topo::start(lexer* p, dive* a)
         for(qn=0;qn<p->T37;++qn)
         {
         jacket_member_norm(p,a,qn,tri_start,tri_end,p->T37_xm1[qn],
-                p->T37_ym1[qn],p->T37_ym1[qn],p->T37_r1[qn],p->T37_xm2[qn],p->T37_ym2[qn],p->T37_ym2[qn],p->T37_r1[qn]);
+                p->T37_ym1[qn],p->T37_zm1[qn],p->T37_r1[qn],p->T37_xm2[qn],p->T37_ym2[qn],p->T37_ym2[qn],p->T37_r1[qn]);
         rotate_triangle(p,a,tri_start,tri_end);
         ray_cast(p,a,tri_start,tri_end,a->topo,a->topo_dist,a->topobed);
         }
