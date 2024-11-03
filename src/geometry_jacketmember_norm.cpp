@@ -28,7 +28,6 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
                 double xm1, double ym1, double zm1, double r1, double xm2, double ym2, double zm2, double r2)
 {
     double U,ds,eta;
-	
 	double rmax;
 	int snum;
 	int vertice_mem, center1_num,center2_num;
@@ -38,7 +37,6 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
 	double Nx,Ny,Nz,norm;
     double alpha,beta,gamma;
     double dX,dY,dZ,ddX,ddY,ddZ;
-    double eps = 1.0e-10;
     double length;
     double xvec1,yvec1,zvec1;
     double alpha1,beta1,gamma1;
@@ -65,7 +63,7 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     b2=0.0;
     c2=0.0;
  
-    double ee=0.000001;
+    double ee=1.0e-4;
     int count=0;
     do
     {
@@ -77,13 +75,13 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
       angle_calc(x1,y1,z1,a2,b2,c2);
 
       if(a2>alpha+ee || a2<alpha-ee)
-      a1 = a1 - 0.5*(a2-alpha);
+      a1 = a1 - 0.1*(a2-alpha);
 
       if(b2>beta+ee || b2<beta-ee)
-      b1 = b1 - 0.5*(b2-beta);
+      b1 = b1 - 0.1*(b2-beta);
 
       if(c2>gamma+ee || c2<gamma-ee)
-      c1 = c1 - 0.5*(c2-gamma);
+      c1 = c1 - 0.1*(c2-gamma);
 
 
       if(a2<=alpha+ee && a2>=alpha-ee)
@@ -92,7 +90,7 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
       break;
 
      ++count;
-    }while(count<1500);
+    }while(count<2500);
 
     cout<<"iteration: "<<count<<endl;
     cout<<"alpha: "<<alpha*(180.0/PI)<<" beta: "<<beta*(180.0/PI)<<" gamma: "<<gamma*(180.0/PI)<<endl;
@@ -105,22 +103,16 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
 	rmax = MAX(r1,r2);
 
 	U = 2.0 * PI * rmax;
-
 	ds = p->S19*(U*p->DXM);
-
 	snum = int(U/ds);
 
-	//ds = U/double(snum);
-    
+
     dX = xm2-xm1;
     dY = ym2-ym1;
     dZ = zm2-zm1;
     
-    //xm1
     xm2=xm1+length;
-    //ym1=0.0;
     ym2=ym1;
-    //zm1=0.0;
     zm2=zm1;
 
 // Vertices
@@ -225,7 +217,6 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
 	eta+=ds;
 	}
     te=p->tricount;
-
 
     xrot=xm1;
 	yrot=ym1;

@@ -41,7 +41,6 @@ void geometry::rotate_triangle(lexer* p, dive* a, int ts, int te)
             double x0 = 0.5*(p->xmax-p->xmin);
             double y0 = 0.5*(p->ymax-p->ymin);
 
-
         for(int qr=ts;qr<te;++qr)
         {
         beta = p->S8*PI/180.0;
@@ -60,8 +59,6 @@ void geometry::rotate_triangle(lexer* p, dive* a, int ts, int te)
         yval = y0 + (p->tri_x[qr][2]-x0)*sin(beta) + (p->tri_y[qr][2]-y0)*cos(beta);
         p->tri_x[qr][2]=xval;
         p->tri_y[qr][2]=yval;
-
-
         }
     }
 }
@@ -103,7 +100,6 @@ void geometry::rotation(double &xvec,double &yvec,double &zvec,double phi, doubl
     xvec=a+xrot;
 	yvec=b+yrot;
 	zvec=c+zrot;
-
 }
 
 double geometry::xtrans(double xvec,double yvec,double zvec,double xrot,double yrot,double zrot,double alpha,double beta,double gamma)
