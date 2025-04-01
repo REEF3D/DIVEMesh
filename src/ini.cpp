@@ -203,7 +203,7 @@ void lexer::ini_default()
     S330 = 0;       // int right bend
     S340 = 0;       // int meander
     
-    T1 = 0;			// int read TTL file
+    T1 = 0;			// int read STL file
 	T2 = 0;			// int auto margins
 	T3 = 0;			// int set auto margins
 	T4 = 1.0;		// double scaling factor for stl model
