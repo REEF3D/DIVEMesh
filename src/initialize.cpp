@@ -49,6 +49,8 @@ void initialize::start(lexer* p, dive* a)
 	XYLOOP
     {
     a->bedlevel(i,j)=p->zmin;
+    a->zstl_min(i,j)=1.0e10;
+    a->zstl_max(i,j)=-1.0e10;
     a->solidbed(i,j)=-1.0e10;
     a->topobed(i,j)=p->zmin;
     }

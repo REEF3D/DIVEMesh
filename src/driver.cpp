@@ -101,6 +101,10 @@ void driver::mainloop()
 	print_solid.solid_vtp(p,a);
 	if(p->S6==1)
 	print_solid.solid_stl(p,a);
+    
+    print_stl_geodat print_geo(p,a);
+    if(p->S90==1)
+    print_geo.print_geo(p,a);
 	}
 
 // Slice

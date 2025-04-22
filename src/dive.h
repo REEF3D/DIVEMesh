@@ -47,6 +47,7 @@ class dive : public increment, public resize_class
     intfield subgrid;      // for all water cells: number of subgrid
     field2d topobed,solidbed; 
     field2d bedlevel;      // combined bedlevel
+    field2d zstl_max,zstl_min;
     field2d dataset;
     intfield2d flagslice,subslice;
 

@@ -217,6 +217,7 @@ public:
     double **S83_xyz;
     int S84;
     double **S84_xyz;
+    int S90,S91;
 	int S121;
 	double *S121_x,*S121_y,*S121_z,*S121_b,*S121_Pd,*S121_H0;
 	double S122;

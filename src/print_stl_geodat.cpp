@@ -20,34 +20,40 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
-#include"increment.h"
-#include"initialize.h"
-
-#include"baselayer.h"
-#include"box_bl.h"
-#include"bc.h"
-#include<iostream>
+#include"print_stl_geodat.h"
 #include"lexer.h"
 #include"dive.h"
-#include"printer.h"
-#include"print_grid.h"
-#include"print_vtu.h"
-#include"surface.h"
-#include"solid.h"
-#include"topo.h"
+#include<sys/stat.h>
 
-#include"baselayer.h"
+print_stl_geodat::print_stl_geodat(lexer* p, dive *a)
+{
+}
 
-#include"geodat.h"
-#include"bedlevel.h"
-#include"dataset.h"
-#include"slice.h"
+print_stl_geodat::~print_stl_geodat()
+{
+}
 
-#include"print_stl.h"
-#include"print_stl_geodat.h"
+void print_stl_geodat::print_geo(lexer* p, dive* a)
+{
+    mkdir("./DIVEMesh_Geo",0777);
+	sprintf(name,"./DIVEMesh_Geo/REEF3D_stl_geo.dat");
 
-#include"hdc.h"
+	ofstream result;
+	result.open(name, ios::binary);
+    
+    if(p->S91==1)
+	XYLOOP
+	result<<p->XP[IP]<<" "<<p->YP[JP]<<" "<<a->zstl_min(i,j)<<endl;
+    
+    if(p->S91==2)
+	XYLOOP
+	result<<p->XP[IP]<<" "<<p->YP[JP]<<" "<<a->zstl_max(i,j)<<endl;
+	
+
+
+	result.close();	
+}
+
 
 
 

@@ -513,6 +513,12 @@ void lexer::read_control()
                case 84: ++S84;
 						 clear(c,numint);
 						 break;
+               case 90: control>>S90;
+						 clear(c,numint);
+						 break;
+               case 91: control>>S91;
+						 clear(c,numint);
+						 break;
 				case 121: ++S121;
 						 clear(c,numint);
 						 break;

@@ -171,6 +171,13 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
             {
             if(Rz<p->zmax-1.0e-10)
             bedlevel(i,j) = MAX(bedlevel(i,j),Rz);
+            
+            
+            if(Rz>p->zmin+1.0e-10)
+            a->zstl_min(i,j) = MAX(a->zstl_min(i,j),Rz);
+            
+            if(Rz<p->zmax-1.0e-10)
+            a->zstl_max(i,j) = MAX(a->zstl_max(i,j),Rz);
             }
 
             }

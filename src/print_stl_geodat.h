@@ -20,34 +20,34 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
-#include"increment.h"
-#include"initialize.h"
-
-#include"baselayer.h"
-#include"box_bl.h"
-#include"bc.h"
-#include<iostream>
-#include"lexer.h"
-#include"dive.h"
 #include"printer.h"
-#include"print_grid.h"
-#include"print_vtu.h"
-#include"surface.h"
-#include"solid.h"
-#include"topo.h"
+#include"increment.h"
 
-#include"baselayer.h"
+class lexer;
+class dive;
 
-#include"geodat.h"
-#include"bedlevel.h"
-#include"dataset.h"
-#include"slice.h"
+#ifndef PRINT_STL_GEODAT_H_
+#define PRINT_STL_GEODAT_H_
 
-#include"print_stl.h"
-#include"print_stl_geodat.h"
+using namespace std;
 
-#include"hdc.h"
+class print_stl_geodat :  public increment
+{
 
+public:
+	print_stl_geodat(lexer*,dive*);
+	virtual ~print_stl_geodat();
+    
+	virtual void print_geo(lexer*,dive*);
+
+private:
+
+    char name[100],pname[100],epsvar[100];
+    int n,iin,offset[100];
+    float ffn;
+    double ddn;
+};
+
+#endif
 
 

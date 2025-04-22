@@ -330,11 +330,9 @@ void solid::start(lexer* p, dive* a)
         if(a->solid(i,j,k)==-1)
         a->solid_dist(i,j,k)=-fabs(a->solid_dist(i,j,k));
 
-
         if(a->solid(i,j,k)==1)
         a->solid_dist(i,j,k)=fabs(a->solid_dist(i,j,k));
     }
-
 
     LOOP
 	{
@@ -351,7 +349,6 @@ void solid::start(lexer* p, dive* a)
 
 
 	cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
-
 }
 
 

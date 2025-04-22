@@ -177,6 +177,8 @@ void lexer::ini_default()
     S82 = 0;		// int solid pyramid
     S83 = 0;		// int solid wedge
     S84 = 0;		// int solid hexahedon
+    S90 = 0;          // int write STL to geodat
+    S91 = 1;          // int min or max z-values for geodat  
 	S121 = 0; 		// int solid ogee weir
 	S122 = 0; 		// int solid ogee weir, K and n
 	S123 = 0; 		// int solid ogee weir, R1 and R2

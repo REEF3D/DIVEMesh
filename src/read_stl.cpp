@@ -28,7 +28,6 @@ void lexer::read_stl()
 	int count, vert_count;
 	
 	// reopen and read triangles
-    
     ifstream stl("solid.stl", ios_base::in);
 	
     int chk=0;
@@ -38,14 +37,12 @@ void lexer::read_stl()
 		
 		if(word=="ascii" || word=="solid")
 		chk=1;
-
 	}
 	
 	if(chk==0)
 	{
 	cout<<"Please convert STL file to ASCII format!"<<endl<<endl;
 	cout<<"See User's Guide for more information!"<<endl<<endl<<endl;
-	//exit(0);
 	}
 	
 	stl.close();
@@ -114,7 +111,6 @@ void lexer::read_stl()
 	tri_x[n][q] = xval;
 	tri_y[n][q] = yval;
 	}
-	
 
 	
 	// find min/max coordinates
@@ -320,7 +316,6 @@ void lexer::pre_read_stl()
 	
 	zs_stl = MIN(zs_stl,MIN3(Az,Bz,Cz));
 	ze_stl = MAX(ze_stl,MAX3(Az,Bz,Cz));
-	
 	}
 	
 	xs_stl -= S3_xs;
