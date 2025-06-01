@@ -1,4 +1,7 @@
 
+25.5
+x added stl to geo.dat conversion
+
 24.12
 x added NHFLOW to CFD HDC coupling
 x updated HDC 
