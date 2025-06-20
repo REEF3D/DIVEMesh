@@ -43,7 +43,7 @@ void lexer::read_control()
 	if(!control)
 	{
 		cout<<"no 'control.txt' file"<<endl<<endl;
-		//exit(0);
+		exit(1);
 	}
     
     count=0;
@@ -850,7 +850,7 @@ void lexer::read_control()
         cout<<"!!! missing input parameter in control.txt !!!"<<endl<<endl;
         cout<<"!!! please check the DIVEMesh User Guide !!!"<<endl<<endl<<endl<<endl;
         
-        exit(0);
+        exit(1);
         }
 	}
 	control.close();
