@@ -30,6 +30,8 @@ void geometry::fluvial_box_v1(lexer *p, dive *a, int rank, int &ts, int &te)
     // add the rest of the geometry geometry
     ts=p->tricount;
     
+    //cout<<"yl[0]: "<<yl[0]<<endl;
+    
     // Front Face
 	// Tri 1
 	p->trivec_x[p->tricount] = 0.0;
@@ -105,7 +107,7 @@ void geometry::fluvial_box_v1(lexer *p, dive *a, int rank, int &ts, int &te)
 	p->tri_z[p->tricount][2] = box_ze;
 	++p->tricount;
   
-  cout<<"NUMDS: "<<numds<<endl;
+
     for(n=0; n<numds-1;++n)
     {
 

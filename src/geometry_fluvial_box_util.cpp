@@ -34,9 +34,7 @@ void geometry::fluvial_box_move(lexer *p, dive *a)
     yl[n] += G308_y;
     yr[n] += G308_y;
     }
-    
 }
-
 
 void geometry::fluvial_box_extend(lexer *p, dive *a)
 {

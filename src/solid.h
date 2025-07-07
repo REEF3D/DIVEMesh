@@ -54,15 +54,8 @@ private:
 
     
     // fluvial box 
-    int countS310;
-    int countS320;
-    int countS330;
-    int countS340;
-    int countds;
-    int numds;
-    int ds_count;
     double dangle,length;
-    double *xl,*yl,*xr,*yr;
+    //double *xl,*yl,*xr,*yr;
     double x0; // add origin afterwards
     double y0; // add origin
     double phi0;

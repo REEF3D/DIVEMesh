@@ -300,5 +300,7 @@ void lexer::tri_space()
 	Darray(trivec_x,trinum);
 	Darray(trivec_y,trinum);
 	Darray(trivec_z,trinum);
+    
+    cout<<"TRINUM:  "<<trinum<<endl;
   
 }

@@ -52,13 +52,8 @@ private:
     int **is_num;
     int is_count;
     int maxpt;
-
     
     // fluvial box 
-    int countS310;
-    int countS320;
-    int countS330;
-    int countS340;
     int countds;
     int numds;
     int ds_count;

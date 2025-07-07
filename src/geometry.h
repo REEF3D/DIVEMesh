@@ -119,6 +119,11 @@ public:
     int G340;
     double *G340_teta,*G340_L,*G340_N,*G340_ds;
     
+    double *xl,*yl,*xr,*yr;
+    int countds;
+    int numds;
+    int ds_count;
+    
 private:
     void sort(double*, int, int);
     
@@ -134,15 +139,12 @@ private:
     const double epsi;
     
     // fluvial box
-    int countS310;
-    int countS320;
-    int countS330;
-    int countS340;
-    int countds;
-    int numds;
-    int ds_count;
+    int countG310;
+    int countG320;
+    int countG330;
+    int countG340;
+    
     double dangle,length;
-    double *xl,*yl,*xr,*yr;
     double x0; // add origin afterwards
     double y0; // add origin
     double phi0;

@@ -59,10 +59,6 @@ private:
     void fluvial_box_move(lexer*,dive*);
     void fluvial_box_extend(lexer*,dive*);
     
-    int countS310;
-    int countS320;
-    int countS330;
-    int countS340;
     int countds;
     int numds;
     int ds_count;
