@@ -214,7 +214,7 @@ void lexer::pre_read_stl()
 	{
 	cout<<"Please convert STL file to ASCII format!"<<endl<<endl;
 	cout<<"See User's Guide for more information!"<<endl<<endl<<endl;
-	exit(0);
+	exit(1);
 	}
 	
 	stl.close();
