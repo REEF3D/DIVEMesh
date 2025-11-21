@@ -1,19 +1,27 @@
-BUILD    := ./build
-BIN    	 := ./bin
 TARGET   := DiveMESH
 CXX      := -g++
-CXXFLAGS := -w -O3
+CXXFLAGS := -std=c++17
 LDFLAGS  := 
 
-OBJ_DIR  := $(BUILD)
-APP_DIR  := $(BIN)
+OPENMP ?= 0
+
+ifeq ($(OPENMP),1)
+CXXFLAGS += -fopenmp
+LDFLAGS += -fopenmp
+endif
+
+OBJ_DIR  := ./build
+APP_DIR  := ./bin
 SRC      := $(wildcard src/*.cpp)
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
-DEPENDENCIES := $(OBJECTS:.o=.d)
 
-.PHONY: all build clean debug info
+.PHONY: all clean debug info
 
-all: build $(APP_DIR)/$(TARGET)
+all: CXXFLAGS += -w -O3
+all: $(APP_DIR)/$(TARGET)
+
+debug: CXXFLAGS += -O0 -w -g -g3
+debug: $(APP_DIR)/$(TARGET)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
@@ -21,14 +29,7 @@ $(OBJ_DIR)/%.o: %.cpp
 
 $(APP_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -o $(APP_DIR)/$(TARGET) $^ $(LDFLAGS)
-
-build:
-	@mkdir -p $(APP_DIR)
-	@mkdir -p $(OBJ_DIR)
-
-debug: CXXFLAGS = -O0 -w -g -g3
-debug: all
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
 	-@rm -rvf $(OBJ_DIR)/*
@@ -39,4 +40,3 @@ info:
 	@echo "[*] Object dir:      ${OBJ_DIR}     "
 	@echo "[*] Sources:         ${SRC}         "
 	@echo "[*] Objects:         ${OBJECTS}     "
-	@echo "[*] Dependencies:    ${DEPENDENCIES}"
