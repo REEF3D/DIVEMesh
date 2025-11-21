@@ -28,259 +28,278 @@ Author: Hans Bihs
 #include<fstream>
 #include<sys/stat.h>
 #include<sys/types.h>
-#include <iomanip>
+#include<iomanip>
+#include<cstddef>
+#include<vector>
+#include<cstring>
+#include<sstream>
 
-print_vtu::print_vtu(lexer* p) 
+print_vtu::print_vtu(lexer* p)
 {
-
 }
 
-print_vtu::~print_vtu()
+void print_vtu::start(lexer* p, dive* a)
 {
-}
-
-void print_vtu::start(lexer* p,dive* a)
-{   
     field nodeval(p);
-    
+
     // NODELOOP
     int count=0;
     int pointnum=0;
     int tpcellnum=0;
-    
+
     TPLOOP
-	{
-	++count;
-    ++pointnum;
-	nodeval(i,j,k)=count;
-	}
-    
+    {
+        ++count;
+        ++pointnum;
+        nodeval(i,j,k)=count;
+    }
+
     LOOP
-	{
-	++tpcellnum;
-	}
+    {
+        ++tpcellnum;
+    }
+
+    size_t offset[10];
+    size_t n = 0;
+    offset[n] = 0;
+    ++n;
+
+    // topo
+    offset[n]=offset[n-1]+sizeof(float)*pointnum+sizeof(int);
+    ++n;
+
+    // solid
+    offset[n]=offset[n-1]+sizeof(float)*pointnum+sizeof(int);
+    ++n;
+
+    // Points
+    offset[n]=offset[n-1]+sizeof(float)*pointnum*3+sizeof(int);
+    ++n;
+
+    // Cells
+    offset[n]=offset[n-1] + sizeof(int)*tpcellnum*8+sizeof(int);
+    ++n;
+    offset[n]=offset[n-1] + sizeof(int)*tpcellnum+sizeof(int);
+    ++n;
+    offset[n]=offset[n-1] + sizeof(int)*tpcellnum+sizeof(int);
+    ++n;
+    //---------------------------------------------
+
+    std::stringstream header;
+
+    header<<"<?xml version=\"1.0\"?>\n";
+    header<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
+    header<<"<UnstructuredGrid>\n";
+    header<<"<Piece NumberOfPoints=\""<<pointnum<<"\" NumberOfCells=\""<<tpcellnum<<"\">\n";
+
+    n=0;
+    header<<"<PointData>\n";
+    header<<"<DataArray type=\"Float32\" Name=\"topo\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    header<<"<DataArray type=\"Float32\" Name=\"solid\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    header<<"</PointData>\n";
+
+    header<<"<Points>\n";
+    header<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    header<<"</Points>\n";
+
+    header<<"<Cells>\n";
+    header<<"<DataArray type=\"Int32\" Name=\"connectivity\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    header<<"<DataArray type=\"Int32\" Name=\"offsets\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    header<<"<DataArray type=\"Int32\" Name=\"types\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    header<<"</Cells>\n";
+
+    header<<"</Piece>\n";
+    header<<"</UnstructuredGrid>\n";
+    header<<"<AppendedData encoding=\"raw\">\n_";
+
+    //----------------------------------------------------------------------------
+    std::vector<char> buffer;
+    size_t file_offset = header.str().length();
+    const size_t total_size = file_offset + offset[n] + 28;
+    buffer.resize(total_size);
+    std::memcpy(&buffer[0], header.str().data(), file_offset);
+
+    int iin;
+    float ffn;
+
+    //  topo
+    iin=sizeof(float)*pointnum;
+    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+    file_offset+=sizeof(int);
+    TPLOOP
+    {
+        ffn=float(ipol(a,a->topo_dist));
+        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
+        file_offset+=sizeof(float);
+    }
+
+    //  solid
+    iin=sizeof(float)*pointnum;
+    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+    file_offset+=sizeof(int);
+    TPLOOP
+    {
+        ffn=float(ipol(a,a->solid_dist));
+        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
+        file_offset+=sizeof(float);
+    }
+
+    //  XYZ
+    iin=sizeof(float)*pointnum*3;
+    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+    file_offset+=sizeof(int);
+    TPLOOP
+    {
+        ffn=float(p->XN[IP1]);
+        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
+        file_offset+=sizeof(float);
+
+        ffn=float(p->YN[JP1]);
+        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
+        file_offset+=sizeof(float);
+
+        ffn=float(p->ZN[KP1]);
+        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
+        file_offset+=sizeof(float);
+    }
+
+    //  Connectivity
+    iin=sizeof(int)*tpcellnum*8;
+    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+    file_offset+=sizeof(int);
+    LOOP
+    {
+        iin=int(nodeval(i-1,j-1,k-1)-1);
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+
+        iin=int(nodeval(i,j-1,k-1))-1;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+
+        iin= int(nodeval(i,j,k-1))-1;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+
+        iin=int(nodeval(i-1,j,k-1))-1;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+
+        iin=int(nodeval(i-1,j-1,k))-1;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+
+        iin=int(nodeval(i,j-1,k))-1;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+
+        iin=int(nodeval(i,j,k))-1;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+
+        iin=int(nodeval(i-1,j,k))-1;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+    }
+
+    //  Offset of Connectivity
+    iin=sizeof(int)*tpcellnum;
+    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+    file_offset+=sizeof(int);
+    for(n=0;n<tpcellnum;++n)
+    {
+        iin=(n+1)*8;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+    }
+
+    //  Cell types
+    iin=sizeof(int)*tpcellnum;
+    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+    file_offset+=sizeof(int);
+    for(n=0;n<tpcellnum;++n)
+    {
+        iin=12;
+        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
+        file_offset+=sizeof(int);
+    }
+
+    std::string footer = "\n</AppendedData>\n</VTKFile>\n";
+    std::memcpy(&buffer[file_offset],footer.data(),footer.size());
 
     mkdir("./DIVEMesh_Paraview",0777);
-    sprintf(name,"./DIVEMesh_Paraview/DIVEMesh_grid-preview.vtu");
-    
-	// Open File
-	ofstream result;
-	result.open(name, ios::binary);
-
-    n=0;
-
-	offset[n]=0;
-	++n;
-    
-    // topo
-	offset[n]=offset[n-1]+4*(pointnum)+4;
-	++n;
-    
-    // solid
-	offset[n]=offset[n-1]+4*(pointnum)+4;
-	++n;
-
-	// Points
-    offset[n]=offset[n-1]+4*(pointnum)*3+4;
-    ++n;
-	
-	// Cells
-    offset[n]=offset[n-1] + 4*tpcellnum*8 + 4;
-    ++n;
-    offset[n]=offset[n-1] + 4*(tpcellnum)+4;
-    ++n;
-	offset[n]=offset[n-1] + 4*(tpcellnum)+4;
-    ++n;
-	//---------------------------------------------
-
-	result<<"<?xml version=\"1.0\"?>"<<endl;
-	result<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">"<<endl;
-	result<<"<UnstructuredGrid>"<<endl;
-	result<<"<Piece NumberOfPoints=\""<<pointnum<<"\" NumberOfCells=\""<<tpcellnum<<"\">"<<endl;
-
-    n=0;
-    result<<"<PointData >"<<endl;
-
-    result<<"<DataArray type=\"Float32\" Name=\"topo\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-
-	result<<"<DataArray type=\"Float32\" Name=\"solid\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-    result<<"</PointData>"<<endl;
-
-
-    result<<"<Points>"<<endl;
-    result<<"<DataArray type=\"Float32\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-    result<<"</Points>"<<endl;
-
-    result<<"<Cells>"<<endl;
-    result<<"<DataArray type=\"Int32\"  Name=\"connectivity\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-	result<<"<DataArray type=\"Int32\"  Name=\"offsets\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-	++n;
-    result<<"<DataArray type=\"Int32\"  Name=\"types\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-	result<<"</Cells>"<<endl;
-    
-
-    result<<"</Piece>"<<endl;
-    result<<"</UnstructuredGrid>"<<endl;
-
-//----------------------------------------------------------------------------
-    result<<"<AppendedData encoding=\"raw\">"<<endl<<"_";
-	
-//  topo
-    iin=4*(pointnum);
-    result.write((char*)&iin, sizeof (int));
-	TPLOOP
-	{
-	ffn=float(ipol(a,a->topo_dist));
-	result.write((char*)&ffn, sizeof (float));
-	}
-	
-//  solid
-    iin=4*(pointnum);
-    result.write((char*)&iin, sizeof (int));
-	TPLOOP
-	{
-	ffn=float(ipol(a,a->solid_dist));
-	result.write((char*)&ffn, sizeof (float));
-	}
-	
-//  XYZ
-	iin=4*(pointnum)*3;
-	result.write((char*)&iin, sizeof (int));
-    TPLOOP
-	{
-    ffn=float(p->XN[IP1]);
-	result.write((char*)&ffn, sizeof (float));
-
-	ffn=float(p->YN[JP1]);
-	result.write((char*)&ffn, sizeof (float));
-
-	ffn=float(p->ZN[KP1]);
-	result.write((char*)&ffn, sizeof (float));
-	}
-
-
-//  Connectivity
-    iin=4*(tpcellnum)*8;
-    result.write((char*)&iin, sizeof (int));
-    LOOP
-	{
-	iin=int(nodeval(i-1,j-1,k-1)-1);
-	result.write((char*)&iin, sizeof (int));
-
-	iin=int(nodeval(i,j-1,k-1))-1;
-	result.write((char*)&iin, sizeof (int));
-
-    iin= int(nodeval(i,j,k-1))-1;
-	result.write((char*)&iin, sizeof (int));
-
-	iin=int(nodeval(i-1,j,k-1))-1;
-	result.write((char*)&iin, sizeof (int));
-
-	iin=int(nodeval(i-1,j-1,k))-1;
-	result.write((char*)&iin, sizeof (int));
-
-	iin=int(nodeval(i,j-1,k))-1;
-	result.write((char*)&iin, sizeof (int));
-
-	iin=int(nodeval(i,j,k))-1;
-	result.write((char*)&iin, sizeof (int));
-
-	iin=int(nodeval(i-1,j,k))-1;
-	result.write((char*)&iin, sizeof (int));
-	}
-
-
-//  Offset of Connectivity
-    iin=4*(tpcellnum);
-    result.write((char*)&iin, sizeof (int));
-	for(n=0;n<tpcellnum;++n)
-	{
-	iin=(n+1)*8;
-	result.write((char*)&iin, sizeof (int));
-	}
-
-
-//  Cell types
-    iin=4*(tpcellnum);
-    result.write((char*)&iin, sizeof (int));
-	for(n=0;n<tpcellnum;++n)
-	{
-	iin=12;
-	result.write((char*)&iin, sizeof (int));
-	}
-
-	result<<endl<<"</AppendedData>"<<endl;
-    result<<"</VTKFile>"<<endl;
-
-	result.close();
-	
+    char filename[100];
+    snprintf(filename,sizeof(filename),"./DIVEMesh_Paraview/DIVEMesh_grid-preview.vtu");
+    FILE* file = fopen(filename, "wb");
+    if(file)
+    {
+        fwrite(buffer.data(), buffer.size(), 1, file);
+        fclose(file);
+    }
 }
 
 double print_vtu::ipol(dive *a, field &b)
 {
     int q=0;
-    
+
+    double v1,v2,v3,v4,v5,v6,v7,v8;
     v1=v2=v3=v4=v5=v6=v7=v8=0.0;
 
     if(a->flag(i,j,k)>0)
     {
-    v1=b(i,j,k);
-    ++q;
+        v1=b(i,j,k);
+        ++q;
     }
-    
+
     if(a->flag(i,j+1,k)>0)
     {
-    v2=b(i,j+1,k);
-    ++q;
+        v2=b(i,j+1,k);
+        ++q;
     }
-    
+
     if(a->flag(i+1,j,k)>0)
     {
-    v3=b(i+1,j,k);
-    ++q;
+        v3=b(i+1,j,k);
+        ++q;
     }
-    
+
     if(a->flag(i+1,j+1,k)>0)
     {
-    v4=b(i+1,j+1,k);
-    ++q;
+        v4=b(i+1,j+1,k);
+        ++q;
     }
-    
+
     if(a->flag(i,j,k+1)>0)
     {
-    v5=b(i,j,k+1);
-    ++q;
+        v5=b(i,j,k+1);
+        ++q;
     }
-    
+
     if(a->flag(i,j+1,k+1)>0)
     {
-    v6=b(i,j+1,k+1);
-    ++q;
+        v6=b(i,j+1,k+1);
+        ++q;
     }
-    
+
     if(a->flag(i+1,j,k+1)>0)
     {
-    v7=b(i+1,j,k+1);
-    ++q;
+        v7=b(i+1,j,k+1);
+        ++q;
     }
-    
+
     if(a->flag(i+1,j+1,k+1)>0)
     {
-    v8=b(i+1,j+1,k+1);
-    ++q;
+        v8=b(i+1,j+1,k+1);
+        ++q;
     }
-    
-    double denom = 1.0/double(q);
-    
-    if(q==0)
-    denom=1.0;
 
-    value=denom*(v1+v2+v3+v4+v5+v6+v7+v8);
+    double denom = q==0 ? 1.0 : 1.0/double(q);
 
-    return value;
+    return denom*(v1+v2+v3+v4+v5+v6+v7+v8);
 }

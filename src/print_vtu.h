@@ -23,33 +23,17 @@ Author: Hans Bihs
 #ifndef PRINT_VTU_H_
 #define PRINT_VTU_H_
 
-#include<iostream>
-#include<fstream>
-
 #include"printer.h"
 #include"increment.h"
 
-using namespace std;
-
-using namespace std;
-
 class print_vtu : public printer, public increment
 {
-
 public:
-	print_vtu(lexer*);
-	virtual ~print_vtu();
-	virtual void start(lexer*,dive*);
-
+    print_vtu(lexer*);
+    virtual ~print_vtu() = default;
+    void start(lexer*,dive*) override;
 private:
     double ipol(dive*,field&);
-    char name[200],pname[200],epsvar[200];
-    int n,iin,offset[200];
-    float ffn;
-    
-    double v1,v2,v3,v4,v5,v6,v7,v8;
-    double value;
 };
 
 #endif
-
