@@ -24,6 +24,10 @@ Author: Hans Bihs
 #include"lexer.h"
 #include"dive.h"
 #include<sys/stat.h>
+#include<iostream>
+#include<fstream>
+
+using namespace std;
 
 void print_grid::print_bottom(lexer* p,dive* a)
 {
@@ -31,7 +35,7 @@ void print_grid::print_bottom(lexer* p,dive* a)
     
     mkdir("./DIVEMesh_log",0777);
     
-    sprintf(name,"./DIVEMesh_Log/bottom_file.dat",count);
+    sprintf(name,"./DIVEMesh_Log/bottom_file.dat");
     
     ofstream result;
 	result.open(name);

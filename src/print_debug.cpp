@@ -22,6 +22,10 @@ Author: Hans Bihs
 
 #include"print_grid.h"
 #include<sys/stat.h>
+#include<iostream>
+#include<fstream>
+
+using namespace std;
 
 void print_grid::print_debug(lexer* p, dive* a)
 {

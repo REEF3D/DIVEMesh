@@ -23,30 +23,19 @@ Author: Hans Bihs
 #ifndef PRINT_GRID_H_
 #define PRINT_GRID_H_
 
-#include<iostream>
-#include<fstream>
-
 #include"printer.h"
 #include"increment.h"
-
-using namespace std;
 
 class print_grid : public printer, public increment
 {
 public:
     print_grid(lexer*);
-    virtual ~print_grid();
+    virtual ~print_grid() = default;
 
-    virtual void start(lexer*,dive*);
-    void print_debug(lexer*,dive*);
-    
-    void print_bottom(lexer*,dive*);
-
+    void start(lexer*,dive*) override;
 private:
-    int count;
-    int q,qq;
-    int i_old,j_old;
-    int bcount;
+    void print_debug(lexer*,dive*);
+    void print_bottom(lexer*,dive*);
 };
 
 #endif
