@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef BEDLEVEL_H_
+#define BEDLEVEL_H_
+
 #include"increment.h"
 
 class lexer;
@@ -27,9 +30,6 @@ class dive;
 class interpolation;
 
 using namespace std;
-
-#ifndef BEDLEVEL_H_
-#define BEDLEVEL_H_
 
 class bedlevel : public increment
 {

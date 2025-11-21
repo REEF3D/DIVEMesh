@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef INVERSE_DIST_LOCAL_H_
+#define INVERSE_DIST_LOCAL_H_
+
 #include"interpolation.h"
 #include"increment.h"
 
@@ -27,9 +30,6 @@ class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef INVERSE_DIST_LOCAL_H_
-#define INVERSE_DIST_LOCAL_H_
 
 class inverse_dist_local : public interpolation, public increment
 {

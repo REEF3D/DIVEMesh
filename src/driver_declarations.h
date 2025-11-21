@@ -19,7 +19,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 Author: Hans Bihs
 --------------------------------------------------------------------*/
-class lexer;
+
+#ifndef DRIVER_DECLARATIONS_H_
+#define DRIVER_DECLARATIONS_H_
+
+class lexer;
 class dive;
 class box_bl;
 class printer;
@@ -41,3 +45,4 @@ class slice;
 class bedlevel;
 class hdc;
 
+#endif

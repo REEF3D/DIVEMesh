@@ -20,15 +20,15 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef MODULE_VOID_H_
+#define MODULE_VOID_H_
+
 #include"module.h" 
 
 class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef MODULE_VOID_H_
-#define MODULE_VOID_H_
 
 class module_void : public module
 {

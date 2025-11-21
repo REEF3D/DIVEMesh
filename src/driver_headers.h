@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef DRIVER_HEADERS_H_
+#define DRIVER_HEADERS_H_
+
 #include"decomp.h"
 #include"increment.h"
 #include"initialize.h"
@@ -49,5 +52,4 @@ Author: Hans Bihs
 
 #include"hdc.h"
 
-
-
+#endif

@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef DECOMPOSITION_H_
+#define DECOMPOSITION_H_
+
 #include<iostream>
 #include<fstream>
 #include"lexer.h"
@@ -28,9 +31,6 @@ Author: Hans Bihs
 
 using namespace std;
 
-
-#ifndef DECOMPOSITION_H_
-#define DECOMPOSITION_H_
 
 class decomp : public increment
 {

@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef PRINTER_H_
+#define PRINTER_H_
+
 #include<iostream>
 #include<fstream>
 
@@ -27,9 +30,6 @@ Author: Hans Bihs
 #include"dive.h"
 
 using namespace std;
-
-#ifndef PRINTER_H_
-#define PRINTER_H_
 
 class printer
 {

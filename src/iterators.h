@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef ITERATORS_H_
+#define ITERATORS_H_
+
 #define IP (i + marge) 
 #define IP1 (i + 1 + marge)
 #define IP2 (i + 2 + marge)
@@ -65,4 +68,4 @@ Author: Hans Bihs
 #define KK (kk + marge)
 #define KKP1 (kk + 1 + marge)
 
-
+#endif

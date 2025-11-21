@@ -20,13 +20,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef INCREMENT_H_
+#define INCREMENT_H_
+
 #include<iostream>
 #include<math.h>
 #include"iterators.h"
 #include"looping.h"
-
-#ifndef INCREMENT_H_
-#define INCREMENT_H_
 
 #define PI 3.14159265359
 

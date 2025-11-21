@@ -20,14 +20,14 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef INTERPOLATION_H_
+#define INTERPOLATION_H_
+
 class lexer;
 class dive;
 class field2d;
 
 using namespace std;
-
-#ifndef INTERPOLATION_H_
-#define INTERPOLATION_H_
 
 class interpolation
 {

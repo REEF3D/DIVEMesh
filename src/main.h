@@ -20,11 +20,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include<iostream>
+#ifndef MAIN_H_
+#define MAIN_H_
+
+#include<iostream>
 #include"driver.h"
 
-
-
-
-
-
+#endif

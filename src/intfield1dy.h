@@ -20,13 +20,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef INTFIELD1DY_H_
+#define INTFIELD1DY_H_
+
 #include<iostream>
 #include"increment.h"
 
 class lexer;
-
-#ifndef INTFIELD1DY_H_
-#define INTFIELD1DY_H_
 
 using namespace std;
 

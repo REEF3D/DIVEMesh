@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef GEOMETRY_H_
+#define GEOMETRY_H_
+
 #include"increment.h"
 #include"intfield.h"
 
@@ -29,9 +32,6 @@ class field;
 class field2d;
 
 using namespace std;
-
-#ifndef GEOMETRY_H_
-#define GEOMETRY_H_
 
 class geometry : public increment
 {

@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef SOLID_H_
+#define SOLID_H_
+
 #include"geometry.h"
 #include"intfield.h"
 
@@ -27,9 +30,6 @@ class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef SOLID_H_
-#define SOLID_H_
 
 class solid : public geometry
 {

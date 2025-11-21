@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef POROUS_H_
+#define POROUS_H_
+
 #include"geometry.h"
 #include"intfield.h"
 #include"field.h"
@@ -29,9 +32,6 @@ class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef POROUS_H_
-#define POROUS_H_
 
 class porous : public geometry
 {

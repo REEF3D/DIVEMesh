@@ -20,15 +20,16 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"increment.h"
+
+#ifndef SLICE_H_
+#define SLICE_H_
+
+#include"increment.h"
 
 class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef SLICE_H_
-#define SLICE_H_
 
 class slice : public increment
 {

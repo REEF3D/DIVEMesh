@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef GEODAT_H_
+#define GEODAT_H_
+
 #include"increment.h"
 
 class lexer;
@@ -29,9 +32,6 @@ class field2d;
 class field;
 
 using namespace std;
-
-#ifndef GEODAT_H_
-#define GEODAT_H_
 
 class geodat : public increment
 {

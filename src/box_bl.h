@@ -20,15 +20,15 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef BOX_BL_H_
+#define BOX_BL_H_
+
 #include"increment.h"
 
 class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef BOX_BL_H_
-#define BOX_BL_H_
 
 class box_bl : public increment
 {

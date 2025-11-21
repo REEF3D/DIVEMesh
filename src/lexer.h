@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef LEXER_H_
+#define LEXER_H_
+
 #include<iostream>
 #include<iostream>
 #include<fstream>
@@ -28,9 +31,6 @@ Author: Hans Bihs
 #include"field.h"
 #include"increment.h"
 #include<stdlib.h>
-
-#ifndef LEXER_H_
-#define LEXER_H_
 
 using namespace std;
 

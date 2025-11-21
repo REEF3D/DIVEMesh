@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef BC_H_
+#define BC_H_
+
 #include<iostream>
 #include"field.h"
 #include"lexer.h"
@@ -27,9 +30,6 @@ Author: Hans Bihs
 #include"dive.h"
 
 using namespace std;
-
-#ifndef BC_H_
-#define BC_H_
 
 class bc : public increment
 {

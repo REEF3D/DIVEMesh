@@ -20,12 +20,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef TEMPLATE_H_
+#define TEMPLATE_H_
+
 #include<iostream>
 #include"lexer.h"
 #include"dive.h"
-
-#ifndef TEMPLATE_H_
-#define TEMPLATE_H_
 
 using namespace std;
 

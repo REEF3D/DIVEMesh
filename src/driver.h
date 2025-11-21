@@ -20,13 +20,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef DRIVER_H_
+#define DRIVER_H_
+
 #include<iostream>
 #include<fstream>
 #include"driver_declarations.h"
 #include"increment.h"
-
-#ifndef DRIVER_H_
-#define DRIVER_H_
 
 using namespace std;
 

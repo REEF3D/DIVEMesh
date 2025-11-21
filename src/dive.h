@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef DIVE_H_
+#define DIVE_H_
+
 #include<iostream>
 #include"lexer.h"
 #include"field.h"
@@ -30,9 +33,6 @@ Author: Hans Bihs
 
 using namespace std;
  
-#ifndef DIVE_H_
-#define DIVE_H_
-
 class dive : public increment, public resize_class
 {
  public:

@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef HDC_H_
+#define HDC_H_
+
 #include"increment.h"
 #include<fstream>
 
@@ -27,9 +30,6 @@ class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef HDC_H_
-#define HDC_H_
 
 class hdc : public increment
 {

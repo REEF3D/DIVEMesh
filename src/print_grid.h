@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef PRINT_GRID_H_
+#define PRINT_GRID_H_
+
 #include<iostream>
 #include<fstream>
 
@@ -27,9 +30,6 @@ Author: Hans Bihs
 #include"increment.h"
 
 using namespace std;
-
-#ifndef PRINT_BINARY_H_
-#define PRINT_BINARY_H_
 
 class print_grid : public printer, public increment
 {

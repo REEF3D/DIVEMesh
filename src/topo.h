@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef TOPO_H_
+#define TOPO_H_
+
 #include"geometry.h"
 #include"intfield.h"
 
@@ -27,9 +30,6 @@ class lexer;
 class dive;
 
 using namespace std;
-
-#ifndef TOPO_H_
-#define TOPO_H_
 
 class topo : public geometry
 {

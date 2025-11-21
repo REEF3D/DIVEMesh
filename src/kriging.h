@@ -19,7 +19,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 Author: Hans Bihs
 --------------------------------------------------------------------*/
-#include"interpolation.h"
+
+#ifndef KRIGING_H_
+#define KRIGING_H_
+
+#include"interpolation.h"
 #include"increment.h"
 
 class lexer;
@@ -27,9 +31,6 @@ class dive;
 class field2d;
 
 using namespace std;
-
-#ifndef KRIGING_H_
-#define KRIGING_H_
 
 class kriging : public interpolation, public increment
 {

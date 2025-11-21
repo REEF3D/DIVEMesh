@@ -20,6 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
+#ifndef INITIALIZE_H_
+#define INITIALIZE_H_
+
 #include<iostream>
 #include"field.h"
 #include"lexer.h"
@@ -27,9 +30,6 @@ Author: Hans Bihs
 
 
 using namespace std;
-
-#ifndef INITIALIZE_H_
-#define INITIALIZE_H_
 
 class initialize : public increment
 {
