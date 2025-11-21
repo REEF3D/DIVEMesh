@@ -1,13 +1,10 @@
 src/Makefile*
 src/*.txt
+src/Release
+src/Debug
 **/.codelite
-.codelite/.tern-port
-.codelite/DIVEMesh.tags
-.codelite/refactoring.db
-Release
-Debug
 bin
-obj
+build
 *.session
 *.db
 *.tags
