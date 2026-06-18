@@ -21,6 +21,8 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include "decomp.h"
+#include <algorithm>
+#include <vector>
 
 void decomp::partition_correct_z(lexer* p, dive* a)
 {
@@ -90,34 +92,34 @@ void decomp::partition_correct_z(lexer* p, dive* a)
     for(q=0;q<p->M10;++q)
     ddout<<"old subcell_count: "<<subcell[q]<<endl;
 
-    // re-partition
-    for(cc=1;cc<=a->mz;++cc)
+    // re-partition (two-phase, sequential): 1) build prefix sums from `zcross`,
+    // 2) sequentially determine monotonic `a->znode` boundaries, 3) compute `zcount` from prefix
+
+    std::vector<long long> prefix(a->knoz + 1);
+    prefix[0] = 0;
+    for(k = 0; k < a->knoz; ++k)
     {
-        for(kk=0;kk<a->knoz;++kk)
-        {
-            a->znode[cc]=kk;
-
-            zcount[cc]=0;
-            for(k=a->znode[cc-1];k<a->znode[cc];++k)
-            for(i=0;i<a->knox;++i)
-            for(j=0;j<a->knoy;++j)
-            if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-            ++zcount[cc];
-
-            if(zcount[cc]>zaverage)
-            {
-                diff_p=zcount[cc]-zaverage;
-
-                //if(diff_p>zcross_m/2)
-                --a->znode[cc];
-
-                break;
-            }
-
-        }
+        prefix[k+1] = prefix[k] + zcross[k];
     }
 
-    a->znode[a->mz]=a->knoz;
+    int startz = a->znode[0];
+    for(cc = 1; cc < a->mz; ++cc)
+    {
+        double target = static_cast<double>(prefix[startz]) + zaverage;
+        auto it = std::upper_bound(prefix.begin() + startz + 1, prefix.end(), target);
+        int kk_idx = static_cast<int>(it - prefix.begin()) - 1;
+        if(kk_idx < startz) kk_idx = startz;
+        if(kk_idx > a->knoz) kk_idx = a->knoz;
+        a->znode[cc] = kk_idx;
+        startz = a->znode[cc];
+    }
+    a->znode[a->mz] = a->knoz;
+
+    // compute zcount for the (new) partitions from prefix sums
+    for(cc = 1; cc <= a->mz; ++cc)
+    {
+        zcount[cc] = static_cast<int>(prefix[a->znode[cc]] - prefix[a->znode[cc-1]]);
+    }
 
     // check last
     for(cc=1;cc<=a->mz;++cc)

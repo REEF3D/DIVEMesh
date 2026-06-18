@@ -21,6 +21,8 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include "decomp.h"
+#include <algorithm>
+#include <vector>
 
 void decomp::partition_correct_y(lexer* p, dive* a)
 {
@@ -95,36 +97,35 @@ void decomp::partition_correct_y(lexer* p, dive* a)
     for(q=0;q<p->M10;++q)
     ddout<<"old subcell_count: "<<subcell[q]<<endl;
 
-    // re-partition
-    for(bb=1;bb<=a->my;++bb)
+    // re-partition (two-phase): 1) build prefix sums from `ycross`,
+    // 2) sequentially determine monotonic `a->ynode` boundaries, 3) compute `ycount` from prefix
+
+    std::vector<long long> prefix(a->knoy + 1);
+    prefix[0] = 0;
+    for(j = 0; j < a->knoy; ++j)
     {
-        for(jj=0;jj<a->knoy;++jj)
-        {
-
-            a->ynode[bb]=jj;
-
-            ycount[bb]=0;
-            for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-            for(i=0;i<a->knox;++i)
-            for(k=0;k<a->knoz;++k)
-            if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-            ++ycount[bb];
-
-            if(ycount[bb]>yaverage)
-            {
-                diff_p=ycount[bb]-yaverage;
-
-                //if(diff_p>ycross_m/2)
-                --a->ynode[bb];
-
-                break;
-            }
-
-        }
+        prefix[j+1] = prefix[j] + ycross[j];
     }
 
+    // sequential boundary determination to avoid races and ensure monotonic ynode
+    int start = a->ynode[0];
+    for(bb = 1; bb < a->my; ++bb)
+    {
+        double target = static_cast<double>(prefix[start]) + yaverage;
+        auto it = std::upper_bound(prefix.begin() + start + 1, prefix.end(), target);
+        int jj_idx = static_cast<int>(it - prefix.begin()) - 1;
+        if(jj_idx < start) jj_idx = start;
+        if(jj_idx > a->knoy) jj_idx = a->knoy;
+        a->ynode[bb] = jj_idx;
+        start = a->ynode[bb];
+    }
+    a->ynode[a->my] = a->knoy;
 
-    a->ynode[a->my]=a->knoy;
+    // compute ycount for the (new) partitions in parallel
+    for(int b = 1; b <= a->my; ++b)
+    {
+        ycount[b] = static_cast<int>(prefix[a->ynode[b]] - prefix[a->ynode[b-1]]);
+    }
 
     // check last
     for(bb=1;bb<=a->my;++bb)
