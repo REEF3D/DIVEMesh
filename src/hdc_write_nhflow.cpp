@@ -36,7 +36,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
     for(bb=0;bb<a->my;++bb)
     {   
         // Open single file
-        if(file_type==1)
+        if(file_conti==1)
         {
         filename_single_out(p,a,n,count);
         wfile[count].open(name, ios::binary);
@@ -82,7 +82,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
     }
     
     // file close
-    if(file_type==1)
+    if(file_conti==1)
     for(q=0;q<p->M10;++q)
     wfile[q].close();
 }

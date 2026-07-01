@@ -50,6 +50,10 @@ void hdc::write_header(lexer *p, dive *a)
         iin=file_type;
         header.write((char*)&iin, sizeof (int));
         
+        // file_conti
+        iin=file_conti;
+        header.write((char*)&iin, sizeof (int));
+        
         // jdir
         iin=jdir;
         header.write((char*)&iin, sizeof (int));

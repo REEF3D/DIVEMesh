@@ -48,7 +48,7 @@ void hdc::start(lexer* p, dive* a)
     write_header(p,a);
     
     // open contiuous file pointer
-    if(file_type==2)
+    if(file_conti==2)
     {
         for(q=0; q<numprocs; ++q)
         {
@@ -66,7 +66,7 @@ void hdc::start(lexer* p, dive* a)
     cout<<"HDC read/write "<<endl;
     
     // read/write result files
-    if(file_type==1)
+    if(file_conti==1)
     for(n=0; n<numiter; ++n)
     if(simtime[n]>=p->H31 && simtime[n]<p->H32)
     if(n>=p->H33 && n<p->H34)
@@ -77,7 +77,7 @@ void hdc::start(lexer* p, dive* a)
     cout<<"HDC I/O iter: "<<n<<"   simtime: "<<simtime[n]<<endl;
     }
     
-    if(file_type==2)
+    if(file_conti==2)
     for(n=0; n<numiter; ++n)
     {
         read(p,a);
@@ -94,7 +94,7 @@ void hdc::start(lexer* p, dive* a)
     }
     
     // close continuous file pointer
-    if(file_type==2)
+    if(file_conti==2)
     {
         for(q=0; q<numprocs; ++q)
         {

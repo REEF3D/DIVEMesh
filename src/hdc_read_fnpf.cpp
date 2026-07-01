@@ -34,7 +34,7 @@ void hdc::read_fnpf(lexer *p, dive *a)
     if(flag_all[q]==1)
     {
         // Open Single File
-        if(file_type==1)
+        if(file_conti==1)
         {
         filename_single_in(p,a,n,q); 
         result[q].open(name, ios::binary);
@@ -93,7 +93,7 @@ void hdc::read_fnpf(lexer *p, dive *a)
     }
     }
     
-    if(file_type==1)
+    if(file_conti==1)
     for(q=0; q<numprocs; ++q)
     result[q].close();
 }

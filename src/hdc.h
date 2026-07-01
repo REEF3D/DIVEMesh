@@ -91,7 +91,7 @@ private:
     int n,q,count;
     int numprocs, jdir, numiter;
     int NGx,NGy,NGz;
-    int file_version,file_type;
+    int file_version,file_type,file_conti;
     double SWL;
     
     

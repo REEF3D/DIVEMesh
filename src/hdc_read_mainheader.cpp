@@ -67,6 +67,9 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&iin, sizeof (int));
 	file_type=iin;
     
+    mainhead.read((char*)&iin, sizeof (int));
+	file_conti=iin;
+    
     mainhead.read((char*)&ddn, sizeof (double));
 	SWL=ddn;
     
@@ -140,6 +143,9 @@ void hdc::read_mainheader(lexer *p, dive *a)
     mainhead.read((char*)&iin, sizeof (int));
 	file_type=iin;
     
+    mainhead.read((char*)&iin, sizeof (int));
+	file_conti=iin;
+    
     mainhead.read((char*)&ddn, sizeof (double));
 	SWL=ddn;
     
@@ -156,6 +162,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     cout<<"HDC jdir: "<<jdir<<endl;
     cout<<"HDC file_version: "<<file_version<<endl;
     cout<<"HDC file_type: "<<file_type<<endl<<endl;
+    cout<<"HDC file_conti: "<<file_conti<<endl<<endl;
 
     // read flag    
     for(qn=0;qn<numprocs;++qn)
