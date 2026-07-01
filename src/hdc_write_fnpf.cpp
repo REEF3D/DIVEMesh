@@ -53,7 +53,17 @@ void hdc::write_fnpf(lexer *p, dive *a)
         ffn=eta[i][j];
         wfile[count].write((char*)&ffn, sizeof (float));
         }
-            
+        
+        if(p->H10==44)
+        for(i=is[aa]; i<ie[aa]; ++i)
+        for(j=js[bb]; j<je[bb]; ++j)
+        {
+        ffn=Fifsf[i][j];
+        wfile[count].write((char*)&ffn, sizeof (float));
+        }
+        
+        if(p->H10==4)
+        {
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
@@ -77,6 +87,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         ffn=W[i][j][k];
         wfile[count].write((char*)&ffn, sizeof (float));
         } 
+        }
         ++count;
     }
     

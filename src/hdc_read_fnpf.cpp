@@ -67,6 +67,8 @@ void hdc::read_fnpf(lexer *p, dive *a)
     Fifsf[i+orig_i[q]][j+orig_j[q]] = ffn;
     }
     
+    if(file_type<=2)
+    {
     // read velocities
     for(i=0;i<NLx[q];++i)
     for(j=0;j<NLy[q];++j)
@@ -91,6 +93,8 @@ void hdc::read_fnpf(lexer *p, dive *a)
     result[q].read((char*)&ffn, sizeof (float)); 
     W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
     }
+    }
+    
     }
     
     if(file_conti==1)

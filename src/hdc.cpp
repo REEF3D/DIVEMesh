@@ -29,7 +29,11 @@ Author: Hans Bihs
 hdc::hdc(lexer *p, dive *a) 
 {
     // Create Folder
+    if(p->H10!=44)
 	mkdir("./REEF3D_CFD_HDC_Input",0777);
+    
+    if(p->H10==44)
+    mkdir("./REEF3D_FNPF_HDC_Input",0777);
 }
 
 hdc::~hdc()
@@ -85,8 +89,6 @@ void hdc::start(lexer* p, dive* a)
         if(simtime[n]>=p->H31 && simtime[n]<p->H32)
         if(n>=p->H33 && n<p->H34)
         {
-            
-            
             write(p,a);
         
         cout<<"HDC I/O iter: "<<n<<"   simtime: "<<simtime[n]<<endl;
@@ -112,7 +114,7 @@ void hdc::read(lexer *p, dive *a)
     if(p->H10==2)
     read_sflow(p,a);
     
-    if(p->H10==4)
+    if(p->H10==4 || p->H10==44)
     read_fnpf(p,a);
     
     if(p->H10==5)
@@ -124,10 +126,10 @@ void hdc::write(lexer *p, dive *a)
     if(p->H10==2)
     write_sflow(p,a);
     
-    if(p->H10==4)
+    if(p->H10==4 || p->H10==44)
     write_fnpf(p,a); 
 
     if(p->H10==5)
-    write_nhflow(p,a);    
+    write_nhflow(p,a);   
 }
 
