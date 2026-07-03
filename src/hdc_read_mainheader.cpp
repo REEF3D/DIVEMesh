@@ -37,7 +37,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     if(p->H10==2)
     sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D-SFLOW_State_Mainheader.r3d");
     
-    if(p->H10==4)
+    if(p->H10==4 || p->H10==44)
     sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
     
     if(p->H10==5)

@@ -44,7 +44,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
         
         // write iter
         iin = n;
-        wfile[count].write((char*)&iin, sizeof (iin));
+        wfile[count].write((char*)&iin, sizeof (int));
         
         //ijk loop
         // ->write
