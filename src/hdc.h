@@ -99,7 +99,7 @@ private:
     double xc,yc;
     
     ifstream *result;
-    ofstream *wfile;
+    ofstream *wfile,*testfile;
     
     // arrays
     double *orig_x, *orig_y, *orig_z;

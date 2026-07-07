@@ -95,6 +95,14 @@ void hdc::read_fnpf(lexer *p, dive *a)
     }
     }
     
+    if(file_type==2)
+    for(i=0;i<NLx[q];++i)
+    for(j=0;j<NLy[q];++j)
+    for(k=0;k<NLz[q]+1;++k)
+    {
+    result[q].read((char*)&ffn, sizeof(float));
+    }
+    
     }
     
     if(file_conti==1)

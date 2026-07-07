@@ -161,7 +161,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     cout<<"HDC NGz: "<<NGz<<endl;
     cout<<"HDC jdir: "<<jdir<<endl;
     cout<<"HDC file_version: "<<file_version<<endl;
-    cout<<"HDC file_type: "<<file_type<<endl<<endl;
+    cout<<"HDC file_type: "<<file_type<<endl;
     cout<<"HDC file_conti: "<<file_conti<<endl<<endl;
 
     // read flag    

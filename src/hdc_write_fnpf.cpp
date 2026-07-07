@@ -34,20 +34,16 @@ void hdc::write_fnpf(lexer *p, dive *a)
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {   
-        // Open single file
-        if(file_conti==1)
-        {
-        filename_single_out(p,a,n,count);
-        wfile[count].open(name, ios::binary);
-        }
-        
-        cout<<"file_conti_fnpf: "<<file_conti<<endl;
+            // Open single file
+            if(file_conti==1)
+            {
+            filename_single_out(p,a,n,count);
+            wfile[count].open(name, ios::binary);
+            }
         
         // write iter
-        iin = n;
+        iin = 1014;
         wfile[count].write((char*)&iin, sizeof(int));
-        
-        cout<<"sizeof(int): "<<sizeof(int)<<endl;
         
         //ijk loop
         // ->write
@@ -93,13 +89,14 @@ void hdc::write_fnpf(lexer *p, dive *a)
         wfile[count].write((char*)&ffn, sizeof(float));
         } 
         }
+        
         ++count;
     }
     
-    // file close
-    if(file_conti==1)
-    for(q=0;q<p->M10;++q)
-    wfile[q].close();
+            // file close
+            if(file_conti==1)
+            for(q=0;q<p->M10;++q)
+            wfile[q].close();
 }
 
 

@@ -29,7 +29,7 @@ void hdc::filename_single_out(lexer *p, dive *a,int num, int rank)
     sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-%08i-%06i.r3d",num,rank+1);
     
     if(p->H10==44)
-    sprintf(name,"./REEF3D_FNPF_HDC_Input/REEF3D-FNPF-Input-%08i-%06i.r3d",num,rank+1);
+    sprintf(name,"./REEF3D_FNPF_HDC_Input/REEF3D-HDC-Input-%08i-%06i.r3d",num,rank+1);
 }
 
 void hdc::filename_continuous_out(lexer *p, dive *a, int rank)
@@ -38,7 +38,7 @@ void hdc::filename_continuous_out(lexer *p, dive *a, int rank)
 	sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-%06i.r3d",rank+1);
     
     if(p->H10==44)
-	sprintf(name,"./REEF3D_FNPF_HDC_Input/REEF3D-FNPF-Input-%06i.r3d",rank+1);
+	sprintf(name,"./REEF3D_FNPF_HDC_Input/REEF3D-HDC-Input-%06i.r3d",rank+1);
 }
 
 void hdc::filename_out_header(lexer *p, dive *a, int rank)

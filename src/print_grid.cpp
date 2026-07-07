@@ -649,6 +649,7 @@ void print_grid::start(lexer* p,dive* a)
 
         // -----------------------------------------------------------------------------
         // Para Corners
+        
         for(q=0;q<a->paraco1count;q++)
         {
             i=a->para1co[q][0];
