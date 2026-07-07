@@ -124,89 +124,89 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
 
 //  radius
     iin=4*(Np);
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<Np;++n)
 	{
 	ffn=0.1*p->DXM;
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 	}
 	
 //  X_coord
     iin=4*(Np);
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<Np;++n)
 	{
 	ffn=float(p->Xout(Fx[n],Fy[n]));
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 	}
     
 //  Y_Coord
     iin=4*(Np);
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<Np;++n)
 	{
 	ffn=float(p->Yout(Fx[n],Fy[n]));
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 	}
     
 //  Z_Coord
     iin=4*(Np);
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<Np;++n)
 	{
 	ffn=float(Fz[n]);
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 	}
 
 
 //  XYZ
 	iin=4*(Np)*3;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
     for(n=0;n<Np;++n)
 	{
 	ffn=float(p->Xout(Fx[n],Fy[n]));
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 
 	ffn=float(p->Yout(Fx[n],Fy[n]));
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 
 	ffn=float(Fz[n]);
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 	}
 	
 //  Connectivity
 	count=0;
     iin=4*(Np)*2;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<Np;++n)
 	{
 	iin=int(0);
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 
 	iin=int(count);
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	++count;
 	}
 
 //  Offset of Connectivity
 	count=0;
     iin=4*(Np);
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<Np;++n)
 	{
 	iin=(count+1)*2;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	++count;
 	}
 
 
 //  Cell types
     iin=4*(Np);
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<Np;++n)
 	{
 	iin=1;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	}
 
 	result<<endl<<"</AppendedData>"<<endl;

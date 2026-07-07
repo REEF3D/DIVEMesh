@@ -41,11 +41,13 @@ void hdc::write_fnpf(lexer *p, dive *a)
         wfile[count].open(name, ios::binary);
         }
         
-        cout<<"file_conti: "<<file_conti<<endl;
+        cout<<"file_conti_fnpf: "<<file_conti<<endl;
         
         // write iter
         iin = n;
-        wfile[count].write((char*)&iin, sizeof (int));
+        wfile[count].write((char*)&iin, sizeof(int));
+        
+        cout<<"sizeof(int): "<<sizeof(int)<<endl;
         
         //ijk loop
         // ->write
@@ -54,7 +56,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         {
         ffn=float(eta[i][j]);
         //cout<<"ETA: "<<ffn<<endl;
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         }
         
         if(p->H10==44)
@@ -62,7 +64,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=float(Fifsf[i][j]);
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         }
         
         if(p->H10==4)
@@ -72,7 +74,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(U[i][j][k]);
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -80,7 +82,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(V[i][j][k]);
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -88,7 +90,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(W[i][j][k]);
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         }
         ++count;

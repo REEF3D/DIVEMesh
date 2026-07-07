@@ -77,49 +77,49 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 
 //  XYZ
 	iin=8*tricount*3*3;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
     for(n=0;n<tricount;++n)
 	for(q=0;q<3;++q)
 	{
     ddn=trix[n][q];
-	result.write((char*)&ddn, sizeof (double));
+	result.write((char*)&ddn, sizeof(double));
 
     ddn=triy[n][q];
-	result.write((char*)&ddn, sizeof (double));
+	result.write((char*)&ddn, sizeof(double));
 
     ddn=triz[n][q];
-	result.write((char*)&ddn, sizeof (double));
+	result.write((char*)&ddn, sizeof(double));
 	}
 
 //  Connectivity POLYGON
 	int count=0;
     iin=4*tricount*3;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
     for(n=0;n<tricount;++n)
 	for(q=0;q<3;++q)
 	{
 	iin=count;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	++count;
 	}
 
 //  Offset of Connectivity
     iin=4*tricount;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	iin=0;
 	for(n=0;n<tricount;++n)
 	{
 	iin+= 3;//a->polygon_offset[n];
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	}
 
 //  Cell types
     iin=4*tricount;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<tricount;++n)
 	{
 	iin=7;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	}
 
 	result<<endl<<"</AppendedData>"<<endl;

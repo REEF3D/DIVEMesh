@@ -44,7 +44,7 @@ void hdc::write_sflow(lexer *p, dive *a)
         
         // write iter
         iin = n;
-        wfile[count].write((char*)&iin, sizeof (int));
+        wfile[count].write((char*)&iin, sizeof(int));
         
         //ijk loop
         // ->write
@@ -52,28 +52,28 @@ void hdc::write_sflow(lexer *p, dive *a)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=eta[i][j];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         }
         
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=U[i][j][0];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=V[i][j][0];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=W[i][j][0];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         ++count;
     }

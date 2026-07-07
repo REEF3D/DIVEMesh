@@ -35,6 +35,8 @@ void geodat::print_sampled(lexer* p, dive* a)
     float ffn;
     int count;
     
+    cout<<"PRINT SAMPLED GEODAT "<<p->Np<<endl;
+    
 	mkdir("./DIVEMesh_Geo",0777);
     
     sprintf(name,"./DIVEMesh_Geo/geo_sampled.dat");
@@ -44,7 +46,7 @@ void geodat::print_sampled(lexer* p, dive* a)
     
     for(n=0;n<p->Np;++n)
     {
-    result<<p->Xout(p->G10_x[n],p->G10_x[n])<<" "<<p->Yout(p->G10_x[n],p->G10_x[n])<<" "<<p->G10_z[n]<<endl;
+    result<<p->Xout(p->G10_x[n],p->G10_y[n])<<" "<<p->Yout(p->G10_x[n],p->G10_y[n])<<" "<<p->G10_z[n]<<endl;
     }
     
     

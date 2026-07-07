@@ -44,62 +44,62 @@ void hdc::write_header(lexer *p, dive *a)
         
         // file_version
         iin=file_version;
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         // file_type
         iin=file_type;
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         // file_conti
         iin=file_conti;
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         // jdir
         iin=jdir;
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         // origin_ij
         iin=is[aa];
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         iin=js[bb];
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         // origin_xy
         ffn=xs[aa];
-        header.write((char*)&ffn, sizeof (float));
+        header.write((char*)&ffn, sizeof(float));
         
         ffn=ys[bb];
-        header.write((char*)&ffn, sizeof (float));
+        header.write((char*)&ffn, sizeof(float));
         
         // Nx,Ny,Nz
         iin=ie[aa]-is[aa];
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         iin=je[bb]-js[bb];
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         iin=NGz;
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
 
         // write coordinates
         for(i=is[aa]; i<ie[aa]; ++i)
         {
         ffn=float(X[i]);
-        header.write((char*)&ffn, sizeof (float));
+        header.write((char*)&ffn, sizeof(float));
         }
             
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=float(Y[j]);
-        header.write((char*)&ffn, sizeof (float));
+        header.write((char*)&ffn, sizeof(float));
         }
         
         for(k=0; k<NGz; ++k)
         {
         ffn=float(Z[k]);
-        header.write((char*)&ffn, sizeof (float));
+        header.write((char*)&ffn, sizeof(float));
         }
         
         
@@ -108,7 +108,7 @@ void hdc::write_header(lexer *p, dive *a)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=float(bed[i][j]);
-        header.write((char*)&ffn, sizeof (float));
+        header.write((char*)&ffn, sizeof(float));
         }  
         
         
@@ -120,7 +120,7 @@ void hdc::write_header(lexer *p, dive *a)
         ++qn;
 
         iin=qn;
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         // delta iterations
         qn=0;
@@ -134,7 +134,7 @@ void hdc::write_header(lexer *p, dive *a)
         
         
         iin=qn;
-        header.write((char*)&iin, sizeof (int));
+        header.write((char*)&iin, sizeof(int));
         
         // simtime
         for(n=0;n<numiter;++n)
@@ -142,7 +142,7 @@ void hdc::write_header(lexer *p, dive *a)
         if(n>=p->H33 && n<p->H34)
         {
         ddn=simtime[n];
-        header.write((char*)&ddn, sizeof (double));
+        header.write((char*)&ddn, sizeof(double));
         }
         ++count;
         

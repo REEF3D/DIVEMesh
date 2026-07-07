@@ -144,49 +144,49 @@ void print_stl::solid_vtp(lexer* p, dive* a)
 
 //  XYZ
 	iin=8*p->tricount*3*3;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
     for(n=0;n<p->tricount;++n)
 	for(q=0;q<3;++q)
 	{
 	ddn=p->Xout(p->tri_x[n][q],p->tri_y[n][q]);
-	result.write((char*)&ddn, sizeof (double));
+	result.write((char*)&ddn, sizeof(double));
 
 	ddn=p->Yout(p->tri_x[n][q],p->tri_y[n][q]);
-	result.write((char*)&ddn, sizeof (double));
+	result.write((char*)&ddn, sizeof(double));
 
 	ddn=p->tri_z[n][q];
-	result.write((char*)&ddn, sizeof (double));
+	result.write((char*)&ddn, sizeof(double));
 	}
 
 //  Connectivity POLYGON
 	int count=0;
     iin=4*p->tricount*3;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
     for(n=0;n<p->tricount;++n)
 	for(q=0;q<3;++q)
 	{
 	iin=count;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	++count;
 	}
 
 //  Offset of Connectivity
     iin=4*p->tricount;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	iin=0;
 	for(n=0;n<p->tricount;++n)
 	{
 	iin+= 3;//a->polygon_offset[n];
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	}
 
 //  Cell types
     iin=4*p->tricount;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<p->tricount;++n)
 	{
 	iin=7;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	}
 
 	result<<endl<<"</AppendedData>"<<endl;
@@ -247,49 +247,49 @@ void print_stl::topo_vtp(lexer* p, dive* a)
 
 //  XYZ
 	iin=4*p->tricount*3*3;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
     for(n=0;n<p->tricount;++n)
 	for(q=0;q<3;++q)
 	{
 	ffn=p->tri_x[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 
 	ffn=p->tri_y[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 
 	ffn=p->tri_z[n][q];
-	result.write((char*)&ffn, sizeof (float));
+	result.write((char*)&ffn, sizeof(float));
 	}
 
 //  Connectivity POLYGON
 	int count=0;
     iin=4*p->tricount*3;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
     for(n=0;n<p->tricount;++n)
 	for(q=0;q<3;++q)
 	{
 	iin=count;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	++count;
 	}
 
 //  Offset of Connectivity
     iin=4*p->tricount;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	iin=0;
 	for(n=0;n<p->tricount;++n)
 	{
 	iin+= 3;//a->polygon_offset[n];
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	}
 
 //  Cell types
     iin=4*p->tricount;
-    result.write((char*)&iin, sizeof (int));
+    result.write((char*)&iin, sizeof(int));
 	for(n=0;n<p->tricount;++n)
 	{
 	iin=7;
-	result.write((char*)&iin, sizeof (int));
+	result.write((char*)&iin, sizeof(int));
 	}
 
 	result<<endl<<"</AppendedData>"<<endl;

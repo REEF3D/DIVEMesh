@@ -44,7 +44,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
         
         // write iter
         iin = n;
-        wfile[count].write((char*)&iin, sizeof (int));
+        wfile[count].write((char*)&iin, sizeof(int));
         
         //ijk loop
         // ->write
@@ -52,7 +52,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
         for(j=js[bb]; j<je[bb]; ++j)
         {
         ffn=eta[i][j];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         }
             
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -60,7 +60,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
         for(k=0; k<NGz; ++k)
         {
         ffn=U[i][j][k];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -68,7 +68,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
         for(k=0; k<NGz; ++k)
         {
         ffn=V[i][j][k];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -76,7 +76,7 @@ void hdc::write_nhflow(lexer *p, dive *a)
         for(k=0; k<NGz; ++k)
         {
         ffn=W[i][j][k];
-        wfile[count].write((char*)&ffn, sizeof (float));
+        wfile[count].write((char*)&ffn, sizeof(float));
         } 
         ++count;
     }

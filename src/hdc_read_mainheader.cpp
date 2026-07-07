@@ -46,37 +46,37 @@ void hdc::read_mainheader(lexer *p, dive *a)
 	mainhead.open(name, ios::binary);
     
     // count numiter
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	numprocs=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	jdir=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	NGx=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	NGy=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	NGz=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	file_version=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	file_type=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	file_conti=iin;
     
-    mainhead.read((char*)&ddn, sizeof (double));
+    mainhead.read((char*)&ddn, sizeof(double));
 	SWL=ddn;
     
-    mainhead.read((char*)&ddn, sizeof (double));
+    mainhead.read((char*)&ddn, sizeof(double));
 	val=ddn;
     
-    mainhead.read((char*)&ddn, sizeof (double));
+    mainhead.read((char*)&ddn, sizeof(double));
 	val=ddn;
     
     
@@ -85,7 +85,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
     
     for(int qn=0;qn<numprocs;++qn)
     {    
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
     
 	flag_all[qn]=iin;
     }
@@ -97,10 +97,10 @@ void hdc::read_mainheader(lexer *p, dive *a)
 	{
     ii1=ii2;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
     ii2=iin;
  
-    mainhead.read((char*)&ddn, sizeof (double));  
+    mainhead.read((char*)&ddn, sizeof(double));  
     
     ++numiter;
     }
@@ -122,37 +122,37 @@ void hdc::read_mainheader(lexer *p, dive *a)
     // re-read mainhead
     mainhead.open(name, ios::binary);
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	numprocs=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	jdir=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	NGx=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	NGy=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	NGz=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	file_version=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	file_type=iin;
     
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	file_conti=iin;
     
-    mainhead.read((char*)&ddn, sizeof (double));
+    mainhead.read((char*)&ddn, sizeof(double));
 	SWL=ddn;
     
-    mainhead.read((char*)&ddn, sizeof (double));
+    mainhead.read((char*)&ddn, sizeof(double));
 	val=ddn;
     
-    mainhead.read((char*)&ddn, sizeof (double));
+    mainhead.read((char*)&ddn, sizeof(double));
 	val=ddn;
     
     cout<<"HDC numprocs: "<<numprocs<<endl;
@@ -167,16 +167,16 @@ void hdc::read_mainheader(lexer *p, dive *a)
     // read flag    
     for(qn=0;qn<numprocs;++qn)
     {
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
 	flag_all[qn]=iin;
     }
     
     count=0;
     while(!mainhead.eof())
 	{
-    mainhead.read((char*)&iin, sizeof (int));
+    mainhead.read((char*)&iin, sizeof(int));
  
-    mainhead.read((char*)&ddn, sizeof (double)); 
+    mainhead.read((char*)&ddn, sizeof(double)); 
     simtime[count] = ddn;
     
     //cout<<"simtime: "<<simtime[count]<<endl;
