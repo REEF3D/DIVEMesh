@@ -108,6 +108,6 @@ Author: Hans Bihs
 #define ITPLOOP for(i=-1; i<p->knox; ++i)
 #define JTPLOOP for(j=-1; j<p->knoy; ++j)
 #define KTPLOOP for(k=-1; k<p->knoz; ++k)
-#define TPLOOP ITPLOOP JTPLOOP KTPLOOP 
+#define TPLOOP KTPLOOP JTPLOOP ITPLOOP
 
 #endif

@@ -135,7 +135,7 @@ void driver::mainloop()
     if(p->H10>0)
     phdc->start(p,a);
 
-    pvtu->start(p,a);
+    pvts->start(p,a);
     pprint->start(p,a);
 
     analytics(p,a);
