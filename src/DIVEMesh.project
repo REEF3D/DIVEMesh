@@ -225,7 +225,6 @@
         <VirtualDirectory Name="Coordinates">
           <File Name="coordinates.cpp"/>
         </VirtualDirectory>
-        <File Name="increment.cpp"/>
         <VirtualDirectory Name="Field">
           <File Name="field.cpp"/>
           <File Name="field1d.cpp"/>

@@ -22,14 +22,15 @@ Author: Hans Bihs
 
 #include"lexer.h"
 #include<iomanip>
+#include<cmath>
 
 void lexer::createspace()
 {
     if(B2==0)
     {
-    knox = conv((xmax-xmin)/dx);
-	knoy = conv((ymax-ymin)/dx);
-	knoz = conv((zmax-zmin)/dx);
+        knox = std::round((xmax-xmin)/dx);
+        knoy = std::round((ymax-ymin)/dx);
+        knoz = std::round((zmax-zmin)/dx);
     }
     
     if(B2==1)
