@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"print_vtu.h"
+#include"print_vts.h"
 #include"lexer.h"
 #include"dive.h"
 #include"field.h"
@@ -34,29 +34,23 @@ Author: Hans Bihs
 #include<cstring>
 #include<sstream>
 
-print_vtu::print_vtu(lexer* p)
+print_vts::print_vts(lexer* p)
 {
 }
 
-void print_vtu::start(lexer* p, dive* a)
+void print_vts::start(lexer* p, dive* a)
 {
     field nodeval(p);
 
     // NODELOOP
     int count=0;
     int pointnum=0;
-    int tpcellnum=0;
 
     TPLOOP
     {
         ++count;
         ++pointnum;
         nodeval(i,j,k)=count;
-    }
-
-    LOOP
-    {
-        ++tpcellnum;
     }
 
     size_t offset[10];
@@ -75,22 +69,14 @@ void print_vtu::start(lexer* p, dive* a)
     // Points
     offset[n]=offset[n-1]+sizeof(float)*pointnum*3+sizeof(int);
     ++n;
-
-    // Cells
-    offset[n]=offset[n-1] + sizeof(int)*tpcellnum*8+sizeof(int);
-    ++n;
-    offset[n]=offset[n-1] + sizeof(int)*tpcellnum+sizeof(int);
-    ++n;
-    offset[n]=offset[n-1] + sizeof(int)*tpcellnum+sizeof(int);
-    ++n;
     //---------------------------------------------
 
     std::stringstream header;
 
     header<<"<?xml version=\"1.0\"?>\n";
-    header<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
-    header<<"<UnstructuredGrid>\n";
-    header<<"<Piece NumberOfPoints=\""<<pointnum<<"\" NumberOfCells=\""<<tpcellnum<<"\">\n";
+    header<<"<VTKFile type=\"StructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
+    header<<"<StructuredGrid WholeExtent=\"0 "<<p->knox<<" 0 "<<p->knoy<<" 0 "<<p->knoz<<"\">\n";
+    header<<"<Piece Extent=\"0 "<<p->knox<<" 0 "<<p->knoy<<" 0 "<<p->knoz<<"\">\n";
 
     n=0;
     header<<"<PointData>\n";
@@ -104,18 +90,8 @@ void print_vtu::start(lexer* p, dive* a)
     header<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
     header<<"</Points>\n";
-
-    header<<"<Cells>\n";
-    header<<"<DataArray type=\"Int32\" Name=\"connectivity\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
-    ++n;
-    header<<"<DataArray type=\"Int32\" Name=\"offsets\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
-    ++n;
-    header<<"<DataArray type=\"Int32\" Name=\"types\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
-    ++n;
-    header<<"</Cells>\n";
-
     header<<"</Piece>\n";
-    header<<"</UnstructuredGrid>\n";
+    header<<"</StructuredGrid>\n";
     header<<"<AppendedData encoding=\"raw\">\n_";
 
     //----------------------------------------------------------------------------
@@ -169,73 +145,12 @@ void print_vtu::start(lexer* p, dive* a)
         file_offset+=sizeof(float);
     }
 
-    //  Connectivity
-    iin=sizeof(int)*tpcellnum*8;
-    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-    file_offset+=sizeof(int);
-    LOOP
-    {
-        iin=int(nodeval(i-1,j-1,k-1)-1);
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-
-        iin=int(nodeval(i,j-1,k-1))-1;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-
-        iin= int(nodeval(i,j,k-1))-1;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-
-        iin=int(nodeval(i-1,j,k-1))-1;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-
-        iin=int(nodeval(i-1,j-1,k))-1;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-
-        iin=int(nodeval(i,j-1,k))-1;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-
-        iin=int(nodeval(i,j,k))-1;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-
-        iin=int(nodeval(i-1,j,k))-1;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-    }
-
-    //  Offset of Connectivity
-    iin=sizeof(int)*tpcellnum;
-    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-    file_offset+=sizeof(int);
-    for(n=0;n<tpcellnum;++n)
-    {
-        iin=(n+1)*8;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-    }
-
-    //  Cell types
-    iin=sizeof(int)*tpcellnum;
-    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-    file_offset+=sizeof(int);
-    for(n=0;n<tpcellnum;++n)
-    {
-        iin=12;
-        std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-        file_offset+=sizeof(int);
-    }
-
     std::string footer = "\n</AppendedData>\n</VTKFile>\n";
     std::memcpy(&buffer[file_offset],footer.data(),footer.size());
 
     mkdir("./DIVEMesh_Paraview",0777);
     char filename[100];
-    snprintf(filename,sizeof(filename),"./DIVEMesh_Paraview/DIVEMesh_grid-preview.vtu");
+    snprintf(filename,sizeof(filename),"./DIVEMesh_Paraview/DIVEMesh_grid-preview.vts");
     FILE* file = fopen(filename, "wb");
     if(file)
     {
@@ -244,7 +159,7 @@ void print_vtu::start(lexer* p, dive* a)
     }
 }
 
-double print_vtu::ipol(dive *a, field &b)
+double print_vts::ipol(dive *a, field &b)
 {
     int q=0;
 
