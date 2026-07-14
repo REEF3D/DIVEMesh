@@ -68,7 +68,6 @@
         <File Name="print_stl_geodat.h"/>
         <File Name="print_grid.h"/>
         <File Name="print_vtu.h"/>
-        <File Name="printer.h"/>
         <File Name="print_stl.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Grid">

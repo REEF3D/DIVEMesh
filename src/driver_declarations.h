@@ -25,7 +25,8 @@ Author: Hans Bihs
 
 class lexer;
 class dive;
-class printer;
+class print_grid;
+class print_vtu;
 class surface;
 class decomp;
 class initialize;

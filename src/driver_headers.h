@@ -31,7 +31,6 @@ Author: Hans Bihs
 #include<iostream>
 #include"lexer.h"
 #include"dive.h"
-#include"printer.h"
 #include"print_grid.h"
 #include"print_vtu.h"
 #include"surface.h"

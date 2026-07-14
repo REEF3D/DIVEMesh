@@ -44,8 +44,8 @@ public:
 
 	lexer *p;
 	dive *a;
-    printer *pprint;
-    printer *pvtu;
+    print_grid *pprint;
+    print_vtu *pvtu;
     surface *psurf;
     decomp *pdd;
     initialize *pini;
