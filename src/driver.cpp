@@ -55,11 +55,6 @@ void driver::mainloop()
 
     pini->start(p,a);
 
-// BASELAYER
-
-// baselayer new
-    pbase->start(p,a);
-
 // Geometry Pipeline
     //Solid
         // geodat

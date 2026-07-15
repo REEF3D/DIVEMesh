@@ -25,7 +25,6 @@ Author: Hans Bihs
 
 class lexer;
 class dive;
-class box_bl;
 class printer;
 class surface;
 class decomp;
@@ -34,7 +33,6 @@ class bc;
 class freecoor;
 class objects;
 class box;
-class baselayer;
 class geodat;
 class dataset;
 class objects_geometry;

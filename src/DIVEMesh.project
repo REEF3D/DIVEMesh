@@ -29,10 +29,6 @@
     <VirtualDirectory Name="HDC">
       <File Name="hdc.h"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="Baselayer">
-      <File Name="baselayer.h"/>
-      <File Name="box_bl.h"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="Boundary">
       <File Name="bc.h"/>
       <File Name="surface.h"/>
@@ -174,10 +170,6 @@
       <File Name="hdc_decomp.cpp"/>
       <File Name="hdc_allocate.cpp"/>
       <File Name="hdc.cpp"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Baselayer">
-      <File Name="baselayer.cpp"/>
-      <File Name="box_bl.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Boundary">
       <VirtualDirectory Name="BC">

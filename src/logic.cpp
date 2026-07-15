@@ -44,8 +44,6 @@ void driver::logic(lexer* p)
     
     pvtu = new print_vtu(p);
 
-    pbase = new baselayer(p,a);
-
     if(p->G10>0)
     pgeo = new geodat(p,a);
     
