@@ -1,6 +1,6 @@
 TARGET   := DiveMESH
 CXX      := -g++
-CXXFLAGS := -std=c++17
+CXXFLAGS := -std=c++20
 LDFLAGS  := 
 
 OPENMP ?= 0
