@@ -26,7 +26,7 @@ Author: Hans Bihs
 void lexer::read_control_preread()
 {
     char c;
-    int numint,numval;
+    int numint;
     int count;
     numlinsurf=0;
 
