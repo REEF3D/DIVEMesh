@@ -29,7 +29,7 @@ class dive;
 class interpolation
 {
 public:
-
+    virtual ~interpolation() = default;
     virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**)=0;
 };
 
