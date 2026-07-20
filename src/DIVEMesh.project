@@ -83,7 +83,6 @@
         <VirtualDirectory Name="Intfield">
           <File Name="intfield.h"/>
           <File Name="intfield1d.h"/>
-          <File Name="intfield1dy.h"/>
           <File Name="intfield2d.h"/>
         </VirtualDirectory>
         <File Name="resize.h"/>
@@ -229,7 +228,6 @@
         <VirtualDirectory Name="Fieldint">
           <File Name="intfield.cpp"/>
           <File Name="intfield1d.cpp"/>
-          <File Name="intfield1dy.cpp"/>
           <File Name="intfield2d.cpp"/>
         </VirtualDirectory>
         <VirtualDirectory Name="Resize">
