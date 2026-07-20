@@ -27,7 +27,7 @@ Author: Hans Bihs
 void decomp::partition_correct_x(lexer* p, dive* a)
 {
     int q,ii;
-    int fac,mincell,maxcell,iloc,iloc_min,iloc_max;
+    int fac,mincell,maxcell,iloc=0,iloc_min=0,iloc_max=0;
     double diff;
 
     xcount[0]=0;
