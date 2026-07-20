@@ -40,7 +40,7 @@ void driver::analytics(lexer *p, dive *a)
     // Min/Max cell size and position
 
     double dx_min, dx_max, dy_min, dy_max, dz_min, dz_max;
-    double i_min, i_max, j_min, j_max, k_min, k_max;
+    double i_min = 0, i_max = 0, j_min = 0, j_max = 0, k_min = 0, k_max = 0;
 
     dx_min = 100.0*p->DXM;
     dy_min = 100.0*p->DXM;
@@ -98,8 +98,8 @@ void driver::analytics(lexer *p, dive *a)
 
     // Min/Max Aspect Ratio
 
-    double ratio;
-    double ratiox_max, ratioy_max, ratioz_max;
+    double ratio = 0;
+    double ratiox_max = 0, ratioy_max = 0, ratioz_max = 0;
 
     for (i = 0; i <= p->knox; ++i)
     {
