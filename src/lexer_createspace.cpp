@@ -195,10 +195,10 @@ void lexer::createspace()
     cout<<"xmin:"<<xmin<<" ymin: "<<ymin<<" zmin: "<<zmin<<endl;
     cout<<"xmax:"<<xmax<<" ymax: "<<ymax<<" zmax: "<<zmax<<endl;
     cout<<"knox:"<<knox<<" knoy: "<<knoy<<" knoz: "<<knoz<<endl;
-	cout<<"base_cellnum3D: "<<knox*knoy*knoz<<endl;
+    cout<<"base_cellnum3D: "<<knox*knoy*knoz<<endl;
     cout<<"base_cellnum2D: "<<knox*knoy<<endl;
 	
-	cout<<"field: "<<(knox+2*xma)*(knoy+2*yma)*(knoz+2*zma)<<endl;
+    cout<<"field: "<<(knox+2*xma)*(knoy+2*yma)*(knoz+2*zma)<<endl;
     cout<<"slice: "<<(knox+2*xma)*(knoy+2*yma)<<endl<<endl;
 }
 
@@ -207,13 +207,13 @@ void lexer::tri_space()
     trinum = trinum_stl+trinum_solid+trinum_topo;
     
     // create arrays
-	Darray(tri_x,trinum,3);
-	Darray(tri_y,trinum,3);
-	Darray(tri_z,trinum,3);
+    Darray(tri_x,trinum,3);
+    Darray(tri_y,trinum,3);
+    Darray(tri_z,trinum,3);
 	
-	Darray(trivec_x,trinum);
-	Darray(trivec_y,trinum);
-	Darray(trivec_z,trinum);
+    Darray(trivec_x,trinum);
+    Darray(trivec_y,trinum);
+    Darray(trivec_z,trinum);
     
     cout<<"TRINUM:  "<<trinum<<endl;
   
