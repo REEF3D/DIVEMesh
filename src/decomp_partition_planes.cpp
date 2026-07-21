@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::partition_planes(lexer* p, dive* a)
 {
@@ -56,12 +56,11 @@ void decomp::partition_planes(lexer* p, dive* a)
         triy[n][1] = p->ymax;
         triz[n][1] = p->zmin;
 
-    trix[n][2] = a->xorig[qn];
-    triy[n][2] = p->ymax;
-    triz[n][2] = p->zmax;
-    ++n;
-	}
-
+        trix[n][2] = a->xorig[qn];
+        triy[n][2] = p->ymax;
+        triz[n][2] = p->zmax;
+        ++n;
+    }
 
     for(qn=1;qn<a->my;qn++)
     {
@@ -86,13 +85,11 @@ void decomp::partition_planes(lexer* p, dive* a)
         triy[n][1] = a->yorig[qn];
         triz[n][1] = p->zmax;
 
-    trix[n][2] = p->xmax;
-    triy[n][2] = a->yorig[qn];
-    triz[n][2] = p->zmax;
-    ++n;
-	}
-
-
+        trix[n][2] = p->xmax;
+        triy[n][2] = a->yorig[qn];
+        triz[n][2] = p->zmax;
+        ++n;
+    }
 
     for(qn=1;qn<a->mz;qn++)
     {
@@ -117,13 +114,11 @@ void decomp::partition_planes(lexer* p, dive* a)
         triy[n][1] = p->ymax;
         triz[n][1] = a->zorig[qn];
 
-    trix[n][2] = p->xmin;
-    triy[n][2] = p->ymax;
-    triz[n][2] = a->zorig[qn];
-    ++n;
-	}
-
+        trix[n][2] = p->xmin;
+        triy[n][2] = p->ymax;
+        triz[n][2] = a->zorig[qn];
+        ++n;
+    }
 
     tricount=n;
-
 }

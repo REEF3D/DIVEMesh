@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::nodecalc(lexer *p, dive *a)
 {
@@ -30,10 +30,7 @@ void decomp::nodecalc(lexer *p, dive *a)
     for(j=1;j<=p->M10;j++)
     for(k=1;k<=p->M10;k++)
     if(i*j*k==p->M10)
-    {
-     numfactor++;
-     //cout<<"numfactor: "<<numfactor<<endl;
-    }
+    numfactor++;
 
 
     p->Iarray(a->mpx,numfactor+1);
@@ -47,14 +44,11 @@ void decomp::nodecalc(lexer *p, dive *a)
     for(k=1;k<=p->M10;k++)
     if(i*j*k==p->M10)
     {
-     a->mpx[numfactor]=i;
-     a->mpy[numfactor]=j;
-     a->mpz[numfactor]=k;
-     numfactor++;
-     //cout<<"numfactor: "<<numfactor<<endl;
+        a->mpx[numfactor]=i;
+        a->mpy[numfactor]=j;
+        a->mpz[numfactor]=k;
+        numfactor++;
     }
-
-
 }
 
 void decomp::costfunc(lexer* p, dive* a)
@@ -64,9 +58,9 @@ void decomp::costfunc(lexer* p, dive* a)
 
     for(n=0;n<numfactor;n++)
     {
-    cost =    double(a->knox)/double(a->mpx[n])*double(a->knoy)/double(a->mpy[n])
-            + double(a->knox)/double(a->mpx[n])*double(a->knoz)/double(a->mpz[n])
-            + double(a->knoy)/double(a->mpy[n])*double(a->knoz)/double(a->mpz[n]);
+        cost = double(a->knox)/double(a->mpx[n])*double(a->knoy)/double(a->mpy[n])
+             + double(a->knox)/double(a->mpx[n])*double(a->knoz)/double(a->mpz[n])
+             + double(a->knoy)/double(a->mpy[n])*double(a->knoz)/double(a->mpz[n]);
 
         if(costmin>=cost && p->M11==1 && p->M12==1 && p->M13==1)
         {

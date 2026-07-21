@@ -19,19 +19,17 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 Author: Hans Bihs
 --------------------------------------------------------------------*/
-#include"decomp.h"
+
+#include "decomp.h"
 
 void decomp::partition_correction(lexer* p, dive* a)
 {
     cout<<"maindir: "<<maindir<<endl;
 
-	if(maindir==1)
-	partition_correct_x(p,a);
-
-	if(maindir==2)
-	partition_correct_y(p,a);
-
-	if(maindir==3)
-	partition_correct_z(p,a);
+    if(maindir==1)
+    partition_correct_x(p,a);
+    else if(maindir==2)
+    partition_correct_y(p,a);
+    else if(maindir==3)
+    partition_correct_z(p,a);
 }
-	

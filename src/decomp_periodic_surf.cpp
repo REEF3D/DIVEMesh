@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::periodic_surf(lexer* p, dive* a)
 {
@@ -59,7 +59,6 @@ void decomp::periodic_surf(lexer* p, dive* a)
         }
     }
 
-
     if(p->C22==2)
     {
         j=0;
@@ -84,7 +83,6 @@ void decomp::periodic_surf(lexer* p, dive* a)
             ++periodic_count;
         }
     }
-
 
     if(p->C23==2)
     {
