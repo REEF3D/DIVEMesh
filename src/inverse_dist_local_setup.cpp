@@ -20,13 +20,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"inverse_dist_local.h"
-#include"dive.h"
-#include"lexer.h"
+#include "inverse_dist_local.h"
+#include "dive.h"
+#include "lexer.h"
 
 void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
-
     xmin=+1.0e19;
     ymin=+1.0e19;
     zmin=+1.0e19;
@@ -66,7 +65,6 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
         ++ptnum[ic+dd][jc+dd];
     }
 
-
     p->Iarray(ptid,Nx,Ny, ptnum);
 
     for(r=0;r<Nx;++r)
@@ -78,19 +76,17 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     for(t=0;t<ptnum[r][s];++t)
     ptid[r][s][t]=-1;
 
-
     for(n=0;n<p->Np;++n)
     {
         ic = p->poscgen_i(Fx[n],XC,kx);
         jc = p->poscgen_j(Fy[n],YC,ky);
 
-    ICFLAG
-    {
-    ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
-    ++ptnum[ic+dd][jc+dd];
+        ICFLAG
+        {
+            ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
+            ++ptnum[ic+dd][jc+dd];
+        }
     }
-    }
-
 
     // Radius
     Dmax=sqrt(pow(p->xmax-p->xmin,2.0)+pow(p->ymax-p->ymin,2.0));
@@ -102,5 +98,3 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
 
     cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" R: "<<R<<" dij: "<<dij<<endl;
 }
-
-

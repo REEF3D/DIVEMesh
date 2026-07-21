@@ -23,34 +23,31 @@ Author: Hans Bihs
 #ifndef KRIGING_H_
 #define KRIGING_H_
 
-#include"interpolation.h"
-#include"increment.h"
+#include "interpolation.h"
+#include "increment.h"
 
 class lexer;
 class dive;
-class field2d;
 
 using namespace std;
 
-class kriging : public interpolation, public increment
+class kriging final : public interpolation, public increment
 {
 public:
     kriging(lexer*,dive*,int,double*,double*,double*);
     virtual ~kriging();
 
-    virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
-
-	virtual void rearrange(lexer*);
-	virtual void rearrange_b(lexer*);
-
-	virtual void invert(lexer*,double**, double**, double*, double*);
-	virtual void decomp(lexer*,double**, double**);
-	virtual void backsubstitution(lexer*,double**, double*);
-	virtual void matvec(lexer*,double**, double*, double*);
-	virtual void solve(lexer*,double**, double*, double*);
-
+    void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**) override final;
 
 private:
+    void rearrange(lexer*);
+    void rearrange_b(lexer*);
+
+    void invert(lexer*,double**, double**, double*, double*);
+    void decomp(lexer*,double**, double**);
+    void backsubstitution(lexer*,double**, double*);
+    void matvec(lexer*,double**, double*, double*);
+    void solve(lexer*,double**, double*, double*);
 
     void ini(lexer*,dive*,int,double*,double*,double*);
 
@@ -76,5 +73,3 @@ private:
 };
 
 #endif
-
-

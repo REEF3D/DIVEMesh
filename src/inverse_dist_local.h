@@ -23,25 +23,26 @@ Author: Hans Bihs
 #ifndef INVERSE_DIST_LOCAL_H_
 #define INVERSE_DIST_LOCAL_H_
 
-#include"interpolation.h"
-#include"increment.h"
+#include "interpolation.h"
+#include "increment.h"
 
 class lexer;
 class dive;
 
 using namespace std;
 
-class inverse_dist_local : public interpolation, public increment
+class inverse_dist_local final : public interpolation, public increment
 {
 public:
     inverse_dist_local(lexer*,dive*);
     virtual ~inverse_dist_local();
 
-    virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
-    virtual double gxy(lexer*,dive*,double*,double*,double*,double*,double*,int,int,double**);
-    virtual void setup(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
+    void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**) override final;
 
 private:
+    double gxy(lexer*,dive*,double*,double*,double*,double*,double*,int,int,double**);
+    void setup(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
+
     double xmin,xmax,ymin,ymax,zmin,zmax;
 
     int Nx,Ny;
@@ -55,15 +56,9 @@ private:
     int r,s,t,ic,jc,kp,dd;
     int is,ie,js,je;
 
-
-
     double g,wsum,dist,weight;
     double xc,yc;
     double smooth_length;
-
 };
 
 #endif
-
-
-

@@ -20,9 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"inverse_dist_local.h"
-#include"dive.h"
-#include"lexer.h"
+#include "inverse_dist_local.h"
+#include "dive.h"
+#include "lexer.h"
 
 inverse_dist_local::inverse_dist_local(lexer *p, dive *a)
 {
@@ -91,17 +91,14 @@ double inverse_dist_local::gxy(lexer *p, dive *a, double *Fx, double *Fy, double
 
                     ++count;
                     zmean+=Fz[q];
-
                 }
-
             }
-
         }
+
         if(count>0)
         zmean=zmean/double(count);
 
-    cp+=2;//*(count+1);
-    //cout<<"IWD  cp: "<<cp<<" count: "<<count<<endl;
+        cp+=2;//*(count+1);
     }while(count<MIN(p->G18,p->Np));
 
     if(wsum>0.0)
@@ -112,11 +109,3 @@ double inverse_dist_local::gxy(lexer *p, dive *a, double *Fx, double *Fy, double
 
     return g;
 }
-
-
-
-
-
-
-
-

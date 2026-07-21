@@ -20,16 +20,15 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"gaussian.h"
-#include"dive.h"
-#include"lexer.h"
+#include "gaussian.h"
+#include "dive.h"
+#include "lexer.h"
 
 gaussian::gaussian(lexer *p, dive *a)
 {
-    sigma=5.0*p->DXM;
+    sigma = 5.0*p->DXM;
 
-    cutoff  = 3.0*sigma;
-
+    cutoff = 3.0*sigma;
 }
 
 gaussian::~gaussian()
@@ -88,9 +87,6 @@ double gaussian::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
                     ry = yc-Fy[q];
                     r2 = rx*rx + ry*ry;
 
-                    //if(w<1.0e-15)
-                    //cout<<"GEO smal w !!!!!!!! %%%%%%%"<<endl;
-
                     //if(r2<cutoff)
                     //{
                     w = exp(-r2 / (2.0*sigma*sigma));
@@ -112,7 +108,6 @@ double gaussian::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
         zmean=zmean/double(count);
 
     cp+=2;//*(count+1);
-    //cout<<"IWD  cp: "<<cp<<" count: "<<count<<endl;
     }while(count<MIN(p->G18,p->Np));
 
     if(wsum>0.0)
@@ -123,11 +118,3 @@ double gaussian::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
 
     return g;
 }
-
-
-
-
-
-
-
-
