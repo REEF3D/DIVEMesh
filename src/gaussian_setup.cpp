@@ -20,13 +20,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"gaussian.h"
-#include"dive.h"
-#include"lexer.h"
+#include "gaussian.h"
+#include "dive.h"
+#include "lexer.h"
 
 void gaussian::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
-
     xmin=+1.0e19;
     ymin=+1.0e19;
     zmin=+1.0e19;
@@ -84,13 +83,12 @@ void gaussian::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
         ic = p->poscgen_i(Fx[n],XC,kx);
         jc = p->poscgen_j(Fy[n],YC,ky);
 
-    ICFLAG
-    {
-    ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
-    ++ptnum[ic+dd][jc+dd];
+        ICFLAG
+        {
+            ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
+            ++ptnum[ic+dd][jc+dd];
+        }
     }
-    }
-
 
     // Radius
     Dmax=sqrt(pow(p->xmax-p->xmin,2.0)+pow(p->ymax-p->ymin,2.0));
@@ -102,5 +100,3 @@ void gaussian::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
 
     cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" R: "<<R<<" dij: "<<dij<<endl;
 }
-
-

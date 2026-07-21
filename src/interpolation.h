@@ -25,9 +25,6 @@ Author: Hans Bihs
 
 class lexer;
 class dive;
-class field2d;
-
-using namespace std;
 
 class interpolation
 {
@@ -37,5 +34,3 @@ public:
 };
 
 #endif
-
-
