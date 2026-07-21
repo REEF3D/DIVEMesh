@@ -24,20 +24,14 @@ Author: Hans Bihs
 #define COORDINATES_H_
 
 #include"increment.h"
-#include"intfield.h"
 
 class lexer;
-class dive;
-class field;
-class field2d;
-
-using namespace std;
 
 class coordinates : public increment
 {
 public:
     coordinates(lexer*);
-	virtual ~coordinates();
+    virtual ~coordinates() = default;
 
     // world to model
     void XYin(double&,double&);
@@ -51,18 +45,6 @@ public:
 
 private:
     lexer *p;
-
-    double pos;
-
-    int stop,count;
-    int ii,jj,kk;
-
-    int is,ie,iloc;
-    int js,je,jloc;
-    int ks,ke,kloc;
-
-    double Xtemp,Ytemp;
-
 };
 
 #endif
