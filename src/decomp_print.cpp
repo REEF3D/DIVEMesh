@@ -20,12 +20,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::print_partition(lexer* p, dive* a)
 {
-
-	for(q=0;q<p->M10;++q)
-	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
-
+    for(q=0;q<p->M10;++q)
+    ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 }

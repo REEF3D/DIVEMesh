@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::paraslicesurface(lexer* p, dive* a)
 {
@@ -28,7 +28,6 @@ void decomp::paraslicesurface(lexer* p, dive* a)
     a->paraslice2count=0;
     a->paraslice3count=0;
     a->paraslice4count=0;
-
 
     XYLOOP
     {
@@ -53,19 +52,17 @@ void decomp::paraslicesurface(lexer* p, dive* a)
             a->paraslice3count++;
         }
 
-    if(a->subslice(i,j+1)!=a->subslice(i,j) && a->flagslice(i,j+1)>0 && a->flagslice(i,j)>0)
-    {
-    a->paraslice2sf[a->paraslice2count][0]=i;
-    a->paraslice2sf[a->paraslice2count][1]=j;
-    a->paraslice2count++;
-    }
-
+        if(a->subslice(i,j+1)!=a->subslice(i,j) && a->flagslice(i,j+1)>0 && a->flagslice(i,j)>0)
+        {
+            a->paraslice2sf[a->paraslice2count][0]=i;
+            a->paraslice2sf[a->paraslice2count][1]=j;
+            a->paraslice2count++;
+        }
     }
 }
 
 void decomp::paraslicecosurface(lexer* p, dive* a)
 {
-
     a->paracoslice1count=0;
     a->paracoslice2count=0;
     a->paracoslice3count=0;
@@ -100,91 +97,87 @@ void decomp::paraslicecosurface(lexer* p, dive* a)
         a->paracoslice1count++;
         }
 
-//  4
-    if(a->subslice(i+1,j)!=a->subslice(i,j)   // ok
-    && a->flagslice(i,j)>0 //ok
-    && a->flagslice(i+1,j)>0 //ok
-    && ((a->flagslice(i,j-1)<0  && a->flagslice(i+1,j-1)<0)
-        ||(a->subslice(i,j-1)!=a->subslice(i,j)  && a->subslice(i+1,j-1)!=a->subslice(i+1,j))))
-    {
-    a->paracoslice4sf[a->paracoslice4count][0]=i;
-    a->paracoslice4sf[a->paracoslice4count][1]=j-1;
-    a->paracoslice4sf[a->paracoslice4count][2]=a->subslice(i,j);
-	a->paracoslice4sf[a->paracoslice4count][3]=3;
-    a->paracoslice4count++;
+        //  4
+        if(a->subslice(i+1,j)!=a->subslice(i,j)
+        && a->flagslice(i,j)>0
+        && a->flagslice(i+1,j)>0
+        && ((a->flagslice(i,j-1)<0  && a->flagslice(i+1,j-1)<0)
+            ||(a->subslice(i,j-1)!=a->subslice(i,j)  && a->subslice(i+1,j-1)!=a->subslice(i+1,j))))
+        {
+            a->paracoslice4sf[a->paracoslice4count][0]=i;
+            a->paracoslice4sf[a->paracoslice4count][1]=j-1;
+            a->paracoslice4sf[a->paracoslice4count][2]=a->subslice(i,j);
+            a->paracoslice4sf[a->paracoslice4count][3]=3;
+            a->paracoslice4count++;
+        }
+
+
+        if(a->subslice(i+1,j)!=a->subslice(i,j)
+        && a->flagslice(i,j)>0
+        && a->flagslice(i+1,j)>0
+        && ((a->flagslice(i,j+1)<0  && a->flagslice(i+1,j+1)<0)
+            ||(a->subslice(i,j+1)!=a->subslice(i,j)  && a->subslice(i+1,j+1)!=a->subslice(i+1,j))))
+        {
+            a->paracoslice4sf[a->paracoslice4count][0]=i;
+            a->paracoslice4sf[a->paracoslice4count][1]=j+1;
+            a->paracoslice4sf[a->paracoslice4count][2]=a->subslice(i,j);
+            a->paracoslice4sf[a->paracoslice4count][3]=2;
+            a->paracoslice4count++;
+        }
+
+        //  3
+        if(a->subslice(i,j-1)!=a->subslice(i,j)
+        && a->flagslice(i,j)>0
+        && a->flagslice(i,j-1)>0
+        && ((a->flagslice(i-1,j)<0  && a->flagslice(i-1,j-1)<0)
+            ||(a->subslice(i-1,j)!=a->subslice(i,j)  && a->subslice(i-1,j-1)!=a->subslice(i,j-1))))
+        {
+            a->paracoslice3sf[a->paracoslice3count][0]=i-1;
+            a->paracoslice3sf[a->paracoslice3count][1]=j;
+            a->paracoslice3sf[a->paracoslice3count][2]=a->subslice(i,j);
+            a->paracoslice3sf[a->paracoslice3count][3]=1;
+            a->paracoslice3count++;
+        }
+
+        if(a->subslice(i,j-1)!=a->subslice(i,j)
+        && a->flagslice(i,j)>0
+        && a->flagslice(i,j-1)>0
+        && ((a->flagslice(i+1,j)<0  && a->flagslice(i+1,j-1)<0)
+            ||(a->subslice(i+1,j)!=a->subslice(i,j)  && a->subslice(i+1,j-1)!=a->subslice(i,j-1))))
+        {
+            a->paracoslice3sf[a->paracoslice3count][0]=i+1;
+            a->paracoslice3sf[a->paracoslice3count][1]=j;
+            a->paracoslice3sf[a->paracoslice3count][2]=a->subslice(i,j);
+            a->paracoslice3sf[a->paracoslice3count][3]=4;
+            a->paracoslice3count++;
+        }
+
+        //  2
+        if(a->subslice(i,j+1)!=a->subslice(i,j)
+
+        && a->flagslice(i,j)>0
+        && a->flagslice(i,j+1)>0
+        && ((a->flagslice(i-1,j)<0  && a->flagslice(i-1,j+1)<0)
+            ||(a->subslice(i-1,j)!=a->subslice(i,j)  && a->subslice(i-1,j+1)!=a->subslice(i,j+1))))
+        {
+            a->paracoslice2sf[a->paracoslice2count][0]=i-1;
+            a->paracoslice2sf[a->paracoslice2count][1]=j;
+            a->paracoslice2sf[a->paracoslice2count][2]=a->subslice(i,j);
+            a->paracoslice2sf[a->paracoslice2count][3]=1;
+            a->paracoslice2count++;
+        }
+
+        if(a->subslice(i,j+1)!=a->subslice(i,j)
+        && a->flagslice(i,j)>0
+        && a->flagslice(i,j+1)>0
+        && ((a->flagslice(i+1,j)<0  && a->flagslice(i+1,j+1)<0)
+            ||(a->subslice(i+1,j)!=a->subslice(i,j)  && a->subslice(i+1,j+1)!=a->subslice(i,j+1))))
+        {
+            a->paracoslice2sf[a->paracoslice2count][0]=i+1;
+            a->paracoslice2sf[a->paracoslice2count][1]=j;
+            a->paracoslice2sf[a->paracoslice2count][2]=a->subslice(i,j);
+            a->paracoslice2sf[a->paracoslice2count][3]=4;
+            a->paracoslice2count++;
+        }
     }
-
-
-    if(a->subslice(i+1,j)!=a->subslice(i,j)
-    && a->flagslice(i,j)>0
-    && a->flagslice(i+1,j)>0
-    && ((a->flagslice(i,j+1)<0  && a->flagslice(i+1,j+1)<0)
-        ||(a->subslice(i,j+1)!=a->subslice(i,j)  && a->subslice(i+1,j+1)!=a->subslice(i+1,j))))
-    {
-    a->paracoslice4sf[a->paracoslice4count][0]=i;
-    a->paracoslice4sf[a->paracoslice4count][1]=j+1;
-    a->paracoslice4sf[a->paracoslice4count][2]=a->subslice(i,j);
-	a->paracoslice4sf[a->paracoslice4count][3]=2;
-    a->paracoslice4count++;
-    }
-
-//  3
-    if(a->subslice(i,j-1)!=a->subslice(i,j)
-    && a->flagslice(i,j)>0
-    && a->flagslice(i,j-1)>0
-    && ((a->flagslice(i-1,j)<0  && a->flagslice(i-1,j-1)<0)
-        ||(a->subslice(i-1,j)!=a->subslice(i,j)  && a->subslice(i-1,j-1)!=a->subslice(i,j-1))))
-    {
-    a->paracoslice3sf[a->paracoslice3count][0]=i-1;
-    a->paracoslice3sf[a->paracoslice3count][1]=j;
-    a->paracoslice3sf[a->paracoslice3count][2]=a->subslice(i,j);
-	a->paracoslice3sf[a->paracoslice3count][3]=1;
-    a->paracoslice3count++;
-    }
-
-    if(a->subslice(i,j-1)!=a->subslice(i,j)
-    && a->flagslice(i,j)>0
-    && a->flagslice(i,j-1)>0
-    && ((a->flagslice(i+1,j)<0  && a->flagslice(i+1,j-1)<0)
-        ||(a->subslice(i+1,j)!=a->subslice(i,j)  && a->subslice(i+1,j-1)!=a->subslice(i,j-1))))
-    {
-    a->paracoslice3sf[a->paracoslice3count][0]=i+1;
-    a->paracoslice3sf[a->paracoslice3count][1]=j;
-    a->paracoslice3sf[a->paracoslice3count][2]=a->subslice(i,j);
-	a->paracoslice3sf[a->paracoslice3count][3]=4;
-    a->paracoslice3count++;
-    }
-
-//  2
-    if(a->subslice(i,j+1)!=a->subslice(i,j)
-
-    && a->flagslice(i,j)>0
-    && a->flagslice(i,j+1)>0
-    && ((a->flagslice(i-1,j)<0  && a->flagslice(i-1,j+1)<0)
-        ||(a->subslice(i-1,j)!=a->subslice(i,j)  && a->subslice(i-1,j+1)!=a->subslice(i,j+1))))
-    {
-    a->paracoslice2sf[a->paracoslice2count][0]=i-1;
-    a->paracoslice2sf[a->paracoslice2count][1]=j;
-    a->paracoslice2sf[a->paracoslice2count][2]=a->subslice(i,j);
-	a->paracoslice2sf[a->paracoslice2count][3]=1;
-    a->paracoslice2count++;
-    }
-
-    if(a->subslice(i,j+1)!=a->subslice(i,j)
-    && a->flagslice(i,j)>0
-    && a->flagslice(i,j+1)>0
-    && ((a->flagslice(i+1,j)<0  && a->flagslice(i+1,j+1)<0)
-        ||(a->subslice(i+1,j)!=a->subslice(i,j)  && a->subslice(i+1,j+1)!=a->subslice(i,j+1))))
-    {
-    a->paracoslice2sf[a->paracoslice2count][0]=i+1;
-    a->paracoslice2sf[a->paracoslice2count][1]=j;
-    a->paracoslice2sf[a->paracoslice2count][2]=a->subslice(i,j);
-	a->paracoslice2sf[a->paracoslice2count][3]=4;
-    a->paracoslice2count++;
-    }
-
-
-    }
-
-	//cout<<"PARACOSLICE  1: "<<a->paracoslice1count<<"  2: "<<a->paracoslice2count<<"  3: "<<a->paracoslice3count<<"  4: "<<a->paracoslice4count<<endl;
 }

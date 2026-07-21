@@ -20,19 +20,16 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::periodic_ini(lexer* p, dive* a)
 {
-
     // serial or parallel periodic BC
     if(p->C21>=1)
     {
-
         if(a->mx==1)
         p->C21=1;
-
-        if(a->mx>1)
+        else if(a->mx>1)
         p->C21=2;
     }
 
@@ -40,8 +37,7 @@ void decomp::periodic_ini(lexer* p, dive* a)
     {
         if(a->my==1)
         p->C22=1;
-
-        if(a->my>1)
+        else if(a->my>1)
         p->C22=2;
     }
 
@@ -49,12 +45,9 @@ void decomp::periodic_ini(lexer* p, dive* a)
     {
         if(a->mz==1)
         p->C23=1;
-
-        if(a->mz>1)
+        else if(a->mz>1)
         p->C23=2;
-
     }
-
 }
 
 void decomp::periodic_nb(lexer* p, dive* a)
@@ -145,7 +138,4 @@ void decomp::periodic_count(lexer* p, dive* a)
         n=a->subgrid(a->para6sf[i][0],a->para6sf[i][1],a->para6sf[i][2]);
         a->periodicX[n][5]++;
     }
-
-
-
 }
