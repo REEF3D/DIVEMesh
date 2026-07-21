@@ -97,10 +97,10 @@ double gaussian::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
 
                     wsum+=w;
 
-                    g += w*Fz[q];
+                        g += w*Fz[q];
 
-                    ++count;
-                    zmean+=Fz[q];
+                        ++count;
+                        zmean+=Fz[q];
                     //}
                 }
 
