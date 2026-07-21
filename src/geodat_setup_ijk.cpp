@@ -20,9 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"geodat.h"
-#include"dive.h"
-#include"lexer.h"
+#include "geodat.h"
+#include "dive.h"
+#include "lexer.h"
 
 void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
@@ -31,10 +31,6 @@ void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, do
     Ny = ky + 2*dd+1;
 
     p->Iarray(ptnum,Nx,Ny);
-
-    for(r=0;r<Nx;++r)
-    for(s=0;s<Ny;++s)
-    ptnum[r][s]=0;
 
     for(n=0;n<p->Np;++n)
     {
@@ -45,8 +41,7 @@ void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, do
         ++ptnum[ic+dd][jc+dd];
     }
 
-
-    p->Iarray(ptid,Nx,Ny, ptnum);
+    p->Iarray(ptid,Nx,Ny,ptnum);
 
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
@@ -56,7 +51,6 @@ void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, do
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     ptnum[r][s]=0;
-
 
     for(n=0;n<p->Np;++n)
     {
@@ -69,19 +63,13 @@ void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, do
             ++ptnum[ic+dd][jc+dd];
         }
     }
-
 }
 
 void geodat::setup_ijk_delete(lexer *p, dive *a, int kx, int ky)
 {
-
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 
-
     p->del_Iarray(ptid,Nx,Ny, ptnum);
     p->del_Iarray(ptnum,Nx,Ny);
-
 }
-
-
