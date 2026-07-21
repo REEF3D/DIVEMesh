@@ -35,17 +35,13 @@ class inverse_dist final : public interpolation, public increment
 {
 public:
     inverse_dist(lexer*,dive*);
-    virtual ~inverse_dist();
+    virtual ~inverse_dist() = default;
 
     void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**) override final;
 
 private:
-    double gxy(lexer*,dive*,double*,double*,double*,double*,double*,int,int,double**);
-    double w(lexer*,int,double*,double*,double*);
-
-    double g,wsum,dist;
-    double xc,yc;
-
+    double gxy(lexer*,int,int,double*,double*,double*,double*,double*);
+    inline double w(double,double,double);
 };
 
 #endif
