@@ -20,15 +20,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"geodat.h"
-#include"dive.h"
-#include"lexer.h"
-
-class field2d;
+#include "geodat.h"
+#include "dive.h"
+#include "lexer.h"
 
 void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
 {
-    double dist, maxdist,meandist,zmean;
+    double dist, maxdist,meandist;
     double Dmax,R,dij;
     int check;
     int pcount=0;
@@ -60,10 +58,8 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
             is=MAX(i-dij-cp,-3);
             ie=MIN(i+dij+cp,Nx-3);
 
-        js=MAX(j-dij-cp,-3);
-        je=MIN(j+dij+cp,Ny-3);
-
-
+            js=MAX(j-dij-cp,-3);
+            je=MIN(j+dij+cp,Ny-3);
 
             count=0;
             for(r=is;r<ie;++r)
@@ -81,30 +77,16 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
                     meandist += dist;
                     ++pcount;
                     ++count;
-
-                    //cout<<"DIST: "<<dist<<" X[n]: "<<X[n]<<" X[q]: "<<X[q]<<" Y[n]: "<<Y[n]<<" Y[q]: "<<Y[q]<<"  ptnum[r+dd][s+dd]: "<<ptnum[r+dd][s+dd]<<" t: "<<t<<" |  n: "<<n<<" q: "<<q
-                    //<<"   | i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" |  count: "<<count<<endl;
                 }
 
             }
-
-
-
-        //cout<<n<<"  "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
-
-
-        cp+=2;
+            cp+=2;
         }while(count<MIN(19,p->Np) && cp<10);
-
-        //cout<<"PCOUNT: "<<pcount<<endl;
     }
 
     cout<<"MAX pointdist: "<<maxdist<<" MEAN pointdist: "<<meandist/double(pcount)<<" MEAN pointdist: "<<meandist<<" pcount: "<<pcount<<endl;
 
-
     meandist = meandist/double(pcount);
-
-
 
     ///- ---- -- -- - - -
 
@@ -134,14 +116,11 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-
-
         is=MAX(i-dij,-3);
         ie=MIN(i+dij,Nx-3);
 
         js=MAX(j-dij,-3);
         je=MIN(j+dij,Ny-3);
-
 
         check=0;
         for(r=is;r<ie;++r)
@@ -157,28 +136,20 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
     }
     cout<<"NEW POINTS: "<<count<<endl;
 
-
-
     p->Dresize(p->G10_x,p->Np,p->Np+count);
     p->Dresize(p->G10_y,p->Np,p->Np+count);
     p->Dresize(p->G10_z,p->Np,p->Np+count);
-
 
     // FILL
     //ap->Np=0;
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-
-
         is=MAX(i-dij,-3);
         ie=MIN(i+dij,Nx-3);
 
         js=MAX(j-dij,-3);
         je=MIN(j+dij,Ny-3);
-
-        //cout<<n<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" | is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
-
 
         check=0;
         for(r=is;r<ie;++r)
@@ -192,14 +163,7 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
             p->G10_y[p->Np] = p->YP[JP];
             p->G10_z[p->Np] = p->G52;
 
-       //cout<<" Np: "<<p->Np<<" X[p->Np]: "<<X[p->Np]<<" Y[p->Np]: "<<Y[p->Np]<<" F[p->Np]: "<<F[p->Np]<<endl;
-        //cout<<" Np: "<<p->Np<<" p->G10_x: "<<p->G10_x[p->Np]<<" p->G10_y: "<<p->G10_y[p->Np]<<" p->G10_z: "<<p->G10_z[p->Np]<<endl;
-
-        ++p->Np;
+            ++p->Np;
         }
-
-    //cout<<"check: "<<check<<" "<<" i: "<<i<<" j: "<<j<<endl;
     }
-
-
 }

@@ -20,32 +20,17 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"geodat.h"
-#include"dive.h"
-#include"lexer.h"
-
+#include "geodat.h"
+#include "dive.h"
+#include "lexer.h"
 
 double geodat::ccipol(lexer *p, double **f, double xp, double yp)
 {
     iii=i;
     jjj=j;
 
-
-
     i = p->poscgen_i(xp,XC,kx);
     j = p->poscgen_j(yp,YC,ky);
-
-    //if(i<0 || j<0)
-    //cout<<"pos_ij: "<<i<<" "<<j<<" | "<<xp<<" "<<yp<<" YC[3]: "<<YC[3]<<" marge: "<<marge<<endl;
-
-    /*
-    i = MAX(i,0);
-    i = MIN(i,kx-1);
-
-    j = MAX(j,0);
-    j = MIN(j,ky-1);*/
-
-
 
     // wa
     wa = (XC[IP1]-xp)/(XC[IP1]-XC[IP]);
@@ -78,15 +63,10 @@ double geodat::ccipol(lexer *p, double **f, double xp, double yp)
         --j;
     }
 
-    //cout<<"pos_ij: "<<wa<<" "<<wb<<" | "<<xp<<" "<<yp<<" YC[3]: "<<YC[3]<<" marge: "<<marge<<endl;
-
     if(p->knoy==1)
     value =  lint2D(p,f,i,j,wa,wb);
-
-    if(p->knoy>1)
+    else if(p->knoy>1)
     value =  lint(p,f,i,j,wa,wb);
-
-
 
     i=iii;
     j=jjj;
@@ -100,14 +80,6 @@ double geodat::lint2D(lexer *p, double **f, int& i,int& j, double wa, double wb)
     v1=v2=v3=v4=0.0;
     c1=c2=c3=c4=0;
 
-    /*
-    i = MAX(i,0);
-    i = MIN(i,kx-1);
-
-    j = MAX(j,0);
-    j = MIN(j,ky-1);*/
-
-
     if(i>=0 && i<kx)
     {
         v1=f[i+3][0+3];
@@ -120,30 +92,17 @@ double geodat::lint2D(lexer *p, double **f, int& i,int& j, double wa, double wb)
         c3=1;
     }
 
-    //cout<<"v1: "<<v1<<" v3: "<<v3<<endl;
-
-
     // x1
     if(c1==1 && c3==1)
     value = wa*v1 + (1.0-wa)*v3;
 
-
- return value;
-
+    return value;
 }
 
 double geodat::lint(lexer *p, double **f, int& i,int& j, double wa, double wb)
 {
     v1=v2=v3=v4=0.0;
     c1=c2=c3=c4=0;
-
-    /*
-    i = MAX(i,0);
-    i = MIN(i,kx-1);
-
-    j = MAX(j,0);
-    j = MIN(j,ky-1);*/
-
 
     if(i>=0 && i<kx && j>=0 && j<ky)
     {
@@ -169,41 +128,28 @@ double geodat::lint(lexer *p, double **f, int& i,int& j, double wa, double wb)
         c4=1;
     }
 
-
     // x1
     if(c1==1 && c3==1)
     x1 = wa*v1 + (1.0-wa)*v3;
-
-    if(c1==1 && c3==0)
+    else if(c1==1 && c3==0)
     x1 = v1;
-
-    if(c1==0 && c3==1)
+    else if(c1==0 && c3==1)
     x1 = v3;
-
 
     // x2
     if(c2==1 && c4==1)
     x2 = wa*v2 + (1.0-wa)*v4;
-
-    if(c2==1 && c4==0)
+    else if(c2==1 && c4==0)
     x2 = v2;
-
-    if(c2==0 && c4==1)
+    else if(c2==0 && c4==1)
     x2 = v4;
 
     if((c1==0 && c3==0) && (c2==1 || c4==1))
     wb=0.0;
-
     if((c2==0 && c4==0) && (c1==1 || c3==1))
     wb=1.0;
 
-    /*if(c2==0 && c4==0 && c1==1 && c3==1)
-    {
-    x1=x2=0.0;
-    }*/
-
     value = wb*x1 + (1.0-wb)*x2;
 
- return value;
-
+    return value;
 }

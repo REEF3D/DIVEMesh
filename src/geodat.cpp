@@ -20,13 +20,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"geodat.h"
-#include"dive.h"
-#include"lexer.h"
-#include"inverse_dist.h"
-#include"inverse_dist_local.h"
-#include"kriging.h"
-#include"gaussian.h"
+#include "geodat.h"
+#include "dive.h"
+#include "lexer.h"
+#include "inverse_dist.h"
+#include "inverse_dist_local.h"
+#include "kriging.h"
+#include "gaussian.h"
 
 geodat::geodat(lexer *p, dive *a)
 {
@@ -55,17 +55,14 @@ geodat::geodat(lexer *p, dive *a)
 
     if(p->G15==1)
     pipol = new inverse_dist(p,a);
-
-    if(p->G15==2)
+    else if(p->G15==2)
     pipol = new inverse_dist_local(p,a);
-
-    if(p->G15==3)
+    else if(p->G15==3)
     {
         p->G36_select=1;
         pipol = new kriging(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z);
     }
-
-    if(p->G15==5)
+    else if(p->G15==5)
     pipol = new gaussian(p,a);
 
     p->Np=p->G10;
@@ -73,12 +70,13 @@ geodat::geodat(lexer *p, dive *a)
 
     p->Darray(XC,p->knox+14);
     p->Darray(YC,p->knoy+14);
-
-    //cout<<"geodat  |  G10: "<<p->G10<<" Np: "<<p->Np<<endl;
 }
 
 geodat::~geodat()
 {
+    delete pipol;
+    delete[] XC;
+    delete[] YC;
 }
 
 void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
@@ -97,7 +95,6 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
     if(p->G37_select==1)
     pointcheck_random(p,a,p->G10_x,p->G10_y,p->G10_z);
 
-
     if(p->G51==1)
     {
         setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
@@ -107,7 +104,6 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
         holecheck(p,a,p->G10_x,p->G10_y,p->G10_z);
     }
 
-
     coarsen(p,a);
 
     // geo_patch
@@ -116,7 +112,6 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
 
     print(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,1);
 
-
     pipol->start(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);
 
     prolong(p,a,bed);
@@ -124,7 +119,6 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
     dryside(p,a,bed);
 
     filter(p,a,bed);
-
 
     LOOP
     dist(i,j,k) = -bed(i,j) + p->ZP[KP];
@@ -142,11 +136,10 @@ void geodat::gcb_estimate(lexer *p, dive *a, field2d &bed)
 
     for(qn=0; qn<p->M10;qn++)
     {
-    if(p->G9==1)
-	a->topo_gcb[qn]=0;
-
-    if(p->G9==2)
-	a->solid_gcb[qn]=0;
+        if(p->G9==1)
+        a->topo_gcb[qn]=0;
+        else if(p->G9==2)
+        a->solid_gcb[qn]=0;
     }
 
     MALOOP
@@ -167,11 +160,10 @@ void geodat::gcb_estimate(lexer *p, dive *a, field2d &bed)
         {
             if(gd(i,j,k)==1 && (gd(i-1,j,k)==-1 || gd(i+1,j,k)==-1 || gd(i,j-1,k)==-1 || gd(i,j+1,k)==-1 || gd(i,j,k-1)==-1 || gd(i,j,k+1)==-1))
             {
-            if(p->G9==1)
-            ++a->topo_gcb[qn];
-
-            if(p->G9==2)
-            ++a->solid_gcb[qn];
+                if(p->G9==1)
+                ++a->topo_gcb[qn];
+                else if(p->G9==2)
+                ++a->solid_gcb[qn];
             }
 
         }
@@ -191,6 +183,3 @@ void geodat::dryside(lexer *p, dive *a, field2d &bed)
     if(bed(i,j)>p->G25_h)
     bed(i,j) *= p->G25_fz;
 }
-
-
-
