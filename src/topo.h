@@ -37,43 +37,8 @@ public:
     topo(lexer*,dive*);
     virtual ~topo();
 
-    virtual void start(lexer*,dive*);
-	void gcb_estimate(lexer*,dive*);
-
-    // fluvial box
-    void fluvial_box(lexer*,dive*,int,int&,int&);
-    void fluvial_box_fill_segments(lexer*,dive*,int,int&,int&);
-    void fluvial_box_v1(lexer*,dive*,int,int&,int&);
-    void fluvial_box_v2(lexer*,dive*,int,int&,int&);
-
-private:
-    double xs,ys,zs,xe,ye,ze;
-	double L,G;
-    double ***is_R;
-    int **is_num;
-    int is_count;
-    int maxpt;
-
-
-    // fluvial box
-    void fluvial_box_move(lexer*,dive*);
-    void fluvial_box_extend(lexer*,dive*);
-
-    int countds;
-    int numds;
-    int ds_count;
-    double dangle,length;
-    double *xl,*yl,*xr,*yr;
-    double x0; // add origin afterwards
-    double y0; // add origin
-    double phi0;
-    double deltax,deltay;
-    int lastds;
-    int fluvial_outflow_side;
-    double box_xs,box_xe,box_ys,box_ye,box_zs,box_ze;
-
-    double nx,ny,norm,xc,yc,x1,y1,teta,ds,m,s;
+    void start(lexer*,dive*);
+    void gcb_estimate(lexer*,dive*);
 };
 
 #endif
-
