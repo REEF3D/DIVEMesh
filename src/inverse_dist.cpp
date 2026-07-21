@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-inverse_dist::inverse_dist(lexer *p, dive *a) 
+inverse_dist::inverse_dist(lexer *p, dive *a)
 {
 }
 
@@ -35,21 +35,21 @@ inverse_dist::~inverse_dist()
 void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {
     int counter=0;
-    
+
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-    f[i+3][j+3] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
-    
-    ++counter;
-    
-    if(counter%1000==0)
-    cout<<"> processed cells: "<<counter<<endl;
+        f[i+3][j+3] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
+
+        ++counter;
+
+        if(counter%1000==0)
+        cout<<"> processed cells: "<<counter<<endl;
     }
 }
 
 double inverse_dist::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
-{    
+{
     xc = XC[IP];
     yc = YC[JP];
 
@@ -70,7 +70,7 @@ double inverse_dist::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, 
 double inverse_dist::w(lexer  *p, int Np, double *Fx, double *Fy, double *Fz)
 {
     dist = sqrt(pow(xc-Fx[n],2.0) + pow(yc-Fy[n],2.0));
-	
+
     dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),p->G35);
 
     return dist;

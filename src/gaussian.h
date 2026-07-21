@@ -43,22 +43,22 @@ public:
 
 private:
     double xmin,xmax,ymin,ymax,zmin,zmax;
-    
+
     int Nx,Ny;
     int count,cp;
     int counter;
     double Dmax,R,dij;
     double origx,origy,w;
-    
+
     int **ptnum,***ptid;
-    
+
     int r,s,t,ic,jc,kp,dd;
     int is,ie,js,je;
-    
+
     double rx,ry,r2;
     double sigma,cutoff;
-    
-    
+
+
 
     double g,wsum,dist,weight;
     double xc,yc;

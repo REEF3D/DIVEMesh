@@ -26,7 +26,7 @@ Author: Hans Bihs
 
 void gaussian::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
-     
+
     xmin=+1.0e19;
     ymin=+1.0e19;
     zmin=+1.0e19;
@@ -37,52 +37,52 @@ void gaussian::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
 
     for(n=0;n<p->Np;++n)
     {
-    xmax=MAX(xmax,Fx[n]);
-    xmin=MIN(xmin,Fx[n]);
-    ymax=MAX(ymax,Fy[n]);
-    ymin=MIN(ymin,Fy[n]);
-    zmax=MAX(zmax,Fz[n]);
-    zmin=MIN(zmin,Fz[n]);
+        xmax=MAX(xmax,Fx[n]);
+        xmin=MIN(xmin,Fx[n]);
+        ymax=MAX(ymax,Fy[n]);
+        ymin=MIN(ymin,Fy[n]);
+        zmax=MAX(zmax,Fz[n]);
+        zmin=MIN(zmin,Fz[n]);
     }
-            
+
     // Grid
     dd = 3;
-    
+
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 
     p->Iarray(ptnum,Nx,Ny);
-    
+
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     ptnum[r][s]=0;
 
     for(n=0;n<p->Np;++n)
     {
-    ic = p->poscgen_i(Fx[n],XC,kx);
-    jc = p->poscgen_j(Fy[n],YC,ky);
-    
-    ICFLAG
-    ++ptnum[ic+dd][jc+dd];
+        ic = p->poscgen_i(Fx[n],XC,kx);
+        jc = p->poscgen_j(Fy[n],YC,ky);
+
+        ICFLAG
+        ++ptnum[ic+dd][jc+dd];
     }
-    
-    
+
+
     p->Iarray(ptid,Nx,Ny, ptnum);
-    
+
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     ptnum[r][s]=0;
-    
+
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     for(t=0;t<ptnum[r][s];++t)
     ptid[r][s][t]=-1;
 
-    
+
     for(n=0;n<p->Np;++n)
     {
-    ic = p->poscgen_i(Fx[n],XC,kx);
-    jc = p->poscgen_j(Fy[n],YC,ky);
+        ic = p->poscgen_i(Fx[n],XC,kx);
+        jc = p->poscgen_j(Fy[n],YC,ky);
 
     ICFLAG
     {
@@ -90,16 +90,16 @@ void gaussian::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
     ++ptnum[ic+dd][jc+dd];
     }
     }
-    
-    
+
+
     // Radius
     Dmax=sqrt(pow(p->xmax-p->xmin,2.0)+pow(p->ymax-p->ymin,2.0));
     R = 0.25*Dmax*sqrt(p->G18/p->Np);
-    
+
     dij = MAX(int(R/(p->DXM)),p->G17);
-    
+
     dij=p->G17;
-    
+
     cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" R: "<<R<<" dij: "<<dij<<endl;
 }
 

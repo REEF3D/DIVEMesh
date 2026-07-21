@@ -39,10 +39,10 @@ public:
     virtual ~kriging();
 
     virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
-    
+
 	virtual void rearrange(lexer*);
 	virtual void rearrange_b(lexer*);
-	
+
 	virtual void invert(lexer*,double**, double**, double*, double*);
 	virtual void decomp(lexer*,double**, double**);
 	virtual void backsubstitution(lexer*,double**, double*);
@@ -51,7 +51,7 @@ public:
 
 
 private:
-    
+
     void ini(lexer*,dive*,int,double*,double*,double*);
 
     inline double semivariogram(double dist)
@@ -61,18 +61,18 @@ private:
         else
             return variance;
     }
-	
-	double **A,**B;
-	double*x,*b,*s,*row;
 
-	int Np,n,m,q,r,count;
-	double dist,xc,yc;
-	double xmin,xmax,ymin,ymax;
-	double mean, variance, range;
-	double gamma,aii;
-	
-	double vmax,sum,val;
-	int imax,np,nn;
+    double **A,**B;
+    double*x,*b,*s,*row;
+
+    int Np,n,m,q,r,count;
+    double dist,xc,yc;
+    double xmin,xmax,ymin,ymax;
+    double mean, variance, range;
+    double gamma,aii;
+
+    double vmax,sum,val;
+    int imax,np,nn;
 };
 
 #endif
