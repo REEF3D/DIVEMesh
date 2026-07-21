@@ -28,7 +28,6 @@ Author: Hans Bihs
 #include"initialize.h"
 
 #include"bc.h"
-#include<iostream>
 #include"lexer.h"
 #include"dive.h"
 #include"print_grid.h"
@@ -46,5 +45,7 @@ Author: Hans Bihs
 #include"print_stl_geodat.h"
 
 #include"hdc.h"
+
+#include<iostream>
 
 #endif
