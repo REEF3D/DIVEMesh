@@ -64,8 +64,8 @@ private:
 
     int Np,n,m,q,r,count;
     double dist,xc,yc;
-    double xmin,xmax,ymin,ymax;
-    double mean, variance, range;
+
+    double variance, range;
     double gamma,aii;
 
     double vmax,sum,val;

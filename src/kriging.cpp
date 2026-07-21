@@ -28,7 +28,6 @@ Author: Hans Bihs
 
 kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
-
 }
 
 kriging::~kriging()

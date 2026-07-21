@@ -23,31 +23,38 @@ Author: Hans Bihs
 #include "kriging.h"
 #include "dive.h"
 #include "lexer.h"
+#include <algorithm>
+#include <cmath>
+#include <limits>
 
 void kriging::ini(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
-    xmin=ymin=1.0e15;
-    xmax=ymax=-1.0e15;
-    mean=0.0;
+    double xmin = +std::numeric_limits<double>::max();
+    double ymin = +std::numeric_limits<double>::max();
+    double xmax = -std::numeric_limits<double>::max();
+    double ymax = -std::numeric_limits<double>::max();
+    double mean = 0.0;
 
     for(n=0; n<numpt; ++n)
     {
-        xmin = MIN(xmin,X[n]);
-        xmax = MAX(xmax,X[n]);
+        xmin = std::min(xmin,X[n]);
+        xmax = std::max(xmax,X[n]);
 
-        ymin = MIN(ymin,Y[n]);
-        ymax = MAX(ymax,Y[n]);
+        ymin = std::min(ymin,Y[n]);
+        ymax = std::max(ymax,Y[n]);
 
         mean += F[n];
     }
 
-    range = p->D18*sqrt(pow(xmax-xmin,2.0) + pow(ymax-ymin,2.0));
+    const double dx = xmax-xmin;
+    const double dy = ymax-ymin;
+    range = p->D18*sqrt(dx*dx + dy*dy);
 
     mean/=double(numpt);
 
     variance=0.0;
     for(n=0; n<numpt; ++n)
-    variance += pow(F[n] - mean, 2.0);
+    variance += (F[n] - mean)*(F[n] - mean);
 
     variance/=double(numpt);
 

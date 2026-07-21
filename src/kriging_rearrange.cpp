@@ -21,7 +21,6 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include "kriging.h"
-#include "dive.h"
 #include "lexer.h"
 
 void kriging::rearrange(lexer *p)
