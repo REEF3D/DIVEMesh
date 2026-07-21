@@ -37,9 +37,9 @@ public:
     driver();
     virtual ~driver();
     void mainloop();
-	void logic(lexer*);
-	void analytics(lexer*,dive*);
-	
+    void logic(lexer*);
+    void analytics(lexer*,dive*);
+
 	int conlev(int);
 
 	lexer *p;
@@ -54,10 +54,10 @@ public:
     objects *pobj;
     box *pbox;
     geodat *pgeo;
-	dataset *pdata;
-	objects_geometry *objgeo;
-	print_objects *objprint;
-	solid *psolid;
+    dataset *pdata;
+    objects_geometry *objgeo;
+    print_objects *objprint;
+    solid *psolid;
     topo *ptopo;
     slice *pslice;
     bedlevel *pbed;
@@ -73,11 +73,11 @@ public:
 	int **surf_fsf;
 	int **surf_wall;
 	int **surf_bed;
-	
+
 	int **flagmg;
 	int l,h;
 	int cellnum;
-	
+
 	ofstream mgout;
 };
 
