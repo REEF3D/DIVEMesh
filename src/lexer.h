@@ -38,7 +38,6 @@ using namespace std;
 class lexer : public resize_class, public coordinates
 {
 public:
-
     lexer();
     virtual ~lexer();
 
@@ -175,8 +174,6 @@ public:
     int M30,M30_x,M30_y,M30_z;
     int *M31,*M32,*M33;
     double M41, M45;
-
-    int P10;
 
 
     // solid
