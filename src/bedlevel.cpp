@@ -24,11 +24,9 @@ Author: Hans Bihs
 #include"dive.h"
 #include"lexer.h"
 
-bedlevel::bedlevel(lexer *p, dive *a)
-{
-}
+using namespace std;
 
-bedlevel::~bedlevel()
+bedlevel::bedlevel(lexer *p, dive *a)
 {
 }
 
@@ -41,5 +39,3 @@ void bedlevel::start(lexer* p, dive* a)
         a->bedlevel(i,j) = MAX(a->bedlevel(i,j),MAX(a->solidbed(i,j),a->topobed(i,j)));
     }
 }
-
-
