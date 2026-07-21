@@ -21,10 +21,9 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include "kriging.h"
-#include "dive.h"
 #include "lexer.h"
 
-void kriging::solve(lexer *p,double **A, double *x, double *b)
+void kriging::solve(lexer *p, double **A, double *x, double *b)
 {
     // LU decomp
     for (r=0; r<p->Np; r++)
@@ -57,7 +56,7 @@ void kriging::solve(lexer *p,double **A, double *x, double *b)
     }
 }
 
-void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
+void kriging::invert(lexer *p, double **A, double **B, double *x, double *b)
 {
     cout<<"    decomp"<<endl;
     // LU decomp
@@ -83,7 +82,7 @@ void kriging::invert(lexer *p,double **A,double **B, double *x, double *b)
     }
 }
 
-void kriging::decomp(lexer *p,double **A,double **B)
+void kriging::decomp(lexer *p, double **A, double **B)
 {
     // LU decomp
     for(r=0; r<p->Np; ++r)
@@ -91,11 +90,11 @@ void kriging::decomp(lexer *p,double **A,double **B)
         if(r%1000==0)
         cout<<"decomp: "<<r<<endl;
 
-        aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
+        aii = 1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
 
         for(n=r+1; n<p->Np; ++n)
         {
-            A[n][r]=A[n][r]*aii;
+            A[n][r] = A[n][r]*aii;
 
             for(q=r+1; q<p->Np; q++)
             A[n][q]-=A[r][q]*A[n][r];
@@ -103,7 +102,7 @@ void kriging::decomp(lexer *p,double **A,double **B)
     }
 }
 
-void kriging::backsubstitution(lexer *p,double **A, double *b)
+void kriging::backsubstitution(lexer *p, double **A, double *b)
 {
     int qq,nn;
 
@@ -124,7 +123,7 @@ void kriging::backsubstitution(lexer *p,double **A, double *b)
     }
 }
 
-void kriging::matvec(lexer *p,double **A, double *b, double *x)
+void kriging::matvec(lexer *p, double **A, double *b, double *x)
 {
     int qq,nn;
 
