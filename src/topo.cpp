@@ -30,36 +30,33 @@ topo::topo(lexer *p, dive *a) : geometry(p,a)
 
     cout<<"."<<endl;
 
-	if(p->T9==1)
-	p->T9_1=1;
+    if(p->T9==1)
+    p->T9_1=1;
+    else if(p->T9==2)
+    p->T9_1=-1;
 
-	if(p->T9==2)
-	p->T9_1=-1;
+    if(p->T121>0)
+    {
+        if(p->T122<p->T121)
+        for(qn=0;qn<p->T121;++qn)
+        {
+            p->T122_K[qn] = 0.5;
+            p->T122_n[qn] = 1.85;
+            p->T122_xc[qn] = 0.22;
+            p->T122_yc[qn] = 0.075;
+        }
 
-	if(p->T121>0)
-	{
-		if(p->T122<p->T121)
-		for(qn=0;qn<p->T121;++qn)
-		{
-		p->T122_K[qn] = 0.5;
-		p->T122_n[qn] = 1.85;
-		p->T122_xc[qn] = 0.22;
-		p->T122_yc[qn] = 0.075;
-		}
-
-		if(p->T123<p->T121)
-		for(qn=0;qn<p->T121;++qn)
-		{
-		p->T123_R1[qn] = 0.45;
-		p->T123_R2[qn] = 0.2;
-		}
-	}
+        if(p->T123<p->T121)
+        for(qn=0;qn<p->T121;++qn)
+        {
+            p->T123_R1[qn] = 0.45;
+            p->T123_R2[qn] = 0.2;
+        }
+    }
 
     if(p->T201>0)
     {
-    maxpt = MAX(a->knox,MAX(a->knoy,a->knoz));
-    p->Darray(is_R,maxpt,maxpt,maxpt);
-    p->Iarray(is_num,maxpt,maxpt);
+        int maxpt = MAX(a->knox,MAX(a->knoy,a->knoz));
 
         a->surfnum_solid = maxpt*maxpt;
 
@@ -96,9 +93,7 @@ void topo::start(lexer* p, dive* a)
     cout<<"topo "<<endl;
 
     MALOOP
-	{
-	a->topo_dist(i,j,k)=1.0e9;
-	}
+    a->topo_dist(i,j,k)=1.0e9;
 
     if(p->T2==1)
     LOOP
@@ -320,27 +315,22 @@ void topo::start(lexer* p, dive* a)
     {
         if(a->topo(i,j,k)==-1)
         a->topo_dist(i,j,k)=-fabs(a->topo_dist(i,j,k));
-
-
-        if(a->topo(i,j,k)==1)
+        else if(a->topo(i,j,k)==1)
         a->topo_dist(i,j,k)=fabs(a->topo_dist(i,j,k));
     }
 
 
     LOOP
-	{
-		if(a->topo_dist(i,j,k)>10.0*p->DXM)
-		a->topo_dist(i,j,k)=10.0*p->DXM;
-
-		if(a->topo_dist(i,j,k)<-10.0*p->DXM)
-		a->topo_dist(i,j,k)=-10.0*p->DXM;
-	}
+    {
+        if(a->topo_dist(i,j,k)>10.0*p->DXM)
+        a->topo_dist(i,j,k)=10.0*p->DXM;
+        else if(a->topo_dist(i,j,k)<-10.0*p->DXM)
+        a->topo_dist(i,j,k)=-10.0*p->DXM;
+    }
 
     LOOP
     if(a->topo_dist(i,j,k)!=a->topo_dist(i,j,k))
     cout<<"TOPO NAN: "<<a->topo_dist(i,j,k)<<endl;
 
-
-
-	cout<<"topo_trinum: "<<p->trinum<<"  topo_tricount: "<<p->tricount<<endl;
+    cout<<"topo_trinum: "<<p->trinum<<"  topo_tricount: "<<p->tricount<<endl;
 }
