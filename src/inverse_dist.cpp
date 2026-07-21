@@ -24,6 +24,11 @@ Author: Hans Bihs
 #include "dive.h"
 #include "lexer.h"
 #include <cmath>
+#include <sstream>
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 inverse_dist::inverse_dist(lexer *p, dive *a)
 {
@@ -33,6 +38,11 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
 {
     int counter=0;
 
+    int progress_output_interval = 1000;
+    if(p->knox*p->knoy*p->knoz>1000000)
+    progress_output_interval = 100000;
+
+    #pragma omp parallel for collapse(2) schedule(dynamic)
     for(int i=0; i<kx; ++i)
     for(int j=0; j<ky; ++j)
     {
@@ -40,8 +50,12 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
 
         ++counter;
 
-        if(counter%1000==0)
-        cout<<"> processed cells: "<<counter<<endl;
+        if(counter%progress_output_interval==0)
+        {
+            std::stringstream ss;
+            ss<<"> processed cells: "<<counter<<endl;
+            cout<<ss.str();
+        }
     }
 }
 
@@ -52,15 +66,15 @@ double inverse_dist::gxy(lexer *p, int i, int j, double *Fx, double *Fy, double 
 
     double g=0.0;
     double wsum=0.0;
-double weight = 0.0;
+    double weight = 0.0;
 
     for(n=0; n<p->Np; ++n)
-{
+    {
         weight = w(xc-Fx[n],yc-Fy[n],p->G35);
-    wsum += weight;
+        wsum += weight;
 
         g += (weight*Fz[n]);
-}
+    }
 
     g/=wsum;
 
