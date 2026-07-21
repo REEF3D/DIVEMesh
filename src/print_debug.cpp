@@ -31,8 +31,8 @@ void print_grid::print_debug(lexer* p, dive* a)
 {
     mkdir("./DIVEMesh_log",0777);
 
-    char name[20];
-    sprintf(name,"./DIVEMesh_Log/DIVE_MESH_debug.txt");
+    char name[40];
+    snprintf(name,sizeof(name),"./DIVEMesh_Log/DIVE_MESH_debug.txt");
     ofstream result;
     result.open(name);
 
