@@ -33,8 +33,8 @@ void print_grid::print_debug(lexer* p, dive* a)
 
     char name[20];
     sprintf(name,"./DIVEMesh_Log/DIVE_MESH_debug.txt");
-	ofstream result;
-	result.open(name);
+    ofstream result;
+    result.open(name);
 
     result<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<endl;
 
@@ -42,8 +42,8 @@ void print_grid::print_debug(lexer* p, dive* a)
 
     NLOOP
     {
-    result<<aa<<" "<<bb<<" "<<cc<<" : "<<a->xnode[aa-1]<<" "<<a->ynode[bb-1]<<" "<<a->znode[cc-1];
-    result<<" \t "<<a->xnode[aa]<<" "<<a->ynode[bb]<<" "<<a->znode[cc]<<endl;
+        result<<aa<<" "<<bb<<" "<<cc<<" : "<<a->xnode[aa-1]<<" "<<a->ynode[bb-1]<<" "<<a->znode[cc-1];
+        result<<" \t "<<a->xnode[aa]<<" "<<a->ynode[bb]<<" "<<a->znode[cc]<<endl;
     }
 
     result.close();
