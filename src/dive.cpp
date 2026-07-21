@@ -19,24 +19,25 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 Author: Hans Bihs
 --------------------------------------------------------------------*/
-#include "dive.h"
 
-dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
-                   topo(p),topo_dist(p),porous(p),
-                   subgrid(p),
-                   topobed(p),solidbed(p),dataset(p),
-                   bedlevel(p),zstl_min(p),zstl_max(p),
-                   flagslice(p),subslice(p)
+#include "dive.h"
+
+dive::dive(lexer* p) : flag(p),
+                    solid(p),topo(p),porous(p),
+                    solid_dist(p),topo_dist(p),
+                    subgrid(p),
+                    topobed(p),solidbed(p),
+                    bedlevel(p),dataset(p),
+                    zstl_min(p),zstl_max(p),
+                    flagslice(p),subslice(p)
 {
+    p->Darray(xorig,p->M10+10);
+    p->Darray(yorig,p->M10+10);
+    p->Darray(zorig,p->M10+10);
 
-	p->Darray(xorig,p->M10+10);
-	p->Darray(yorig,p->M10+10);
-	p->Darray(zorig,p->M10+10);
-
-	p->Iarray(xnode,p->M10+10);
-	p->Iarray(ynode,p->M10+10);
-	p->Iarray(znode,p->M10+10);
-
+    p->Iarray(xnode,p->M10+10);
+    p->Iarray(ynode,p->M10+10);
+    p->Iarray(znode,p->M10+10);
 
     knox=p->knox;
     knoy=p->knoy;
@@ -169,15 +170,9 @@ dive::dive(lexer* p) : flag(p),solid(p),solid_dist(p),
     Iarray(tot_gcbextra,p->M10+2);
 
 
-cout<<'.'<<endl;
-
-
+    cout<<'.'<<endl;
 }
 
 dive::~dive()
 {
-
 }
-
-
-

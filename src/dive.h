@@ -35,11 +35,9 @@ using namespace std;
 
 class dive : public increment, public resize_class
 {
- public:
-
+public:
     dive(lexer*);
     virtual ~dive();
-    void initialize();
 
     intfield flag;         // water/soC12/empty  +  which bc
     intfield solid,topo,porous;
@@ -47,8 +45,8 @@ class dive : public increment, public resize_class
     intfield subgrid;      // for all water cells: number of subgrid
     field2d topobed,solidbed;
     field2d bedlevel;      // combined bedlevel
-    field2d zstl_max,zstl_min;
     field2d dataset;
+    field2d zstl_min,zstl_max;
     intfield2d flagslice,subslice;
 
     int knox,knoy,knoz;
@@ -97,18 +95,16 @@ class dive : public increment, public resize_class
     double **vertice;
 
 
-	// MG
-	int ***paramg1,***paramg2,***paramg3,***paramg4,***paramg5,***paramg6;
-	int *paramg1_count,*paramg2_count,*paramg3_count,*paramg4_count,*paramg5_count,*paramg6_count;
-	int **paramgsub1,**paramgsub2,**paramgsub3,**paramgsub4,**paramgsub5,**paramgsub6;
-	int maxcoarse,maxlevels;
-	int *mgx,*mgy,*mgz;
-	int **submgx,**submgy,**submgz;
-	int **xoff,**yoff,**zoff;
-	int *magx,*magy,*magz;
-	int **submg;
-
+    // MG
+    int ***paramg1,***paramg2,***paramg3,***paramg4,***paramg5,***paramg6;
+    int *paramg1_count,*paramg2_count,*paramg3_count,*paramg4_count,*paramg5_count,*paramg6_count;
+    int **paramgsub1,**paramgsub2,**paramgsub3,**paramgsub4,**paramgsub5,**paramgsub6;
+    int maxcoarse,maxlevels;
+    int *mgx,*mgy,*mgz;
+    int **submgx,**submgy,**submgz;
+    int **xoff,**yoff,**zoff;
+    int *magx,*magy,*magz;
+    int **submg;
 };
-
 
 #endif
