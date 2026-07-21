@@ -33,7 +33,6 @@ Author: Hans Bihs
 #define JDIR if(a->j_dir==1)
 #define KDIR if(a->k_dir==1)
 
-
 #define ILOOP for(i=0;i<a->knox;++i)
 #define JLOOP for(j=0;j<a->knoy;++j)
 #define KLOOP for(k=0;k<a->knoz;++k)
