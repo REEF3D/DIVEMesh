@@ -35,10 +35,9 @@ using namespace std;
 
 class geometry : public increment
 {
-public:
+protected:
     geometry(lexer*,dive*);
     virtual ~geometry();
-    virtual void start(lexer*,dive*);
 
     // entities
     void box(lexer*,dive*,int,int&,int&,double,double,double,double,double,double);
@@ -85,9 +84,8 @@ public:
     void fluvial_box_move(lexer*,dive*);
     void fluvial_box_extend(lexer*,dive*);
 
-	void rotation(double&,double&,double&,double,double,double);
-	void rotate_triangle(lexer*,dive*,int,int);
-
+    void rotation(double&,double&,double&,double,double,double);
+    void rotate_triangle(lexer*,dive*,int,int);
 
     double xtrans(double,double,double,double,double,double,double,double,double);
     double ytrans(double,double,double,double,double,double,double,double,double);
@@ -157,4 +155,3 @@ private:
 };
 
 #endif
-

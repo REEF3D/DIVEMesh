@@ -107,11 +107,10 @@ void geometry::tetrahedon(lexer *p, dive *a, int rank, int &ts, int &te, double 
     p->tri_y[p->tricount][1] = y3;
     p->tri_z[p->tricount][1] = z3;
 
-	p->tri_x[p->tricount][2] = x4;
-	p->tri_y[p->tricount][2] = y4;
-	p->tri_z[p->tricount][2] = z4;
-	++p->tricount;
-
+    p->tri_x[p->tricount][2] = x4;
+    p->tri_y[p->tricount][2] = y4;
+    p->tri_z[p->tricount][2] = z4;
+    ++p->tricount;
 
 
     p->trivec_x[p->tricount] = (y2-y4)*(z3-z4) - (z2-z4)*(y3-y4);

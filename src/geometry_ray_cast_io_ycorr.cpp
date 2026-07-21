@@ -22,23 +22,21 @@ Author: Hans Bihs
 
 #include"geometry.h"
 #include"dive.h"
-#include"lexer.h"#include"field2d.h"
+#include"lexer.h"
+#include"field2d.h"
 
 void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
-	double ys,ye,zs,ze;
-	double Px,Py,Pz;
-	double Qx,Qy,Qz;
-	double Rx,Ry,Rz;
-	double Ax,Ay,Az;
-	double Bx,By,Bz;
-	double Cx,Cy,Cz;
-	double PQx,PQy,PQz;
-	double PAx,PAy,PAz;
-	double PBx,PBy,PBz;
-	double PCx,PCy,PCz;
-	double Mx,My,Mz;
-	int js,je,ks,ke;
+    double zs,ze;
+    double Px,Py,Pz;
+    double Qx,Qy,Qz;
+    double Ry;
+    double Ax,Ay,Az;
+    double Bx,By,Bz;
+    double Cx,Cy,Cz;
+    double PQx,PQy,PQz;
+    double Mx,My,Mz;
+    int ks,ke;
     int ie,is;
     double u,v,w;
     double denom;
@@ -96,92 +94,77 @@ void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te, intfield &fl
         ke = MIN(ke,p->knoz);
 
 
-		for(i=is;i<ie;i++)
-		for(k=ks;k<ke;k++)
-		{
+        for(i=is;i<ie;i++)
+        for(k=ks;k<ke;k++)
+        {
+            Px = p->XP[IP]+psi;
+            Py = p->ymin-10.0*p->DXM ;
+            Pz = p->ZP[KP]+psi;
+
+            Qx = p->XP[IP]+psi;
+            Qy = p->ymax+10.0*p->DXM ;
+            Qz = p->ZP[KP]+psi;
 
 
-		Px = p->XP[IP]+psi;
-		Py = p->ymin-10.0*p->DXM ;
-		Pz = p->ZP[KP]+psi;
+            PQx = Qx-Px;
+            PQy = Qy-Py;
+            PQz = Qz-Pz;
 
-		Qx = p->XP[IP]+psi;
-		Qy = p->ymax+10.0*p->DXM ;
-		Qz = p->ZP[KP]+psi;
-
-
-		PQx = Qx-Px;
-		PQy = Qy-Py;
-		PQz = Qz-Pz;
-
-		PAx = Ax-Px;
-		PAy = Ay-Py;
-		PAz = Az-Pz;
-
-		PBx = Bx-Px;
-		PBy = By-Py;
-		PBz = Bz-Pz;
-
-		PCx = Cx-Px;
-		PCy = Cy-Py;
-		PCz = Cz-Pz;
-
-		// uvw
-		Mx = PQy*Pz - PQz*Py;
-		My = PQz*Px - PQx*Pz;
-		Mz = PQx*Py - PQy*Px;
+            // uvw
+            Mx = PQy*Pz - PQz*Py;
+            My = PQz*Px - PQx*Pz;
+            Mz = PQx*Py - PQy*Px;
 
 
-		u = PQx*(Cy*Bz - Cz*By) + PQy*(Cz*Bx - Cx*Bz) + PQz*(Cx*By - Cy*Bx)
-		  + Mx*(Cx-Bx) + My*(Cy-By) + Mz*(Cz-Bz);
+            u = PQx*(Cy*Bz - Cz*By) + PQy*(Cz*Bx - Cx*Bz) + PQz*(Cx*By - Cy*Bx)
+            + Mx*(Cx-Bx) + My*(Cy-By) + Mz*(Cz-Bz);
 
-		v = PQx*(Ay*Cz - Az*Cy) + PQy*(Az*Cx - Ax*Cz) + PQz*(Ax*Cy - Ay*Cx)
-		  + Mx*(Ax-Cx) + My*(Ay-Cy) + Mz*(Az-Cz);
+            v = PQx*(Ay*Cz - Az*Cy) + PQy*(Az*Cx - Ax*Cz) + PQz*(Ax*Cy - Ay*Cx)
+            + Mx*(Ax-Cx) + My*(Ay-Cy) + Mz*(Az-Cz);
 
-		w = PQx*(By*Az - Bz*Ay) + PQy*(Bz*Ax - Bx*Az) + PQz*(Bx*Ay - By*Ax)
-		  + Mx*(Bx-Ax) + My*(By-Ay) + Mz*(Bz-Az);
-
-
-		int check=1;
-		if(u==0.0 && v==0.0 && w==0.0)
-		check = 0;
-
-			if(((u>0.0 && v>0.0 && w>0.0) || (u<0.0 && v<0.0 && w<0.0)) && check==1)
-			{
-			denom = 1.0/(u+v+w);
-			u *= denom;
-			v *= denom;
-			w *= denom;
-
-			Rx = u*Ax + v*Bx + w*Cx;
-			Ry = u*Ay + v*By + w*Cy;
-			Rz = u*Az + v*Bz + w*Cz;
+            w = PQx*(By*Az - Bz*Ay) + PQy*(Bz*Ax - Bx*Az) + PQz*(Bx*Ay - By*Ax)
+            + Mx*(Bx-Ax) + My*(By-Ay) + Mz*(Bz-Az);
 
 
-				for(j=0;j<=a->knoy;++j)
-				{
-				if(p->YP[JP]<Ry)
-				cutr(i,j,k) += 1;
+            int check=1;
+            if(u==0.0 && v==0.0 && w==0.0)
+            check = 0;
 
-				if(p->YP[JP]>=Ry)
-				cutl(i,j,k) += 1;
-				}
-			}
-		}
-	}
+            if(((u>0.0 && v>0.0 && w>0.0) || (u<0.0 && v<0.0 && w<0.0)) && check==1)
+            {
+                denom = 1.0/(u+v+w);
+                u *= denom;
+                v *= denom;
+                w *= denom;
 
-	if(p->S18==1)
-	LOOP
-	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
-    {
-	flag(i,j,k)=-1;
+                Ry = u*Ay + v*By + w*Cy;
+
+                for(j=0;j<=a->knoy;++j)
+                {
+                    if(p->YP[JP]>=Ry)
+                    cutl(i,j,k) += 1;
+                    else
+                    cutr(i,j,k) += 1;
+                }
+            }
+        }
     }
 
-    if(p->S18==2)
-	LOOP
-	if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
+    if(p->S18==1)
     {
-	flag(i,j,k)=-1;
+        LOOP
+        if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
+        {
+            flag(i,j,k)=-1;
+        }
+    }
+    else if(p->S18==2)
+    {
+        LOOP
+        if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
+        {
+            flag(i,j,k)=-1;
+        }
     }
 
     count=0;
@@ -189,7 +172,5 @@ void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te, intfield &fl
     if(flag(i,j,k)>0)
     ++count;
 
-
-	cout<<"Number of active cells after geometry_y: "<<count<<endl;
-
+    cout<<"Number of active cells after geometry_y: "<<count<<endl;
 }

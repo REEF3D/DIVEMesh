@@ -52,9 +52,8 @@ void geometry::fluvial_box_fill_segments(lexer *p, dive *a, int rank, int &ts, i
             ++countds;
             ++countG310;
         }
-
         // left bend
-        if(G300_ord[n]==2)
+        else if(G300_ord[n]==2)
         {
             lastds = countds;
             length = (G320_r[countG320])*G320_phi[countG320];
@@ -77,11 +76,9 @@ void geometry::fluvial_box_fill_segments(lexer *p, dive *a, int rank, int &ts, i
 
             phi0 += G320_phi[countG320];
             ++countG320;
-
         }
-
         // right bend
-        if(G300_ord[n]==3)
+        else if(G300_ord[n]==3)
         {
             lastds = countds;
             length = (G330_r[countG330])*G330_phi[countG330];
@@ -102,13 +99,11 @@ void geometry::fluvial_box_fill_segments(lexer *p, dive *a, int rank, int &ts, i
                 ++countds;
             }
 
-
             phi0 -= G330_phi[countG330];
             ++countG330;
         }
-
         // meander
-        if(G300_ord[n]==4)
+        else if(G300_ord[n]==4)
         {
             lastds = countds;
 
@@ -145,22 +140,15 @@ void geometry::fluvial_box_fill_segments(lexer *p, dive *a, int rank, int &ts, i
                 xr[countds] = xc - nx*0.5*G306;
                 yr[countds] = yc - ny*0.5*G306;
 
-            //cout<<"MEANDER: "<<teta<<" "<<m<<" "<<nx<<" "<<ny<<" "<<countds<<endl;
+                x1=xc;
+                y1=yc;
 
-
-            x1=xc;
-            y1=yc;
-
-            ++countds;
+                ++countds;
             }
 
-            //phi0 -= G340_phi[countG340];
             ++countG340;
         }
     }
 
     numds = countds;
-
-
-
 }

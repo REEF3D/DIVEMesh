@@ -26,19 +26,16 @@ Author: Hans Bihs
 
 void geometry::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
-	double ys,ye,zs,ze;
-	double Px,Py,Pz;
-	double Qx,Qy,Qz;
-	double Rx,Ry,Rz;
-	double Ax,Ay,Az;
-	double Bx,By,Bz;
-	double Cx,Cy,Cz;
-	double PQx,PQy,PQz;
-	double PAx,PAy,PAz;
-	double PBx,PBy,PBz;
-	double PCx,PCy,PCz;
-	double Mx,My,Mz;
-	int js,je,ks,ke;
+    double ys,ye;
+    double Px,Py,Pz;
+    double Qx,Qy,Qz;
+    double Rz;
+    double Ax,Ay,Az;
+    double Bx,By,Bz;
+    double Cx,Cy,Cz;
+    double PQx,PQy,PQz;
+    double Mx,My,Mz;
+    int js,je;
     int ie,is;
     double u,v,w;
     double denom;
@@ -113,22 +110,10 @@ void geometry::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te, intfield &fl
             PQy = Qy-Py;
             PQz = Qz-Pz;
 
-		PAx = Ax-Px;
-		PAy = Ay-Py;
-		PAz = Az-Pz;
-
-		PBx = Bx-Px;
-		PBy = By-Py;
-		PBz = Bz-Pz;
-
-		PCx = Cx-Px;
-		PCy = Cy-Py;
-		PCz = Cz-Pz;
-
-		// uvw
-		Mx = PQy*Pz - PQz*Py;
-		My = PQz*Px - PQx*Pz;
-		Mz = PQx*Py - PQy*Px;
+            // uvw
+            Mx = PQy*Pz - PQz*Py;
+            My = PQz*Px - PQx*Pz;
+            Mz = PQx*Py - PQy*Px;
 
 
             u = PQx*(Cy*Bz - Cz*By) + PQy*(Cz*Bx - Cx*Bz) + PQz*(Cx*By - Cy*Bx)
@@ -149,48 +134,45 @@ void geometry::ray_cast_io_zcorr(lexer* p, dive* a, int ts, int te, intfield &fl
             {
                 denom = 1.0/(u+v+w);
 
-            //cout<<"u: "<<u<<" v: "<<v<<" w: "<<w<<" denom: "<<denom<<endl;
-			u *= denom;
-			v *= denom;
-			w *= denom;
+                u *= denom;
+                v *= denom;
+                w *= denom;
 
-			Rx = u*Ax + v*Bx + w*Cx;
-			Ry = u*Ay + v*By + w*Cy;
-			Rz = u*Az + v*Bz + w*Cz;
+                Rz = u*Az + v*Bz + w*Cz;
 
 
-				for(k=0;k<=a->knoz;++k)
-				{
-				if(p->ZP[KP]<Rz)
-				cutr(i,j,k) += 1;
-
-				if(p->ZP[KP]>=Rz)
-				cutl(i,j,k) += 1;
-				}
-			}
-		}
-	}
-
-	if(p->S18==1)
-	LOOP
-	if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
-    {
-	flag(i,j,k)=-1;
+                for(k=0;k<=a->knoz;++k)
+                {
+                    if(p->ZP[KP]>=Rz)
+                    cutl(i,j,k) += 1;
+                    else
+                    cutr(i,j,k) += 1;
+                }
+            }
+        }
     }
 
-    if(p->S18==2)
-	LOOP
-	if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
+    if(p->S18==1)
     {
-	flag(i,j,k)=-1;
+        LOOP
+        if((cutl(i,j,k)+1)%2==0  && (cutr(i,j,k)+1)%2==0)
+        {
+            flag(i,j,k)=-1;
+        }
     }
+    else if(p->S18==2)
+    {
+        LOOP
+        if((cutl(i,j,k))%2==0  && (cutr(i,j,k))%2==0)
+        {
+        flag(i,j,k)=-1;
+        }
+}
 
     count=0;
     LOOP
     if(flag(i,j,k)>0)
     ++count;
 
-
-	cout<<"Number of active cells after geometry_z: "<<count<<endl;
-
+    cout<<"Number of active cells after geometry_z: "<<count<<endl;
 }

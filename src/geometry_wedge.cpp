@@ -26,10 +26,9 @@ Author: Hans Bihs
 
 void geometry::wedge(lexer *p, dive *a, int rank, int &ts, int &te, double **xyz)
 {
+    double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4,x5,y5,z5,x6,y6,z6;
 
-	double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4,x5,y5,z5,x6,y6,z6;
-
-	x1 = xyz[rank][0];
+    x1 = xyz[rank][0];
     y1 = xyz[rank][1];
     z1 = xyz[rank][2];
 
@@ -71,25 +70,7 @@ void geometry::wedge(lexer *p, dive *a, int rank, int &ts, int &te, double **xyz
     x6 = p->Xin(x6,y6);
     y6 = p->Yin(x6,y6);
 
-	ts=p->tricount;
-
-
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
-
-	p->tri_x[p->tricount][0] = x1;
-	p->tri_y[p->tricount][0] = y1;
-	p->tri_z[p->tricount][0] = z1;
-
-	p->tri_x[p->tricount][1] = x2;
-	p->tri_y[p->tricount][1] = y2;
-	p->tri_z[p->tricount][1] = z2;
-
-	p->tri_x[p->tricount][2] = x3;
-	p->tri_y[p->tricount][2] = y3;
-	p->tri_z[p->tricount][2] = z3;
-	++p->tricount;
+    ts=p->tricount;
 
 
     p->trivec_x[p->tricount] = 0.0;
@@ -104,10 +85,10 @@ void geometry::wedge(lexer *p, dive *a, int rank, int &ts, int &te, double **xyz
     p->tri_y[p->tricount][1] = y2;
     p->tri_z[p->tricount][1] = z2;
 
-	p->tri_x[p->tricount][2] = x5;
-	p->tri_y[p->tricount][2] = y5;
-	p->tri_z[p->tricount][2] = z5;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = x3;
+    p->tri_y[p->tricount][2] = y3;
+    p->tri_z[p->tricount][2] = z3;
+    ++p->tricount;
 
 
     p->trivec_x[p->tricount] = 0.0;
@@ -118,14 +99,32 @@ void geometry::wedge(lexer *p, dive *a, int rank, int &ts, int &te, double **xyz
     p->tri_y[p->tricount][0] = y1;
     p->tri_z[p->tricount][0] = z1;
 
-	p->tri_x[p->tricount][1] = x4;
-	p->tri_y[p->tricount][1] = y4;
-	p->tri_z[p->tricount][1] = z4;
+    p->tri_x[p->tricount][1] = x2;
+    p->tri_y[p->tricount][1] = y2;
+    p->tri_z[p->tricount][1] = z2;
 
-	p->tri_x[p->tricount][2] = x5;
-	p->tri_y[p->tricount][2] = y5;
-	p->tri_z[p->tricount][2] = z5;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = x5;
+    p->tri_y[p->tricount][2] = y5;
+    p->tri_z[p->tricount][2] = z5;
+    ++p->tricount;
+
+
+    p->trivec_x[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = 0.0;
+    p->trivec_z[p->tricount] = 0.0;
+
+    p->tri_x[p->tricount][0] = x1;
+    p->tri_y[p->tricount][0] = y1;
+    p->tri_z[p->tricount][0] = z1;
+
+    p->tri_x[p->tricount][1] = x4;
+    p->tri_y[p->tricount][1] = y4;
+    p->tri_z[p->tricount][1] = z4;
+
+    p->tri_x[p->tricount][2] = x5;
+    p->tri_y[p->tricount][2] = y5;
+    p->tri_z[p->tricount][2] = z5;
+    ++p->tricount;
 
 
 

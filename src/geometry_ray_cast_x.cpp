@@ -26,23 +26,18 @@ Author: Hans Bihs
 
 void geometry::ray_cast_x(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist)
 {
-	double ys,ye,zs,ze;
-	double Px,Py,Pz;
-	double Qx,Qy,Qz;
-	double Rx,Ry,Rz;
-	double Ax,Ay,Az;
-	double Bx,By,Bz;
-	double Cx,Cy,Cz;
-	double PQx,PQy,PQz;
-	double PAx,PAy,PAz;
-	double PBx,PBy,PBz;
-	double PCx,PCy,PCz;
-	double Mx,My,Mz;
-	int js,je,ks,ke;
-	int ir;
-	double u,v,w;
-	double denom;
-	int insidecheck;
+    double ys,ye,zs,ze;
+    double Px,Py,Pz;
+    double Qx,Qy,Qz;
+    double Rx;
+    double Ax,Ay,Az;
+    double Bx,By,Bz;
+    double Cx,Cy,Cz;
+    double PQx,PQy,PQz;
+    double Mx,My,Mz;
+    int js,je,ks,ke;
+    double u,v,w;
+    double denom;
     double psi = 1.0e-8*p->DXM;
 
 
@@ -110,22 +105,10 @@ void geometry::ray_cast_x(lexer* p, dive* a, int ts, int te, intfield &flag, fie
             PQy = Qy-Py;
             PQz = Qz-Pz;
 
-		PAx = Ax-Px;
-		PAy = Ay-Py;
-		PAz = Az-Pz;
-
-		PBx = Bx-Px;
-		PBy = By-Py;
-		PBz = Bz-Pz;
-
-		PCx = Cx-Px;
-		PCy = Cy-Py;
-		PCz = Cz-Pz;
-
-		// uvw
-		Mx = PQy*Pz - PQz*Py;
-		My = PQz*Px - PQx*Pz;
-		Mz = PQx*Py - PQy*Px;
+            // uvw
+            Mx = PQy*Pz - PQz*Py;
+            My = PQz*Px - PQx*Pz;
+            Mz = PQx*Py - PQy*Px;
 
 
             u = PQx*(Cy*Bz - Cz*By) + PQy*(Cz*Bx - Cx*Bz) + PQz*(Cx*By - Cy*Bx)
@@ -155,22 +138,20 @@ void geometry::ray_cast_x(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 
                 int distcheck=1;
 
+                if(Rx<p->XP[IP])
+                if(i>=0 && i<p->knox)
+                if(flag(i,j,k)<0 && flag(i-1,j,k)<0)
+                distcheck=0;
 
-            if(Rx<p->XP[IP])
-            if(i>=0 && i<p->knox)
-            if(flag(i,j,k)<0 && flag(i-1,j,k)<0)
-            distcheck=0;
+                if(Rx>=p->XP[IP])
+                if(i>=0 && i<p->knox)
+                if(flag(i,j,k)<0 && flag(i+1,j,k)<0)
+                distcheck=0;
 
-            if(Rx>=p->XP[IP])
-            if(i>=0 && i<p->knox)
-            if(flag(i,j,k)<0 && flag(i+1,j,k)<0)
-            distcheck=0;
-
-            if(distcheck==1)
-			for(i=0;i<p->knox;++i)
-			dist(i,j,k)=MIN(fabs(Rx-p->XP[IP]),dist(i,j,k));
-			}
-		}
-	}
-
+                if(distcheck==1)
+                for(i=0;i<p->knox;++i)
+                dist(i,j,k)=MIN(fabs(Rx-p->XP[IP]),dist(i,j,k));
+            }
+        }
+    }
 }
