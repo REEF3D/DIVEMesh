@@ -45,7 +45,7 @@ public:
     void fluvial_box_fill_segments(lexer*,dive*,int,int&,int&);
     void fluvial_box_v1(lexer*,dive*,int,int&,int&);
     void fluvial_box_v2(lexer*,dive*,int,int&,int&);
-    
+
 private:
     double xs,ys,zs,xe,ye,ze;
 	double L,G;
@@ -54,11 +54,11 @@ private:
     int is_count;
     int maxpt;
 
-    
+
     // fluvial box
     void fluvial_box_move(lexer*,dive*);
     void fluvial_box_extend(lexer*,dive*);
-    
+
     int countds;
     int numds;
     int ds_count;
@@ -71,7 +71,7 @@ private:
     int lastds;
     int fluvial_outflow_side;
     double box_xs,box_xe,box_ys,box_ye,box_zs,box_ze;
-    
+
     double nx,ny,norm,xc,yc,x1,y1,teta,ds,m,s;
 };
 
