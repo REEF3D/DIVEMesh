@@ -32,7 +32,3 @@ geometry::geometry(lexer *p, dive *a) : cutl(p),cutr(p),epsi(1.6)
 geometry::~geometry()
 {
 }
-
-void geometry::start(lexer* p, dive* a)
-{
-}
