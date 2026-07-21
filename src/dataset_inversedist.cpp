@@ -25,7 +25,7 @@ Author: Hans Bihs
 #include"lexer.h"
 
 double dataset::inverse_dist_2D(lexer *p, dive *a)
-{	
+{
     xc = p->XP[IP];
     yc = p->YP[JP];
 
@@ -37,9 +37,9 @@ double dataset::inverse_dist_2D(lexer *p, dive *a)
 
     for(n=0; n<p->D10; ++n)
     g += (inverse_dist_w(p)*p->D10_dataset[n]);
-	
-	g/=wsum;
-	
+
+    g/=wsum;
+
 
     return g;
 }
@@ -48,12 +48,12 @@ double dataset::inverse_dist_2D(lexer *p, dive *a)
 double dataset::inverse_dist_w(lexer *p)
 {
     dist = sqrt(pow(xc-p->D10_x[n],2.0) + pow(yc-p->D10_y[n],2.0));
-	
-	if(dist>p->D24 && p->D24>-1.0)
-	dist=0.0;
-		
+
+    if(dist>p->D24 && p->D24>-1.0)
+    dist=0.0;
+
     dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),p->D17);
-	
+
     return dist;
 }
 
