@@ -37,38 +37,13 @@ class porous : public geometry
 {
 public:
     porous(lexer*,dive*);
-    virtual ~porous();
+    virtual ~porous() = default;
 
-    virtual void start(lexer*,dive*);
-    void gcb_estimate(lexer*,dive*);
+    void start(lexer*,dive*);
 
 private:
     field porous_dist;
     field2d porousbed;
-
-    double xs,ys,zs,xe,ye,ze;
-    double L,G;
-    double ***is_R;
-    int **is_num;
-    int is_count;
-    int maxpt;
-
-    // fluvial box
-    int countds;
-    int numds;
-    int ds_count;
-    double dangle,length;
-    double *xl,*yl,*xr,*yr;
-    double x0; // add origin afterwards
-    double y0; // add origin
-    double phi0;
-    double deltax,deltay;
-    int lastds;
-    int fluvial_outflow_side;
-    double box_xs,box_xe,box_ys,box_ye,box_zs,box_ze;
-
-    double nx,ny,norm,xc,yc,x1,y1,teta,ds,m,s;
 };
 
 #endif
-
