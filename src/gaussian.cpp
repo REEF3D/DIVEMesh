@@ -23,27 +23,27 @@ Author: Hans Bihs
 #include "gaussian.h"
 #include "dive.h"
 #include "lexer.h"
+#include <algorithm>
+#include <cmath>
 
 gaussian::gaussian(lexer *p, dive *a)
 {
-    sigma = 5.0*p->DXM;
+    const double sigma = 5.0*p->DXM;
 
     cutoff = 3.0*sigma;
-}
 
-gaussian::~gaussian()
-{
+    sigmaP2M2 = 2.0*sigma*sigma;
 }
 
 void gaussian::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
 {
     setup(p,a,Fx,Fy,Fz,XC,YC,kx,ky);
 
-    counter=0;
-    for(i=0;i<kx;++i)
-    for(j=0;j<ky;++j)
+    int counter=0;
+    for(int i=0; i<kx; ++i)
+    for(int j=0; j<ky; ++j)
     {
-        f[i+3][j+3] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
+        f[i+3][j+3] = gxy(p,i,j,Fx,Fy,Fz,XC,YC);
         ++counter;
 
         if(counter%1000==0)
@@ -51,25 +51,30 @@ void gaussian::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, doubl
     }
 }
 
-double gaussian::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
+double gaussian::gxy(lexer *p, int i, int j, double *Fx, double *Fy, double *Fz, double *XC, double *YC)
 {
-    xc = XC[IP];
-    yc = YC[JP];
+    constexpr int radius = 3;
 
-    g=0.0;
-    wsum=0.0;
+    const double xc = XC[IP];
+    const double yc = YC[JP];
 
-    int radius=3;
+    double g = 0.0;
+    double wsum = 0.0;
+    double zmean = 0.0;
+    int cp = 0;
 
-    double zmean=0.0;
-    cp=0;
+    double w;
+    double rx, ry, r2;
+    int is,ie,js,je;
+    int r,s,t,q;
+    int count;
+
     do{
-        is=MAX(i-dij-cp,-radius);
-        ie=MIN(i+dij+cp,Nx-radius);
+        is = std::max(i-dij-cp,-radius);
+        ie = std::min(i+dij+cp,Nx-radius);
 
-        js=MAX(j-dij-cp,-radius);
-        je=MIN(j+dij+cp,Ny-radius);
-
+        js = std::max(j-dij-cp,-radius);
+        je = std::min(j+dij+cp,Ny-radius);
 
         zmean=0.0;
         count=0;
@@ -81,17 +86,15 @@ double gaussian::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
                 {
                     q = ptid[r+dd][s+dd][t];
 
-                    dist = sqrt(pow(xc-Fx[q],2.0) + pow(yc-Fy[q],2.0));
-
                     rx = xc-Fx[q];
                     ry = yc-Fy[q];
                     r2 = rx*rx + ry*ry;
 
                     //if(r2<cutoff)
                     //{
-                    w = exp(-r2 / (2.0*sigma*sigma));
+                    w = exp(-r2 / sigmaP2M2);
 
-                    wsum+=w;
+                    wsum += w;
 
                         g += w*Fz[q];
 
@@ -99,22 +102,20 @@ double gaussian::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
                         zmean+=Fz[q];
                     //}
                 }
-
-
             }
-
         }
-        if(count>0)
-        zmean=zmean/double(count);
 
-    cp+=2;//*(count+1);
-    }while(count<MIN(p->G18,p->Np));
+        if(count>0)
+        zmean = zmean/double(count);
+
+        cp += 2;
+    }
+    while(count<std::min(p->G18,p->Np));
 
     if(wsum>0.0)
-    g/=wsum;
-
-    if(wsum==0.0)
-    g/=1.0e20;
+    g /= wsum;
+    else if(wsum==0.0)
+    g /= 1.0e20;
 
     return g;
 }
