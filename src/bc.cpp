@@ -22,24 +22,24 @@ Author: Hans Bihs
 
 #include"bc.h"
 
-bc::bc()
-{
-}
-
-bc::~bc()
-{
-}
+using namespace std;
 
 void bc::makebc(lexer* p, dive* a)
 {
+    // Boundary Conditions
+    // 1 = inflow, 2 = outflow,
+    // 3 = symmetry,
+    // 6 = wave generation, 7 = numerical beach
+    // 21 = wall
+
     cout<<"bc";
 
-    inflow = p->C11;
-    right = p->C12;
-    left = p->C13;
-    outflow = p->C14;
-    bottom = p->C15;
-    top = p->C16;
+    int inflow = p->C11;
+    int right = p->C12;
+    int left = p->C13;
+    int outflow = p->C14;
+    int bottom = p->C15;
+    int top = p->C16;
 
     if(p->knoy==1)
     {
@@ -70,6 +70,4 @@ void bc::makebc(lexer* p, dive* a)
     }
 
     cout<<"."<<endl;
-
 }
-

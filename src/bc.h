@@ -23,27 +23,16 @@ Author: Hans Bihs
 #ifndef BC_H_
 #define BC_H_
 
-#include<iostream>
-#include"field.h"
 #include"lexer.h"
-#include"resize.h"
 #include"dive.h"
-
-using namespace std;
 
 class bc : public increment
 {
 public:
-
-    bc();
-    virtual ~bc();
+    bc() = default;
+    virtual ~bc() = default;
 
     void makebc(lexer*,dive*);
-
-    int top, bottom;
-    int inflow,outflow;
-    int left, right;
 };
 
 #endif
-
