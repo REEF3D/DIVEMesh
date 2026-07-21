@@ -36,7 +36,7 @@ void hdc::read_header(lexer *p, dive *a)
     if(flag_all[q]==1)
     {
         // filename
-        filename_in_header(p,a,q);
+        filename_in_header(p,q);
 
         // read header
         header.open(name, ios::binary);
@@ -120,5 +120,4 @@ void hdc::read_header(lexer *p, dive *a)
 
         header.close();
     }
-
 }

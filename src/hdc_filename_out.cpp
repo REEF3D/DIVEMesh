@@ -23,31 +23,53 @@ Author: Hans Bihs
 #include"hdc.h"
 #include"lexer.h"
 
-void hdc::filename_single_out(lexer *p, dive *a,int num, int rank)
+auto out_single = [](char* name, int size, const char* model, int num, int rank)
 {
-    if(p->H10!=44)
-    sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-%08i-%06i.r3d",num,rank+1);
+    snprintf(name,size,"./REEF3D_%s_HDC_Input/REEF3D-HDC-Input-%08i-%06i.r3d",model,num,rank+1);
+};
 
+auto out_continuous = [](char* name, int size, const char* model, int rank)
+{
+    snprintf(name,size,"./REEF3D_%s_HDC_Input/REEF3D-HDC-Input-%06i.r3d",model,rank+1);
+};
+
+auto out_header = [](char* name, int size, const char* model, int rank)
+{
+    snprintf(name,size,"./REEF3D_%s_HDC_Input/REEF3D-HDC-Input-Header-%06i.r3d",model,rank+1);
+};
+
+void hdc::filename_out_single(lexer *p, int num, int rank)
+{
     if(p->H10==44)
-    sprintf(name,"./REEF3D_FNPF_HDC_Input/REEF3D-HDC-Input-%08i-%06i.r3d",num,rank+1);
+    {
+        out_single(name,sizeof(name),"FNPF",num,rank);
+    }
+    else
+    {
+        out_single(name,sizeof(name),"CFD",num,rank);
+    }
 }
 
-void hdc::filename_continuous_out(lexer *p, dive *a, int rank)
+void hdc::filename_out_continuous(lexer *p, int rank)
 {
-    if(p->H10!=44)
-	sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-%06i.r3d",rank+1);
-
     if(p->H10==44)
-	sprintf(name,"./REEF3D_FNPF_HDC_Input/REEF3D-HDC-Input-%06i.r3d",rank+1);
+    {
+        out_continuous(name,sizeof(name),"FNPF",rank);
+    }
+    else
+    {
+        out_continuous(name,sizeof(name),"CFD",rank);
+    }
 }
 
-void hdc::filename_out_header(lexer *p, dive *a, int rank)
+void hdc::filename_out_header(lexer *p, int rank)
 {
-    if(p->H10!=44)
-	sprintf(name,"./REEF3D_CFD_HDC_Input/REEF3D-HDC-Input-Header-%06i.r3d",rank+1);
-
     if(p->H10==44)
-	sprintf(name,"./REEF3D_FNPF_HDC_Input/REEF3D-HDC-Input-Header-%06i.r3d",rank+1);
+    {
+        out_header(name,sizeof(name),"FNPF",rank);
+    }
+    else
+    {
+        out_header(name,sizeof(name),"CFD",rank);
+    }
 }
-
-

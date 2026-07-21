@@ -19,7 +19,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 Author: Hans Bihs
 --------------------------------------------------------------------*/
-#include"hdc.h"
+
+#include"hdc.h"
 #include"lexer.h"
 #include"dive.h"
 #include<iostream>
@@ -34,10 +35,10 @@ void hdc::write_fnpf(lexer *p, dive *a)
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {
-            // Open single file
-            if(file_conti==1)
-            {
-            filename_single_out(p,a,n,count);
+        // Open single file
+        if(file_conti==1)
+        {
+            filename_out_single(p,n,count);
             wfile[count].open(name, ios::binary);
         }
 
@@ -50,44 +51,44 @@ void hdc::write_fnpf(lexer *p, dive *a)
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=float(eta[i][j]);
-        //cout<<"ETA: "<<ffn<<endl;
-        wfile[count].write((char*)&ffn, sizeof(float));
+            ffn=float(eta[i][j]);
+            wfile[count].write((char*)&ffn, sizeof(float));
         }
 
         if(p->H10==44)
-        for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=float(Fifsf[i][j]);
-        wfile[count].write((char*)&ffn, sizeof(float));
+            for(i=is[aa]; i<ie[aa]; ++i)
+            for(j=js[bb]; j<je[bb]; ++j)
+            {
+                ffn=float(Fifsf[i][j]);
+                wfile[count].write((char*)&ffn, sizeof(float));
+            }
         }
+        else if(p->H10==4)
+        {
+            for(i=is[aa]; i<ie[aa]; ++i)
+            for(j=js[bb]; j<je[bb]; ++j)
+            for(k=0; k<NGz; ++k)
+            {
+                ffn=float(U[i][j][k]);
+                wfile[count].write((char*)&ffn, sizeof(float));
+            }
 
-        if(p->H10==4)
-        {
-        for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j<je[bb]; ++j)
-        for(k=0; k<NGz; ++k)
-        {
-        ffn=float(U[i][j][k]);
-        wfile[count].write((char*)&ffn, sizeof(float));
-        }
+            for(i=is[aa]; i<ie[aa]; ++i)
+            for(j=js[bb]; j<je[bb]; ++j)
+            for(k=0; k<NGz; ++k)
+            {
+                ffn=float(V[i][j][k]);
+                wfile[count].write((char*)&ffn, sizeof(float));
+            }
 
-        for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j<je[bb]; ++j)
-        for(k=0; k<NGz; ++k)
-        {
-        ffn=float(V[i][j][k]);
-        wfile[count].write((char*)&ffn, sizeof(float));
-        }
-
-        for(i=is[aa]; i<ie[aa]; ++i)
-        for(j=js[bb]; j<je[bb]; ++j)
-        for(k=0; k<NGz; ++k)
-        {
-        ffn=float(W[i][j][k]);
-        wfile[count].write((char*)&ffn, sizeof(float));
-        }
+            for(i=is[aa]; i<ie[aa]; ++i)
+            for(j=js[bb]; j<je[bb]; ++j)
+            for(k=0; k<NGz; ++k)
+            {
+                ffn=float(W[i][j][k]);
+                wfile[count].write((char*)&ffn, sizeof(float));
+            }
         }
 
         ++count;
@@ -98,7 +99,3 @@ void hdc::write_fnpf(lexer *p, dive *a)
     for(q=0;q<p->M10;++q)
     wfile[q].close();
 }
-
-
-
-

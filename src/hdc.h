@@ -34,52 +34,37 @@ using namespace std;
 class hdc : public increment
 {
 public:
-    hdc(lexer*,dive*);
+    hdc(lexer*, dive*);
     virtual ~hdc();
 
-    virtual void start(lexer*,dive*);
+    void start(lexer*, dive*);
 
     void allocate(lexer*, dive*);
 
     void read(lexer*, dive*);
     void read_mainheader(lexer*, dive*);
     void read_header(lexer*, dive*);
-    void read_result(lexer*, dive*);
 
-    void filename_single_in(lexer*, dive*,int,int);
-    void filename_continuous_in(lexer*, dive*,int);
-    void filename_in_header(lexer*, dive*,int);
+    void filename_in_single(lexer*, int, int);
+    void filename_in_continuous(lexer*, int);
+    void filename_in_header(lexer*, int);
 
-    void filename_sflow_single_in(lexer*, dive*,int,int);
-    void filename_sflow_continuous_in(lexer*, dive*,int);
-    void filename_sflow_in_header(lexer*, dive*,int);
+    void filename_out_single(lexer*, int, int);
+    void filename_out_continuous(lexer*, int);
+    void filename_out_header(lexer*, int);
 
-    void filename_fnpf_single_in(lexer*, dive*,int,int);
-    void filename_fnpf_continuous_in(lexer*, dive*,int);
-    void filename_fnpf_in_header(lexer*, dive*,int);
-
-    void filename_nhflow_single_in(lexer*, dive*,int,int);
-    void filename_nhflow_continuous_in(lexer*, dive*,int);
-    void filename_nhflow_in_header(lexer*, dive*,int);
-
-    void filename_single_out(lexer*, dive*,int,int);
-    void filename_continuous_out(lexer*, dive*,int);
-    void filename_out_header(lexer*, dive*,int);
-
-    void merge(lexer*,dive*);
-    void decomp(lexer*,dive*);
-	void write(lexer*,dive*);
-    void write_header(lexer*,dive*);
-    void filename_out(lexer*, dive*);
+    void decomp(lexer*, dive*);
+    void write(lexer*, dive*);
+    void write_header(lexer*, dive*);
 
     void read_sflow(lexer*, dive*);
-    void write_sflow(lexer*,dive*);
+    void write_sflow(lexer*, dive*);
 
     void read_fnpf(lexer*, dive*);
-    void write_fnpf(lexer*,dive*);
+    void write_fnpf(lexer*, dive*);
 
     void read_nhflow(lexer*, dive*);
-    void write_nhflow(lexer*,dive*);
+    void write_nhflow(lexer*, dive*);
 
 private:
     int iin;
@@ -94,12 +79,11 @@ private:
     int file_version,file_type,file_conti;
     double SWL;
 
-
-	double g,wsum,dist;
+    double g,wsum,dist;
     double xc,yc;
 
     ifstream *result;
-    ofstream *wfile,*testfile;
+    ofstream *wfile;
 
     // arrays
     double *orig_x, *orig_y, *orig_z;
@@ -116,5 +100,3 @@ private:
 };
 
 #endif
-
-
