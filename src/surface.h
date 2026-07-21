@@ -35,26 +35,20 @@ using namespace std;
 class surface : public increment
 {
 public:
-
     surface();
     virtual ~surface();
     void start(lexer*,dive*);
-
-    void makesurf(lexer*,dive*);
-    void makedist(lexer*,dive*);
-	void mem_alloc(lexer*,dive*);
-    void make_solidsurf(lexer*,dive*);
-    void makesurfsolid(lexer*,dive*);
-    
-    
-    void mem_alloc_plate(lexer*,dive*);
-    void makesurf_plate(lexer*,dive*);
     void gcb_estimate(lexer*,dive*);
-
 
 private:
 
-    
+    void makesurf(lexer*,dive*);
+    void mem_alloc(lexer*,dive*);
+    void makesurfsolid(lexer*,dive*);
+
+    void mem_alloc_plate(lexer*,dive*);
+    void makesurf_plate(lexer*,dive*);
+
     int surfnum;
 };
 
