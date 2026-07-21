@@ -172,7 +172,6 @@
         <File Name="surface_gcbest.cpp"/>
         <File Name="surface_plate.cpp"/>
         <File Name="surface.cpp"/>
-        <File Name="surface_dir.cpp"/>
         <File Name="surface_solid.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Slice">
@@ -292,7 +291,6 @@
       <VirtualDirectory Name="Kriging">
         <File Name="kriging_ini.cpp"/>
         <File Name="kriging_solve.cpp"/>
-        <File Name="kriging_semivariogram.cpp"/>
         <File Name="kriging_rearrange.cpp"/>
         <File Name="kriging.cpp"/>
       </VirtualDirectory>
