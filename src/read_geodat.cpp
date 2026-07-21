@@ -25,7 +25,7 @@ void lexer::read_geodat()
 {
 	int countG10=0;
 
-// read geodat
+    // read geodat
 	if(G10>0)
 	{
         cout<<"open geo.dat and count entries"<<endl;
@@ -51,9 +51,9 @@ void lexer::read_geodat()
         G10_y = new double[countG10];
         G10_z = new double[countG10];
 
-        
+
         cout<<"read geo.dat"<<endl;
-        
+
         geo.open("geo.dat", ios_base::in);
 
         countG10=0;
@@ -68,9 +68,9 @@ void lexer::read_geodat()
         }
 
         geo.close();
-		
+
 		if(G13>0)
-		{   
+		{
             xmin=+1.0e19;
             ymin=+1.0e19;
             zmin=+1.0e19;
@@ -81,34 +81,34 @@ void lexer::read_geodat()
 
             for(n=0;n<G10;++n)
             {
-            xmax=MAX(xmax,G12_x*G10_x[n]);
-            xmin=MIN(xmin,G12_x*G10_x[n]);
-            ymax=MAX(ymax,G12_y*G10_y[n]);
-            ymin=MIN(ymin,G12_y*G10_y[n]);
-            zmax=MAX(zmax,G12_z*G10_z[n]);
-            zmin=MIN(zmin,G12_z*G10_z[n]);
+                xmax=MAX(xmax,G12_x*G10_x[n]);
+                xmin=MIN(xmin,G12_x*G10_x[n]);
+                ymax=MAX(ymax,G12_y*G10_y[n]);
+                ymin=MIN(ymin,G12_y*G10_y[n]);
+                zmax=MAX(zmax,G12_z*G10_z[n]);
+                zmin=MIN(zmin,G12_z*G10_z[n]);
             }
-            
+
             if(G14==0)
             {
-            G14_x = xmin + 0.5*(xmax-xmin);
-            G14_y = ymin + 0.5*(ymax-ymin);
+                G14_x = xmin + 0.5*(xmax-xmin);
+                G14_y = ymin + 0.5*(ymax-ymin);
             }
-            
+
 			// rotate geodat points
 			G13_phi	 = G13_phi*PI/180.0;
-			
+
 			double xval,yval;
 			for(n=0;n<G10;++n)
 			{
-			xval = G14_x + (G10_x[n]-G14_x)*cos(G13_phi) - (G10_y[n]-G14_y)*sin(G13_phi);
-			yval = G14_y + (G10_x[n]-G14_x)*sin(G13_phi) + (G10_y[n]-G14_y)*cos(G13_phi);
+                xval = G14_x + (G10_x[n]-G14_x)*cos(G13_phi) - (G10_y[n]-G14_y)*sin(G13_phi);
+                yval = G14_y + (G10_x[n]-G14_x)*sin(G13_phi) + (G10_y[n]-G14_y)*cos(G13_phi);
 
-			G10_x[n] = xval;
-			G10_y[n] = yval;
+                G10_x[n] = xval;
+                G10_y[n] = yval;
 			}
 		}
-        
+
 
         if(G20>0)
         {
@@ -122,25 +122,25 @@ void lexer::read_geodat()
 
             for(n=0;n<G10;++n)
             {
-            xmax=MAX(xmax,G12_x*G10_x[n]);
-            xmin=MIN(xmin,G12_x*G10_x[n]);
-            ymax=MAX(ymax,G12_y*G10_y[n]);
-            ymin=MIN(ymin,G12_y*G10_y[n]);
-            zmax=MAX(zmax,G12_z*G10_z[n]);
-            zmin=MIN(zmin,G12_z*G10_z[n]);
+                xmax=MAX(xmax,G12_x*G10_x[n]);
+                xmin=MIN(xmin,G12_x*G10_x[n]);
+                ymax=MAX(ymax,G12_y*G10_y[n]);
+                ymin=MIN(ymin,G12_y*G10_y[n]);
+                zmax=MAX(zmax,G12_z*G10_z[n]);
+                zmin=MIN(zmin,G12_z*G10_z[n]);
             }
 
             if(B10==0)
             {
-            B10=1;
-            B10_xs = new double[B10];
-            B10_xe = new double[B10];
+                B10=1;
+                B10_xs = new double[B10];
+                B10_xe = new double[B10];
 
-            B10_ys= new double[B10];
-            B10_ye= new double[B10];
+                B10_ys= new double[B10];
+                B10_ye= new double[B10];
 
-            B10_zs = new double[B10];
-            B10_ze = new double[B10];
+                B10_zs = new double[B10];
+                B10_ze = new double[B10];
             }
 
             B10_xs[0] = xmin-G21_x;
@@ -159,9 +159,9 @@ void lexer::read_geodat()
             {
                 for(n=0;n<G10;++n)
                 {
-                G10_x[n]-=xmin;
-                G10_y[n]-=ymin;
-                G10_z[n]-=zmin;
+                    G10_x[n]-=xmin;
+                    G10_y[n]-=ymin;
+                    G10_z[n]-=zmin;
                 }
 
                 B10_xs[0] -= xmin;
@@ -174,19 +174,19 @@ void lexer::read_geodat()
                 B10_ze[0] -= zmin;
             }
         }
-        
+
 
          double Gx,Gy;
         for(n=0;n<G10;++n)
         {
-        Gx = Xin(G10_x[n],G10_y[n]);
-        Gy = Yin(G10_x[n],G10_y[n]);
-        
-        G10_x[n] = Gx;
-        G10_y[n] = Gy;
+            Gx = Xin(G10_x[n],G10_y[n]);
+            Gy = Yin(G10_x[n],G10_y[n]);
+
+            G10_x[n] = Gx;
+            G10_y[n] = Gy;
         }
 
-        
-    
+
+
 	}
 }

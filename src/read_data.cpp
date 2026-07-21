@@ -27,7 +27,7 @@ void lexer::read_data()
 	int countD10=0;
 	int count=0;
 	double val1,val2,val3;
-// read geodat
+    // read geodat
 	if(D10>0)
 	{
         double val;
@@ -36,16 +36,16 @@ void lexer::read_data()
 
         while(!dataset.eof())
         {
-			
+
         if(D19==0)
         dataset>>val>>val>>val;
 
         if(D19==1)
         dataset>>cval>>val>>val>>val;
-		
+
 		if(count%D13==0)
         ++countD10;
-		
+
 		++count;
         }
         D10=countD10;
@@ -58,7 +58,7 @@ void lexer::read_data()
 
 
         dataset.open("gmdataset.dat", ios_base::in);
-		
+
 		count=0;
         countD10=0;
         while(!dataset.eof())
@@ -71,18 +71,18 @@ void lexer::read_data()
 
 			if(count%D13==0)
 			{
-			D10_x[countD10]=val1;
-			D10_y[countD10]=val2;
-			D10_dataset[countD10]=val3;
+                D10_x[countD10]=val1;
+                D10_y[countD10]=val2;
+                D10_dataset[countD10]=val3;
 
-			++countD10;
+                ++countD10;
 			}
-			
-		++count;
+
+		    ++count;
         }
 
         dataset.close();
 
-        
+
 	}
 }
