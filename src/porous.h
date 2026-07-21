@@ -40,20 +40,20 @@ public:
     virtual ~porous();
 
     virtual void start(lexer*,dive*);
-	void gcb_estimate(lexer*,dive*);
-    
+    void gcb_estimate(lexer*,dive*);
+
 private:
     field porous_dist;
     field2d porousbed;
-    
+
     double xs,ys,zs,xe,ye,ze;
-	double L,G;
+    double L,G;
     double ***is_R;
     int **is_num;
     int is_count;
     int maxpt;
-    
-    // fluvial box 
+
+    // fluvial box
     int countds;
     int numds;
     int ds_count;
@@ -66,7 +66,7 @@ private:
     int lastds;
     int fluvial_outflow_side;
     double box_xs,box_xe,box_ys,box_ye,box_zs,box_ze;
-    
+
     double nx,ny,norm,xc,yc,x1,y1,teta,ds,m,s;
 };
 
