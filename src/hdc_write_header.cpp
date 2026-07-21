@@ -39,7 +39,7 @@ void hdc::write_header(lexer *p, dive *a)
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
     {
-        filename_out_header(p,a,count);
+        filename_out_header(p,count);
         header.open(name, ios::binary);
 
         // file_version
@@ -132,7 +132,6 @@ void hdc::write_header(lexer *p, dive *a)
             break;
         }
 
-
         iin=qn;
         header.write((char*)&iin, sizeof(int));
 
@@ -148,6 +147,4 @@ void hdc::write_header(lexer *p, dive *a)
 
         header.close();
     }
-
 }
-    

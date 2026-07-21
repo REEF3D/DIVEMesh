@@ -36,8 +36,8 @@ void hdc::read_sflow(lexer *p, dive *a)
         // Open Single File
         if(file_conti==1)
         {
-        filename_single_in(p,a,n,q);
-        result[q].open(name, ios::binary);
+            filename_in_single(p,n,q);
+            result[q].open(name, ios::binary);
         }
 
         // header section
@@ -93,4 +93,3 @@ void hdc::read_sflow(lexer *p, dive *a)
     for(q=0; q<numprocs; ++q)
     result[q].close();
 }
-

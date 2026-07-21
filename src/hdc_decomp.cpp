@@ -32,7 +32,6 @@ void hdc::decomp(lexer *p, dive *a)
 {
     cout<<"HDC decomp "<<endl;
 
-    int istart,iend,jstart,jend;
     double xstart,xend,ystart,yend;
 
     p->Iarray(is,a->mx+2);
@@ -58,18 +57,15 @@ void hdc::decomp(lexer *p, dive *a)
         xstart = a->xorig[aa];
         xend  = a->xorig[aa+1];
 
-
         for(i=0;i<NGx;++i)
         {
-            if(i<NGx-1)
-            if(X[i+1]>=xstart && X[i]<xstart)
+            if(i<NGx-1 && X[i+1]>=xstart && X[i]<xstart)
             {
                 is[aa] = i;
                 xs[aa] = X[i];
             }
 
-            if(i>1)
-            if((X[i]>=xend && X[i-1]<xend))
+            if(i>1 && X[i]>=xend && X[i-1]<xend)
             {
                 ie[aa] = i+1;
                 xe[aa] = X[i];
@@ -77,48 +73,47 @@ void hdc::decomp(lexer *p, dive *a)
 
             if((i==NGx-1 && X[i]<xend && X[i]>xstart))
             {
-            ie[aa] = i+1;
-            xe[aa] = X[i];
+                ie[aa] = i+1;
+                xe[aa] = X[i];
             }
         }
     }
-    if(jdir==1)
+
     for(bb=0;bb<a->my;++bb)
     {
-        ystart = a->yorig[bb];
-        yend = a->yorig[bb+1];
-
-        for(j=0;j<NGy;++j)
+        if(jdir==1)
         {
-            if(j<NGy-1)
-            if(Y[j+1]>=ystart && Y[j]<ystart)
-            {
-            js[bb] = j;
-            ys[bb] = Y[j];
-            }
+            ystart = a->yorig[bb];
+            yend = a->yorig[bb+1];
 
-            if(j>1)
-            if(Y[j]>=yend && Y[j-1]<yend)
+            for(j=0;j<NGy;++j)
             {
-            je[bb] = j+1;
-            ye[bb] = Y[j];
-            }
+                if(j<NGy-1 && Y[j+1]>=ystart && Y[j]<ystart)
+                {
+                    js[bb] = j;
+                    ys[bb] = Y[j];
+                }
 
-            if((j==NGy-1 && Y[j]<yend && Y[j]>ystart))
-            {
-            je[bb] = j+1;
-            ye[bb] = Y[j];
+                if(j>1 && Y[j]>=yend && Y[j-1]<yend)
+                {
+                    je[bb] = j+1;
+                    ye[bb] = Y[j];
+                }
+
+                if((j==NGy-1 && Y[j]<yend && Y[j]>ystart))
+                {
+                    je[bb] = j+1;
+                    ye[bb] = Y[j];
+                }
             }
         }
-    }
+        else if(jdir==0)
+        {
+            js[bb] = 0;
+            ys[bb] = Y[0];
 
-    if(jdir==0)
-    for(bb=0;bb<a->my;++bb)
-    {
-    js[bb] = 0;
-    ys[bb] = Y[0];
-
-    je[bb] = 1;
-    ye[bb] = Y[0];
+            je[bb] = 1;
+            ye[bb] = Y[0];
+        }
     }
 }

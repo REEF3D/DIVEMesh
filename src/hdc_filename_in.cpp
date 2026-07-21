@@ -23,89 +23,65 @@ Author: Hans Bihs
 #include"hdc.h"
 #include"lexer.h"
 
-void hdc::filename_single_in(lexer *p, dive *a,int num, int rank)
+auto in_single = [] (char *name, int size, const char *model, int num, int rank)
+{
+    snprintf(name,size,"./REEF3D_%s_STATE/REEF3D-%s-State-%08i-%06i.r3d",model,model,num,rank+1);
+};
+
+auto in_continuous = [] (char *name, int size, const char *model, int rank)
+{
+    snprintf(name,size,"./REEF3D_%s_STATE/REEF3D-%s-State-%06i.r3d",model,model,rank+1);
+};
+
+auto in_header = [] (char *name, int size, const char *model, int rank)
+{
+    snprintf(name,size,"./REEF3D_%s_STATE/REEF3D-%s-State-Header-%06i.r3d",model,model,rank+1);
+};
+
+void hdc::filename_in_single(lexer *p, int num, int rank)
 {
     if(p->H10==2)
-    filename_sflow_single_in(p,a,num,rank);
-
-    if(p->H10==4 || p->H10==44)
-    filename_fnpf_single_in(p,a,num,rank);
-
-    if(p->H10==5)
-    filename_nhflow_single_in(p,a,num,rank);
+    {
+        in_single(name, sizeof(name), "SFLOW", num, rank);
+    }
+    else if(p->H10==4 || p->H10==44)
+    {
+        in_single(name, sizeof(name), "FNPF", num, rank);
+    }
+    else if(p->H10==5)
+    {
+        in_single(name, sizeof(name), "NHFLOW", num, rank);
+    }
 }
 
-void hdc::filename_continuous_in(lexer *p, dive *a, int rank)
+void hdc::filename_in_continuous(lexer *p, int rank)
 {
     if(p->H10==2)
-    filename_sflow_continuous_in(p,a,rank);
-
-    if(p->H10==4 || p->H10==44)
-    filename_fnpf_continuous_in(p,a,rank);
-
-    if(p->H10==5)
-    filename_nhflow_continuous_in(p,a,rank);
+    {
+        in_continuous(name, sizeof(name), "SFLOW", rank);
+    }
+    else if(p->H10==4 || p->H10==44)
+    {
+        in_continuous(name,sizeof(name), "FNPF", rank);
+    }
+    else if(p->H10==5)
+    {
+        in_continuous(name, sizeof(name), "NHFLOW", rank);
+    }
 }
 
-void hdc::filename_in_header(lexer *p, dive *a,int rank)
+void hdc::filename_in_header(lexer *p, int rank)
 {
     if(p->H10==2)
-    filename_sflow_in_header(p,a,rank);
-
-    if(p->H10==4 || p->H10==44)
-    filename_fnpf_in_header(p,a,rank);
-
-    if(p->H10==5)
-    filename_nhflow_in_header(p,a,rank);
-}
-
-// -----------------------------------------
-
-void hdc::filename_sflow_single_in(lexer *p, dive *a,int num, int rank)
-{
-	sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D_SFLOW-State-%08i-%06i.r3d",num,rank+1);
-}
-
-void hdc::filename_sflow_continuous_in(lexer *p, dive *a, int rank)
-{
-	sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D_SFLOW-State-%06i.r3d",rank+1);
-}
-
-void hdc::filename_sflow_in_header(lexer *p, dive *a,int rank)
-{
-    sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D-SFLOW-State-Header-%06i.r3d",rank+1);
-}
-
-// -----------------------------------------
-
-void hdc::filename_fnpf_single_in(lexer *p, dive *a,int num, int rank)
-{
-	sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-%08i-%06i.r3d",num,rank+1);
-}
-
-void hdc::filename_fnpf_continuous_in(lexer *p, dive *a, int rank)
-{
-	sprintf(name,"./REEF3D_FNPF_STATE/REEF3D_FNPF-State-%06i.r3d",rank+1);
-}
-
-void hdc::filename_fnpf_in_header(lexer *p, dive *a,int rank)
-{
-    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF-State-Header-%06i.r3d",rank+1);
-}
-
-// -----------------------------------------
-
-void hdc::filename_nhflow_single_in(lexer *p, dive *a,int num, int rank)
-{
-	sprintf(name,"./REEF3D_NHFLOW_STATE/REEF3D_NHFLOW-State-%08i-%06i.r3d",num,rank+1);
-}
-
-void hdc::filename_nhflow_continuous_in(lexer *p, dive *a, int rank)
-{
-	sprintf(name,"./REEF3D_NHFLOW_STATE/REEF3D_NHFLOW-State-%06i.r3d",rank+1);
-}
-
-void hdc::filename_nhflow_in_header(lexer *p, dive *a,int rank)
-{
-    sprintf(name,"./REEF3D_NHFLOW_STATE/REEF3D-NHFLOW-State-Header-%06i.r3d",rank+1);
+    {
+        in_header(name, sizeof(name), "SFLOW", rank);
+    }
+    else if(p->H10==4 || p->H10==44)
+    {
+        in_header(name, sizeof(name), "FNPF", rank);
+    }
+    else if(p->H10==5)
+    {
+        in_header(name, sizeof(name), "NHFLOW", rank);
+    }
 }
