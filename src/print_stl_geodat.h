@@ -32,23 +32,13 @@ class dive;
 
 using namespace std;
 
-class print_stl_geodat :  public increment
+class print_stl_geodat : public increment
 {
-
 public:
-	print_stl_geodat(lexer*,dive*);
-	virtual ~print_stl_geodat();
+    print_stl_geodat(lexer*,dive*);
+    virtual ~print_stl_geodat();
 
-	void print_geo(lexer*,dive*);
-
-private:
-
-    char name[100],pname[100],epsvar[100];
-    int n,iin,offset[100];
-    float ffn;
-    double ddn;
+    void print_geo(lexer*,dive*);
 };
 
 #endif
-
-
