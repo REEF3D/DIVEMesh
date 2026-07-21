@@ -33,15 +33,11 @@ void driver::analytics(lexer *p, dive *a)
 
     nugout.open("./DIVEMesh_Log/DIVEMesh-Non-Uniform-Mesh.txt");
 
-
-	// Number of Cells
+    // Number of Cells
 
     int count=0;
 
-
-
-
-	// Min/Max cell size and position
+    // Min/Max cell size and position
 
     double dx_min, dx_max, dy_min, dy_max, dz_min, dz_max;
     double i_min, i_max, j_min, j_max, k_min, k_max;
@@ -96,15 +92,9 @@ void driver::analytics(lexer *p, dive *a)
     }
 
     nugout<<"Min/Max Cell Size:"<<endl;
-	nugout<<"dx = "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
-	nugout<<"dy = "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
-	nugout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;
-/*
-    cout<<"Min/Max Cell Size:"<<endl;
-	cout<<"dx = "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
-	cout<<"dy = "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
-	cout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;
-*/
+    nugout<<"dx = "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
+    nugout<<"dy = "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
+    nugout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;
 
     // Min/Max Aspect Ratio
 
@@ -148,16 +138,9 @@ void driver::analytics(lexer *p, dive *a)
     }
 
     nugout<<"\nMax Cell Ratio:"<<endl;
-	nugout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
-	nugout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
-	nugout<<"z "<<ratioz_max<<" at "<<k_max<<endl;
-
-/*
-    cout<<"\nMax Cell Ratio:"<<endl;
-	cout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
-	cout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
-	cout<<"z "<<ratioz_max<<" at "<<k_max<<endl;
-*/
+    nugout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
+    nugout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
+    nugout<<"z "<<ratioz_max<<" at "<<k_max<<endl;
 
     LOOP
     if(a->flag(i,j,k)>0)
@@ -165,8 +148,5 @@ void driver::analytics(lexer *p, dive *a)
 
     nugout<<endl<<"Number of Cells: "<<count<<endl;
 
-//    cout<<endl<<"Number of Cells: "<<count<<endl;
-
-
-	cout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;
+    cout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;
 }

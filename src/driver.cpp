@@ -92,21 +92,23 @@ void driver::mainloop()
     if(p->S1==1)
     p->read_stl();
 
-	if(p->solid_count>0||p->S1==1)
-	psolid->start(p,a);
+    if(p->solid_count>0 || p->S1==1)
+    psolid->start(p,a);
 
-	if(p->solid_count>0||p->S1==1)
-	{
-	print_stl print_solid(p,a);
+    if(p->solid_count>0 || p->S1==1)
+    {
+        print_stl print_solid(p,a);
 
         print_solid.solid_vtp(p,a);
         if(p->S6==1)
         print_solid.solid_stl(p,a);
 
-    print_stl_geodat print_geo(p,a);
-    if(p->S90==1)
-    print_geo.print_geo(p,a);
-	}
+        if(p->S90==1)
+        {
+            print_stl_geodat print_geo(p,a);
+            print_geo.print_geo(p,a);
+        }
+    }
 
 // Slice
     pslice->start(p,a);
@@ -128,7 +130,6 @@ void driver::mainloop()
     psolid->gcb_estimate(p,a);
 
     psurf->gcb_estimate(p,a);
-
 
 // Hydrodynamic Coupling
     if(p->H10>0)
