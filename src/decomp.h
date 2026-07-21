@@ -38,13 +38,13 @@ public:
     decomp();
     virtual ~decomp();
     virtual void start(lexer*,dive*);
-    
+
     void surfcount(lexer*,dive*);
 
 private:
     void nodecalc(lexer*,dive*);
     void costfunc(lexer*,dive*);
-	void partition_analyse(lexer*,dive*);
+    void partition_analyse(lexer*,dive*);
     void partition(lexer*,dive*);
     void partition_correction(lexer*, dive*);
 	void partition_correct_x(lexer*, dive*);
@@ -66,15 +66,15 @@ private:
     void slicesurfcount(lexer*,dive*);
     void slicecornercount(lexer*,dive*);
     void knoxcalc(lexer*,dive*);
-	void mem_alloc(lexer*,dive*);
+    void mem_alloc(lexer*,dive*);
     int partition_check(lexer*,dive*);
-    
+
     void periodic_ini(lexer*,dive*);
     void periodic_surf(lexer*,dive*);
     void periodic_surfco(lexer*,dive*);
     void periodic_nb(lexer*,dive*);
     void periodic_count(lexer*,dive*);
-    
+
     void decomp_vtp(lexer*,dive*);
 
     int numfactor;
@@ -89,7 +89,7 @@ private:
 
     int jmin,jmax,**kmin,**kmax;
     int bcount;
-	
+
 	double xvar,yvar,zvar;
 	double xvar_per,yvar_per,zvar_per;
 	double xdiff,ydiff,zdiff;
@@ -100,15 +100,15 @@ private:
 	int *xcount,*ycount,*zcount;
 	int xaverage,yaverage,zaverage;
 	int xcount_sum,ycount_sum,zcount_sum,cellnum,paverage;
-  
-    
+
+
     char name[100],pname[100],epsvar[100];
     int n,iin,offset[100];
     float ffn;
-    
+
     double **trix,**triy,**triz;
     int tricount;
-	
+
 	ofstream ddout;
 
 

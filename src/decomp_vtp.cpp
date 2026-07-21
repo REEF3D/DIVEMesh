@@ -26,19 +26,19 @@ Author: Hans Bihs
 void decomp::decomp_vtp(lexer* p, dive* a)
 {
     double ddn;
-    
+
     mkdir("./DIVEMesh_Paraview",0777);
 	sprintf(name,"./DIVEMesh_Paraview/DIVEMesh_Partition.vtp");
 
-	ofstream result;
-	result.open(name, ios::binary);
-	
+    ofstream result;
+    result.open(name, ios::binary);
+
 	cout<<"print_partition_vtp"<<endl;
 
     n=0;
 
-	offset[n]=0;
-	++n;
+    offset[n]=0;
+    ++n;
 
     offset[n]=offset[n-1]+8*tricount*3*3 + 4;
     ++n;
@@ -46,7 +46,7 @@ void decomp::decomp_vtp(lexer* p, dive* a)
     ++n;
     offset[n]=offset[n-1]+4*tricount*3 + 4;
     ++n;
-	//---------------------------------------------
+    //---------------------------------------------
 
 	result<<"<?xml version=\"1.0\"?>"<<endl;
 	result<<"<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\">"<<endl;
@@ -75,35 +75,35 @@ void decomp::decomp_vtp(lexer* p, dive* a)
     result<<"<AppendedData encoding=\"raw\">"<<endl<<"_";
 
 
-//  XYZ
-	iin=8*tricount*3*3;
-	result.write((char*)&iin, sizeof(int));
+    //  XYZ
+    iin=8*tricount*3*3;
+    result.write((char*)&iin, sizeof(int));
     for(n=0;n<tricount;++n)
-	for(q=0;q<3;++q)
-	{
-    ddn=trix[n][q];
-	result.write((char*)&ddn, sizeof(double));
+    for(q=0;q<3;++q)
+    {
+        ddn=trix[n][q];
+        result.write((char*)&ddn, sizeof(double));
 
-    ddn=triy[n][q];
-	result.write((char*)&ddn, sizeof(double));
+        ddn=triy[n][q];
+        result.write((char*)&ddn, sizeof(double));
 
-    ddn=triz[n][q];
-	result.write((char*)&ddn, sizeof(double));
-	}
+        ddn=triz[n][q];
+        result.write((char*)&ddn, sizeof(double));
+    }
 
-//  Connectivity POLYGON
-	int count=0;
+    //  Connectivity POLYGON
+    int count=0;
     iin=4*tricount*3;
     result.write((char*)&iin, sizeof(int));
     for(n=0;n<tricount;++n)
-	for(q=0;q<3;++q)
-	{
-	iin=count;
-	result.write((char*)&iin, sizeof(int));
-	++count;
-	}
+    for(q=0;q<3;++q)
+    {
+        iin=count;
+        result.write((char*)&iin, sizeof(int));
+        ++count;
+    }
 
-//  Offset of Connectivity
+    //  Offset of Connectivity
     iin=4*tricount;
     result.write((char*)&iin, sizeof(int));
 	iin=0;
@@ -113,17 +113,17 @@ void decomp::decomp_vtp(lexer* p, dive* a)
 	result.write((char*)&iin, sizeof(int));
 	}
 
-//  Cell types
+    //  Cell types
     iin=4*tricount;
     result.write((char*)&iin, sizeof(int));
-	for(n=0;n<tricount;++n)
-	{
-	iin=7;
-	result.write((char*)&iin, sizeof(int));
-	}
+    for(n=0;n<tricount;++n)
+    {
+        iin=7;
+        result.write((char*)&iin, sizeof(int));
+    }
 
 	result<<endl<<"</AppendedData>"<<endl;
     result<<"</VTKFile>"<<endl;
 
-	result.close();	
+    result.close();
 }

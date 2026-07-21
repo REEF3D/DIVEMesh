@@ -27,5 +27,5 @@ void decomp::print_partition(lexer* p, dive* a)
 
 	for(q=0;q<p->M10;++q)
 	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
-    
+
 }

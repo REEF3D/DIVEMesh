@@ -26,8 +26,8 @@ void decomp::periodic_surfco(lexer* p, dive* a)
 {
     int r;
 	int paracell[3][3][3];
-	
-// CORNERS
+
+    // CORNERS
     a->paraco1count=0;
     a->paraco2count=0;
     a->paraco3count=0;
@@ -35,7 +35,7 @@ void decomp::periodic_surfco(lexer* p, dive* a)
     a->paraco5count=0;
     a->paraco6count=0;
 
-/*    
+/*
 #define ALOOP for(aa=1;aa<=a->mx;++aa)
 #define BLOOP for(bb=1;bb<=a->my;++bb)
 #define CLOOP for(cc=1;cc<=a->mz;++cc)
@@ -52,28 +52,28 @@ void decomp::periodic_surfco(lexer* p, dive* a)
     {
     aa==0;
     i=0;
-        
+
         for(bb=1;bb<=a->my;++bb)
         for(cc=1;cc<=a->mz;++cc)
         {
-        // 1 
+        // 1
         j=a->ynode[bb-1];
         for(k=a->znode[cc-1];k<a->znode[cc];++k)
         {
-            
+
         }
 
 
-        }    
-            
-            
-    
-    
+        }
+
+
+
+
     }*/
-	
+
     LOOP
     {
-		
+
 //-----------------------------------------------------------------------------------------------
 //  1
     if(a->subgrid(i-1,j,k)!=a->subgrid(i,j,k)
@@ -442,8 +442,8 @@ void decomp::periodic_surfco(lexer* p, dive* a)
 	a->para6co[a->paraco6count][6]=paracell[1][2][2];
     a->paraco6count++;
     }
-	
-	
+
+
     }
-    
+
 }

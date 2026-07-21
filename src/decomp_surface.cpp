@@ -83,7 +83,7 @@ void decomp::parasurface(lexer* p, dive* a)
     }
 
     }
-	
+
 	ddout<<"para1: "<<a->para1count<<" para2: "<<a->para2count<<" para3: "<<a->para3count<<" para4: "<<a->para4count<<" para5: "<<a->para5count<<" para6: "<<a->para6count<<endl;
 }
 

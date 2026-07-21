@@ -27,7 +27,7 @@ Author: Hans Bihs
 decomp::decomp()
 {
     mkdir("./DIVEMesh_Decomp",0777);
-    
+
     ddout.open("./DIVEMesh_Decomp/DIVEMesh-Decomposition.txt");
 }
 
@@ -38,16 +38,16 @@ decomp::~decomp()
 void decomp::start(lexer* p, dive* a)
 {
     cout<<"decomposition"<<endl;
-	
-	p->Iarray(subcell,p->M10+10);
-	
-	p->Iarray(xcount,p->M10+10);
-	p->Iarray(ycount,p->M10+10);
-	p->Iarray(zcount,p->M10+10);
-	
-	p->Iarray(xcross,a->knox+10);
-	p->Iarray(ycross,a->knoy+10);
-	p->Iarray(zcross,a->knoz+10);
+
+    p->Iarray(subcell,p->M10+10);
+
+    p->Iarray(xcount,p->M10+10);
+    p->Iarray(ycount,p->M10+10);
+    p->Iarray(zcount,p->M10+10);
+
+    p->Iarray(xcross,a->knox+10);
+    p->Iarray(ycross,a->knoy+10);
+    p->Iarray(zcross,a->knoz+10);
 
 
 	if(p->M20==1)
@@ -57,7 +57,7 @@ void decomp::start(lexer* p, dive* a)
     partition(p,a);
     print_partition(p,a);
 	}
-	
+
 	if(p->M20==2)
 	{
 	nodecalc(p,a);
@@ -70,7 +70,7 @@ void decomp::start(lexer* p, dive* a)
 	partition_voidcheck(p,a);
     print_partition(p,a);
 	}
-    
+
 	if(p->M20==3)
     {
     a->mx=p->M30_x;
@@ -79,18 +79,18 @@ void decomp::start(lexer* p, dive* a)
     partition(p,a);
     print_partition(p,a);
     }
-    
+
     if(p->M20==4)
     {
     partition_manual(p,a);
     print_partition(p,a);
     }
-    
-	neighbors(p,a);
-	knoxcalc(p,a);
+
+    neighbors(p,a);
+    knoxcalc(p,a);
     periodic_ini(p,a);
-	mem_alloc(p,a);
-    parasurface(p,a);	
+    mem_alloc(p,a);
+    parasurface(p,a);
     paracosurface(p,a);
     cornersurface(p,a);
 
@@ -98,7 +98,7 @@ void decomp::start(lexer* p, dive* a)
     periodic_nb(p,a);
     periodic_surf(p,a);
     periodic_count(p,a);
-    
+
     surfcount(p,a);
     cornercount(p,a);
 
@@ -106,9 +106,9 @@ void decomp::start(lexer* p, dive* a)
     paraslicecosurface(p,a);
     slicesurfcount(p,a);
     slicecornercount(p,a);
-	
-	cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
-    
+
+    cout<<"partition: "<<a->mx<<" "<<a->my<<" "<<a->mz<<" "<<endl;
+
     // print partition planes
     partition_planes(p,a);
     decomp_vtp(p,a);
@@ -137,7 +137,7 @@ int decomp::partition_check(lexer* p, dive* a)
     if(partcount[n]>int(maxel*alpha))
     count++;
     }
-    
+
 
     if(count==p->M10)
     checker=1;
@@ -147,7 +147,7 @@ int decomp::partition_check(lexer* p, dive* a)
 
 void decomp::neighbors(lexer* p,dive* a)
 {
-	p->Iarray(a->sgfield, a->mx+2, a->my+2, a->mz+2);
+    p->Iarray(a->sgfield, a->mx+2, a->my+2, a->mz+2);
 
     NMALOOP
     a->sgfield[aa][bb][cc]=-1;
@@ -158,7 +158,7 @@ void decomp::neighbors(lexer* p,dive* a)
     count=0;
     NLOOP
     {
-    count++;
+        count++;
 
     a->nbpara1[count]=a->sgfield[aa-1][bb][cc]-1;
     a->nbpara2[count]=a->sgfield[aa][bb+1][cc]-1;
@@ -168,145 +168,145 @@ void decomp::neighbors(lexer* p,dive* a)
     a->nbpara6[count]=a->sgfield[aa][bb][cc+1]-1;
 
     }
-	
-	// MPI_GRAPH
-	count=0;
-	for(n=1;n<p->M10+1;++n)
-	{
-		if(a->nbpara1[n]>-1)
-		{
-		a->mpi_edges[count]=a->nbpara1[n];
-		++count;
-		}
-		
-		if(a->nbpara2[n]>-1)
-		{
-		a->mpi_edges[count]=a->nbpara2[n];
-		++count;
-		}
-		
-		if(a->nbpara3[n]>-1)
-		{
-		a->mpi_edges[count]=a->nbpara3[n];
-		++count;
-		}
-		
-		if(a->nbpara4[n]>-1)
-		{
-		a->mpi_edges[count]=a->nbpara4[n];
-		++count;
-		}
-		
-		if(a->nbpara5[n]>-1)
-		{
-		a->mpi_edges[count]=a->nbpara5[n];
-		++count;
-		}
-		
-		if(a->nbpara6[n]>-1)
-		{
-		a->mpi_edges[count]=a->nbpara6[n];
-		++count;
-		}
-		
-		a->mpi_index[n]=count;
-	}
-	a->mpi_edgenum=count;
+
+    // MPI_GRAPH
+    count=0;
+    for(n=1;n<p->M10+1;++n)
+    {
+        if(a->nbpara1[n]>-1)
+        {
+            a->mpi_edges[count]=a->nbpara1[n];
+            ++count;
+        }
+
+        if(a->nbpara2[n]>-1)
+        {
+            a->mpi_edges[count]=a->nbpara2[n];
+            ++count;
+        }
+
+        if(a->nbpara3[n]>-1)
+        {
+            a->mpi_edges[count]=a->nbpara3[n];
+            ++count;
+        }
+
+        if(a->nbpara4[n]>-1)
+        {
+            a->mpi_edges[count]=a->nbpara4[n];
+            ++count;
+        }
+
+        if(a->nbpara5[n]>-1)
+        {
+            a->mpi_edges[count]=a->nbpara5[n];
+            ++count;
+        }
+
+        if(a->nbpara6[n]>-1)
+        {
+            a->mpi_edges[count]=a->nbpara6[n];
+            ++count;
+        }
+
+        a->mpi_index[n]=count;
+    }
+    a->mpi_edgenum=count;
 }
 
 void decomp::knoxcalc(lexer* p, dive*a)
 {
     for(n=0;n<=p->M10;n++)
     {
-    a->subknox[n]=0;
-    a->subknoy[n]=0;
-    a->subknoz[n]=0;
+        a->subknox[n]=0;
+        a->subknoy[n]=0;
+        a->subknoz[n]=0;
     }
 
- n=0;
- NLOOP
- {
-     ++n;
+    n=0;
+    NLOOP
+    {
+        ++n;
 
-     SUBLOOP
-     {
-     a->subknox[n]=MAX(i-a->xnode[aa-1]+1,a->subknox[n]);
-     a->subknoy[n]=MAX(j-a->ynode[bb-1]+1,a->subknoy[n]);
-     a->subknoz[n]=MAX(k-a->znode[cc-1]+1,a->subknoz[n]);
-     }
-  }
+        SUBLOOP
+        {
+            a->subknox[n]=MAX(i-a->xnode[aa-1]+1,a->subknox[n]);
+            a->subknoy[n]=MAX(j-a->ynode[bb-1]+1,a->subknoy[n]);
+            a->subknoz[n]=MAX(k-a->znode[cc-1]+1,a->subknoz[n]);
+        }
+    }
 }
 
 void decomp::mem_alloc(lexer *p, dive *a)
 {
-	int xsurf,ysurf,zsurf,maxsurf;
-	int xco,yco,zco;
-    
-	
+    int xsurf,ysurf,zsurf,maxsurf;
+    int xco,yco,zco;
+
+
 	xsurf = 3*p->knoy*p->knoz*(a->mx);
 	ysurf = 3*p->knox*p->knoz*(a->my);
 	zsurf = 3*p->knox*p->knoy*(a->mz);
-    
+
     maxsurf=0;
     maxsurf=MAX(xsurf,ysurf);
     maxsurf=MAX(maxsurf,zsurf);
-	
-	xco = yco = zco = 0;
-	
-	for(n=1;n<=p->M10;++n)
+
+    xco = yco = zco = 0;
+
+    for(n=1;n<=p->M10;++n)
     {
-	xco += 3*(a->subknoy[n]+a->subknoz[n] + 4);
-	yco += 3*(a->subknox[n]+a->subknoz[n] + 4);
-	zco += 3*(a->subknox[n]+a->subknoy[n] + 4);
+        xco += 3*(a->subknoy[n]+a->subknoz[n] + 4);
+        yco += 3*(a->subknox[n]+a->subknoz[n] + 4);
+        zco += 3*(a->subknox[n]+a->subknoy[n] + 4);
     }
-	
-	ddout<<endl;
-	ddout<<"xsurf: "<<xsurf<<"  ysurf: "<<ysurf<<"  zsurf: "<<zsurf<<endl;
-	ddout<<"xco: "<<xco<<"  yco: "<<yco<<"  zco: "<<zco<<endl<<endl;
+
+    ddout<<endl;
+    ddout<<"xsurf: "<<xsurf<<"  ysurf: "<<ysurf<<"  zsurf: "<<zsurf<<endl;
+    ddout<<"xco: "<<xco<<"  yco: "<<yco<<"  zco: "<<zco<<endl<<endl;
 
 
-	a->Iarray(a->para1sf,xsurf,3);
-	a->Iarray(a->para2sf,ysurf,3);
-	a->Iarray(a->para3sf,ysurf,3);
-	a->Iarray(a->para4sf,xsurf,3);
-	a->Iarray(a->para5sf,zsurf,3);
-	a->Iarray(a->para6sf,zsurf,3);
+    a->Iarray(a->para1sf,xsurf,3);
+    a->Iarray(a->para2sf,ysurf,3);
+    a->Iarray(a->para3sf,ysurf,3);
+    a->Iarray(a->para4sf,xsurf,3);
+    a->Iarray(a->para5sf,zsurf,3);
+    a->Iarray(a->para6sf,zsurf,3);
 
-	a->Iarray(a->para1void,xsurf,4);
-	a->Iarray(a->para2void,ysurf,4);
-	a->Iarray(a->para3void,ysurf,4);
-	a->Iarray(a->para4void,xsurf,4);
-	a->Iarray(a->para5void,zsurf,4);
-	a->Iarray(a->para6void,zsurf,4);
+    a->Iarray(a->para1void,xsurf,4);
+    a->Iarray(a->para2void,ysurf,4);
+    a->Iarray(a->para3void,ysurf,4);
+    a->Iarray(a->para4void,xsurf,4);
+    a->Iarray(a->para5void,zsurf,4);
+    a->Iarray(a->para6void,zsurf,4);
 
-	a->Iarray(a->para1co,xco,5);
-	a->Iarray(a->para2co,yco,5);
-	a->Iarray(a->para3co,yco,5);
-	a->Iarray(a->para4co,xco,5);
-	a->Iarray(a->para5co,zco,5);
-	a->Iarray(a->para6co,zco,5);
-    
+    a->Iarray(a->para1co,xco,5);
+    a->Iarray(a->para2co,yco,5);
+    a->Iarray(a->para3co,yco,5);
+    a->Iarray(a->para4co,xco,5);
+    a->Iarray(a->para5co,zco,5);
+    a->Iarray(a->para6co,zco,5);
+
     a->Iarray(a->periodicXall,6);
     a->Iarray(a->periodicX,p->M10+1,6);
 
-    
+
     // Slice
-    
+
     int xslicesurf,yslicesurf;
 	int xsliceco,ysliceco;
-    
+
     xslicesurf = 3*p->knoy*(a->mx);
 	yslicesurf = 3*p->knox*(a->my);
 
-	
+
 	xsliceco = ysliceco = 0;
-	
+
 	for(n=1;n<=p->M10;++n)
     {
 	xsliceco += 3*(a->subknoy[n]+a->subknoz[n] + 4);
 	ysliceco += 3*(a->subknox[n]+a->subknoz[n] + 4);
     }
-    
+
     a->Iarray(a->paraslice1sf,xsurf,2);
 	a->Iarray(a->paraslice2sf,ysurf,2);
 	a->Iarray(a->paraslice3sf,ysurf,2);
