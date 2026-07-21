@@ -36,19 +36,11 @@ public:
     dataset(lexer*,dive*);
     virtual ~dataset();
 
-    virtual void start(lexer*,dive*);
-	double inverse_dist_2D(lexer*, dive*);
-	double inverse_dist_w(lexer*);
+    void start(lexer*,dive*);
 
 private:
-
-	double g,wsum,dist;
-    double xc,yc;
-    double ddn;
-    int iin;
-    float ffn;
+    double inverse_dist_2D(lexer*);
+    inline double inverse_dist_w(double, double, double, double);
 };
 
 #endif
-
-

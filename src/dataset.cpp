@@ -27,22 +27,15 @@ Author: Hans Bihs
 
 dataset::dataset(lexer *p, dive *a)
 {
-
     for(n=0; n<p->D10; ++n)
     {
-    p->D10_x[n] *= p->D12_x;
-    p->D10_y[n] *= p->D12_y;
+        p->D10_x[n] = p->D10_x[n] * p->D12_x + p->D11_x;
+        p->D10_y[n] = p->D10_y[n] * p->D12_y + p->D11_y;
     }
 
+    if(p->D23==1)
     for(n=0; n<p->D10; ++n)
-    {
-    p->D10_x[n] += p->D11_x;
-    p->D10_y[n] += p->D11_y;
-    }
-
-	if(p->D23==1)
-	for(n=0; n<p->D10; ++n)
-	p->D10_dataset[n] *= -1.0;
+    p->D10_dataset[n] *= -1.0;
 }
 
 dataset::~dataset()
@@ -57,47 +50,38 @@ void dataset::start(lexer* p, dive* a)
     {
         cout<<"inverse distance"<<endl;
 
+        XYLOOP
+        a->dataset(i,j) = inverse_dist_2D(p);
+    }
+    else if(p->D14==2)
+    {
+        kriging krig(p,a,p->D10,p->D10_x,p->D10_y,p->D10_dataset);
+
+        //krig.start(p,a,p->D10,p->D10_x,p->D10_y,p->D10_dataset,p->XP,p->YP,p->knox,p->knoy,a->dataset);
+    }
+
+    k=0;
     XYLOOP
-    a->dataset(i,j) = inverse_dist_2D(p,a);
-	}
+    if(a->flag(i,j,k)>0)
+    {
 
-	if(p->D14==2)
-	{
-	kriging krig(p,a,p->D10,p->D10_x,p->D10_y,p->D10_dataset);
+        if(a->flag(i-1,j,k)<0)
+        a->dataset(i-1,j) = a->dataset(i,j);
 
-	//krig.start(p,a,p->D10,p->D10_x,p->D10_y,p->D10_dataset,p->XP,p->YP,p->knox,p->knoy,a->dataset);
-	}
+        if(a->flag(i+1,j,k)<0)
+        a->dataset(i+1,j) = a->dataset(i,j);
 
-	k=0;
-	XYLOOP
-	if(a->flag(i,j,k)>0)
-	{
+        if(a->flag(i,j-1,k)<0)
+        a->dataset(i,j-1) = a->dataset(i,j);
 
-		if(a->flag(i-1,j,k)<0)
-		a->dataset(i-1,j) = a->dataset(i,j);
+        if(a->flag(i,j+1,k)<0)
+        a->dataset(i,j+1) = a->dataset(i,j);
+    }
 
-		if(a->flag(i+1,j,k)<0)
-		a->dataset(i+1,j) = a->dataset(i,j);
-
-		if(a->flag(i,j-1,k)<0)
-		a->dataset(i,j-1) = a->dataset(i,j);
-
-		if(a->flag(i,j+1,k)<0)
-		a->dataset(i,j+1) = a->dataset(i,j);
-	}
-
-
-	k=0;
-	for(n=0;n<p->D15;++n)
-	XYLOOP
-	if(a->flag(i,j,k)>0)
+    k=0;
+    for(n=0;n<p->D15;++n)
+    XYLOOP
+    if(a->flag(i,j,k)>0)
     a->dataset(i,j) = p->D16*a->dataset(i,j) + 0.25*(1.0-p->D16)*(a->dataset(i-1,j) + a->dataset(i+1,j) + a->dataset(i,j-1) + a->dataset(i,j+1));
 
 }
-
-
-
-
-
-
-
