@@ -27,62 +27,62 @@ Author: Hans Bihs
 void geodat::coarsen(lexer *p, dive *a)
 {
     int count;
-    
+
     // x
     count=0;
     ILOOP
     if(i%p->G38==0)
     {
-    XC[count+marge]=p->XP[IP];
-    ++count;
+        XC[count+marge]=p->XP[IP];
+        ++count;
     }
-    
+
     kx=count;
-    
+
     // y
     count=0;
     JLOOP
     if(j%p->G38==0)
     {
-    YC[count+marge]=p->YP[JP];
-    ++count;
+        YC[count+marge]=p->YP[JP];
+        ++count;
     }
-    
+
     ky=count;
-    
+
     p->Darray(topof,kx+2*dd+1,ky+2*dd+1);
-    
+
     cout<<"coarsen knox:"<<p->knox<<" kx: "<<kx<<" | knoy:"<<p->knoy<<" ky: "<<ky<<endl;
 
-    
+
     // bc
     XC[marge-1] = XC[marge] - 1.0*(XC[marge+1]-XC[marge]);
     XC[marge-2] = XC[marge] - 2.0*(XC[marge+1]-XC[marge]);
     XC[marge-3] = XC[marge] - 3.0*(XC[marge+1]-XC[marge]);
     XC[marge-4] = XC[marge] - 4.0*(XC[marge+1]-XC[marge]);
     XC[marge-5] = XC[marge] - 5.0*(XC[marge+1]-XC[marge]);
-    
-    
+
+
     XC[marge+kx]   = XC[marge+kx-1] + 1.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+1] = XC[marge+kx-1] + 2.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+2] = XC[marge+kx-1] + 3.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+3] = XC[marge+kx-1] + 4.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+4] = XC[marge+kx-1] + 5.0*(XC[marge+kx-1]-XC[marge+kx-2]);
-    
-    
+
+
     YC[marge-1] = YC[marge] - 1.0*(YC[marge+1]-YC[marge]);
     YC[marge-2] = YC[marge] - 2.0*(YC[marge+1]-YC[marge]);
     YC[marge-3] = YC[marge] - 3.0*(YC[marge+1]-YC[marge]);
     YC[marge-4] = YC[marge] - 4.0*(YC[marge+1]-YC[marge]);
     YC[marge-5] = YC[marge] - 5.0*(YC[marge+1]-YC[marge]);
-    
-    
+
+
     YC[marge+ky]   = YC[marge+ky-1] + 1.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+1] = YC[marge+ky-1] + 2.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+2] = YC[marge+ky-1] + 3.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+3] = YC[marge+ky-1] + 4.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+4] = YC[marge+ky-1] + 5.0*(YC[marge+ky-1]-YC[marge+ky-2]);
-    
+
 }
 
 void geodat::prolong(lexer *p, dive *a, field2d& bed)
@@ -90,20 +90,20 @@ void geodat::prolong(lexer *p, dive *a, field2d& bed)
     double xc,yc,val;
 
     cout<<"prolong "<<endl;
-    
+
     XYLOOP
     {
-    xc = p->XP[IP];
-    yc = p->YP[JP];
-    
-    val = ccipol(p,topof,xc,yc); 
+        xc = p->XP[IP];
+        yc = p->YP[JP];
 
-    //cout<<" PROLONG: "<<topof[i+3][j+3]<<" val: "<<val<<endl;  
+        val = ccipol(p,topof,xc,yc);
 
-    bed(i,j) = val;    
+    //cout<<" PROLONG: "<<topof[i+3][j+3]<<" val: "<<val<<endl;
+
+    bed(i,j) = val;
     }
-    
-    
+
+
 }
 
 

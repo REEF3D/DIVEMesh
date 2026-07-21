@@ -34,36 +34,36 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
     int pcount=0;
     int cp=0;
     int count=0;
-    
+
     maxdist=0.0;
     meandist=0.0;
-    
+
     // Radius
     Dmax=sqrt(pow(p->xmax-p->xmin,2.0)+pow(p->ymax-p->ymin,2.0));
     R = 0.25*Dmax*sqrt(p->G18/p->Np);
     dij = MAX(int(R/(p->DXM)),p->G17);
-    
+
 
     kx = p->knox;
     ky = p->knoy;
     cout<<"PCOUNT: "<<pcount<<" dij: "<<dij<<endl;
-    
+
     if(p->G53_flag==0)
     for(n=0;n<p->Np;++n)
     {
         i = p->poscgen_i(X[n],p->XP,kx);
         j = p->poscgen_j(Y[n],p->YP,ky);
-        
+
         cp=0;
         do{
 
-        is=MAX(i-dij-cp,-3);
-        ie=MIN(i+dij+cp,Nx-3);
-        
+            is=MAX(i-dij-cp,-3);
+            ie=MIN(i+dij+cp,Nx-3);
+
         js=MAX(j-dij-cp,-3);
         je=MIN(j+dij+cp,Ny-3);
-        
-        
+
+
 
             count=0;
             for(r=is;r<ie;++r)
@@ -71,135 +71,135 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
             for(t=0;t<ptnum[r+dd][s+dd];++t)
             {
                 q = ptid[r+dd][s+dd][t];
-                        
+
                 if(q!=n)
                 {
                     dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
-                        
+
                     maxdist = MAX(maxdist,dist);
-        
+
                     meandist += dist;
                     ++pcount;
                     ++count;
-                        
+
                     //cout<<"DIST: "<<dist<<" X[n]: "<<X[n]<<" X[q]: "<<X[q]<<" Y[n]: "<<Y[n]<<" Y[q]: "<<Y[q]<<"  ptnum[r+dd][s+dd]: "<<ptnum[r+dd][s+dd]<<" t: "<<t<<" |  n: "<<n<<" q: "<<q
                     //<<"   | i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" |  count: "<<count<<endl;
                 }
 
             }
-            
-            
-            
+
+
+
         //cout<<n<<"  "<<" i: "<<i<<" j: "<<j <<" is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
-        
-      
+
+
         cp+=2;
         }while(count<MIN(19,p->Np) && cp<10);
-        
+
         //cout<<"PCOUNT: "<<pcount<<endl;
     }
-    
+
     cout<<"MAX pointdist: "<<maxdist<<" MEAN pointdist: "<<meandist/double(pcount)<<" MEAN pointdist: "<<meandist<<" pcount: "<<pcount<<endl;
-    
-    
+
+
     meandist = meandist/double(pcount);
-    
-    
-    
+
+
+
     ///- ---- -- -- - - -
-    
+
     int **ptnum_old;
     p->Iarray(ptnum_old,Nx,Ny);
-    
+
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     ptnum_old[r][s]=ptnum[r][s];
-    
+
     // radius either G53 or max radius of nearest nb
     // go to very cell, is there a geodat point within the radius?
     // if not at geodat point in cell center with given height G52
         // count entries
         // resize ptid
         // fill ptid
-        
+
     dij =int(2.6*meandist/(p->DXM));
-    
+
     if(p->G53_flag==1)
     dij = int(p->G53/(p->DXM));
-    
+
     cout<<"DIJ: "<<dij<<endl;
-    
+
     // count entries
     count=0;
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-      
+
 
         is=MAX(i-dij,-3);
         ie=MIN(i+dij,Nx-3);
-        
+
         js=MAX(j-dij,-3);
         je=MIN(j+dij,Ny-3);
-        
+
 
         check=0;
         for(r=is;r<ie;++r)
         for(s=js;s<je;++s)
         for(t=0;t<ptnum[r+dd][s+dd];++t)
         check=1;
-            
+
         if(check==0)
         {
-        ++count;
+            ++count;
         }
 
     }
     cout<<"NEW POINTS: "<<count<<endl;
-  
-    
-    
+
+
+
     p->Dresize(p->G10_x,p->Np,p->Np+count);
     p->Dresize(p->G10_y,p->Np,p->Np+count);
     p->Dresize(p->G10_z,p->Np,p->Np+count);
-    
-    
+
+
     // FILL
     //ap->Np=0;
     for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
     {
-      
+
 
         is=MAX(i-dij,-3);
         ie=MIN(i+dij,Nx-3);
-        
+
         js=MAX(j-dij,-3);
         je=MIN(j+dij,Ny-3);
-        
+
         //cout<<n<<"  IDW local "<<" i: "<<i<<" j: "<<j <<" | is: "<<is<<" ie: "<<ie<<" js: "<<js<<" je: "<<je<<" dd: "<<dd<<" cp: "<<cp<<" count: "<<count<<endl;
-        
+
 
         check=0;
         for(r=is;r<ie;++r)
         for(s=js;s<je;++s)
         for(t=0;t<ptnum[r+dd][s+dd];++t)
         check=1;
-            
+
         if(check==0)
         {
-        p->G10_x[p->Np] = p->XP[IP];
-        p->G10_y[p->Np] = p->YP[JP];
-        p->G10_z[p->Np] = p->G52;
-        
+            p->G10_x[p->Np] = p->XP[IP];
+            p->G10_y[p->Np] = p->YP[JP];
+            p->G10_z[p->Np] = p->G52;
+
        //cout<<" Np: "<<p->Np<<" X[p->Np]: "<<X[p->Np]<<" Y[p->Np]: "<<Y[p->Np]<<" F[p->Np]: "<<F[p->Np]<<endl;
         //cout<<" Np: "<<p->Np<<" p->G10_x: "<<p->G10_x[p->Np]<<" p->G10_y: "<<p->G10_y[p->Np]<<" p->G10_z: "<<p->G10_z[p->Np]<<endl;
-        
+
         ++p->Np;
         }
 
     //cout<<"check: "<<check<<" "<<" i: "<<i<<" j: "<<j<<endl;
     }
-    
-    
+
+
 }
