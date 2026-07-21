@@ -34,8 +34,7 @@ surface::~surface()
 
 void surface::start(lexer* p, dive* a)
 {
-	mem_alloc(p,a);
-    direction(p,a);
+    mem_alloc(p,a);
     makesurf(p,a);
     makesurf_plate(p,a);
     makesurfsolid(p,a);
@@ -78,14 +77,11 @@ void surface::mem_alloc(lexer* p, dive* a)
 
     cout<<"surfnum: "<<surfnum<<"  surfnum_solid: "<<a->surfcount_solid<<endl;
 
-
-	a->Iarray(a->surf,surfnum+a->surfcount_solid,5);
+    a->Iarray(a->surf,surfnum+a->surfcount_solid,5);
 }
 
 void surface::makesurf(lexer* p, dive* a)
 {
-//-------
-
     LOOP
     if(a->flag(i,j,k)>0)
     {
@@ -152,12 +148,9 @@ void surface::makesurf(lexer* p, dive* a)
 
     cout<<"surfcount: "<<a->surfcount<<endl;
 
-
     for(i=0;i<a->surfcount;i++)
     {
-    //cout<<" surface: "<<a->surf[i][0]<<" "<<a->surf[i][1]<<" "<<a->surf[i][2]<<" "<<a->surf[i][3]<<" "<<a->surf[i][4]<<endl;
-    n=a->subgrid(a->surf[i][0],a->surf[i][1],a->surf[i][2]);
-    a->wall[n]++;
+        n=a->subgrid(a->surf[i][0],a->surf[i][1],a->surf[i][2]);
+        a->wall[n]++;
     }
-
 }

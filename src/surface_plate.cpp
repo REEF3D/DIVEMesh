@@ -19,7 +19,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------
 Author: Hans Bihs
 --------------------------------------------------------------------*/
-#include"surface.h"
+
+#include"surface.h"
 #include"lexer.h"
 #include"dive.h"
 
@@ -29,7 +30,6 @@ void surface::mem_alloc_plate(lexer* p, dive* a)
 
     for(qn=0;qn<p->S201;++qn)
     {
-
         js = p->posc_j(p->S201_ys[qn]);
         je = p->posc_j(p->S201_ye[qn]);
 
@@ -48,9 +48,6 @@ void surface::mem_alloc_plate(lexer* p, dive* a)
 
 void surface::makesurf_plate(lexer* p, dive* a)
 {
-
-    double locx;
-    int loci;
     int js,je,ks,ke;
 
     for(qn=0;qn<p->S201;++qn)
@@ -65,33 +62,27 @@ void surface::makesurf_plate(lexer* p, dive* a)
             ks = p->posc_k(p->S201_zs[qn]);
             ke = p->posc_k(p->S201_ze[qn]);
 
-        for(j=js;j<=je;++j)
-        for(k=ks;k<=ke;++k)
-        {
-        a->surf[a->surfcount][0]=i;
-        a->surf[a->surfcount][1]=j;
-        a->surf[a->surfcount][2]=k;
-        a->surf[a->surfcount][3]=4;
-        a->surf[a->surfcount][4]=21;
-        a->surfcount++;
+            for(j=js;j<=je;++j)
+            for(k=ks;k<=ke;++k)
+            {
+                a->surf[a->surfcount][0]=i;
+                a->surf[a->surfcount][1]=j;
+                a->surf[a->surfcount][2]=k;
+                a->surf[a->surfcount][3]=4;
+                a->surf[a->surfcount][4]=21;
+                a->surfcount++;
+            }
+
+            for(j=js;j<=je;++j)
+            for(k=ks;k<=ke;++k)
+            {
+                a->surf[a->surfcount][0]=i+1;
+                a->surf[a->surfcount][1]=j;
+                a->surf[a->surfcount][2]=k;
+                a->surf[a->surfcount][3]=1;
+                a->surf[a->surfcount][4]=21;
+                a->surfcount++;
+            }
         }
-
-        for(j=js;j<=je;++j)
-        for(k=ks;k<=ke;++k)
-        {
-        a->surf[a->surfcount][0]=i+1;
-        a->surf[a->surfcount][1]=j;
-        a->surf[a->surfcount][2]=k;
-        a->surf[a->surfcount][3]=1;
-        a->surf[a->surfcount][4]=21;
-        a->surfcount++;
-        }
-
-        }
-
-
-
     }
-
-
 }
