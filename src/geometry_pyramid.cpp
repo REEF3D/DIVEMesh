@@ -26,41 +26,41 @@ Author: Hans Bihs
 
 void geometry::pyramid(lexer *p, dive *a, int rank, int &ts, int &te, double **xyz)
 {
-	double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4,x5,y5,z5;
+    double x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4,x5,y5,z5;
 
-	x1 = xyz[rank][0];
+    x1 = xyz[rank][0];
     y1 = xyz[rank][1];
     z1 = xyz[rank][2];
-    
+
     x2 = xyz[rank][3];
     y2 = xyz[rank][4];
     z2 = xyz[rank][5];
-    
+
     x3 = xyz[rank][6];
     y3 = xyz[rank][7];
     z3 = xyz[rank][8];
-    
+
     x4 = xyz[rank][9];
     y4 = xyz[rank][10];
     z4 = xyz[rank][11];
-	
-	x5 = xyz[rank][12];
+
+    x5 = xyz[rank][12];
     y5 = xyz[rank][13];
     z5 = xyz[rank][14];
-    
-    
+
+
     x1 = p->Xin(x1,y1);
     y1 = p->Yin(x1,y1);
-    
+
     x2 = p->Xin(x2,y2);
     y2 = p->Yin(x2,y2);
-    
+
     x3 = p->Xin(x3,y3);
     y3 = p->Yin(x3,y3);
-    
+
     x4 = p->Xin(x4,y4);
     y4 = p->Yin(x4,y4);
-    
+
     x5 = p->Xin(x5,y5);
     y5 = p->Yin(x5,y5);
 
@@ -87,8 +87,8 @@ void geometry::pyramid(lexer *p, dive *a, int rank, int &ts, int &te, double **x
 
 
     p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = 0.0;
+    p->trivec_z[p->tricount] = 0.0;
 
 	p->tri_x[p->tricount][0] = x2;
 	p->tri_y[p->tricount][0] = y2;
@@ -98,15 +98,15 @@ void geometry::pyramid(lexer *p, dive *a, int rank, int &ts, int &te, double **x
 	p->tri_y[p->tricount][1] = y3;
 	p->tri_z[p->tricount][1] = z3;
 
-	p->tri_x[p->tricount][2] = x4;
-	p->tri_y[p->tricount][2] = y4;
-	p->tri_z[p->tricount][2] = z4;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = x4;
+    p->tri_y[p->tricount][2] = y4;
+    p->tri_z[p->tricount][2] = z4;
+    ++p->tricount;
 
 
     p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = 0.0;
+    p->trivec_z[p->tricount] = 0.0;
 
 	p->tri_x[p->tricount][0] = x1;
 	p->tri_y[p->tricount][0] = y1;
@@ -124,8 +124,8 @@ void geometry::pyramid(lexer *p, dive *a, int rank, int &ts, int &te, double **x
 
 
     p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = 0.0;
+    p->trivec_z[p->tricount] = 0.0;
 
 	p->tri_x[p->tricount][0] = x2;
 	p->tri_y[p->tricount][0] = y2;
@@ -135,15 +135,15 @@ void geometry::pyramid(lexer *p, dive *a, int rank, int &ts, int &te, double **x
 	p->tri_y[p->tricount][1] = y3;
 	p->tri_z[p->tricount][1] = z3;
 
-	p->tri_x[p->tricount][2] = x5;
-	p->tri_y[p->tricount][2] = y5;
-	p->tri_z[p->tricount][2] = z5;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = x5;
+    p->tri_y[p->tricount][2] = y5;
+    p->tri_z[p->tricount][2] = z5;
+    ++p->tricount;
 
 
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
+    p->trivec_x[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = 0.0;
+    p->trivec_z[p->tricount] = 0.0;
 
 	p->tri_x[p->tricount][0] = x3;
 	p->tri_y[p->tricount][0] = y3;
@@ -153,28 +153,28 @@ void geometry::pyramid(lexer *p, dive *a, int rank, int &ts, int &te, double **x
 	p->tri_y[p->tricount][1] = y4;
 	p->tri_z[p->tricount][1] = z4;
 
-	p->tri_x[p->tricount][2] = x5;
-	p->tri_y[p->tricount][2] = y5;
-	p->tri_z[p->tricount][2] = z5;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = x5;
+    p->tri_y[p->tricount][2] = y5;
+    p->tri_z[p->tricount][2] = z5;
+    ++p->tricount;
 
 
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
+    p->trivec_x[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = 0.0;
+    p->trivec_z[p->tricount] = 0.0;
 
 	p->tri_x[p->tricount][0] = x1;
 	p->tri_y[p->tricount][0] = y1;
 	p->tri_z[p->tricount][0] = z1;
 
-	p->tri_x[p->tricount][1] = x4;
-	p->tri_y[p->tricount][1] = y4;
-	p->tri_z[p->tricount][1] = z4;
+    p->tri_x[p->tricount][1] = x4;
+    p->tri_y[p->tricount][1] = y4;
+    p->tri_z[p->tricount][1] = z4;
 
-	p->tri_x[p->tricount][2] = x5;
-	p->tri_y[p->tricount][2] = y5;
-	p->tri_z[p->tricount][2] = z5;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = x5;
+    p->tri_y[p->tricount][2] = y5;
+    p->tri_z[p->tricount][2] = z5;
+    ++p->tricount;
 
 
 	te=p->tricount;

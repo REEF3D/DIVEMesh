@@ -46,49 +46,49 @@ void geometry::ray_cast_y(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 	double psi = 1.0e-8*p->DXM;
 
 
-	for(n=ts; n<te; ++n)
-	{
-	Ax = p->tri_x[n][0];
-	Ay = p->tri_y[n][0];
-	Az = p->tri_z[n][0];
+    for(n=ts; n<te; ++n)
+    {
+        Ax = p->tri_x[n][0];
+        Ay = p->tri_y[n][0];
+        Az = p->tri_z[n][0];
 
-	Bx = p->tri_x[n][1];
-	By = p->tri_y[n][1];
-	Bz = p->tri_z[n][1];
+        Bx = p->tri_x[n][1];
+        By = p->tri_y[n][1];
+        Bz = p->tri_z[n][1];
 
-	Cx = p->tri_x[n][2];
-	Cy = p->tri_y[n][2];
-	Cz = p->tri_z[n][2];
+        Cx = p->tri_x[n][2];
+        Cy = p->tri_y[n][2];
+        Cz = p->tri_z[n][2];
 
-	xs = MIN3(Ax,Bx,Cx);
-	xe = MAX3(Ax,Bx,Cx);
+        xs = MIN3(Ax,Bx,Cx);
+        xe = MAX3(Ax,Bx,Cx);
 
-	zs = MIN3(Az,Bz,Cz);
-	ze = MAX3(Az,Bz,Cz);
+        zs = MIN3(Az,Bz,Cz);
+        ze = MAX3(Az,Bz,Cz);
 
-	is = p->posc_i(xs);
-	ie = p->posc_i(xe);
+        is = p->posc_i(xs);
+        ie = p->posc_i(xe);
 
-	ks = p->posc_k(zs);
-    ke = p->posc_k(ze);
+        ks = p->posc_k(zs);
+        ke = p->posc_k(ze);
 
-    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is +marge];
-	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie +marge];
+        xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is +marge];
+        xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie +marge];
 
-	zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks +marge];
-	ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke +marge];
+        zs = MIN3(Az,Bz,Cz) - epsi*p->DZP[ks +marge];
+        ze = MAX3(Az,Bz,Cz) + epsi*p->DZP[ke +marge];
 
-	is = p->posc_i(xs);
-	ie = p->posc_i(xe);
+        is = p->posc_i(xs);
+        ie = p->posc_i(xe);
 
-	ks = p->posc_k(zs);
-    ke = p->posc_k(ze);
+        ks = p->posc_k(zs);
+        ke = p->posc_k(ze);
 
-	is = MAX(is,0);
-	ie = MIN(ie,p->knox);
+        is = MAX(is,0);
+        ie = MIN(ie,p->knox);
 
-	ks = MAX(ks,0);
-	ke = MIN(ke,p->knoz);
+        ks = MAX(ks,0);
+        ke = MIN(ke,p->knoz);
 
 
 

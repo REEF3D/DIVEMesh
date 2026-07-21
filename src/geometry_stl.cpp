@@ -33,8 +33,8 @@ void geometry::stl_preproc(lexer* p, dive* a, int &ts, int &te)
 void geometry::stl_postproc(lexer* p, dive* a, int &ts, int &te, intfield &f, field &dist, int sign)
 {
     LOOP
-	{
-	f(i,j,k)*=sign;
-    dist(i,j,k)*=double(sign);
-	}
+    {
+        f(i,j,k)*=sign;
+        dist(i,j,k)*=double(sign);
+    }
 }

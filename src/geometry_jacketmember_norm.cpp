@@ -24,7 +24,7 @@ Author: Hans Bihs
 #include"lexer.h"
 #include"dive.h"
 
-void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te, 
+void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
                 double xm1, double ym1, double zm1, double r1, double xm2, double ym2, double zm2, double r2)
 {
     double U,ds,eta;
@@ -44,13 +44,13 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     double x2,y2,z2;
     double a1,b1,c1;
     double a2,b2,c2;
-    
+
     dX = xm2-xm1;
     dY = ym2-ym1;
     dZ = zm2-zm1;
 
     length = sqrt(dX*dX + dY*dY + dZ*dZ);
-    
+
     alpha=beta=gamma=0.0;
 
     // alpha
@@ -62,7 +62,7 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     a2=0.0;
     b2=0.0;
     c2=0.0;
- 
+
     double ee=1.0e-4;
     int count=0;
     do
@@ -71,25 +71,25 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
         y1=0.0;
         z1=0.0;
 
-      rotation(x1,y1,z1,a1,b1,c1);
-      angle_calc(x1,y1,z1,a2,b2,c2);
+        rotation(x1,y1,z1,a1,b1,c1);
+        angle_calc(x1,y1,z1,a2,b2,c2);
 
-      if(a2>alpha+ee || a2<alpha-ee)
-      a1 = a1 - 0.1*(a2-alpha);
+        if(a2>alpha+ee || a2<alpha-ee)
+        a1 = a1 - 0.1*(a2-alpha);
 
-      if(b2>beta+ee || b2<beta-ee)
-      b1 = b1 - 0.1*(b2-beta);
+        if(b2>beta+ee || b2<beta-ee)
+        b1 = b1 - 0.1*(b2-beta);
 
-      if(c2>gamma+ee || c2<gamma-ee)
-      c1 = c1 - 0.1*(c2-gamma);
+        if(c2>gamma+ee || c2<gamma-ee)
+        c1 = c1 - 0.1*(c2-gamma);
 
 
-      if(a2<=alpha+ee && a2>=alpha-ee)
-      if(b2<=beta+ee && b2>=beta-ee)
-      if(c2<=gamma+ee && c2>=gamma-ee)
-      break;
+        if(a2<=alpha+ee && a2>=alpha-ee)
+        if(b2<=beta+ee && b2>=beta-ee)
+        if(c2<=gamma+ee && c2>=gamma-ee)
+        break;
 
-     ++count;
+        ++count;
     }while(count<2500);
 
     cout<<"iteration: "<<count<<endl;
@@ -100,127 +100,127 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     cout<<"x1: "<<x1<<" y1: "<<y1<<" z1: "<<z1<<endl<<endl;
 
 
-	rmax = MAX(r1,r2);
+    rmax = MAX(r1,r2);
 
-	U = 2.0 * PI * rmax;
-	ds = p->S19*(U*p->DXM);
-	snum = int(U/ds);
+    U = 2.0 * PI * rmax;
+    ds = p->S19*(U*p->DXM);
+    snum = int(U/ds);
 
 
     dX = xm2-xm1;
     dY = ym2-ym1;
     dZ = zm2-zm1;
-    
+
     xm2=xm1+length;
     ym2=ym1;
     zm2=zm1;
 
-// Vertices
-	ds = (2.0*PI)/double(snum);
+    // Vertices
+    ds = (2.0*PI)/double(snum);
 
-	eta=0.0;
+    eta=0.0;
 
-	ts=p->tricount;
+    ts=p->tricount;
 
-	for(n=0;n<snum;++n)
-	{
-	//bottom circle
-	p->trivec_x[p->tricount] = -1.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
+    for(n=0;n<snum;++n)
+    {
+        //bottom circle
+        p->trivec_x[p->tricount] = -1.0;
+        p->trivec_y[p->tricount] = 0.0;
+        p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xm1;
-	p->tri_y[p->tricount][0] = ym1;
-	p->tri_z[p->tricount][0] = zm1;
+        p->tri_x[p->tricount][0] = xm1;
+        p->tri_y[p->tricount][0] = ym1;
+        p->tri_z[p->tricount][0] = zm1;
 
-	p->tri_x[p->tricount][1] = xm1;
-	p->tri_y[p->tricount][1] = ym1 + r1*sin(eta);
-	p->tri_z[p->tricount][1] = zm1 + r1*cos(eta);
+        p->tri_x[p->tricount][1] = xm1;
+        p->tri_y[p->tricount][1] = ym1 + r1*sin(eta);
+        p->tri_z[p->tricount][1] = zm1 + r1*cos(eta);
 
-	p->tri_x[p->tricount][2] = xm1;
-	p->tri_y[p->tricount][2] = ym1 + r1*sin(eta+ds);
-	p->tri_z[p->tricount][2] = zm1 + r1*cos(eta+ds);
-	++p->tricount;
+        p->tri_x[p->tricount][2] = xm1;
+        p->tri_y[p->tricount][2] = ym1 + r1*sin(eta+ds);
+        p->tri_z[p->tricount][2] = zm1 + r1*cos(eta+ds);
+        ++p->tricount;
 
-	//top circle
-	p->trivec_x[p->tricount] = 1.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
+        //top circle
+        p->trivec_x[p->tricount] = 1.0;
+        p->trivec_y[p->tricount] = 0.0;
+        p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xm2;
-	p->tri_y[p->tricount][0] = ym2;
-	p->tri_z[p->tricount][0] = zm2;
+        p->tri_x[p->tricount][0] = xm2;
+        p->tri_y[p->tricount][0] = ym2;
+        p->tri_z[p->tricount][0] = zm2;
 
-	p->tri_x[p->tricount][1] = xm2;
-	p->tri_y[p->tricount][1] = ym2 + r2*sin(eta);
-	p->tri_z[p->tricount][1] = zm2 + r2*cos(eta);
+        p->tri_x[p->tricount][1] = xm2;
+        p->tri_y[p->tricount][1] = ym2 + r2*sin(eta);
+        p->tri_z[p->tricount][1] = zm2 + r2*cos(eta);
 
-	p->tri_x[p->tricount][2] = xm2;
-	p->tri_y[p->tricount][2] = ym2 + r2*sin(eta+ds);
-	p->tri_z[p->tricount][2] = zm2 + r2*cos(eta+ds);
-	++p->tricount;
+        p->tri_x[p->tricount][2] = xm2;
+        p->tri_y[p->tricount][2] = ym2 + r2*sin(eta+ds);
+        p->tri_z[p->tricount][2] = zm2 + r2*cos(eta+ds);
+        ++p->tricount;
 
-	//side
-	// 1st triangle
-	p->tri_x[p->tricount][0] = xm1;
-	p->tri_y[p->tricount][0] = ym1 + r1*sin(eta);
-	p->tri_z[p->tricount][0] = zm1 + r1*cos(eta);
+        //side
+        // 1st triangle
+        p->tri_x[p->tricount][0] = xm1;
+        p->tri_y[p->tricount][0] = ym1 + r1*sin(eta);
+        p->tri_z[p->tricount][0] = zm1 + r1*cos(eta);
 
-	p->tri_x[p->tricount][1] = xm2;
-	p->tri_y[p->tricount][1] = ym2 + r2*sin(eta+ds);
-	p->tri_z[p->tricount][1] = zm2 + r2*cos(eta+ds);
+        p->tri_x[p->tricount][1] = xm2;
+        p->tri_y[p->tricount][1] = ym2 + r2*sin(eta+ds);
+        p->tri_z[p->tricount][1] = zm2 + r2*cos(eta+ds);
 
-	p->tri_x[p->tricount][2] = xm1;
-	p->tri_y[p->tricount][2] = ym1 + r1*sin(eta+ds);
-	p->tri_z[p->tricount][2] = zm1 + r1*cos(eta+ds);
+        p->tri_x[p->tricount][2] = xm1;
+        p->tri_y[p->tricount][2] = ym1 + r1*sin(eta+ds);
+        p->tri_z[p->tricount][2] = zm1 + r1*cos(eta+ds);
 
-	Ax = p->tri_x[p->tricount][0]-p->tri_x[p->tricount][2];
-	Ay = p->tri_y[p->tricount][0]-p->tri_x[p->tricount][2];
-	Az = p->tri_z[p->tricount][0]-p->tri_x[p->tricount][2];
+        Ax = p->tri_x[p->tricount][0]-p->tri_x[p->tricount][2];
+        Ay = p->tri_y[p->tricount][0]-p->tri_x[p->tricount][2];
+        Az = p->tri_z[p->tricount][0]-p->tri_x[p->tricount][2];
 
-	Bx = p->tri_x[p->tricount][1]-p->tri_x[p->tricount][2];
-	By = p->tri_y[p->tricount][1]-p->tri_x[p->tricount][2];
-	Bz = p->tri_z[p->tricount][1]-p->tri_x[p->tricount][2];
+        Bx = p->tri_x[p->tricount][1]-p->tri_x[p->tricount][2];
+        By = p->tri_y[p->tricount][1]-p->tri_x[p->tricount][2];
+        Bz = p->tri_z[p->tricount][1]-p->tri_x[p->tricount][2];
 
-	Nx = Ay*Bz - Az*By;
-	Ny = Az*Bx - Ax*Bz;
-	Nz = Ax*By - Ay*Bx;
+        Nx = Ay*Bz - Az*By;
+        Ny = Az*Bx - Ax*Bz;
+        Nz = Ax*By - Ay*Bx;
 
-	norm = sqrt(Nx*Nx + Ny*Ny + Nz*Nz);
+        norm = sqrt(Nx*Nx + Ny*Ny + Nz*Nz);
 
-	p->trivec_x[p->tricount] = Nx/norm;
-	p->trivec_y[p->tricount] = Ny/norm;
-	p->trivec_z[p->tricount] = Nz/norm;
+        p->trivec_x[p->tricount] = Nx/norm;
+        p->trivec_y[p->tricount] = Ny/norm;
+        p->trivec_z[p->tricount] = Nz/norm;
 
-	++p->tricount;
+        ++p->tricount;
 
-	// 2nd triangle
-	p->tri_x[p->tricount][0] = xm1;
-	p->tri_y[p->tricount][0] = ym1 + r1*sin(eta);
-	p->tri_z[p->tricount][0] = zm1 + r1*cos(eta);
+        // 2nd triangle
+        p->tri_x[p->tricount][0] = xm1;
+        p->tri_y[p->tricount][0] = ym1 + r1*sin(eta);
+        p->tri_z[p->tricount][0] = zm1 + r1*cos(eta);
 
-	p->tri_x[p->tricount][1] = xm2;
-	p->tri_y[p->tricount][1] = ym2 + r2*sin(eta+ds);
-	p->tri_z[p->tricount][1] = zm2 + r2*cos(eta+ds);
+        p->tri_x[p->tricount][1] = xm2;
+        p->tri_y[p->tricount][1] = ym2 + r2*sin(eta+ds);
+        p->tri_z[p->tricount][1] = zm2 + r2*cos(eta+ds);
 
-	p->tri_x[p->tricount][2] = xm2;
-	p->tri_y[p->tricount][2] = ym2 + r2*sin(eta);
-	p->tri_z[p->tricount][2] = zm2 + r2*cos(eta);
+        p->tri_x[p->tricount][2] = xm2;
+        p->tri_y[p->tricount][2] = ym2 + r2*sin(eta);
+        p->tri_z[p->tricount][2] = zm2 + r2*cos(eta);
 
-	p->trivec_x[p->tricount] = Nx/norm;
-	p->trivec_y[p->tricount] = Ny/norm;
-	p->trivec_z[p->tricount] = Nz/norm;
+        p->trivec_x[p->tricount] = Nx/norm;
+        p->trivec_y[p->tricount] = Ny/norm;
+        p->trivec_z[p->tricount] = Nz/norm;
 
 
-	++p->tricount;
+        ++p->tricount;
 
-	eta+=ds;
-	}
+        eta+=ds;
+    }
     te=p->tricount;
 
     xrot=xm1;
-	yrot=ym1;
-	zrot=zm1;
+    yrot=ym1;
+    zrot=zm1;
 
     psi=c1;
     theta=b1;
