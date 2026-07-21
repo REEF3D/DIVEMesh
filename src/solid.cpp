@@ -28,33 +28,31 @@ solid::solid(lexer *p, dive *a) : geometry(p,a)
 {
     cout<<"solid ini";
 
+    cout<<"."<<endl;
 
-	cout<<"."<<endl;
+    if(p->S9==1)
+    p->S9_1=1;
+    else if(p->S9==2)
+    p->S9_1=-1;
 
-	if(p->S9==1)
-	p->S9_1=1;
+    if(p->S121>0)
+    {
+        if(p->S122<p->S121)
+        for(qn=0;qn<p->S121;++qn)
+        {
+            p->S122_K[qn] = 0.5;
+            p->S122_n[qn] = 1.85;
+            p->S122_xc[qn] = 0.22;
+            p->S122_yc[qn] = 0.075;
+        }
 
-	if(p->S9==2)
-	p->S9_1=-1;
-
-	if(p->S121>0)
-	{
-		if(p->S122<p->S121)
-		for(qn=0;qn<p->S121;++qn)
-		{
-		p->S122_K[qn] = 0.5;
-		p->S122_n[qn] = 1.85;
-		p->S122_xc[qn] = 0.22;
-		p->S122_yc[qn] = 0.075;
-		}
-
-		if(p->S123<p->S121)
-		for(qn=0;qn<p->S121;++qn)
-		{
-		p->S123_R1[qn] = 0.45;
-		p->S123_R2[qn] = 0.2;
-		}
-	}
+        if(p->S123<p->S121)
+        for(qn=0;qn<p->S121;++qn)
+        {
+            p->S123_R1[qn] = 0.45;
+            p->S123_R2[qn] = 0.2;
+        }
+    }
 
     if(p->S201>0)
     {
@@ -316,8 +314,7 @@ void solid::start(lexer* p, dive* a)
                 ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
                 p->S18_1=temp;
             }
-
-            if(p->S301==2)
+            else if(p->S301==2)
             {
                 ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
             }
@@ -329,19 +326,17 @@ void solid::start(lexer* p, dive* a)
     {
         if(a->solid(i,j,k)==-1)
         a->solid_dist(i,j,k)=-fabs(a->solid_dist(i,j,k));
-
-        if(a->solid(i,j,k)==1)
+        else if(a->solid(i,j,k)==1)
         a->solid_dist(i,j,k)=fabs(a->solid_dist(i,j,k));
     }
 
     LOOP
-	{
-		if(a->solid_dist(i,j,k)>10.0*p->DXM)
-		a->solid_dist(i,j,k)=10.0*p->DXM;
-
-		if(a->solid_dist(i,j,k)<-10.0*p->DXM)
-		a->solid_dist(i,j,k)=-10.0*p->DXM;
-	}
+    {
+        if(a->solid_dist(i,j,k)>10.0*p->DXM)
+        a->solid_dist(i,j,k)=10.0*p->DXM;
+        else if(a->solid_dist(i,j,k)<-10.0*p->DXM)
+        a->solid_dist(i,j,k)=-10.0*p->DXM;
+    }
 
     LOOP
     if(a->solid_dist(i,j,k)!=a->solid_dist(i,j,k))
@@ -350,5 +345,3 @@ void solid::start(lexer* p, dive* a)
 
     cout<<"solid_trinum: "<<p->trinum<<"  solid_tricount: "<<p->tricount<<endl;
 }
-
-
