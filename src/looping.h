@@ -32,7 +32,7 @@ Author: Hans Bihs
 #define IDIR if(a->i_dir==1)
 #define JDIR if(a->j_dir==1)
 #define KDIR if(a->k_dir==1)
-	
+
 
 #define ILOOP for(i=0;i<a->knox;++i)
 #define JLOOP for(j=0;j<a->knoy;++j)
@@ -63,7 +63,7 @@ Author: Hans Bihs
 
 #define IREVLOOP for(i=p->knox-1;i>=0;--i)
 #define JREVLOOP for(j=p->knoy-1;j>=0;--j)
-#define XYREVLOOP ILOOP JLOOP 
+#define XYREVLOOP ILOOP JLOOP
 
 #define XYMALOOP IMALOOP JMALOOP
 #define YXMALOOP JMALOOP IMALOOP
@@ -105,7 +105,7 @@ Author: Hans Bihs
 
 #define ICFLAG if(ic>=-3 && ic<kx+3 && jc>=-3 && jc<ky+3)
 #define ICBOUNDS if(ic<-3 || ic>=kx+3 || jc<-3 || jc>=ky+3)
-    
+
 #define ITPLOOP for(i=-1; i<p->knox; ++i)
 #define JTPLOOP for(j=-1; j<p->knoy; ++j)
 #define KTPLOOP for(k=-1; k<p->knoz; ++k)
