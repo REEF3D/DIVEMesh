@@ -35,9 +35,9 @@ void lexer::createspace()
     
     if(B2==1)
     {
-    knox = B2_knox;
-    knoy = B2_knoy;
-    knoz = B2_knoz;
+        knox = B2_knox;
+        knoy = B2_knoy;
+        knoz = B2_knoz;
     }
     
     if(B101==8)
@@ -80,9 +80,9 @@ void lexer::createspace()
         count=0;
         while(!file.eof())
         {
-        val0=val;
-        file>>val;
-        ++count;
+            val0=val;
+            file>>val;
+            ++count;
         }
         
         file.close();
@@ -116,9 +116,9 @@ void lexer::createspace()
         count=0;
         while(!file.eof())
         {
-        val0=val;
-        file>>val;
-        ++count;
+            val0=val;
+            file>>val;
+            ++count;
         }
         
         file.close();
