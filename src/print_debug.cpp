@@ -48,4 +48,3 @@ void print_grid::print_debug(lexer* p, dive* a)
 
     result.close();
 }
-

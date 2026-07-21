@@ -29,7 +29,7 @@ Author: Hans Bihs
 
 using namespace std;
 
-void print_grid::print_bottom(lexer* p,dive* a)
+void print_grid::print_bottom(lexer* p, dive* a)
 {
     char name[100];
 
