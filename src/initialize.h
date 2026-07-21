@@ -23,24 +23,18 @@ Author: Hans Bihs
 #ifndef INITIALIZE_H_
 #define INITIALIZE_H_
 
-#include<iostream>
-#include"field.h"
 #include"lexer.h"
 #include"dive.h"
-
 
 using namespace std;
 
 class initialize : public increment
 {
 public:
-    initialize();
-    virtual ~initialize();
+    initialize() = default;
+    virtual ~initialize() = default;
 
     void start(lexer*,dive*);
-
-
-
 };
 
 #endif

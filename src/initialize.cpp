@@ -22,14 +22,6 @@ Author: Hans Bihs
 
 #include "initialize.h"
 
-initialize::initialize()
-{
-}
-
-initialize::~initialize()
-{
-}
-
 void initialize::start(lexer* p, dive* a)
 {
     MALOOP
@@ -41,18 +33,17 @@ void initialize::start(lexer* p, dive* a)
     }
 
     LOOP
-	{
-    a->flag(i,j,k)=1;
-	a->solid(i,j,k)=1;
-	}
-
-	XYLOOP
     {
-    a->bedlevel(i,j)=p->zmin;
-    a->zstl_min(i,j)=1.0e10;
-    a->zstl_max(i,j)=-1.0e10;
-    a->solidbed(i,j)=-1.0e10;
-    a->topobed(i,j)=p->zmin;
+        a->flag(i,j,k)=1;
+        a->solid(i,j,k)=1;
     }
 
+    XYLOOP
+    {
+        a->bedlevel(i,j)=p->zmin;
+        a->zstl_min(i,j)=1.0e10;
+        a->zstl_max(i,j)=-1.0e10;
+        a->solidbed(i,j)=-1.0e10;
+        a->topobed(i,j)=p->zmin;
+    }
 }
