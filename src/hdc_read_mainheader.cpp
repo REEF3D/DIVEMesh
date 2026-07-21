@@ -33,128 +33,128 @@ void hdc::read_mainheader(lexer *p, dive *a)
     ifstream mainhead;
     int ii1,ii2;
     double val;
-    
+
     if(p->H10==2)
     sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D-SFLOW_State_Mainheader.r3d");
-    
+
     if(p->H10==4 || p->H10==44)
     sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
-    
+
     if(p->H10==5)
     sprintf(name,"./REEF3D_NHFLOW_STATE/REEF3D-NHFLOW_State_Mainheader.r3d");
-    
+
 	mainhead.open(name, ios::binary);
-    
+
     // count numiter
     mainhead.read((char*)&iin, sizeof(int));
-	numprocs=iin;
-    
+    numprocs=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	jdir=iin;
-    
+    jdir=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	NGx=iin;
-    
+    NGx=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	NGy=iin;
-    
+    NGy=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	NGz=iin;
-    
+    NGz=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	file_version=iin;
-    
+    file_version=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	file_type=iin;
-    
+    file_type=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	file_conti=iin;
-    
+    file_conti=iin;
+
     mainhead.read((char*)&ddn, sizeof(double));
-	SWL=ddn;
-    
-    mainhead.read((char*)&ddn, sizeof(double));
-	val=ddn;
-    
+    SWL=ddn;
+
     mainhead.read((char*)&ddn, sizeof(double));
 	val=ddn;
-    
-    
+
+    mainhead.read((char*)&ddn, sizeof(double));
+	val=ddn;
+
+
     // read flag
     p->Iarray(flag_all,numprocs);
-    
+
     for(int qn=0;qn<numprocs;++qn)
-    {    
-    mainhead.read((char*)&iin, sizeof(int));
-    
-	flag_all[qn]=iin;
+    {
+        mainhead.read((char*)&iin, sizeof(int));
+
+        flag_all[qn]=iin;
     }
-    
-    
+
+
     // read timesteps
     numiter=0;
     while(!mainhead.eof())
-	{
-    ii1=ii2;
-    
-    mainhead.read((char*)&iin, sizeof(int));
-    ii2=iin;
- 
-    mainhead.read((char*)&ddn, sizeof(double));  
-    
-    ++numiter;
+    {
+        ii1=ii2;
+
+        mainhead.read((char*)&iin, sizeof(int));
+        ii2=iin;
+
+        mainhead.read((char*)&ddn, sizeof(double));
+
+        ++numiter;
     }
-    
-    
+
+
     if(ii1==ii2)
     --numiter;
-    
+
     mainhead.close();
-    
+
     cout<<"HDC numiter: "<<numiter<<endl;
-    
-    
+
+
     // allocate simtime
     p->Darray(simtime,numiter+1);
-    
-// ------------
-    
+
+    // ------------
+
     // re-read mainhead
     mainhead.open(name, ios::binary);
-    
+
     mainhead.read((char*)&iin, sizeof(int));
-	numprocs=iin;
-    
+    numprocs=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	jdir=iin;
-    
+    jdir=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	NGx=iin;
-    
+    NGx=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	NGy=iin;
-    
+    NGy=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	NGz=iin;
-    
+    NGz=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	file_version=iin;
-    
+    file_version=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	file_type=iin;
-    
+    file_type=iin;
+
     mainhead.read((char*)&iin, sizeof(int));
-	file_conti=iin;
-    
+    file_conti=iin;
+
     mainhead.read((char*)&ddn, sizeof(double));
-	SWL=ddn;
-    
-    mainhead.read((char*)&ddn, sizeof(double));
-	val=ddn;
-    
+    SWL=ddn;
+
     mainhead.read((char*)&ddn, sizeof(double));
 	val=ddn;
-    
+
+    mainhead.read((char*)&ddn, sizeof(double));
+	val=ddn;
+
     cout<<"HDC numprocs: "<<numprocs<<endl;
     cout<<"HDC NGx: "<<NGx<<endl;
     cout<<"HDC NGy: "<<NGy<<endl;
@@ -164,25 +164,25 @@ void hdc::read_mainheader(lexer *p, dive *a)
     cout<<"HDC file_type: "<<file_type<<endl;
     cout<<"HDC file_conti: "<<file_conti<<endl<<endl;
 
-    // read flag    
+    // read flag
     for(qn=0;qn<numprocs;++qn)
     {
-    mainhead.read((char*)&iin, sizeof(int));
-	flag_all[qn]=iin;
+        mainhead.read((char*)&iin, sizeof(int));
+        flag_all[qn]=iin;
     }
-    
+
     count=0;
     while(!mainhead.eof())
-	{
-    mainhead.read((char*)&iin, sizeof(int));
- 
-    mainhead.read((char*)&ddn, sizeof(double)); 
-    simtime[count] = ddn;
-    
+    {
+        mainhead.read((char*)&iin, sizeof(int));
+
+        mainhead.read((char*)&ddn, sizeof(double));
+        simtime[count] = ddn;
+
     //cout<<"simtime: "<<simtime[count]<<endl;
-    
+
     ++count;
     }
-    
+
     mainhead.close();
 }

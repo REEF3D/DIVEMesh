@@ -36,59 +36,59 @@ void hdc::read_sflow(lexer *p, dive *a)
         // Open Single File
         if(file_conti==1)
         {
-        filename_single_in(p,a,n,q); 
+        filename_single_in(p,a,n,q);
         result[q].open(name, ios::binary);
         }
-    
-    // header section
+
+        // header section
         result[q].read((char*)&iin, sizeof(int));
         result[q].read((char*)&iin, sizeof(int));
         result[q].read((char*)&iin, sizeof(int));
 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-	
-    // read eta and bed
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    eta[i+orig_i[q]][j+orig_j[q]] = ffn;
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+
+        // read eta and bed
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            eta[i+orig_i[q]][j+orig_j[q]] = ffn;
+        }
+
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            bed[i+orig_i[q]][j+orig_j[q]] = ffn;
+        }
+
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            U[i+orig_i[q]][j+orig_j[q]][0] = ffn;
+        }
+
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            V[i+orig_i[q]][j+orig_j[q]][0] = ffn;
+        }
+
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            W[i+orig_i[q]][j+orig_j[q]][0] = ffn;
+        }
     }
-    
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    bed[i+orig_i[q]][j+orig_j[q]] = ffn;
-    }
-    
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    U[i+orig_i[q]][j+orig_j[q]][0] = ffn;
-    }
-    
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    V[i+orig_i[q]][j+orig_j[q]][0] = ffn;
-    }
-    
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    W[i+orig_i[q]][j+orig_j[q]][0] = ffn;
-    }
-    }
-    
+
     if(file_conti==1)
     for(q=0; q<numprocs; ++q)
     result[q].close();
