@@ -23,25 +23,21 @@ Author: Hans Bihs
 #ifndef FIELD_H_
 #define FIELD_H_
 
-#include<iostream>
 #include"increment.h"
 
 class lexer;
 
-using namespace std;
-
 class field : public increment
 {
 public:
-
-	field(lexer*);
-	double& operator()(int, int, int);
-
+    field(lexer*);
+    inline double& operator()(int ii, int jj, int kk)
+    {
+        return feld[ii+xma][jj+yma][kk+zma];
+    };
 
 private:
-	double ***feld;
-	int dx,dy,dz;
-
+    double ***feld;
 };
 
 #endif

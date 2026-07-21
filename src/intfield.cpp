@@ -25,16 +25,5 @@ Author: Hans Bihs
 
 intfield::intfield(lexer *p)
 {
-	p->Iarray(feld,p->knox+2*xma,p->knoy+2*yma,p->knoz+2*zma);
-
-	dx=xma;
-	dy=yma;
-	dz=zma;
+    p->Iarray(feld,p->knox+2*xma,p->knoy+2*yma,p->knoz+2*zma);
 }
-
-int& intfield::operator()(int ii, int jj, int kk)
-{
-	return feld[ii+dx][jj+dy][kk+dz];
-}
-
-
