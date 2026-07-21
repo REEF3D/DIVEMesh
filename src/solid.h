@@ -52,7 +52,6 @@ private:
     int is_count;
     int maxpt;
 
-
     // fluvial box
     double dangle,length;
     //double *xl,*yl,*xr,*yr;
@@ -68,4 +67,3 @@ private:
 };
 
 #endif
-
