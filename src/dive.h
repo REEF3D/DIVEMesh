@@ -32,7 +32,7 @@ Author: Hans Bihs
 #include"intfield2d.h"
 
 using namespace std;
- 
+
 class dive : public increment, public resize_class
 {
  public:
@@ -42,10 +42,10 @@ class dive : public increment, public resize_class
     void initialize();
 
     intfield flag;         // water/soC12/empty  +  which bc
-	intfield solid,topo,porous;
+    intfield solid,topo,porous;
     field solid_dist,topo_dist;
     intfield subgrid;      // for all water cells: number of subgrid
-    field2d topobed,solidbed; 
+    field2d topobed,solidbed;
     field2d bedlevel;      // combined bedlevel
     field2d zstl_max,zstl_min;
     field2d dataset;
@@ -57,14 +57,14 @@ class dive : public increment, public resize_class
     int **surf,**surf_solid;
     int *in,*ut,*fsf,*bed,*wall;                                // surface counter
     int *subknox,*subknoy,*subknoz;
-	int i_dir,j_dir,k_dir;
+    int i_dir,j_dir,k_dir;
     int *solid_gcbextra,*topo_gcbextra,*tot_gcbextra;
 
-	//domain decomp
-	int *mpx,*mpy,*mpz;                                         // possible subgrids in each directions
+    //domain decomp
+    int *mpx,*mpy,*mpz;                                         // possible subgrids in each directions
     int mx,my,mz;                                               // final subgrids in each direction
 
-	double *xorig,*yorig,*zorig;                                // origin in [m] for each subgrid
+    double *xorig,*yorig,*zorig;                                // origin in [m] for each subgrid
     int *xnode,*ynode,*znode;                                   // origin of subgrids in ijk in large grid
 
     int para1count,para2count,para3count,para4count,para5count,para6count;
@@ -73,30 +73,30 @@ class dive : public increment, public resize_class
     int paraco1count,paraco2count,paraco3count,paraco4count,paraco5count,paraco6count;
     int **para1sf,**para2sf,**para3sf,**para4sf,**para5sf,**para6sf;
     int **paraslice1sf,**paraslice2sf,**paraslice3sf,**paraslice4sf;
-	int **para1void,**para2void,**para3void,**para4void,**para5void,**para6void;
+    int **para1void,**para2void,**para3void,**para4void,**para5void,**para6void;
     int **para1co,**para2co,**para3co,**para4co,**para5co,**para6co;
     int **paracoslice1sf,**paracoslice2sf,**paracoslice3sf,**paracoslice4sf;
     int *para1,*para2,*para3,*para4,*para5,*para6;              // para surface counter
     int *paraco1,*paraco2,*paraco3,*paraco4,*paraco5,*paraco6;
     int *paraslice1,*paraslice2,*paraslice3,*paraslice4;              // paraslice surface counter
-    int *paracoslice1,*paracoslice2,*paracoslice3,*paracoslice4; 
+    int *paracoslice1,*paracoslice2,*paracoslice3,*paracoslice4;
     int *nbpara1,*nbpara2,*nbpara3,*nbpara4,*nbpara5,*nbpara6;  // neigbours for each subgrid
 
     int*** sgfield;
-    
+
     int **periodicX,*periodicXall;
 
     //ibm
     int maxsurf;
-	int *mpi_index, *mpi_edges, mpi_edgenum;
-	int *solid_gcb,*topo_gcb;
-	
-	//polygon objects
-	int vertice_num, polygon_num;
-	int **polygon,*numvert,*polygon_offset,polygon_sum;
-	double **vertice;
-	
-	
+    int *mpi_index, *mpi_edges, mpi_edgenum;
+    int *solid_gcb,*topo_gcb;
+
+    //polygon objects
+    int vertice_num, polygon_num;
+    int **polygon,*numvert,*polygon_offset,polygon_sum;
+    double **vertice;
+
+
 	// MG
 	int ***paramg1,***paramg2,***paramg3,***paramg4,***paramg5,***paramg6;
 	int *paramg1_count,*paramg2_count,*paramg3_count,*paramg4_count,*paramg5_count,*paramg6_count;
