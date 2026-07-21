@@ -35,30 +35,22 @@ class inverse_dist_local final : public interpolation, public increment
 {
 public:
     inverse_dist_local(lexer*,dive*);
-    virtual ~inverse_dist_local();
+    virtual ~inverse_dist_local() = default;
 
     void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**) override final;
 
 private:
-    double gxy(lexer*,dive*,double*,double*,double*,double*,double*,int,int,double**);
+    double gxy(lexer*,dive*,int,int,double*,double*,double*,double*,double*,int,int);
     void setup(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
 
-    double xmin,xmax,ymin,ymax,zmin,zmax;
-
     int Nx,Ny;
-    int count,cp;
-    int counter;
-    double Dmax,R,dij;
-    double origx,origy,w;
+    int dij;
 
     int **ptnum,***ptid;
 
-    int r,s,t,ic,jc,kp,dd;
-    int is,ie,js,je;
+    double smooth_lengthP4;
 
-    double g,wsum,dist,weight;
-    double xc,yc;
-    double smooth_length;
+    static constexpr int dd = 3;
 };
 
 #endif

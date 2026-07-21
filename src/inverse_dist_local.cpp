@@ -23,12 +23,11 @@ Author: Hans Bihs
 #include "inverse_dist_local.h"
 #include "dive.h"
 #include "lexer.h"
+#include <algorithm>
+#include <cmath>
+#include <sstream>
 
 inverse_dist_local::inverse_dist_local(lexer *p, dive *a)
-{
-}
-
-inverse_dist_local::~inverse_dist_local()
 {
 }
 
@@ -36,11 +35,14 @@ void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double 
 {
     setup(p,a,Fx,Fy,Fz,XC,YC,kx,ky);
 
-    counter=0;
-    for(i=0;i<kx;++i)
-    for(j=0;j<ky;++j)
+    double smooth_length = p->G34*p->DXM;
+    smooth_lengthP4 = smooth_length*smooth_length*smooth_length*smooth_length;
+
+    int counter = 0;
+    for(int i=0; i<kx; ++i)
+    for(int j=0; j<ky; ++j)
     {
-        f[i+3][j+3] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
+        f[i+3][j+3] = gxy(p,a,i,j,Fx,Fy,Fz,XC,YC,kx,ky);
         ++counter;
 
         if(counter%1000==0)
@@ -48,64 +50,69 @@ void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double 
     }
 }
 
-double inverse_dist_local::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
+double inverse_dist_local::gxy(lexer *p, dive *a, int i, int j, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
-    xc = XC[IP];
-    yc = YC[JP];
+    constexpr int radius = 3;
 
-    g=0.0;
-    wsum=0.0;
+    const double xc = XC[IP];
+    const double yc = YC[JP];
 
-    int radius=3;
+    double g = 0.0;
+    double wsum = 0.0;
+    double zmean = 0.0;
+    int cp = 0;
 
-    double zmean=0.0;
-    cp=0;
+    double xcF, ycF, dist, w;
+    int is, ie, js, je;
+    int r, s, t, q;
+    int count;
+
     do{
-        is=MAX(i-dij-cp,-radius);
-        ie=MIN(i+dij+cp,Nx-radius);
+        is=std::max(i-dij-cp,-radius);
+        ie=std::min(i+dij+cp,Nx-radius);
 
-        js=MAX(j-dij-cp,-radius);
-        je=MIN(j+dij+cp,Ny-radius);
-
+        js=std::max(j-dij-cp,-radius);
+        je=std::min(j+dij+cp,Ny-radius);
 
         zmean=0.0;
         count=0;
-        for(r=is;r<ie;++r)
+        for(r=is; r<ie; ++r)
         {
-            for(s=js;s<je;++s)
+            for(s=js; s<je; ++s)
             {
-                for(t=0;t<ptnum[r+dd][s+dd];++t)
+                for(t=0; t<ptnum[r+dd][s+dd]; ++t)
                 {
                     q = ptid[r+dd][s+dd][t];
 
-                    smooth_length = p->G34*p->DXM;
-
-                    dist = sqrt(pow(xc-Fx[q],2.0) + pow(yc-Fy[q],2.0) + pow(smooth_length*smooth_length,2.0));
+                    xcF = xc-Fx[q];
+                    ycF = yc-Fy[q];
+                    dist = sqrt(xcF*xcF + ycF*ycF + smooth_lengthP4);
 
                     // interpolation loop
                     w = pow(1.0/(dist>1.0e-15?dist:1.0e15),p->G35);
 
-                    wsum+=w;
+                    wsum += w;
 
                     g += w*Fz[q];
 
+                    zmean += Fz[q];
+
                     ++count;
-                    zmean+=Fz[q];
                 }
             }
         }
 
         if(count>0)
-        zmean=zmean/double(count);
+        zmean = zmean/double(count);
 
-        cp+=2;//*(count+1);
-    }while(count<MIN(p->G18,p->Np));
+        cp += 2;
+    }
+    while(count<std::min(p->G18,p->Np));
 
     if(wsum>0.0)
-    g/=wsum;
-
-    if(wsum==0.0)
-    g/=1.0e20;
+    g /= wsum;
+    else if(wsum==0.0)
+    g /= 1.0e20;
 
     return g;
 }
