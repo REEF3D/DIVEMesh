@@ -24,15 +24,6 @@ Author: Hans Bihs
 #include"lexer.h"
 
 field1d::field1d(lexer *p)
-{	
-	p->Darray(feld,p->knox+2*xma);
-
-	dx=xma;
-}
-
-double& field1d::operator()(int ii)
 {
-	return feld[ii+dx];
+    p->Darray(feld,p->knox+2*xma);
 }
-
-

@@ -25,17 +25,5 @@ Author: Hans Bihs
 
 field2d::field2d(lexer *p)
 {
-	p->Darray(feld,p->knox+2*xma,p->knoy+2*yma);
-
-	dx=xma;
-	dy=yma;
+    p->Darray(feld,p->knox+2*xma,p->knoy+2*yma);
 }
-
-
-
-double& field2d::operator()(int ii, int jj)
-{
-	return feld[ii+dx][jj+dy];
-}
-
-

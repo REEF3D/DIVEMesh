@@ -24,17 +24,6 @@ Author: Hans Bihs
 #include"lexer.h"
 
 intfield2d::intfield2d(lexer *p)
-{	
-	p->Iarray(feld,p->knox+2*xma,p->knoy+2*yma);
-
-	dx=xma;
-	dy=yma;
-}
-
-int& intfield2d::operator()(int ii, int jj)
 {
-	return feld[ii+dx][jj+dy];
+    p->Iarray(feld,p->knox+2*xma,p->knoy+2*yma);
 }
-
-
-
