@@ -29,23 +29,13 @@ Author: Hans Bihs
 class lexer;
 class dive;
 
-using namespace std;
-
 class slice : public increment
 {
 public:
     slice(lexer*,dive*);
-    virtual ~slice();
+    virtual ~slice() = default;
 
-    virtual void start(lexer*,dive*);
-
-
-private:
-
-
-
+    void start(lexer*,dive*);
 };
 
 #endif
-
-

@@ -23,29 +23,21 @@ Author: Hans Bihs
 #include"slice.h"
 #include"dive.h"
 #include"lexer.h"
-#include"inverse_dist.h"
-#include"inverse_dist_local.h"
 
 slice::slice(lexer *p, dive *a)
 {
 }
 
-slice::~slice()
-{
-}
-
 void slice::start(lexer* p, dive* a)
 {
-    cout<<"slice"<<endl;
-    
+    std::cout<<"slice"<<std::endl;
+
     XYMALOOP
     a->flagslice(i,j)=-10;
-    
-    
+
     LOOP
     {
         if(a->flag(i,j,k)==1 && a->solid(i,j,k)>0)
         a->flagslice(i,j)=1;
     }
 }
-
