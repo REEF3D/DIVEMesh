@@ -1,4 +1,8 @@
 
+26.08
+x added FNPF nesting through the HDC framework
+x fixed sample geo.dat print out
+
 26.05
 x added CMS grid system (grid rotation and translation)
 x updated geodata interpolation
