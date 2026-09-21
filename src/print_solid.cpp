@@ -25,185 +25,68 @@ Author: Hans Bihs
 #include"dive.h"
 #include<sys/stat.h>
 
-print_stl::print_stl(lexer* p, dive *a)
+print_stl::print_stl(lexer *p, dive *a)
 {
 }
 
-print_stl::~print_stl()
-{
-}
-
-void print_stl::solid_stl(lexer* p, dive* a)
+void print_stl::solid_stl(lexer *p, dive *a)
 {
     mkdir("./DIVEMesh_Paraview",0777);
-    sprintf(name,"./DIVEMesh_Paraview/REEF3D_Solid.stl");
+    snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Solid.stl");
 
+    write_stl(p,a);
+}
+
+void print_stl::topo_stl(lexer *p, dive *a)
+{
+    mkdir("./DIVEMesh_Paraview",0777);
+    snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Topo.stl");
+
+    write_stl(p,a);
+}
+
+void print_stl::write_stl(lexer *p, dive *a)
+{
     ofstream result;
     result.open(name, ios::binary);
 
-
-    result<<"solid"<<" "<<"ascii"<<endl;
-
+    result<<"topo ascii\n";
 
     for(n=0; n<p->tricount; ++n)
     {
-        result<<" facet normal "<<p->trivec_x[n]<<" "<<p->trivec_y[n]<<" "<<p->trivec_z[n]<<endl;
-        result<<"  outer loop"<<endl;
-        result<<"   vertex "<<p->tri_x[n][0]<<" "<<p->tri_y[n][0]<<" "<<p->tri_z[n][0]<<endl;
-        result<<"   vertex "<<p->tri_x[n][1]<<" "<<p->tri_y[n][1]<<" "<<p->tri_z[n][1]<<endl;
-        result<<"   vertex "<<p->tri_x[n][2]<<" "<<p->tri_y[n][2]<<" "<<p->tri_z[n][2]<<endl;
-        result<<"  endloop"<<endl;
-        result<<" endfacet"<<endl;
+        result<<" facet normal "<<p->trivec_x[n]<<" "<<p->trivec_y[n]<<" "<<p->trivec_z[n]<<"\n";
+        result<<" outer loop\n";
+        result<<"  vertex "<<p->tri_x[n][0]<<" "<<p->tri_y[n][0]<<" "<<p->tri_z[n][0]<<"\n";
+        result<<"  vertex "<<p->tri_x[n][1]<<" "<<p->tri_y[n][1]<<" "<<p->tri_z[n][1]<<"\n";
+        result<<"  vertex "<<p->tri_x[n][2]<<" "<<p->tri_y[n][2]<<" "<<p->tri_z[n][2]<<"\n";
+        result<<" endloop\n";
+        result<<" endfacet\n";
     }
 
-    result<<"endsolid"<<endl;
-
+    result<<"endsolid\n";
 
     result.close();
 }
 
-void print_stl::topo_stl(lexer* p, dive* a)
+void print_stl::solid_vtp(lexer *p, dive *a)
 {
     mkdir("./DIVEMesh_Paraview",0777);
-    sprintf(name,"./DIVEMesh_Paraview/REEF3D_Topo.stl");
+    snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Solid.vtp");
 
-    ofstream result;
-    result.open(name, ios::binary);
+    cout<<"print_solid\n";
 
-
-    result<<"topo"<<" "<<"ascii"<<endl;
-
-
-    for(n=0; n<p->tricount; ++n)
-    {
-        result<<" facet normal "<<p->trivec_x[n]<<" "<<p->trivec_y[n]<<" "<<p->trivec_z[n]<<endl;
-        result<<"  outer loop"<<endl;
-        result<<"   vertex "<<p->tri_x[n][0]<<" "<<p->tri_y[n][0]<<" "<<p->tri_z[n][0]<<endl;
-        result<<"   vertex "<<p->tri_x[n][1]<<" "<<p->tri_y[n][1]<<" "<<p->tri_z[n][1]<<endl;
-        result<<"   vertex "<<p->tri_x[n][2]<<" "<<p->tri_y[n][2]<<" "<<p->tri_z[n][2]<<endl;
-        result<<"  endloop"<<endl;
-        result<<" endfacet"<<endl;
-    }
-
-    result<<"endsolid"<<endl;
-
-
-    result.close();
+    write_vtp(p,a);
 }
 
-
-void print_stl::solid_vtp(lexer* p, dive* a)
+void print_stl::topo_vtp(lexer *p, dive *a)
 {
     mkdir("./DIVEMesh_Paraview",0777);
-    sprintf(name,"./DIVEMesh_Paraview/REEF3D_Solid.vtp");
+    snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Topo.vtp");
+
+    cout<<"print_topo\n";
 
     ofstream result;
     result.open(name, ios::binary);
-
-    cout<<"print_solid"<<endl;
-
-    n=0;
-
-    offset[n]=0;
-    ++n;
-
-    offset[n]=offset[n-1]+8*p->tricount*3*3 + 4;
-    ++n;
-    offset[n]=offset[n-1]+4*p->tricount*3 + 4;
-    ++n;
-    offset[n]=offset[n-1]+4*p->tricount*3 + 4;
-    ++n;
-    //---------------------------------------------
-
-    result<<"<?xml version=\"1.0\"?>"<<endl;
-    result<<"<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\">"<<endl;
-    result<<"<PolyData>"<<endl;
-    result<<"<Piece NumberOfPoints=\""<<p->tricount*3<<"\" NumberOfPolys=\""<<p->tricount<<"\">"<<endl;
-
-    n=0;
-    result<<"<Points>"<<endl;
-    result<<"<DataArray type=\"Float64\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-    result<<"</Points>"<<endl;
-
-    result<<"<Polys>"<<endl;
-    result<<"<DataArray type=\"Int32\"  Name=\"connectivity\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-    result<<"<DataArray type=\"Int32\"  Name=\"offsets\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-    ++n;
-    result<<"<DataArray type=\"Int32\"  Name=\"types\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-
-    result<<"</Polys>"<<endl;
-
-    result<<"</Piece>"<<endl;
-    result<<"</PolyData>"<<endl;
-
-    //----------------------------------------------------------------------------
-    result<<"<AppendedData encoding=\"raw\">"<<endl<<"_";
-
-
-    //  XYZ
-    iin=8*p->tricount*3*3;
-    result.write((char*)&iin, sizeof(int));
-    for(n=0;n<p->tricount;++n)
-    for(q=0;q<3;++q)
-    {
-        ddn=p->Xout(p->tri_x[n][q],p->tri_y[n][q]);
-        result.write((char*)&ddn, sizeof(double));
-
-        ddn=p->Yout(p->tri_x[n][q],p->tri_y[n][q]);
-        result.write((char*)&ddn, sizeof(double));
-
-        ddn=p->tri_z[n][q];
-        result.write((char*)&ddn, sizeof(double));
-    }
-
-    //  Connectivity POLYGON
-    int count=0;
-    iin=4*p->tricount*3;
-    result.write((char*)&iin, sizeof(int));
-    for(n=0;n<p->tricount;++n)
-    for(q=0;q<3;++q)
-    {
-        iin=count;
-        result.write((char*)&iin, sizeof(int));
-        ++count;
-    }
-
-    //  Offset of Connectivity
-    iin=4*p->tricount;
-    result.write((char*)&iin, sizeof(int));
-    iin=0;
-    for(n=0;n<p->tricount;++n)
-    {
-        iin+= 3;//a->polygon_offset[n];
-        result.write((char*)&iin, sizeof(int));
-    }
-
-    //  Cell types
-    iin=4*p->tricount;
-    result.write((char*)&iin, sizeof(int));
-    for(n=0;n<p->tricount;++n)
-    {
-        iin=7;
-        result.write((char*)&iin, sizeof(int));
-    }
-
-    result<<endl<<"</AppendedData>"<<endl;
-    result<<"</VTKFile>"<<endl;
-
-    result.close();
-}
-
-void print_stl::topo_vtp(lexer* p, dive* a)
-{
-    mkdir("./DIVEMesh_Paraview",0777);
-    sprintf(name,"./DIVEMesh_Paraview/REEF3D_Topo.vtp");
-
-    ofstream result;
-    result.open(name, ios::binary);
-
-    cout<<"print_topo"<<endl;
 
     n=0;
 
@@ -218,32 +101,30 @@ void print_stl::topo_vtp(lexer* p, dive* a)
     ++n;
     //---------------------------------------------
 
-    result<<"<?xml version=\"1.0\"?>"<<endl;
-    result<<"<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\">"<<endl;
-    result<<"<PolyData>"<<endl;
-    result<<"<Piece NumberOfPoints=\""<<p->tricount*3<<"\" NumberOfPolys=\""<<p->tricount<<"\">"<<endl;
+    result<<"<?xml version=\"1.0\"?>\n";
+    result<<"<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
+    result<<"<PolyData>\n";
+    result<<"<Piece NumberOfPoints=\""<<p->tricount*3<<"\" NumberOfPolys=\""<<p->tricount<<"\">\n";
 
     n=0;
-    result<<"<Points>"<<endl;
-    result<<"<DataArray type=\"Float32\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<Points>\n";
+    result<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-    result<<"</Points>"<<endl;
+    result<<"</Points>\n";
 
-    result<<"<Polys>"<<endl;
-    result<<"<DataArray type=\"Int32\"  Name=\"connectivity\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<Polys>\n";
+    result<<"<DataArray type=\"Int32\" Name=\"connectivity\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-    result<<"<DataArray type=\"Int32\"  Name=\"offsets\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<DataArray type=\"Int32\" Name=\"offsets\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-    result<<"<DataArray type=\"Int32\"  Name=\"types\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
 
-    result<<"</Polys>"<<endl;
+    result<<"</Polys>\n";
 
-    result<<"</Piece>"<<endl;
-    result<<"</PolyData>"<<endl;
+    result<<"</Piece>\n";
+    result<<"</PolyData>\n";
+    result<<"<AppendedData encoding=\"raw\">\n"<<"_";
 
     //----------------------------------------------------------------------------
-    result<<"<AppendedData encoding=\"raw\">"<<endl<<"_";
-
 
     //  XYZ
     iin=4*p->tricount*3*3;
@@ -279,28 +160,98 @@ void print_stl::topo_vtp(lexer* p, dive* a)
     iin=0;
     for(n=0;n<p->tricount;++n)
     {
-        iin+= 3;//a->polygon_offset[n];
+        iin+= 3;
         result.write((char*)&iin, sizeof(int));
     }
 
-    //  Cell types
-    iin=4*p->tricount;
-    result.write((char*)&iin, sizeof(int));
-    for(n=0;n<p->tricount;++n)
-    {
-        iin=7;
-        result.write((char*)&iin, sizeof(int));
-    }
-
-    result<<endl<<"</AppendedData>"<<endl;
-    result<<"</VTKFile>"<<endl;
+    result<<endl<<"</AppendedData>\n";
+    result<<"</VTKFile>\n";
 
     result.close();
 }
 
+void print_stl::write_vtp(lexer *p, dive *a)
+{
+    ofstream result;
+    result.open(name, ios::binary);
 
+    n=0;
 
+    offset[n] = 0;
+    ++n;
 
+    offset[n] = offset[n-1] + sizeof(double)*p->tricount*3*3 + sizeof(int);
+    ++n;
+    offset[n] = offset[n-1] + sizeof(int)*p->tricount*3 + sizeof(int);
+    ++n;
+    offset[n] = offset[n-1] + sizeof(int)*p->tricount + sizeof(int);
+    ++n;
+    //---------------------------------------------
 
+    result<<"<?xml version=\"1.0\"?>\n";
+    result<<"<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
+    result<<"<PolyData>\n";
+    result<<"<Piece NumberOfPoints=\""<<p->tricount*3<<"\" NumberOfPolys=\""<<p->tricount<<"\">\n";
 
+    n=0;
+    result<<"<Points>\n";
+    result<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    result<<"</Points>\n";
 
+    result<<"<Polys>\n";
+    result<<"<DataArray type=\"Int32\" Name=\"connectivity\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    result<<"<DataArray type=\"Int32\" Name=\"offsets\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    result<<"</Polys>\n";
+
+    result<<"</Piece>\n";
+    result<<"</PolyData>\n";
+    result<<"<AppendedData encoding=\"raw\">\n_";
+
+    //----------------------------------------------------------------------------
+
+    //  XYZ
+    iin = sizeof(double)*p->tricount*3*3;
+    result.write((char*)&iin, sizeof(int));
+    for(n=0;n<p->tricount;++n)
+    for(q=0;q<3;++q)
+    {
+        ddn = p->Xout(p->tri_x[n][q],p->tri_y[n][q]);
+        result.write((char*)&ddn, sizeof(double));
+
+        ddn = p->Yout(p->tri_x[n][q],p->tri_y[n][q]);
+        result.write((char*)&ddn, sizeof(double));
+
+        ddn = p->tri_z[n][q];
+        result.write((char*)&ddn, sizeof(double));
+    }
+
+    //  Connectivity POLYGON
+    int count = 0;
+    iin = sizeof(int)*p->tricount*3;
+    result.write((char*)&iin, sizeof(int));
+    for(n=0; n<p->tricount; ++n)
+    for(q=0; q<3; ++q)
+    {
+        iin = count;
+        result.write((char*)&iin, sizeof(int));
+        ++count;
+    }
+
+    //  Offset of Connectivity
+    iin = sizeof(int)*p->tricount;
+    result.write((char*)&iin, sizeof(int));
+    iin = 0;
+    for(n=0; n<p->tricount; ++n)
+    {
+        iin += 3;
+        result.write((char*)&iin, sizeof(int));
+    }
+
+    result<<endl<<"</AppendedData>\n";
+    result<<"</VTKFile>\n";
+
+    result.close();
+}
