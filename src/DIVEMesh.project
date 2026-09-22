@@ -149,8 +149,6 @@
       <File Name="geometry.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="HDC">
-      <File Name="hdc_write_cfd.cpp"/>
-      <File Name="hdc_read_cfd.cpp"/>
       <File Name="hdc_write_nhflow.cpp"/>
       <File Name="hdc_read_nhflow.cpp"/>
       <File Name="hdc_write_sflow.cpp"/>
@@ -274,7 +272,6 @@
       <File Name="geodat_filter.cpp"/>
       <VirtualDirectory Name="Gaussian Kernel">
         <File Name="gaussian_setup.cpp"/>
-        <File Name="gaussian_kernel.cpp"/>
         <File Name="gaussian.cpp"/>
       </VirtualDirectory>
       <File Name="geodat_patch.cpp"/>
