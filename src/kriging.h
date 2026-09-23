@@ -40,7 +40,6 @@ public:
 
     virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
     
-	virtual double semivariogram(double);
 	virtual void rearrange(lexer*);
 	virtual void rearrange_b(lexer*);
 	
@@ -54,6 +53,14 @@ public:
 private:
     
     void ini(lexer*,dive*,int,double*,double*,double*);
+
+    inline double semivariogram(double dist)
+    {
+        if(dist<range)
+            return variance*((3.0*dist)/(2.0*range) - 0.5*pow(dist/range,3.0));
+        else
+            return variance;
+    }
 	
 	double **A,**B;
 	double*x,*b,*s,*row;

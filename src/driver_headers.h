@@ -27,20 +27,15 @@ Author: Hans Bihs
 #include"increment.h"
 #include"initialize.h"
 
-#include"baselayer.h"
-#include"box_bl.h"
 #include"bc.h"
 #include<iostream>
 #include"lexer.h"
 #include"dive.h"
-#include"printer.h"
 #include"print_grid.h"
 #include"print_vtu.h"
 #include"surface.h"
 #include"solid.h"
 #include"topo.h"
-
-#include"baselayer.h"
 
 #include"geodat.h"
 #include"bedlevel.h"

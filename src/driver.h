@@ -44,9 +44,8 @@ public:
 
 	lexer *p;
 	dive *a;
-	box_bl *pbox_bl;
-    printer *pprint;
-    printer *pvtu;
+    print_grid *pprint;
+    print_vtu *pvtu;
     surface *psurf;
     decomp *pdd;
     initialize *pini;
@@ -54,7 +53,6 @@ public:
     freecoor *pfree;
     objects *pobj;
     box *pbox;
-    baselayer *pbase;
     geodat *pgeo;
 	dataset *pdata;
 	objects_geometry *objgeo;

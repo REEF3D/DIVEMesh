@@ -29,10 +29,6 @@
     <VirtualDirectory Name="HDC">
       <File Name="hdc.h"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="Baselayer">
-      <File Name="baselayer.h"/>
-      <File Name="box_bl.h"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="Boundary">
       <File Name="bc.h"/>
       <File Name="surface.h"/>
@@ -49,8 +45,6 @@
       <VirtualDirectory Name="Initialize">
         <File Name="initialize.h"/>
       </VirtualDirectory>
-      <File Name="module.h"/>
-      <File Name="module_void.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Geodat">
       <VirtualDirectory Name="Interpolation">
@@ -72,7 +66,6 @@
         <File Name="print_stl_geodat.h"/>
         <File Name="print_grid.h"/>
         <File Name="print_vtu.h"/>
-        <File Name="printer.h"/>
         <File Name="print_stl.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Grid">
@@ -90,7 +83,6 @@
         <VirtualDirectory Name="Intfield">
           <File Name="intfield.h"/>
           <File Name="intfield1d.h"/>
-          <File Name="intfield1dy.h"/>
           <File Name="intfield2d.h"/>
         </VirtualDirectory>
         <File Name="resize.h"/>
@@ -98,7 +90,6 @@
       <File Name="driver.h"/>
       <File Name="main.h"/>
       <File Name="lexer.h"/>
-      <File Name="template.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Solid">
       <File Name="solid.h"/>
@@ -158,8 +149,6 @@
       <File Name="geometry.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="HDC">
-      <File Name="hdc_write_cfd.cpp"/>
-      <File Name="hdc_read_cfd.cpp"/>
       <File Name="hdc_write_nhflow.cpp"/>
       <File Name="hdc_read_nhflow.cpp"/>
       <File Name="hdc_write_sflow.cpp"/>
@@ -175,10 +164,6 @@
       <File Name="hdc_allocate.cpp"/>
       <File Name="hdc.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="Baselayer">
-      <File Name="baselayer.cpp"/>
-      <File Name="box_bl.cpp"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="Boundary">
       <VirtualDirectory Name="BC">
         <File Name="bc.cpp"/>
@@ -187,7 +172,6 @@
         <File Name="surface_gcbest.cpp"/>
         <File Name="surface_plate.cpp"/>
         <File Name="surface.cpp"/>
-        <File Name="surface_dir.cpp"/>
         <File Name="surface_solid.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Slice">
@@ -226,7 +210,6 @@
         <File Name="dataset_inversedist.cpp"/>
         <File Name="dataset.cpp"/>
       </VirtualDirectory>
-      <File Name="module_void.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Main">
       <File Name="driver.cpp"/>
@@ -234,7 +217,6 @@
         <VirtualDirectory Name="Coordinates">
           <File Name="coordinates.cpp"/>
         </VirtualDirectory>
-        <File Name="increment.cpp"/>
         <VirtualDirectory Name="Field">
           <File Name="field.cpp"/>
           <File Name="field1d.cpp"/>
@@ -243,7 +225,6 @@
         <VirtualDirectory Name="Fieldint">
           <File Name="intfield.cpp"/>
           <File Name="intfield1d.cpp"/>
-          <File Name="intfield1dy.cpp"/>
           <File Name="intfield2d.cpp"/>
         </VirtualDirectory>
         <VirtualDirectory Name="Resize">
@@ -290,7 +271,6 @@
       <File Name="geodat_filter.cpp"/>
       <VirtualDirectory Name="Gaussian Kernel">
         <File Name="gaussian_setup.cpp"/>
-        <File Name="gaussian_kernel.cpp"/>
         <File Name="gaussian.cpp"/>
       </VirtualDirectory>
       <File Name="geodat_patch.cpp"/>
@@ -311,7 +291,6 @@
       <VirtualDirectory Name="Kriging">
         <File Name="kriging_ini.cpp"/>
         <File Name="kriging_solve.cpp"/>
-        <File Name="kriging_semivariogram.cpp"/>
         <File Name="kriging_rearrange.cpp"/>
         <File Name="kriging.cpp"/>
       </VirtualDirectory>
@@ -327,7 +306,7 @@
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
-      <Compiler Options="-std=c++17" C_Options="" Assembler="">
+      <Compiler Options="-std=c++20" C_Options="" Assembler="">
         <IncludePath Value="."/>
       </Compiler>
       <Linker Options="">

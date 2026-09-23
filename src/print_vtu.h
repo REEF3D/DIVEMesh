@@ -23,15 +23,16 @@ Author: Hans Bihs
 #ifndef PRINT_VTU_H_
 #define PRINT_VTU_H_
 
-#include"printer.h"
+#include"lexer.h"
+#include"dive.h"
 #include"increment.h"
 
-class print_vtu : public printer, public increment
+class print_vtu : public increment
 {
 public:
     print_vtu(lexer*);
     virtual ~print_vtu() = default;
-    void start(lexer*,dive*) override;
+    void start(lexer*,dive*);
 private:
     double ipol(dive*,field&);
 };

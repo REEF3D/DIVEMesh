@@ -23,7 +23,8 @@ Author: Hans Bihs
 #ifndef PRINT_STL_GEODAT_H_
 #define PRINT_STL_GEODAT_H_
 
-#include"printer.h"
+#include"lexer.h"
+#include"dive.h"
 #include"increment.h"
 
 class lexer;
@@ -38,7 +39,7 @@ public:
 	print_stl_geodat(lexer*,dive*);
 	virtual ~print_stl_geodat();
     
-	virtual void print_geo(lexer*,dive*);
+	void print_geo(lexer*,dive*);
 
 private:
 

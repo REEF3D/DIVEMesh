@@ -23,16 +23,17 @@ Author: Hans Bihs
 #ifndef PRINT_GRID_H_
 #define PRINT_GRID_H_
 
-#include"printer.h"
+#include"lexer.h"
+#include"dive.h"
 #include"increment.h"
 
-class print_grid : public printer, public increment
+class print_grid : public increment
 {
 public:
     print_grid(lexer*);
     virtual ~print_grid() = default;
 
-    void start(lexer*,dive*) override;
+    void start(lexer*,dive*);
 private:
     void print_debug(lexer*,dive*);
     void print_bottom(lexer*,dive*);

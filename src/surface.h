@@ -42,7 +42,6 @@ public:
 
     void makesurf(lexer*,dive*);
     void makedist(lexer*,dive*);
-    void direction(lexer*,dive*);
 	void mem_alloc(lexer*,dive*);
     void make_solidsurf(lexer*,dive*);
     void makesurfsolid(lexer*,dive*);

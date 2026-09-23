@@ -23,7 +23,8 @@ Author: Hans Bihs
 #ifndef PRINT_STL_H_
 #define PRINT_STL_H_
 
-#include"printer.h"
+#include"lexer.h"
+#include"dive.h"
 #include"increment.h"
 
 class lexer;
@@ -37,10 +38,10 @@ class print_stl :  public increment
 public:
 	print_stl(lexer*,dive*);
 	virtual ~print_stl();
-	virtual void solid_vtp(lexer*,dive*);
-	virtual void solid_stl(lexer*,dive*);
-    virtual void topo_vtp(lexer*,dive*);
-	virtual void topo_stl(lexer*,dive*);
+	void solid_vtp(lexer*,dive*);
+	void solid_stl(lexer*,dive*);
+    void topo_vtp(lexer*,dive*);
+	void topo_stl(lexer*,dive*);
 
 private:
 
