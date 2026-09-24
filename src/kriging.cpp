@@ -28,8 +28,8 @@ Author: Hans Bihs
 // source:
 
 kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
-{    	
-	
+{
+
 }
 
 kriging::~kriging()
@@ -39,73 +39,73 @@ kriging::~kriging()
 void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *F, double *XC, double *YC, int kx, int ky, double **f)
 {
     ini(p,a,numpt,X,F,F);
-    
+
     //p->Np=numpt;
-	cout<<"kriging  p->Np: "<<p->Np<<endl;
-	
-	p->Darray(A,p->Np+1,p->Np+1);
-	p->Darray(B,p->Np+1,p->Np+1);
+    cout<<"kriging  p->Np: "<<p->Np<<endl;
 
-	p->Darray(b,p->Np+1);
-	p->Darray(x,p->Np+1);
-	p->Darray(s,p->Np+1);
-	p->Darray(row,p->Np+1);
+    p->Darray(A,p->Np+1,p->Np+1);
+    p->Darray(B,p->Np+1,p->Np+1);
 
-    
-	
+    p->Darray(b,p->Np+1);
+    p->Darray(x,p->Np+1);
+    p->Darray(s,p->Np+1);
+    p->Darray(row,p->Np+1);
+
+
+
 	cout<<"fill Aij"<<endl;
 	for(n=0; n<p->Np; ++n)
 	for(q=0; q<p->Np; ++q)
 	{
 		dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
-        	
-		A[n][q] = semivariogram(dist); 
+
+		A[n][q] = semivariogram(dist);
 	}
 
 	n=p->Np;
 	for(q=0; q<p->Np; ++q)
-	A[n][q] = 1.0; 
-	
+	A[n][q] = 1.0;
+
 	q=p->Np;
 	for(n=0; n<p->Np; ++n)
-	A[n][q] = 1.0; 
-	
-	A[p->Np][p->Np] = 0.0; 	
-	
+	A[n][q] = 1.0;
+
+	A[p->Np][p->Np] = 0.0;
+
 	rearrange(p);
-	
+
 	cout<<"matrix solver"<<endl;
 	invert(p,A,B,x,b);
-	
-	
+
+
 	cout<<"mainloop kriging"<<endl<<endl;
-	
+
 	for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
 	f[i+3][j+3] = 0.0;
-	
+
 	count=0;
 	for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
 	{
 	xc = XC[IP];
     yc = YC[JP];
-	
+
 		for(n=0; n<p->Np; ++n)
 		{
 			dist = sqrt(pow(xc-X[n],2.0) + pow(yc-Y[n],2.0));
-		
+
 			b[n] = semivariogram(dist);
-            
+
 		}
-		
+
 		b[p->Np]=1.0;
-		
+
 		rearrange_b(p);
 
-	
+
 	matvec(p,B,b,x);
-	
+
 		val=0.0;
 		for(n=0; n<p->Np; ++n)
         {
@@ -113,12 +113,12 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
 		}
         if(count%1000==0)
 		cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
-		
+
 	for(n=0; n<p->Np; ++n)
 	f[i+3][j+3] += x[n] * F[n];
-	
+
 	++count;
-    
+
     if(count%1000==0)
     cout<<"> processed cells: "<<count<<endl;
 	}

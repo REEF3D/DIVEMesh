@@ -32,64 +32,64 @@ class resize_class
 {
 public:
 
-	resize_class();
-	virtual ~resize_class();
-	
-	void rank(int);
+    resize_class();
+    virtual ~resize_class();
 
-	void Darray(double*&, int);
-	void Darray(double**&, int, int);
-	void Darray(double***&, int, int, int);
-	void Darray(double****&, int, int, int, int);
-    
+    void rank(int);
+
+    void Darray(double*&, int);
+    void Darray(double**&, int, int);
+    void Darray(double***&, int, int, int);
+    void Darray(double****&, int, int, int, int);
+
     void Farray(float*&, int);
-	void Farray(float**&, int, int);
-	void Farray(float***&, int, int, int);
-	void Farray(float****&, int, int, int, int);
+    void Farray(float**&, int, int);
+    void Farray(float***&, int, int, int);
+    void Farray(float****&, int, int, int, int);
 
-	void Iarray(int*&, int);
-	void Iarray(int**&, int, int);
-	void Iarray(int***&, int, int, int);
-	void Iarray(int****&, int, int, int, int);
-	void Iarray(int*****&, int, int, int, int, int);
-    
+    void Iarray(int*&, int);
+    void Iarray(int**&, int, int);
+    void Iarray(int***&, int, int, int);
+    void Iarray(int****&, int, int, int, int);
+    void Iarray(int*****&, int, int, int, int, int);
+
     void Iarray(int***&, int, int, int**);
 
-	void carray(char*&, int);
-	void carray(char**&, int, int);
-	void carray(char***&, int, int, int);
+    void carray(char*&, int);
+    void carray(char**&, int, int);
+    void carray(char***&, int, int, int);
 
 
-	void del_Darray(double*&,int);
-	void del_Darray(double**&,int, int);
-	void del_Darray(double***&,int, int, int);
-	void del_Darray(double****&,int,int, int, int);
+    void del_Darray(double*&,int);
+    void del_Darray(double**&,int, int);
+    void del_Darray(double***&,int, int, int);
+    void del_Darray(double****&,int,int, int, int);
 
-	void del_Iarray(int*&,int);
-	void del_Iarray(int**&,int, int);
-	void del_Iarray(int***&,int, int, int);
-	void del_Iarray(int****&,int, int, int, int);
-	void del_Iarray(int*****&,int,int, int, int, int);
-    
+    void del_Iarray(int*&,int);
+    void del_Iarray(int**&,int, int);
+    void del_Iarray(int***&,int, int, int);
+    void del_Iarray(int****&,int, int, int, int);
+    void del_Iarray(int*****&,int,int, int, int, int);
+
     void del_Iarray(int***&,int, int, int**);
 
-	void del_carray(char*&,int);
-	void del_carray(char**&,int, int);
-	void del_carray(char***&,int, int, int);
-	
-	void Dresize(double*&,int,int);
-	void Dresize(double**&,int,int,int,int);
-	void Dresize(double***&,int,int,int,int,int,int);
-	void Dresize(double****&,int,int,int,int,int,int,int,int);
-	
-	void Iresize(int*&,int,int);
-	void Iresize(int**&,int,int,int,int);
-	void Iresize(int***&,int,int,int,int,int,int);
-	void Iresize(int****&,int,int,int,int,int,int,int,int);
-    
+    void del_carray(char*&,int);
+    void del_carray(char**&,int, int);
+    void del_carray(char***&,int, int, int);
+
+    void Dresize(double*&,int,int);
+    void Dresize(double**&,int,int,int,int);
+    void Dresize(double***&,int,int,int,int,int,int);
+    void Dresize(double****&,int,int,int,int,int,int,int,int);
+
+    void Iresize(int*&,int,int);
+    void Iresize(int**&,int,int,int,int);
+    void Iresize(int***&,int,int,int,int,int,int);
+    void Iresize(int****&,int,int,int,int,int,int,int,int);
+
     void Iresize(int***&, int, int, int**, int**);
-	
-	int pararank;
+
+    int pararank;
 
 };
 

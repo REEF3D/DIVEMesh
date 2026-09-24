@@ -24,12 +24,12 @@ Author: Hans Bihs
 #include"lexer.h"
 #include"dive.h"
 
-void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te, 
+void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
                 double xs, double ys, double zs, double xe, double ye, double ze, double b, double h)
 {
-    
+
     double U,ds,eta;
-	
+
 	double rmax;
 	int snum;
 	int vertice_mem, center1_num,center2_num;
@@ -48,13 +48,13 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
     double a1,b1,c1;
     double a2,b2,c2;
     double off_x,off_y,off_z;
-    
+
     dX = xe-xs;
     dY = ye-ys;
     dZ = ze-zs;
 
     length = sqrt(dX*dX + dY*dY + dZ*dZ);
-    
+
     cout<<"beam length: "<<length<<endl;
 
     alpha=beta=gamma=0.0;
@@ -77,25 +77,25 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
         y1=0.0;
         z1=0.0;
 
-      rotation(x1,y1,z1,a1,b1,c1);
-      angle_calc(x1,y1,z1,a2,b2,c2);
+        rotation(x1,y1,z1,a1,b1,c1);
+        angle_calc(x1,y1,z1,a2,b2,c2);
 
-      if(a2>alpha+ee || a2<alpha-ee)
-      a1 = a1 - 0.5*(a2-alpha);
+        if(a2>alpha+ee || a2<alpha-ee)
+        a1 = a1 - 0.5*(a2-alpha);
 
-      if(b2>beta+ee || b2<beta-ee)
-      b1 = b1 - 0.5*(b2-beta);
+        if(b2>beta+ee || b2<beta-ee)
+        b1 = b1 - 0.5*(b2-beta);
 
-      if(c2>gamma+ee || c2<gamma-ee)
-      c1 = c1 - 0.5*(c2-gamma);
+        if(c2>gamma+ee || c2<gamma-ee)
+        c1 = c1 - 0.5*(c2-gamma);
 
 
-      if(a2<=alpha+ee && a2>=alpha-ee)
-      if(b2<=beta+ee && b2>=beta-ee)
-      if(c2<=gamma+ee && c2>=gamma-ee)
-      break;
+        if(a2<=alpha+ee && a2>=alpha-ee)
+        if(b2<=beta+ee && b2>=beta-ee)
+        if(c2<=gamma+ee && c2>=gamma-ee)
+        break;
 
-     ++count;
+        ++count;
     }while(count<1500);
 
     cout<<"iteration: "<<count<<endl;
@@ -108,19 +108,19 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
 
 	ts=p->tricount;
 
-    
+
     // redefine xs,xe
     off_x = xs;
     off_y = ys;
     off_z = zs;
-    
+
     xs = 0.0 + off_x;
     xe = length + off_x;
     ys = -0.5*b + off_y;
     ye = 0.5*b + off_y;
     zs = -0.5*h + off_z;
     ze = 0.5*h + off_z;
-    
+
 
 // Face 3
 	// Tri 1
@@ -128,229 +128,229 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = -1.0;
 	p->trivec_z[p->tricount] = 0.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ys;
 	p->tri_z[p->tricount][1] = ze;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
-	
+
 	// Tri 2
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = -1.0;
 	p->trivec_z[p->tricount] = 0.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
 	p->tri_z[p->tricount][1] = ze;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
 
-// Face 4	
+// Face 4
 	// Tri 3
 	p->trivec_x[p->tricount] = 1.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 0.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ys;
 	p->tri_z[p->tricount][1] = ze;
-	
+
 	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
-	
+
 	// Tri 4
 	p->trivec_x[p->tricount] = 1.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 0.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = zs;
-	
+
 	p->tri_x[p->tricount][2] = xe;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
 
-// Face 2	
+// Face 2
 	// Tri 5
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = 1.0;
 	p->trivec_z[p->tricount] = 0.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ye;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = ze;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
-	
+
 	// Tri 6
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = 1.0;
 	p->trivec_z[p->tricount] = 0.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ye;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = ze;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
 
-// Face 1	
+// Face 1
 	// Tri 7
 	p->trivec_x[p->tricount] = -1.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 0.0;
-	
+
 	p->tri_x[p->tricount][0] = xs;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ys;
 	p->tri_z[p->tricount][1] = ze;
-	
-	p->tri_x[p->tricount][2] = xs;
-	p->tri_y[p->tricount][2] = ye;
-	p->tri_z[p->tricount][2] = ze;
-	++p->tricount;
-	
-	// Tri 8
-	p->trivec_x[p->tricount] = -1.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = 0.0;
-	
-	p->tri_x[p->tricount][0] = xs;
-	p->tri_y[p->tricount][0] = ys;
-	p->tri_z[p->tricount][0] = zs;
-	
-	p->tri_x[p->tricount][1] = xs;
-	p->tri_y[p->tricount][1] = ye;
-	p->tri_z[p->tricount][1] = zs;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
 
-// Face 5	
+	// Tri 8
+	p->trivec_x[p->tricount] = -1.0;
+	p->trivec_y[p->tricount] = 0.0;
+	p->trivec_z[p->tricount] = 0.0;
+
+	p->tri_x[p->tricount][0] = xs;
+	p->tri_y[p->tricount][0] = ys;
+	p->tri_z[p->tricount][0] = zs;
+
+	p->tri_x[p->tricount][1] = xs;
+	p->tri_y[p->tricount][1] = ye;
+	p->tri_z[p->tricount][1] = zs;
+
+	p->tri_x[p->tricount][2] = xs;
+	p->tri_y[p->tricount][2] = ye;
+	p->tri_z[p->tricount][2] = ze;
+	++p->tricount;
+
+// Face 5
 	// Tri 9
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = -1.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = zs;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
-	
+
 	// Tri 10
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = -1.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = zs;
-	
+
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = zs;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = zs;
 	++p->tricount;
-	
+
 // Face 6
 	// Tri 11
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 1.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = ze;
-	
+
 	p->tri_x[p->tricount][1] = xs;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = ze;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ys;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
-	
+
 	// Tri 12
 	p->trivec_x[p->tricount] = 0.0;
 	p->trivec_y[p->tricount] = 0.0;
 	p->trivec_z[p->tricount] = 1.0;
-	
+
 	p->tri_x[p->tricount][0] = xe;
 	p->tri_y[p->tricount][0] = ys;
 	p->tri_z[p->tricount][0] = ze;
-	
+
 	p->tri_x[p->tricount][1] = xe;
 	p->tri_y[p->tricount][1] = ye;
 	p->tri_z[p->tricount][1] = ze;
-	
+
 	p->tri_x[p->tricount][2] = xs;
 	p->tri_y[p->tricount][2] = ye;
 	p->tri_z[p->tricount][2] = ze;
 	++p->tricount;
-	
+
     te=p->tricount;
 
 
     xrot=xs;
-	yrot=ys+0.5*b;
-	zrot=zs+0.5*h;
+    yrot=ys+0.5*b;
+    zrot=zs+0.5*h;
 
     psi=c1;
     theta=b1;
@@ -375,6 +375,6 @@ void geometry::beam(lexer *p, dive *a, int rank, int &ts, int &te,
 	phi=(PI/180.0)*p->S5_phi;
 	theta=(PI/180.0)*p->S5_theta;
 	psi=(PI/180.0)*p->S5_psi;
-    
+
 
 }

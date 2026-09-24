@@ -28,33 +28,33 @@ Author: Hans Bihs
 // source:
 
 void kriging::ini(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
-{    	
-	xmin=ymin=1.0e15;
-	xmax=ymax=-1.0e15;
-	mean=0.0;
-	
-	
+{
+    xmin=ymin=1.0e15;
+    xmax=ymax=-1.0e15;
+    mean=0.0;
+
+
 	for(n=0; n<numpt; ++n)
 	{
 	xmin = MIN(xmin,X[n]);
 	xmax = MAX(xmax,X[n]);
-	
+
 	ymin = MIN(ymin,Y[n]);
 	ymax = MAX(ymax,Y[n]);
-	
+
 	mean += F[n];
 	}
-	
+
 	range = p->D18*sqrt(pow(xmax-xmin,2.0) + pow(ymax-ymin,2.0));
-	
+
 	mean/=double(numpt);
-	
+
 	variance=0.0;
 	for(n=0; n<numpt; ++n)
 	variance += pow(F[n] - mean, 2.0);
-	
+
 	variance/=double(numpt);
-	
+
 	cout<<"Np: "<<numpt<<"  mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
 }
 

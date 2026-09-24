@@ -51,51 +51,51 @@ void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te, intfield &flag,
     for(k=0;k<maxpt;++k)
     is_num[j][k]=0;
 
-	for(n=ts; n<te; ++n)
-	{
-	Ax = p->tri_x[n][0];
-	Ay = p->tri_y[n][0];
-	Az = p->tri_z[n][0];
+    for(n=ts; n<te; ++n)
+    {
+        Ax = p->tri_x[n][0];
+        Ay = p->tri_y[n][0];
+        Az = p->tri_z[n][0];
 
-	Bx = p->tri_x[n][1];
-	By = p->tri_y[n][1];
-	Bz = p->tri_z[n][1];
+        Bx = p->tri_x[n][1];
+        By = p->tri_y[n][1];
+        Bz = p->tri_z[n][1];
 
-	Cx = p->tri_x[n][2];
-	Cy = p->tri_y[n][2];
-	Cz = p->tri_z[n][2];
+        Cx = p->tri_x[n][2];
+        Cy = p->tri_y[n][2];
+        Cz = p->tri_z[n][2];
 
-// --
-    ys = MIN3(Ay,By,Cy);
-	ye = MAX3(Ay,By,Cy);
+        // --
+        ys = MIN3(Ay,By,Cy);
+        ye = MAX3(Ay,By,Cy);
 
-	zs = MIN3(Az,Bz,Cz);
-	ze = MAX3(Az,Bz,Cz);
+        zs = MIN3(Az,Bz,Cz);
+        ze = MAX3(Az,Bz,Cz);
 
-    js = p->posc_j(ys);
-    js = p->posc_j(ye);
+        js = p->posc_j(ys);
+        js = p->posc_j(ye);
 
-	ks = p->posc_k(zs);
-    ke = p->posc_k(ze);
-// --
+        ks = p->posc_k(zs);
+        ke = p->posc_k(ze);
+        // --
 
-	ys = MIN3(Ay,By,Cy) - 0.6*p->DY[js];
-	ye = MAX3(Ay,By,Cy) + 0.6*p->DY[je];
+        ys = MIN3(Ay,By,Cy) - 0.6*p->DY[js];
+        ye = MAX3(Ay,By,Cy) + 0.6*p->DY[je];
 
-	zs = MIN3(Az,Bz,Cz) - 0.6*p->DZ[ks];
-	ze = MAX3(Az,Bz,Cz) + 0.6*p->DZ[ke];
+        zs = MIN3(Az,Bz,Cz) - 0.6*p->DZ[ks];
+        ze = MAX3(Az,Bz,Cz) + 0.6*p->DZ[ke];
 
-	js = p->posc_j(ys);
-    js = p->posc_j(ye);
+        js = p->posc_j(ys);
+        js = p->posc_j(ye);
 
-	ks = p->posc_k(zs);
-    ke = p->posc_k(ze);
+        ks = p->posc_k(zs);
+        ke = p->posc_k(ze);
 
-	js = MAX(js,0);
-	je = MIN(je,p->knoy);
+        js = MAX(js,0);
+        je = MIN(je,p->knoy);
 
-	ks = MAX(ks,0);
-	ke = MIN(ke,p->knoz);
+        ks = MAX(ks,0);
+        ke = MIN(ke,p->knoz);
 
 
 		for(j=js;j<je;j++)
@@ -170,7 +170,7 @@ void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te, intfield &flag,
     JLOOP
     KLOOP
     {
-    sort(is_R[j][k],0,is_num[j][k]-1);
+        sort(is_R[j][k],0,is_num[j][k]-1);
     }
 
     // gcb from intersects
@@ -202,8 +202,8 @@ void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te, intfield &flag,
 
         if(a->surfcount_solid>=a->surfnum_solid)
         {
-        p->Iresize(a->surf_solid,a->surfnum_solid,a->surfnum_solid+maxpt,5,5);
-        a->surfnum_solid+=maxpt;
+            p->Iresize(a->surf_solid,a->surfnum_solid,a->surfnum_solid+maxpt,5,5);
+            a->surfnum_solid+=maxpt;
         }
     }
 

@@ -38,20 +38,20 @@ void print_stl_geodat::print_geo(lexer* p, dive* a)
     mkdir("./DIVEMesh_Geo",0777);
 	sprintf(name,"./DIVEMesh_Geo/REEF3D_stl_geo.dat");
 
-	ofstream result;
-	result.open(name, ios::binary);
-    
+    ofstream result;
+    result.open(name, ios::binary);
+
     if(p->S91==1)
 	XYLOOP
 	result<<p->XP[IP]<<" "<<p->YP[JP]<<" "<<a->zstl_min(i,j)<<endl;
-    
+
     if(p->S91==2)
 	XYLOOP
 	result<<p->XP[IP]<<" "<<p->YP[JP]<<" "<<a->zstl_max(i,j)<<endl;
-	
 
 
-	result.close();	
+
+	result.close();
 }
 
 

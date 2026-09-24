@@ -36,33 +36,33 @@ void geometry::ogee_weir(lexer* p, dive* a,int rank, int &ts, int &te,
 	int snum;
 
     /*
-	xs = p->S121_x[rank];
+    xs = p->S121_x[rank];
     ys = p->S121_y[rank];
     zs = p->S121_z[rank];
-	Pd = p->S121_Pd[rank];
-	b = p->S121_b[rank];
-	H0 = p->S121_H0[rank];
+    Pd = p->S121_Pd[rank];
+    b = p->S121_b[rank];
+    H0 = p->S121_H0[rank];
 
-	Kval = p->S122_K[rank];
-	nval = p->S122_n[rank];
-	xc = p->S122_xc[rank]*H0;
-	yc = p->S122_yc[rank]*H0;
+    Kval = p->S122_K[rank];
+    nval = p->S122_n[rank];
+    xc = p->S122_xc[rank]*H0;
+    yc = p->S122_yc[rank]*H0;
 
-	R1 = p->S123_R1[rank]*H0;
-	R2 = p->S123_R2[rank]*H0;*/
+    R1 = p->S123_R1[rank]*H0;
+    R2 = p->S123_R2[rank]*H0;*/
 
 	xorig = xs + xc;
 	yorig = ys;
 	zorig = Pd;
 
-	x0 = xs + xc;
-	y0 = ys;
-	z0 = zs;
+    x0 = xs + xc;
+    y0 = ys;
+    z0 = zs;
 
-	// find xe from formula
+    // find xe from formula
 
-	xl =  pow((zorig-zs)/Kval * pow(H0,nval-1.0),1.0/nval);
-	xe =  xl + xs + xc;
+    xl =  pow((zorig-zs)/Kval * pow(H0,nval-1.0),1.0/nval);
+    xe =  xl + xs + xc;
 
 	//cout<<"OGEE Pd: "<<Pd<<" H0: "<<H0<<" K: "<<Kval<<" n: "<<nval<<endl;
 

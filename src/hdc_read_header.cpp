@@ -31,93 +31,93 @@ Author: Hans Bihs
 void hdc::read_header(lexer *p, dive *a)
 {
     ifstream header;
-    
+
     for(q=0; q<numprocs; ++q)
     if(flag_all[q]==1)
     {
         // filename
         filename_in_header(p,a,q);
-        
+
         // read header
         header.open(name, ios::binary);
-        
- 
+
+
         // read header section
-        
+
         // orig_ijk
         header.read((char*)&iin, sizeof(int));
         orig_i[q]=iin;
-        
+
         header.read((char*)&iin, sizeof(int));
         orig_j[q]=iin;
-        
+
         header.read((char*)&iin, sizeof(int));
         orig_k[q]=iin;
-        
-        // orig_xyz
-        header.read((char*)&ddn, sizeof(double)); 
-        orig_x[q] = ddn;
-        
-        header.read((char*)&ddn, sizeof(double)); 
-        orig_y[q] = ddn;
-        
-        header.read((char*)&ddn, sizeof(double)); 
-        orig_z[q] = ddn;
-        
 
-        
+        // orig_xyz
+        header.read((char*)&ddn, sizeof(double));
+        orig_x[q] = ddn;
+
+        header.read((char*)&ddn, sizeof(double));
+        orig_y[q] = ddn;
+
+        header.read((char*)&ddn, sizeof(double));
+        orig_z[q] = ddn;
+
+
+
         // NLx[q],NLy[q],NLz[q]
         header.read((char*)&iin, sizeof(int));
         NLx[q]=iin;
-        
+
         header.read((char*)&iin, sizeof(int));
         NLy[q]=iin;
-        
+
         header.read((char*)&iin, sizeof(int));
         NLz[q]=iin;
-        
-        
+
+
         // nbx
         header.read((char*)&iin, sizeof(int));
         nb1[q]=iin;
-        
+
         header.read((char*)&iin, sizeof(int));
         nb2[q]=iin;
 
         header.read((char*)&iin, sizeof(int));
         nb3[q]=iin;
-        
+
         header.read((char*)&iin, sizeof(int));
         nb4[q]=iin;
 
-          // read coordinates
+        // read coordinates
         for(i=0;i<NLx[q];++i)
         {
-        header.read((char*)&ddn, sizeof(double)); 
-        X[i+orig_i[q]] = ddn-p->H21;
+            header.read((char*)&ddn, sizeof(double));
+            X[i+orig_i[q]] = ddn-p->H21;
         }
-        
+
         for(j=0;j<NLy[q];++j)
         {
-        header.read((char*)&ddn, sizeof(double)); 
-        Y[j+orig_j[q]] = ddn-p->H22;
+            header.read((char*)&ddn, sizeof(double));
+            Y[j+orig_j[q]] = ddn-p->H22;
         }
-        
+
         for(k=0;k<NLz[q];++k)
         {
-        header.read((char*)&ddn, sizeof(double)); 
-        Z[k+orig_k[q]] = ddn-p->H23;
+            header.read((char*)&ddn, sizeof(double));
+            Z[k+orig_k[q]] = ddn-p->H23;
         }
-        
-        
+
+
         for(i=0;i<NLx[q];++i)
         for(j=0;j<NLy[q];++j)
         {
-        header.read((char*)&ddn, sizeof(double)); 
-        bed[i+orig_i[q]][j+orig_j[q]] = ddn;
+            header.read((char*)&ddn, sizeof(double));
+            bed[i+orig_i[q]][j+orig_j[q]] = ddn;
         }
-        
-        
+
+
         header.close();
     }
 

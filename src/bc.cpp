@@ -40,16 +40,16 @@ void bc::makebc(lexer* p, dive* a)
     outflow = p->C14;
     bottom = p->C15;
     top = p->C16;
-    
+
     if(p->knoy==1)
     {
-    right = 3;
-    left = 3;
+        right = 3;
+        left = 3;
     }
 
     LOOP
     if(a->flag(i,j,k)>0)
-	{
+    {
         if(i==0)
         a->flag(i-1,j,k)=-inflow;
 
@@ -67,9 +67,9 @@ void bc::makebc(lexer* p, dive* a)
 
         if(k==p->knoz-1)
         a->flag(i,j,k+1)=-top;
-	}
+    }
 
-	cout<<"."<<endl;
+    cout<<"."<<endl;
 
 }
 

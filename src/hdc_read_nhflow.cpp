@@ -36,56 +36,56 @@ void hdc::read_nhflow(lexer *p, dive *a)
         // Open Single File
         if(file_conti==1)
         {
-        filename_single_in(p,a,n,q); 
+        filename_single_in(p,a,n,q);
         result[q].open(name, ios::binary);
         }
-    
-    // header section
+
+        // header section
         result[q].read((char*)&iin, sizeof(int));
         result[q].read((char*)&iin, sizeof(int));
         result[q].read((char*)&iin, sizeof(int));
 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-        result[q].read((char*)&ddn, sizeof(double)); 
-	
-    // read eta
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    eta[i+orig_i[q]][j+orig_j[q]] = ffn;
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+        result[q].read((char*)&ddn, sizeof(double));
+
+        // read eta
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            eta[i+orig_i[q]][j+orig_j[q]] = ffn;
+        }
+
+        // read velocities
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        for(k=0;k<NLz[q];++k)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+        }
+
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        for(k=0;k<NLz[q];++k)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+        }
+
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        for(k=0;k<NLz[q];++k)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+            W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
+        }
     }
-    
-    // read velocities
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    for(k=0;k<NLz[q];++k)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    U[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
-    }
-    
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    for(k=0;k<NLz[q];++k)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    V[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
-    }
-    
-    for(i=0;i<NLx[q];++i)
-    for(j=0;j<NLy[q];++j)
-    for(k=0;k<NLz[q];++k)
-    {
-    result[q].read((char*)&ffn, sizeof(float)); 
-    W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
-    }
-    }
-    
+
     if(file_conti==1)
     for(q=0; q<numprocs; ++q)
     result[q].close();

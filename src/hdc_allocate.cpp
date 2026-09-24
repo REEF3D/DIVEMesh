@@ -30,7 +30,7 @@ void hdc::allocate(lexer *p, dive *a)
     result = new ifstream[numprocs];
     wfile  = new ofstream[p->M10];
     testfile  = new ofstream[p->M10];
-    
+
     p->Darray(X,NGx);
     p->Darray(Y,NGy);
     p->Darray(Z,NGz);
@@ -38,26 +38,26 @@ void hdc::allocate(lexer *p, dive *a)
 
     p->Farray(eta,NGx,NGy);
     p->Farray(Fifsf,NGx,NGy);
-    
+
     p->Farray(U,NGx,NGy,NGz);
     p->Farray(V,NGx,NGy,NGz);
     p->Farray(W,NGx,NGy,NGz);
-    
+
     p->Iarray(orig_i,numprocs);
     p->Iarray(orig_j,numprocs);
     p->Iarray(orig_k,numprocs);
-    
+
     p->Darray(orig_x,numprocs);
     p->Darray(orig_y,numprocs);
     p->Darray(orig_z,numprocs);
-    
+
     p->Iarray(nb1,numprocs);
     p->Iarray(nb2,numprocs);
     p->Iarray(nb3,numprocs);
     p->Iarray(nb4,numprocs);
-    
+
     p->Iarray(NLx,numprocs);
     p->Iarray(NLy,numprocs);
     p->Iarray(NLz,numprocs);
-    
+
 }

@@ -31,50 +31,50 @@ Author: Hans Bihs
 geodat::geodat(lexer *p, dive *a)
 {
     dd=3;
-    
+
     printcount=0;
 
     for(n=0; n<p->G10; ++n)
     {
-    p->G10_x[n] *= p->G12_x;
-    p->G10_y[n] *= p->G12_y;
-    p->G10_z[n] *= p->G12_z;
+        p->G10_x[n] *= p->G12_x;
+        p->G10_y[n] *= p->G12_y;
+        p->G10_z[n] *= p->G12_z;
     }
 
     for(n=0; n<p->G10; ++n)
     {
-    p->G10_x[n] += p->G11_x;
-    p->G10_y[n] += p->G11_y;
-    p->G10_z[n] += p->G11_z;
+        p->G10_x[n] += p->G11_x;
+        p->G10_y[n] += p->G11_y;
+        p->G10_z[n] += p->G11_z;
     }
-	
-	if(p->G23==1)
-	for(n=0; n<p->G10; ++n)
-	p->G10_z[n] *= -1.0;
-    
-    
+
+    if(p->G23==1)
+    for(n=0; n<p->G10; ++n)
+    p->G10_z[n] *= -1.0;
+
+
     if(p->G15==1)
     pipol = new inverse_dist(p,a);
-    
+
     if(p->G15==2)
     pipol = new inverse_dist_local(p,a);
-    
+
     if(p->G15==3)
     {
-    p->G36_select=1;
-    pipol = new kriging(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z);
+        p->G36_select=1;
+        pipol = new kriging(p,a,p->G10,p->G10_x,p->G10_y,p->G10_z);
     }
-    
+
     if(p->G15==5)
     pipol = new gaussian(p,a);
-    
+
     p->Np=p->G10;
     print(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,1);
-     
+
     p->Darray(XC,p->knox+14);
     p->Darray(YC,p->knoy+14);
-    
-    //cout<<"geodat  |  G10: "<<p->G10<<" Np: "<<p->Np<<endl;    
+
+    //cout<<"geodat  |  G10: "<<p->G10<<" Np: "<<p->Np<<endl;
 }
 
 geodat::~geodat()
@@ -85,98 +85,98 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
 {
     cout<<"geodat  Np_0: "<<p->G10<<endl;
     p->Np=p->G10;
-    
+
     if(p->G39==1)
     remove_bounds(p,a);
-    
+
     setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
-    
+
     if(p->G36_select==1)
     pointcheck_radius(p,a,p->G10_x,p->G10_y,p->G10_z);
-    
+
     if(p->G37_select==1)
     pointcheck_random(p,a,p->G10_x,p->G10_y,p->G10_z);
-    
-    
+
+
     if(p->G51==1)
     {
-    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
-    setup_ijk_delete(p,a,p->knox,p->knoy);
-    setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+        setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
+        setup_ijk_delete(p,a,p->knox,p->knoy);
+        setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
 
-    holecheck(p,a,p->G10_x,p->G10_y,p->G10_z);
+        holecheck(p,a,p->G10_x,p->G10_y,p->G10_z);
     }
 
-    
+
     coarsen(p,a);
-    
+
     // geo_patch
     if(p->G60==1)
     geo_patch(p,a,p->G10_x,p->G10_y,p->G10_z,p->Np);
-    
+
     print(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,1);
-    
+
 
     pipol->start(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,XC,YC,kx,ky,topof);
-    
+
     prolong(p,a,bed);
-    
+
     dryside(p,a,bed);
-    
+
     filter(p,a,bed);
-    
-    
+
+
     LOOP
     dist(i,j,k) = -bed(i,j) + p->ZP[KP];
-	
-	XYLOOP
-	a->bedlevel(i,j) = MAX(a->bedlevel(i,j),bed(i,j));
+
+    XYLOOP
+    a->bedlevel(i,j) = MAX(a->bedlevel(i,j),bed(i,j));
 }
 
 void geodat::gcb_estimate(lexer *p, dive *a, field2d &bed)
 {
-	int qn;
+    int qn;
     double zval;
-    
+
     intfield gd(p);
-	
-	for(qn=0; qn<p->M10;qn++)
+
+    for(qn=0; qn<p->M10;qn++)
     {
     if(p->G9==1)
 	a->topo_gcb[qn]=0;
-    
+
     if(p->G9==2)
 	a->solid_gcb[qn]=0;
     }
-    
+
     MALOOP
     gd(i,j,k)=-1;
-    
+
     LOOP
     {
-    zval = p->ZP[KP] + p->zmin;
- 
-    if(zval>=bed(i,j))
-    gd(i,j,k)=1;
+        zval = p->ZP[KP] + p->zmin;
+
+        if(zval>=bed(i,j))
+        gd(i,j,k)=1;
     }
 
-	n=0;
-	NLOOP
-	{
-		SUBLOOP
-		{
+    n=0;
+    NLOOP
+    {
+        SUBLOOP
+        {
             if(gd(i,j,k)==1 && (gd(i-1,j,k)==-1 || gd(i+1,j,k)==-1 || gd(i,j-1,k)==-1 || gd(i,j+1,k)==-1 || gd(i,j,k-1)==-1 || gd(i,j,k+1)==-1))
             {
             if(p->G9==1)
             ++a->topo_gcb[qn];
-            
+
             if(p->G9==2)
             ++a->solid_gcb[qn];
             }
 
-		}
-	++n;
-	}	
+        }
+        ++n;
+    }
 }
 
 void geodat::dryside(lexer *p, dive *a, field2d &bed)
@@ -185,11 +185,11 @@ void geodat::dryside(lexer *p, dive *a, field2d &bed)
     XYLOOP
     if(bed(i,j)>p->G24_h)
     bed(i,j) += p->G24_dz;
-    
+
     if(p->G25==1)
     XYLOOP
     if(bed(i,j)>p->G25_h)
-    bed(i,j) *= p->G25_fz;  
+    bed(i,j) *= p->G25_fz;
 }
 
 

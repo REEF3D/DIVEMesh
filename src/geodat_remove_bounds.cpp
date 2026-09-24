@@ -25,28 +25,28 @@ Author: Hans Bihs
 
 void geodat::remove_bounds(lexer *p, dive *a)
 {
-     // remove out of bounds points
-        double xs,xe,ys,ye;
-        
-            i=-3;
-            xs=p->XN[IP];
-            
-            i=p->knox+3;
-            xe=p->XN[IP];
-            
-            
-            j=-3;
-            ys=p->YN[JP];
-            
-            j=p->knoy+3;
-            ye=p->YN[JP];
-            
-        
-            
+    // remove out of bounds points
+    double xs,xe,ys,ye;
+
+    i=-3;
+    xs=p->XN[IP];
+
+    i=p->knox+3;
+    xe=p->XN[IP];
+
+
+    j=-3;
+    ys=p->YN[JP];
+
+    j=p->knoy+3;
+    ye=p->YN[JP];
+
+
+
         for(n=0;n<p->Np;++n)
-        {   
-            
-            
+        {
+
+
             if(p->G10_x[n]<xs || p->G10_x[n]>xe || p->G10_y[n]<ys || p->G10_y[n]>ye )
             {
             p->G10_x[n] = p->G10_x[p->Np-1];
@@ -54,15 +54,15 @@ void geodat::remove_bounds(lexer *p, dive *a)
             p->G10_z[n] = p->G10_z[p->Np-1];
             -- p->Np;
             --n;
-            } 
+            }
         }
-        
+
         //cout<<"geodat - xs: "<<xs<<" xe: "<<xe<<" ys: "<<ys<<" ye: "<<ye<<" |  Np: "<<p->Np<<endl;
-        
-        
+
+
         for(n=0;n<p->Np;++n)
-        {   
-            
+        {
+
             if((p->G26==1 && p->G10_z[n]<p->G26_zh) || (p->G27==1 && p->G10_z[n]>p->G27_zh))
             {
             p->G10_x[n] = p->G10_x[p->Np-1];
@@ -70,6 +70,6 @@ void geodat::remove_bounds(lexer *p, dive *a)
             p->G10_z[n] = p->G10_z[p->Np-1];
             -- p->Np;
             --n;
-            } 
+            }
         }
 }

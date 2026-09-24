@@ -28,23 +28,23 @@ Author: Hans Bihs
 #include<sys/types.h>
 
 void hdc::write_fnpf(lexer *p, dive *a)
-{    
+{
     // write result
     count=0;
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
-    {   
+    {
             // Open single file
             if(file_conti==1)
             {
             filename_single_out(p,a,n,count);
             wfile[count].open(name, ios::binary);
-            }
-        
+        }
+
         // write iter
         iin = 1014;
         wfile[count].write((char*)&iin, sizeof(int));
-        
+
         //ijk loop
         // ->write
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -54,7 +54,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         //cout<<"ETA: "<<ffn<<endl;
         wfile[count].write((char*)&ffn, sizeof(float));
         }
-        
+
         if(p->H10==44)
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
@@ -62,7 +62,7 @@ void hdc::write_fnpf(lexer *p, dive *a)
         ffn=float(Fifsf[i][j]);
         wfile[count].write((char*)&ffn, sizeof(float));
         }
-        
+
         if(p->H10==4)
         {
         for(i=is[aa]; i<ie[aa]; ++i)
@@ -71,32 +71,32 @@ void hdc::write_fnpf(lexer *p, dive *a)
         {
         ffn=float(U[i][j][k]);
         wfile[count].write((char*)&ffn, sizeof(float));
-        } 
-        
+        }
+
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(V[i][j][k]);
         wfile[count].write((char*)&ffn, sizeof(float));
-        } 
-        
+        }
+
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         for(k=0; k<NGz; ++k)
         {
         ffn=float(W[i][j][k]);
         wfile[count].write((char*)&ffn, sizeof(float));
-        } 
         }
-        
+        }
+
         ++count;
     }
-    
-            // file close
-            if(file_conti==1)
-            for(q=0;q<p->M10;++q)
-            wfile[q].close();
+
+    // file close
+    if(file_conti==1)
+    for(q=0;q<p->M10;++q)
+    wfile[q].close();
 }
 
 

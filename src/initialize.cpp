@@ -34,10 +34,10 @@ void initialize::start(lexer* p, dive* a)
 {
     MALOOP
     {
-    a->flag(i,j,k)=-21;
-	a->solid(i,j,k)=-10;
-    a->subgrid(i,j,k)=0;
-    a->solid_dist(i,j,k)=0.0;
+        a->flag(i,j,k)=-21;
+        a->solid(i,j,k)=-10;
+        a->subgrid(i,j,k)=0;
+        a->solid_dist(i,j,k)=0.0;
     }
 
     LOOP

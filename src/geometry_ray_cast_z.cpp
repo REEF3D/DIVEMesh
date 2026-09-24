@@ -44,66 +44,66 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 	double denom;
     double psi = 1.0e-8*p->DXM;
 
-	for(n=ts; n<te; ++n)
-	{
-	Ax = p->tri_x[n][0];
-	Ay = p->tri_y[n][0];
-	Az = p->tri_z[n][0];
+    for(n=ts; n<te; ++n)
+    {
+        Ax = p->tri_x[n][0];
+        Ay = p->tri_y[n][0];
+        Az = p->tri_z[n][0];
 
-	Bx = p->tri_x[n][1];
-	By = p->tri_y[n][1];
-	Bz = p->tri_z[n][1];
+        Bx = p->tri_x[n][1];
+        By = p->tri_y[n][1];
+        Bz = p->tri_z[n][1];
 
-	Cx = p->tri_x[n][2];
-	Cy = p->tri_y[n][2];
-	Cz = p->tri_z[n][2];
+        Cx = p->tri_x[n][2];
+        Cy = p->tri_y[n][2];
+        Cz = p->tri_z[n][2];
 
-	xs = MIN3(Ax,Bx,Cx);
-	xe = MAX3(Ax,Bx,Cx);
+        xs = MIN3(Ax,Bx,Cx);
+        xe = MAX3(Ax,Bx,Cx);
 
-	ys = MIN3(Ay,By,Cy);
-	ye = MAX3(Ay,By,Cy);
+        ys = MIN3(Ay,By,Cy);
+        ye = MAX3(Ay,By,Cy);
 
-	is = p->posf_i(xs);
-	ie = p->posf_i(xe);
+        is = p->posf_i(xs);
+        ie = p->posf_i(xe);
 
-	js = p->posf_j(ys);
-	je = p->posf_j(ye);
+        js = p->posf_j(ys);
+        je = p->posf_j(ye);
 
-    xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge];
-	xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge];
+        xs = MIN3(Ax,Bx,Cx) - epsi*p->DXP[is + marge];
+        xe = MAX3(Ax,Bx,Cx) + epsi*p->DXP[ie + marge];
 
-	ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
-	ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge];
+        ys = MIN3(Ay,By,Cy) - epsi*p->DYP[js + marge];
+        ye = MAX3(Ay,By,Cy) + epsi*p->DYP[je + marge];
 
-	is = p->posf_i(xs);
-	ie = p->posf_i(xe);
+        is = p->posf_i(xs);
+        ie = p->posf_i(xe);
 
-	js = p->posf_j(ys);
-	je = p->posf_j(ye);
-
-
-	is = MAX(is,0);
-	ie = MIN(ie,p->knox);
-
-	js = MAX(js,0);
-	je = MIN(je,p->knoy);
+        js = p->posf_j(ys);
+        je = p->posf_j(ye);
 
 
-		for(i=is;i<ie;i++)
-		for(j=js;j<je;j++)
-		{
-		Px = p->XP[IP]+psi;
-		Py = p->YP[JP]+psi;
-		Pz = p->zmin-10.0*p->DXM ;
+        is = MAX(is,0);
+        ie = MIN(ie,p->knox);
 
-		Qx = p->XP[IP]+psi;
-		Qy = p->YP[JP]+psi;
-		Qz = p->zmax+10.0*p->DXM ;
+        js = MAX(js,0);
+        je = MIN(je,p->knoy);
 
-		PQx = Qx-Px;
-		PQy = Qy-Py;
-		PQz = Qz-Pz;
+
+        for(i=is;i<ie;i++)
+        for(j=js;j<je;j++)
+        {
+            Px = p->XP[IP]+psi;
+            Py = p->YP[JP]+psi;
+            Pz = p->zmin-10.0*p->DXM ;
+
+            Qx = p->XP[IP]+psi;
+            Qy = p->YP[JP]+psi;
+            Qz = p->zmax+10.0*p->DXM ;
+
+            PQx = Qx-Px;
+            PQy = Qy-Py;
+            PQz = Qz-Pz;
 
 		PAx = Ax-Px;
 		PAy = Ay-Py;
@@ -123,58 +123,58 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
 		Mz = PQx*Py - PQy*Px;
 
 
-		u = PQx*(Cy*Bz - Cz*By) + PQy*(Cz*Bx - Cx*Bz) + PQz*(Cx*By - Cy*Bx)
-		  + Mx*(Cx-Bx) + My*(Cy-By) + Mz*(Cz-Bz);
+            u = PQx*(Cy*Bz - Cz*By) + PQy*(Cz*Bx - Cx*Bz) + PQz*(Cx*By - Cy*Bx)
+            + Mx*(Cx-Bx) + My*(Cy-By) + Mz*(Cz-Bz);
 
-		v = PQx*(Ay*Cz - Az*Cy) + PQy*(Az*Cx - Ax*Cz) + PQz*(Ax*Cy - Ay*Cx)
-		  + Mx*(Ax-Cx) + My*(Ay-Cy) + Mz*(Az-Cz);
+            v = PQx*(Ay*Cz - Az*Cy) + PQy*(Az*Cx - Ax*Cz) + PQz*(Ax*Cy - Ay*Cx)
+            + Mx*(Ax-Cx) + My*(Ay-Cy) + Mz*(Az-Cz);
 
-		w = PQx*(By*Az - Bz*Ay) + PQy*(Bz*Ax - Bx*Az) + PQz*(Bx*Ay - By*Ax)
-		  + Mx*(Bx-Ax) + My*(By-Ay) + Mz*(Bz-Az);
+            w = PQx*(By*Az - Bz*Ay) + PQy*(Bz*Ax - Bx*Az) + PQz*(Bx*Ay - By*Ax)
+            + Mx*(Bx-Ax) + My*(By-Ay) + Mz*(Bz-Az);
 
-        int check=1;
-		if(fabs(u)<=1.0e-20 && fabs(v)<=1.0e-20 && fabs(w)<=1.0e-20)
-		check = 0;
+            int check=1;
+            if(fabs(u)<=1.0e-20 && fabs(v)<=1.0e-20 && fabs(w)<=1.0e-20)
+            check = 0;
 
-			if(((u>1.0e-20 && v>1.0e-20 && w>1.0e-20) || (u<-1.0e-20 && v<-1.0e-20 && w<-1.0e-20)) && check==1)
-			{
-			denom = 1.0/(u+v+w);
-
-			u *= denom;
-			v *= denom;
-			w *= denom;
-
-			Rz = u*Az + v*Bz + w*Cz;
-
-
-			k = p->posf_k(Rz);
-
-
-            int distcheck=1;
-
-            if(Rz<p->ZP[KP])
-            if(k>=0 && k<p->knoz)
-            if(flag(i,j,k)<0 && flag(i,j,k-1)<0)
-            distcheck=0;
-
-            if(Rz>=p->ZP[KP])
-            if(k>=0 && k<p->knoz)
-            if(flag(i,j,k)<0 && flag(i,j,k+1)<0)
-            distcheck=0;
-
-            if(distcheck==1)
-			for(k=0;k<p->knoz;++k)
-			dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]),dist(i,j,k));
-
-            if(Rz>p->zmin && Rz<p->zmax)
+            if(((u>1.0e-20 && v>1.0e-20 && w>1.0e-20) || (u<-1.0e-20 && v<-1.0e-20 && w<-1.0e-20)) && check==1)
             {
-            if(Rz<p->zmax-1.0e-10)
-            bedlevel(i,j) = MAX(bedlevel(i,j),Rz);
-            
-            
-            if(Rz>p->zmin+1.0e-10)
-            a->zstl_min(i,j) = MAX(a->zstl_min(i,j),Rz);
-            
+                denom = 1.0/(u+v+w);
+
+                u *= denom;
+                v *= denom;
+                w *= denom;
+
+                Rz = u*Az + v*Bz + w*Cz;
+
+
+                k = p->posf_k(Rz);
+
+
+                int distcheck=1;
+
+                if(Rz<p->ZP[KP])
+                if(k>=0 && k<p->knoz)
+                if(flag(i,j,k)<0 && flag(i,j,k-1)<0)
+                distcheck=0;
+
+                if(Rz>=p->ZP[KP])
+                if(k>=0 && k<p->knoz)
+                if(flag(i,j,k)<0 && flag(i,j,k+1)<0)
+                distcheck=0;
+
+                if(distcheck==1)
+                for(k=0;k<p->knoz;++k)
+                dist(i,j,k)=MIN(fabs(Rz-p->ZP[KP]),dist(i,j,k));
+
+                if(Rz>p->zmin && Rz<p->zmax)
+                {
+                    if(Rz<p->zmax-1.0e-10)
+                    bedlevel(i,j) = MAX(bedlevel(i,j),Rz);
+
+
+                    if(Rz>p->zmin+1.0e-10)
+                    a->zstl_min(i,j) = MAX(a->zstl_min(i,j),Rz);
+
             if(Rz<p->zmax-1.0e-10)
             a->zstl_max(i,j) = MAX(a->zstl_max(i,j),Rz);
             }

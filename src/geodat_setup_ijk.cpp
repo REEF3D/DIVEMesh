@@ -25,39 +25,39 @@ Author: Hans Bihs
 #include"lexer.h"
 
 void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
-{            
+{
     // Grid
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 
     p->Iarray(ptnum,Nx,Ny);
-    
+
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     ptnum[r][s]=0;
 
     for(n=0;n<p->Np;++n)
     {
-    ic = p->poscgen_i(Fx[n],XC,kx);
-    jc = p->poscgen_j(Fy[n],YC,ky);
-    
-    //ICFLAG
-    ++ptnum[ic+dd][jc+dd];
+        ic = p->poscgen_i(Fx[n],XC,kx);
+        jc = p->poscgen_j(Fy[n],YC,ky);
+
+        //ICFLAG
+        ++ptnum[ic+dd][jc+dd];
     }
-    
-    
+
+
     p->Iarray(ptid,Nx,Ny, ptnum);
-    
+
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     for(t=0;t<ptnum[r][s];++t)
     ptid[r][s][t]=-1;
-    
+
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
     ptnum[r][s]=0;
-    
-    
+
+
     for(n=0;n<p->Np;++n)
     {
         ic = p->poscgen_i(Fx[n],XC,kx);
@@ -65,23 +65,23 @@ void geodat::setup_ijk(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, do
 
         //ICFLAG
         {
-        ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
-        ++ptnum[ic+dd][jc+dd];
+            ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
+            ++ptnum[ic+dd][jc+dd];
         }
     }
-    
+
 }
 
 void geodat::setup_ijk_delete(lexer *p, dive *a, int kx, int ky)
 {
-    
+
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 
-    
+
     p->del_Iarray(ptid,Nx,Ny, ptnum);
     p->del_Iarray(ptnum,Nx,Ny);
-    
+
 }
 
 

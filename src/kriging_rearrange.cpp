@@ -26,26 +26,26 @@ Author: Hans Bihs
 
 void kriging::rearrange(lexer *p)
 {
-	// A
-	for(q=0;q<p->Np;++q)
-	row[q] = A[0][q];
-	
-	for(n=0;n<p->Np-1;++n)
-	for(q=0;q<p->Np;++q)
-	A[n][q] = A[n+1][q];
-	
-	for(q=0;q<p->Np;++q)
-	A[p->Np-1][q]=row[q];
+    // A
+    for(q=0;q<p->Np;++q)
+    row[q] = A[0][q];
+
+    for(n=0;n<p->Np-1;++n)
+    for(q=0;q<p->Np;++q)
+    A[n][q] = A[n+1][q];
+
+    for(q=0;q<p->Np;++q)
+    A[p->Np-1][q]=row[q];
 }
 
 void kriging::rearrange_b(lexer *p)
 {
-	// b
-	val = b[0];
-	
-	for(n=0;n<p->Np-1;++n)
-	b[n] = b[n+1];
-	
-	b[p->Np-1] = val;
+    // b
+    val = b[0];
+
+    for(n=0;n<p->Np-1;++n)
+    b[n] = b[n+1];
+
+    b[p->Np-1] = val;
 }
 

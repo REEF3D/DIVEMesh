@@ -31,7 +31,7 @@ void geometry::semicyl_y(lexer* p, dive* a,int rank, int &ts, int &te,
 {
 	//cout<<"SEMI_CYL "<<p->S131<<endl;
 	double U,ds,phi;
-	
+
 	double rmax;
 	int snum;
 	int vertice_mem, center1_num,center2_num;
@@ -40,23 +40,23 @@ void geometry::semicyl_y(lexer* p, dive* a,int rank, int &ts, int &te,
 	double Bx,By,Bz;
 	double Nx,Ny,Nz,norm;
 
-/*
-	xm=p->S131_xm[rank];
+    /*
+    xm=p->S131_xm[rank];
     zm=p->S131_zm[rank];
 
-	y1=p->S131_y1[rank];
-	y2=p->S131_y2[rank];
+    y1=p->S131_y1[rank];
+    y2=p->S131_y2[rank];
 
     r1=p->S131_r1[rank];
-	r2=p->S131_r2[rank];*/
+    r2=p->S131_r2[rank];*/
 
-	rmax = MAX(r1,r2);
+    rmax = MAX(r1,r2);
 
-	U = 1.0 * PI * rmax;
+    U = 1.0 * PI * rmax;
 
-	ds = p->S19*(U*p->DXM);
+    ds = p->S19*(U*p->DXM);
 
-	snum = int(U/ds);
+    snum = int(U/ds);
 
 	//ds = U/double(snum);
 
@@ -124,79 +124,79 @@ void geometry::semicyl_y(lexer* p, dive* a,int rank, int &ts, int &te,
 	++p->tricount;
 
 
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = -1.0;
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = 0.0;
+        p->trivec_z[p->tricount] = -1.0;
 
-	p->tri_x[p->tricount][0] = xm-r1;
-	p->tri_y[p->tricount][0] = y1;
-	p->tri_z[p->tricount][0] = zm;
+        p->tri_x[p->tricount][0] = xm-r1;
+        p->tri_y[p->tricount][0] = y1;
+        p->tri_z[p->tricount][0] = zm;
 
-	p->tri_x[p->tricount][1] = xm+r1;
-	p->tri_y[p->tricount][1] = y1;
-	p->tri_z[p->tricount][1] = zm;
+        p->tri_x[p->tricount][1] = xm+r1;
+        p->tri_y[p->tricount][1] = y1;
+        p->tri_z[p->tricount][1] = zm;
 
-	p->tri_x[p->tricount][2] = xm+r2;
-	p->tri_y[p->tricount][2] = y2;
-	p->tri_z[p->tricount][2] = zm;
-	++p->tricount;
+        p->tri_x[p->tricount][2] = xm+r2;
+        p->tri_y[p->tricount][2] = y2;
+        p->tri_z[p->tricount][2] = zm;
+        ++p->tricount;
 
-	//side
-	// 1st triangle
-	p->tri_x[p->tricount][0] = xm + r1*cos(phi);
-	p->tri_y[p->tricount][0] = y1;
-	p->tri_z[p->tricount][0] = zm + r1*sin(phi);
+        //side
+        // 1st triangle
+        p->tri_x[p->tricount][0] = xm + r1*cos(phi);
+        p->tri_y[p->tricount][0] = y1;
+        p->tri_z[p->tricount][0] = zm + r1*sin(phi);
 
-	p->tri_x[p->tricount][1] = xm + r2*cos(phi+ds);
-	p->tri_y[p->tricount][1] = y2;
-	p->tri_z[p->tricount][1] = zm + r2*sin(phi+ds);
+        p->tri_x[p->tricount][1] = xm + r2*cos(phi+ds);
+        p->tri_y[p->tricount][1] = y2;
+        p->tri_z[p->tricount][1] = zm + r2*sin(phi+ds);
 
-	p->tri_x[p->tricount][2] = xm + r1*cos(phi+ds);
-	p->tri_y[p->tricount][2] = y1;
-	p->tri_z[p->tricount][2] = zm + r1*sin(phi+ds);
+        p->tri_x[p->tricount][2] = xm + r1*cos(phi+ds);
+        p->tri_y[p->tricount][2] = y1;
+        p->tri_z[p->tricount][2] = zm + r1*sin(phi+ds);
 
-	Ax = p->tri_x[p->tricount][0]-p->tri_x[p->tricount][2];
-	Ay = p->tri_y[p->tricount][0]-p->tri_x[p->tricount][2];
-	Az = p->tri_z[p->tricount][0]-p->tri_x[p->tricount][2];
+        Ax = p->tri_x[p->tricount][0]-p->tri_x[p->tricount][2];
+        Ay = p->tri_y[p->tricount][0]-p->tri_x[p->tricount][2];
+        Az = p->tri_z[p->tricount][0]-p->tri_x[p->tricount][2];
 
-	Bx = p->tri_x[p->tricount][1]-p->tri_x[p->tricount][2];
-	By = p->tri_y[p->tricount][1]-p->tri_x[p->tricount][2];
-	Bz = p->tri_z[p->tricount][1]-p->tri_x[p->tricount][2];
+        Bx = p->tri_x[p->tricount][1]-p->tri_x[p->tricount][2];
+        By = p->tri_y[p->tricount][1]-p->tri_x[p->tricount][2];
+        Bz = p->tri_z[p->tricount][1]-p->tri_x[p->tricount][2];
 
-	Nx = Ay*Bz - Az*By;
-	Ny = Az*Bx - Ax*Bz;
-	Nz = Ax*By - Ay*Bx;
+        Nx = Ay*Bz - Az*By;
+        Ny = Az*Bx - Ax*Bz;
+        Nz = Ax*By - Ay*Bx;
 
-	norm = sqrt(Nx*Nx + Ny*Ny + Nz*Nz);
+        norm = sqrt(Nx*Nx + Ny*Ny + Nz*Nz);
 
-	p->trivec_x[p->tricount] = Nx/norm;
-	p->trivec_y[p->tricount] = Ny/norm;
-	p->trivec_z[p->tricount] = Nz/norm;
+        p->trivec_x[p->tricount] = Nx/norm;
+        p->trivec_y[p->tricount] = Ny/norm;
+        p->trivec_z[p->tricount] = Nz/norm;
 
-	++p->tricount;
+        ++p->tricount;
 
-	// 2nd triangle
-	p->tri_x[p->tricount][0] = xm + r1*cos(phi);
-	p->tri_y[p->tricount][0] = y1;
-	p->tri_z[p->tricount][0] = zm + r1*sin(phi);
+        // 2nd triangle
+        p->tri_x[p->tricount][0] = xm + r1*cos(phi);
+        p->tri_y[p->tricount][0] = y1;
+        p->tri_z[p->tricount][0] = zm + r1*sin(phi);
 
-	p->tri_x[p->tricount][1] = xm + r2*cos(phi+ds);
-	p->tri_y[p->tricount][1] = y2;
-	p->tri_z[p->tricount][1] = zm + r2*sin(phi+ds);
+        p->tri_x[p->tricount][1] = xm + r2*cos(phi+ds);
+        p->tri_y[p->tricount][1] = y2;
+        p->tri_z[p->tricount][1] = zm + r2*sin(phi+ds);
 
-	p->tri_x[p->tricount][2] = xm + r2*cos(phi);
-	p->tri_y[p->tricount][2] = y2;
-	p->tri_z[p->tricount][2] = zm + r2*sin(phi);
+        p->tri_x[p->tricount][2] = xm + r2*cos(phi);
+        p->tri_y[p->tricount][2] = y2;
+        p->tri_z[p->tricount][2] = zm + r2*sin(phi);
 
-	p->trivec_x[p->tricount] = Nx/norm;
-	p->trivec_y[p->tricount] = Ny/norm;
-	p->trivec_z[p->tricount] = Nz/norm;
+        p->trivec_x[p->tricount] = Nx/norm;
+        p->trivec_y[p->tricount] = Ny/norm;
+        p->trivec_z[p->tricount] = Nz/norm;
 
 
-	++p->tricount;
+        ++p->tricount;
 
-	phi+=ds;
-	}
+        phi+=ds;
+    }
 
 
 	te=p->tricount;

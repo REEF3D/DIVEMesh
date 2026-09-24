@@ -41,7 +41,7 @@ public:
 	double inverse_dist_w(lexer*);
 
 private:
-	
+
 	double g,wsum,dist;
     double xc,yc;
     double ddn;

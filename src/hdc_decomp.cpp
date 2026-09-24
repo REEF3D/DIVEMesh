@@ -31,50 +31,50 @@ Author: Hans Bihs
 void hdc::decomp(lexer *p, dive *a)
 {
     cout<<"HDC decomp "<<endl;
-    
+
     int istart,iend,jstart,jend;
     double xstart,xend,ystart,yend;
-    
+
     p->Iarray(is,a->mx+2);
     p->Iarray(ie,a->mx+2);
     p->Iarray(js,a->my+2);
     p->Iarray(je,a->my+2);
-    
+
     p->Darray(xs,a->mx+2);
     p->Darray(xe,a->mx+2);
     p->Darray(ys,a->my+2);
     p->Darray(ye,a->my+2);
-    
+
     // ini ijnode start and end
     is[0]=0;
     js[0]=0;
-    
+
     ie[a->mx-1]=0;
     je[a->my-1]=0;
-    
-    // find ijnode 
+
+    // find ijnode
     for(aa=0;aa<a->mx;++aa)
     {
         xstart = a->xorig[aa];
         xend  = a->xorig[aa+1];
-        
-        
+
+
         for(i=0;i<NGx;++i)
         {
             if(i<NGx-1)
             if(X[i+1]>=xstart && X[i]<xstart)
             {
-            is[aa] = i;
-            xs[aa] = X[i];
+                is[aa] = i;
+                xs[aa] = X[i];
             }
-            
+
             if(i>1)
             if((X[i]>=xend && X[i-1]<xend))
             {
-            ie[aa] = i+1;
-            xe[aa] = X[i];
+                ie[aa] = i+1;
+                xe[aa] = X[i];
             }
-            
+
             if((i==NGx-1 && X[i]<xend && X[i]>xstart))
             {
             ie[aa] = i+1;
@@ -87,7 +87,7 @@ void hdc::decomp(lexer *p, dive *a)
     {
         ystart = a->yorig[bb];
         yend = a->yorig[bb+1];
-        
+
         for(j=0;j<NGy;++j)
         {
             if(j<NGy-1)
@@ -96,14 +96,14 @@ void hdc::decomp(lexer *p, dive *a)
             js[bb] = j;
             ys[bb] = Y[j];
             }
-            
+
             if(j>1)
             if(Y[j]>=yend && Y[j-1]<yend)
             {
             je[bb] = j+1;
             ye[bb] = Y[j];
             }
-            
+
             if((j==NGy-1 && Y[j]<yend && Y[j]>ystart))
             {
             je[bb] = j+1;
@@ -111,14 +111,14 @@ void hdc::decomp(lexer *p, dive *a)
             }
         }
     }
-    
+
     if(jdir==0)
     for(bb=0;bb<a->my;++bb)
     {
     js[bb] = 0;
     ys[bb] = Y[0];
-    
+
     je[bb] = 1;
     ye[bb] = Y[0];
-    }    
+    }
 }

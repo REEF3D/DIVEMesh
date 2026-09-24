@@ -27,9 +27,9 @@ Author: Hans Bihs
 void geometry::plate_x(lexer* p, dive* a,int rank, int &ts, int &te,
                 double x,double ys,double ye,double zs,double ze)
 {
-    
+
     /*
-	xs = p->S201_x[rank]-0.001*p->DXM;
+    xs = p->S201_x[rank]-0.001*p->DXM;
     xe = p->S201_x[rank]+0.001*p->DXM;
 
     ys = p->S201_ys[rank];

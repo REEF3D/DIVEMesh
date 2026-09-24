@@ -26,7 +26,7 @@ Author: Hans Bihs
 
 geometry::geometry(lexer *p, dive *a) : cutl(p),cutr(p),epsi(1.6)
 {
-	cout<<"geometry ini";
+    cout<<"geometry ini";
 }
 
 geometry::~geometry()

@@ -23,77 +23,77 @@ Author: Hans Bihs
 #include"decomp.h"
 
 void decomp::partition_correct_x(lexer* p, dive* a)
-{	
+{
 	int q,ii;
 	double diff_p;
 	int fac,mincell,maxcell,iloc,iloc_min,iloc_max;
 	double diff;
-	
-	xcount[0]=0;
 
-	cout<<"starting x-dir partition correction"<<endl;
-	// x-partition
-	for(aa=1;aa<=a->mx;++aa)
-	{
-		xcount[aa]=0;
-		for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-		for(j=0;j<a->knoy;++j)
-		for(k=0;k<a->knoz;++k)
-		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-		++xcount[aa];
-	}
-	
-	for(i=0;i<a->knox;++i)
-	xcross[i]=0;
-	
-	for(i=0;i<a->knox;++i)
-	for(j=0;j<a->knoy;++j)
-	for(k=0;k<a->knoz;++k)
-	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-	++xcross[i];
-	
-	xcross_m=0;
-	for(i=0;i<a->knox;++i)
-	xcross_m+=xcross[i];
-	
-	xcross_m=xcross_m/a->knox;
-	
-		
-	xaverage=0;
-	for(aa=1;aa<=a->mx;++aa)
-	xaverage+=xcount[aa];
-	
-	xaverage/=a->mx;
-	
-	ddout<<"xaverage: "<<xaverage<<endl;
-	ddout<<"xcross_m: "<<xcross_m<<endl;
-	
-	xcount_sum=0;
-	for(aa=1;aa<=a->mx;++aa)
-	xcount_sum+=xcount[aa];
-	
+    xcount[0]=0;
+
+    cout<<"starting x-dir partition correction"<<endl;
+    // x-partition
+    for(aa=1;aa<=a->mx;++aa)
+    {
+        xcount[aa]=0;
+        for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
+        for(j=0;j<a->knoy;++j)
+        for(k=0;k<a->knoz;++k)
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++xcount[aa];
+    }
+
+    for(i=0;i<a->knox;++i)
+    xcross[i]=0;
+
+    for(i=0;i<a->knox;++i)
+    for(j=0;j<a->knoy;++j)
+    for(k=0;k<a->knoz;++k)
+    if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+    ++xcross[i];
+
+    xcross_m=0;
+    for(i=0;i<a->knox;++i)
+    xcross_m+=xcross[i];
+
+    xcross_m=xcross_m/a->knox;
+
+
+    xaverage=0;
+    for(aa=1;aa<=a->mx;++aa)
+    xaverage+=xcount[aa];
+
+    xaverage/=a->mx;
+
+    ddout<<"xaverage: "<<xaverage<<endl;
+    ddout<<"xcross_m: "<<xcross_m<<endl;
+
+    xcount_sum=0;
+    for(aa=1;aa<=a->mx;++aa)
+    xcount_sum+=xcount[aa];
+
 	for(aa=0;aa<=a->mx;++aa)
 	ddout<<"old xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
-	
-	ddout<<"xcount_sum: "<<xcount_sum<<endl;
-	
-	for(q=0;q<p->M10;++q)
-	subcell[q]=0;
 
-	
-	q=0;
-	NLOOP
-	{
-    SUBLOOP
-	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-	++subcell[q];
-	
-	++q;
-	}
-	
-	for(q=0;q<p->M10;++q)
-	ddout<<"old subcell_count: "<<subcell[q]<<endl;
-	
+    ddout<<"xcount_sum: "<<xcount_sum<<endl;
+
+    for(q=0;q<p->M10;++q)
+    subcell[q]=0;
+
+
+    q=0;
+    NLOOP
+    {
+        SUBLOOP
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++subcell[q];
+
+        ++q;
+    }
+
+    for(q=0;q<p->M10;++q)
+    ddout<<"old subcell_count: "<<subcell[q]<<endl;
+
 	// re-partition
 	for(aa=1;aa<=a->mx;++aa)
 	{
@@ -101,28 +101,28 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 		{
 
 			a->xnode[aa]=ii;
-			
+
 			xcount[aa]=0;
 			for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
 			for(j=0;j<a->knoy;++j)
 			for(k=0;k<a->knoz;++k)
 			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 			++xcount[aa];
-			
+
 			if(xcount[aa]>xaverage)
-			{	
+			{
 			diff_p=xcount[aa]-xaverage;
-			
+
 			//if(diff_p>xcross_m/2)
 			--a->xnode[aa];
-			
+
 			break;
 			}
 		}
 	}
-	
+
 	a->xnode[a->mx]=a->knox;
-	
+
 	// check last
 	for(aa=1;aa<=a->mx;++aa)
 	{
@@ -133,183 +133,183 @@ void decomp::partition_correct_x(lexer* p, dive* a)
 		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
 		++xcount[aa];
 	}
-	
-	
-	mincell=1e9;
-	for(aa=1;aa<a->mx;++aa)
-	mincell=MIN(mincell,xcount[aa]);
-	
-	if(xcount[a->mx]>xaverage+xcross_m/2)
-	{
-	
+
+
+    mincell=1e9;
+    for(aa=1;aa<a->mx;++aa)
+    mincell=MIN(mincell,xcount[aa]);
+
+    if(xcount[a->mx]>xaverage+xcross_m/2)
+    {
+
 		for(aa=0;aa<=a->mx;++aa)
 		ddout<<"inter xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
-	
-		diff = xcount[a->mx]-xaverage;
-		fac = diff/xcross_m;
-		
-		ddout<<xcount[a->mx]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
-		
-		count=0;
-		do{
-			
-			mincell=1e9;
-			for(aa=1;aa<a->mx;++aa)
-			if(xcount[aa]<mincell)
-			{
-			iloc=aa;
-			mincell=xcount[aa];
-			}
-			
-			ddout<<"Mincell: "<<mincell<<"  iloc: "<<iloc<<endl;
-			
-			for(ii=iloc;ii<a->mx;++ii)
-			++a->xnode[ii];
+
+        diff = xcount[a->mx]-xaverage;
+        fac = diff/xcross_m;
+
+        ddout<<xcount[a->mx]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
+
+        count=0;
+        do{
+
+            mincell=1e9;
+            for(aa=1;aa<a->mx;++aa)
+            if(xcount[aa]<mincell)
+            {
+                iloc=aa;
+                mincell=xcount[aa];
+            }
+
+            ddout<<"Mincell: "<<mincell<<"  iloc: "<<iloc<<endl;
+
+            for(ii=iloc;ii<a->mx;++ii)
+            ++a->xnode[ii];
 
 
-			for(aa=1;aa<=a->mx;++aa)
-			{
-			xcount[aa]=0;
-			for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-			for(j=0;j<a->knoy;++j)
-			for(k=0;k<a->knoz;++k)
-			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-			++xcount[aa];
-			}
-			
-			
+            for(aa=1;aa<=a->mx;++aa)
+            {
+                xcount[aa]=0;
+                for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
+                for(j=0;j<a->knoy;++j)
+                for(k=0;k<a->knoz;++k)
+                if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+                ++xcount[aa];
+            }
+
+
 		if(xcount[a->mx]<xaverage+xcross_m/5)
 		break;
 		++count;
-		
+
 		}while(xcount[a->mx]>xaverage+xcross_m/2);
-        
+
         int maxiter = MAX(a->mx,a->my);
-		
-		// ----------------------------------------------------------
-		count=0;
-		do{
+
+        // ----------------------------------------------------------
+        count=0;
+        do{
             // find mincell
-			mincell=1e9;
-			for(aa=1;aa<=a->mx;++aa)
-			if(xcount[aa]<mincell)
-			{
-			iloc_min=aa;
-			mincell=MIN(mincell,xcount[aa]);
-			}
-			
+            mincell=1e9;
+            for(aa=1;aa<=a->mx;++aa)
+            if(xcount[aa]<mincell)
+            {
+                iloc_min=aa;
+                mincell=MIN(mincell,xcount[aa]);
+            }
+
             // find maxcell
-			maxcell=-1e9;
-			for(aa=1;aa<=a->mx;++aa)
-			if(xcount[aa]>maxcell)
-			{
-			iloc_max=aa;
-			maxcell=MAX(maxcell,xcount[aa]);
-			}
-			
-			ddout<<"count: "<<count<<" Maxcell: "<<maxcell<<" xaverage+xcross_m/2: "<<xaverage+xcross_m/2<<"  iloc_max: "<<iloc_max<<"  Mincell: "<<mincell<<"  iloc_min: "<<iloc_min<<endl;
-			
-            
-			if(iloc_max<iloc_min)
-			for(ii=iloc_max;ii<iloc_min;++ii)
-			--a->xnode[ii];
-			
-			if(iloc_max>iloc_min)
-			for(ii=iloc_min;ii<iloc_max;++ii)
-			++a->xnode[ii];
+            maxcell=-1e9;
+            for(aa=1;aa<=a->mx;++aa)
+            if(xcount[aa]>maxcell)
+            {
+                iloc_max=aa;
+                maxcell=MAX(maxcell,xcount[aa]);
+            }
+
+            ddout<<"count: "<<count<<" Maxcell: "<<maxcell<<" xaverage+xcross_m/2: "<<xaverage+xcross_m/2<<"  iloc_max: "<<iloc_max<<"  Mincell: "<<mincell<<"  iloc_min: "<<iloc_min<<endl;
 
 
-			for(aa=1;aa<=a->mx;++aa)
-			{
-			xcount[aa]=0;
-			for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-			for(j=0;j<a->knoy;++j)
-			for(k=0;k<a->knoz;++k)
-			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-			++xcount[aa];
-			}
-			
-			maxcell=-1e9;
-			for(aa=1;aa<=a->mx;++aa)
-			if(xcount[aa]>maxcell)
-			{
-			iloc_max=aa;
-			maxcell=xcount[aa];
-			}
-			
+            if(iloc_max<iloc_min)
+            for(ii=iloc_max;ii<iloc_min;++ii)
+            --a->xnode[ii];
+
+            if(iloc_max>iloc_min)
+            for(ii=iloc_min;ii<iloc_max;++ii)
+            ++a->xnode[ii];
+
+
+            for(aa=1;aa<=a->mx;++aa)
+            {
+                xcount[aa]=0;
+                for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
+                for(j=0;j<a->knoy;++j)
+                for(k=0;k<a->knoz;++k)
+                if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+                ++xcount[aa];
+            }
+
+            maxcell=-1e9;
+            for(aa=1;aa<=a->mx;++aa)
+            if(xcount[aa]>maxcell)
+            {
+                iloc_max=aa;
+                maxcell=xcount[aa];
+            }
+
 
 		++count;
-		
+
 		}while(maxcell>xaverage+xcross_m/2 && count<maxiter);
-        
+
         // ----------------------------------------------------------
-	}
-	
-	//count again
-	for(aa=1;aa<=a->mx;++aa)
-	{
-		xcount[aa]=0;
-		for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-		for(j=0;j<a->knoy;++j)
-		for(k=0;k<a->knoz;++k)
-		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-		++xcount[aa];
-	}
-	
-	for(aa=0;aa<=a->mx;++aa)
+    }
+
+    //count again
+    for(aa=1;aa<=a->mx;++aa)
+    {
+        xcount[aa]=0;
+        for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
+        for(j=0;j<a->knoy;++j)
+        for(k=0;k<a->knoz;++k)
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++xcount[aa];
+    }
+
+    for(aa=0;aa<=a->mx;++aa)
     a->xorig[aa] = p->XN[a->xnode[aa]+marge];
-	
-    
-	xcount_sum=0;
-	for(aa=1;aa<=a->mx;++aa)
-	xcount_sum+=xcount[aa];
-	
-	
+
+
+    xcount_sum=0;
+    for(aa=1;aa<=a->mx;++aa)
+    xcount_sum+=xcount[aa];
+
+
 	for(aa=0;aa<=a->mx;++aa)
 	ddout<<"new xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
-	
-	ddout<<"xcount_sum: "<<xcount_sum<<endl;
-	
-	
-	MALOOP
+
+    ddout<<"xcount_sum: "<<xcount_sum<<endl;
+
+
+    MALOOP
     a->subgrid(i,j,k)=-1;
 
     NLOOP
     SUBLOOP
     {
-    a->subgrid(i,j,k)=PARANUM;
-    a->subslice(i,j)=PARANUM;
+        a->subgrid(i,j,k)=PARANUM;
+        a->subslice(i,j)=PARANUM;
     }
-	
+
 
 	for(q=0;q<p->M10;++q)
 	subcell[q]=0;
 
-	
-	q=0;
-	NLOOP
-	{
-    SUBLOOP
-	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-	++subcell[q];
-	
-	++q;
-	}
-	
+
     q=0;
-	ALOOP
-    {   
-    cout<<aa<<" new subcell_count: ";
+    NLOOP
+    {
+        SUBLOOP
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++subcell[q];
+
+        ++q;
+    }
+
+    q=0;
+    ALOOP
+    {
+        cout<<aa<<" new subcell_count: ";
         BLOOP
         CLOOP
         {
         cout<<subcell[q]<<" ";
         //ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
         }
-    cout<<endl;
-    ++q;
+        cout<<endl;
+        ++q;
     }
-	
+
 
 }
 

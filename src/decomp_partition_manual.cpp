@@ -23,11 +23,11 @@ Author: Hans Bihs
 #include"decomp.h"
 
 void decomp::partition_manual(lexer* p,dive* a)
-{	
+{
     a->mx=p->M30_x;
     a->my=p->M30_y;
     a->mz=p->M30_z;
-    
+
     a->xorig[0]=p->xmin;
     a->yorig[0]=p->ymin;
     a->zorig[0]=p->zmin;
@@ -41,25 +41,25 @@ void decomp::partition_manual(lexer* p,dive* a)
     a->xnode[a->mx]=p->knox;
     a->ynode[a->my]=p->knoy;
     a->znode[a->mz]=p->knoz;
-    
+
     // partition
     for(n=1;n<a->mx;n++)
     {
-    a->xnode[n]=p->M31[n];
-    a->xorig[n]=p->XN[a->xnode[n]+marge];
-	}
+        a->xnode[n]=p->M31[n];
+        a->xorig[n]=p->XN[a->xnode[n]+marge];
+    }
 
     for(n=1;n<a->my;n++)
     {
-    a->ynode[n]=p->M32[n];
-    a->yorig[n]=p->YN[a->ynode[n]+marge];
+        a->ynode[n]=p->M32[n];
+        a->yorig[n]=p->YN[a->ynode[n]+marge];
     }
-    
+
 
     for(n=1;n<a->mz;n++)
-    {	
-    a->znode[n]=p->M33[n];
-    a->zorig[n]=p->ZN[a->znode[n]+marge];
+    {
+        a->znode[n]=p->M33[n];
+        a->zorig[n]=p->ZN[a->znode[n]+marge];
     }
-    
+
 }

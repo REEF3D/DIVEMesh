@@ -29,55 +29,55 @@ Author: Hans Bihs
 #include<sys/types.h>
 
 void hdc::write_sflow(lexer *p, dive *a)
-{    
+{
     // write result
     count=0;
     for(aa=0;aa<a->mx;++aa)
     for(bb=0;bb<a->my;++bb)
-    {   
+    {
         // Open single file
         if(file_conti==1)
         {
         filename_single_out(p,a,n,count);
         wfile[count].open(name, ios::binary);
         }
-        
+
         // write iter
         iin = n;
         wfile[count].write((char*)&iin, sizeof(int));
-        
+
         //ijk loop
         // ->write
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=eta[i][j];
-        wfile[count].write((char*)&ffn, sizeof(float));
+            ffn=eta[i][j];
+            wfile[count].write((char*)&ffn, sizeof(float));
         }
-        
+
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=U[i][j][0];
-        wfile[count].write((char*)&ffn, sizeof(float));
-        } 
-        
+            ffn=U[i][j][0];
+            wfile[count].write((char*)&ffn, sizeof(float));
+        }
+
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=V[i][j][0];
-        wfile[count].write((char*)&ffn, sizeof(float));
-        } 
-        
+            ffn=V[i][j][0];
+            wfile[count].write((char*)&ffn, sizeof(float));
+        }
+
         for(i=is[aa]; i<ie[aa]; ++i)
         for(j=js[bb]; j<je[bb]; ++j)
         {
-        ffn=W[i][j][0];
-        wfile[count].write((char*)&ffn, sizeof(float));
-        } 
+            ffn=W[i][j][0];
+            wfile[count].write((char*)&ffn, sizeof(float));
+        }
         ++count;
     }
-    
+
     // file close
     if(file_conti==1)
     for(q=0;q<p->M10;++q)

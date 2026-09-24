@@ -28,12 +28,12 @@ void geometry::rotate_triangle(lexer* p, dive* a, int ts, int te)
 {
     double beta,xval,yval;
 
-	for(int qr=ts;qr<te;++qr)
-	{
-		rotation(p->tri_x[qr][0],p->tri_y[qr][0],p->tri_z[qr][0],phi,theta,psi);
-		rotation(p->tri_x[qr][1],p->tri_y[qr][1],p->tri_z[qr][1],phi,theta,psi);
-		rotation(p->tri_x[qr][2],p->tri_y[qr][2],p->tri_z[qr][2],phi,theta,psi);
-	}
+    for(int qr=ts;qr<te;++qr)
+    {
+        rotation(p->tri_x[qr][0],p->tri_y[qr][0],p->tri_z[qr][0],phi,theta,psi);
+        rotation(p->tri_x[qr][1],p->tri_y[qr][1],p->tri_z[qr][1],phi,theta,psi);
+        rotation(p->tri_x[qr][2],p->tri_y[qr][2],p->tri_z[qr][2],phi,theta,psi);
+    }
 
     if(fabs(p->S8)>0.0)
     {
@@ -43,47 +43,47 @@ void geometry::rotate_triangle(lexer* p, dive* a, int ts, int te)
 
         for(int qr=ts;qr<te;++qr)
         {
-        beta = p->S8*PI/180.0;
+            beta = p->S8*PI/180.0;
 
-        xval = x0 + (p->tri_x[qr][0]-x0)*cos(beta) - (p->tri_y[qr][0]-y0)*sin(beta);
-        yval = y0 + (p->tri_x[qr][0]-x0)*sin(beta) + (p->tri_y[qr][0]-y0)*cos(beta);
-        p->tri_x[qr][0]=xval;
-        p->tri_y[qr][0]=yval;
+            xval = x0 + (p->tri_x[qr][0]-x0)*cos(beta) - (p->tri_y[qr][0]-y0)*sin(beta);
+            yval = y0 + (p->tri_x[qr][0]-x0)*sin(beta) + (p->tri_y[qr][0]-y0)*cos(beta);
+            p->tri_x[qr][0]=xval;
+            p->tri_y[qr][0]=yval;
 
-        xval = x0 + (p->tri_x[qr][1]-x0)*cos(beta) - (p->tri_y[qr][1]-y0)*sin(beta);
-        yval = y0 + (p->tri_x[qr][1]-x0)*sin(beta) + (p->tri_y[qr][1]-y0)*cos(beta);
-        p->tri_x[qr][1]=xval;
-        p->tri_y[qr][1]=yval;
+            xval = x0 + (p->tri_x[qr][1]-x0)*cos(beta) - (p->tri_y[qr][1]-y0)*sin(beta);
+            yval = y0 + (p->tri_x[qr][1]-x0)*sin(beta) + (p->tri_y[qr][1]-y0)*cos(beta);
+            p->tri_x[qr][1]=xval;
+            p->tri_y[qr][1]=yval;
 
-        xval = x0 + (p->tri_x[qr][2]-x0)*cos(beta) - (p->tri_y[qr][2]-y0)*sin(beta);
-        yval = y0 + (p->tri_x[qr][2]-x0)*sin(beta) + (p->tri_y[qr][2]-y0)*cos(beta);
-        p->tri_x[qr][2]=xval;
-        p->tri_y[qr][2]=yval;
+            xval = x0 + (p->tri_x[qr][2]-x0)*cos(beta) - (p->tri_y[qr][2]-y0)*sin(beta);
+            yval = y0 + (p->tri_x[qr][2]-x0)*sin(beta) + (p->tri_y[qr][2]-y0)*cos(beta);
+            p->tri_x[qr][2]=xval;
+            p->tri_y[qr][2]=yval;
         }
     }
 }
 
 void geometry::rotation(double &xvec,double &yvec,double &zvec,double phi, double theta, double psi)
 {
-	double a,b,c;
+    double a,b,c;
 
     // psi
-	a = (xvec-xrot)*cos(psi) - (yvec-yrot)*sin(psi);
+    a = (xvec-xrot)*cos(psi) - (yvec-yrot)*sin(psi);
 
-	b = (xvec-xrot)*sin(psi) + (yvec-yrot)*cos(psi);
+    b = (xvec-xrot)*sin(psi) + (yvec-yrot)*cos(psi);
 
-	c = zvec-zrot;
+    c = zvec-zrot;
 
-	xvec=a;
-	yvec=b;
-	zvec=c;
+    xvec=a;
+    yvec=b;
+    zvec=c;
 
     // theta
-	a = (xvec)*cos(theta) + (zvec)*sin(theta);
+    a = (xvec)*cos(theta) + (zvec)*sin(theta);
 
-	b = yvec;
+    b = yvec;
 
-	c = -(xvec)*sin(theta) + (zvec)*cos(theta);
+    c = -(xvec)*sin(theta) + (zvec)*cos(theta);
 
 	xvec=a;
 	yvec=b;
@@ -91,15 +91,15 @@ void geometry::rotation(double &xvec,double &yvec,double &zvec,double phi, doubl
 
 
     // phi
-	a = xvec;
+    a = xvec;
 
-	b = (yvec)*cos(phi) - (zvec)*sin(phi);
+    b = (yvec)*cos(phi) - (zvec)*sin(phi);
 
-	c = (yvec)*sin(phi) + (zvec)*cos(phi);
+    c = (yvec)*sin(phi) + (zvec)*cos(phi);
 
     xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 }
 
 double geometry::xtrans(double xvec,double yvec,double zvec,double xrot,double yrot,double zrot,double alpha,double beta,double gamma)
@@ -108,33 +108,33 @@ double geometry::xtrans(double xvec,double yvec,double zvec,double xrot,double y
 
 
     // gamma
-	a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
+    a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
 
-	b = (xvec-xrot)*sin(gamma) + (yvec-yrot)*cos(gamma);
+    b = (xvec-xrot)*sin(gamma) + (yvec-yrot)*cos(gamma);
 
-	c = zvec-zrot;
+    c = zvec-zrot;
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
     // beta
-	a = (xvec-xrot)*cos(beta) + (zvec-zrot)*sin(beta);
+    a = (xvec-xrot)*cos(beta) + (zvec-zrot)*sin(beta);
 
-	b = yvec-yrot;
+    b = yvec-yrot;
 
-	c = -(xvec-xrot)*sin(beta) + (zvec-zrot)*cos(beta);
+    c = -(xvec-xrot)*sin(beta) + (zvec-zrot)*cos(beta);
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
-	// alpha
-	a = xvec-xrot;
+    // alpha
+    a = xvec-xrot;
 
-	b = (yvec-yrot)*cos(alpha) - (zvec-zrot)*sin(alpha);
+    b = (yvec-yrot)*cos(alpha) - (zvec-zrot)*sin(alpha);
 
-	c = (yvec-yrot)*sin(alpha) + (zvec-zrot)*cos(alpha);
+    c = (yvec-yrot)*sin(alpha) + (zvec-zrot)*cos(alpha);
 
 	xvec=a+xrot;
 	yvec=b+yrot;
@@ -151,37 +151,37 @@ double geometry::ytrans(double xvec,double yvec,double zvec,double xrot,double y
 
 
     // gamma
-	a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
+    a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
 
-	b = (xvec-xrot)*sin(gamma) + (yvec-yrot)*cos(gamma);
+    b = (xvec-xrot)*sin(gamma) + (yvec-yrot)*cos(gamma);
 
-	c = zvec-zrot;
+    c = zvec-zrot;
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
-	// beta
-	a = (xvec-xrot)*cos(beta) + (zvec-zrot)*sin(beta);
+    // beta
+    a = (xvec-xrot)*cos(beta) + (zvec-zrot)*sin(beta);
 
-	b = yvec-yrot;
+    b = yvec-yrot;
 
-	c = -(xvec-xrot)*sin(beta) + (zvec-zrot)*cos(beta);
+    c = -(xvec-xrot)*sin(beta) + (zvec-zrot)*cos(beta);
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
     // alpha
-	a = xvec-xrot;
+    a = xvec-xrot;
 
-	b = (yvec-yrot)*cos(alpha) - (zvec-zrot)*sin(alpha);
+    b = (yvec-yrot)*cos(alpha) - (zvec-zrot)*sin(alpha);
 
-	c = (yvec-yrot)*sin(alpha) + (zvec-zrot)*cos(alpha);
+    c = (yvec-yrot)*sin(alpha) + (zvec-zrot)*cos(alpha);
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
     return yvec;
 
@@ -189,40 +189,40 @@ double geometry::ytrans(double xvec,double yvec,double zvec,double xrot,double y
 
 double geometry::ztrans(double xvec,double yvec,double zvec,double xrot,double yrot,double zrot,double alpha,double beta,double gamma)
 {
-	double a,b,c;
+    double a,b,c;
 
     // gamma
-	a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
+    a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
 
-	b = (xvec-xrot)*sin(gamma) + (yvec-yrot)*cos(gamma);
+    b = (xvec-xrot)*sin(gamma) + (yvec-yrot)*cos(gamma);
 
-	c = zvec-zrot;
+    c = zvec-zrot;
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
     // beta
-	a = (xvec-xrot)*cos(beta) + (zvec-zrot)*sin(beta);
+    a = (xvec-xrot)*cos(beta) + (zvec-zrot)*sin(beta);
 
-	b = yvec-yrot;
+    b = yvec-yrot;
 
-	c = -(xvec-xrot)*sin(beta) + (zvec-zrot)*cos(beta);
+    c = -(xvec-xrot)*sin(beta) + (zvec-zrot)*cos(beta);
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
-	// alpha
-	a = xvec-xrot;
+    // alpha
+    a = xvec-xrot;
 
-	b = (yvec-yrot)*cos(alpha) - (zvec-zrot)*sin(alpha);
+    b = (yvec-yrot)*cos(alpha) - (zvec-zrot)*sin(alpha);
 
-	c = (yvec-yrot)*sin(alpha) + (zvec-zrot)*cos(alpha);
+    c = (yvec-yrot)*sin(alpha) + (zvec-zrot)*cos(alpha);
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
     return zvec;
 
@@ -251,7 +251,7 @@ void geometry::angle_calc(double dX, double dY, double dZ, double &alpha, double
     if(dY>eps && dZ<-eps)
     alpha = -atan(fabs(dZ/ddY));
 
-   // beta
+    // beta
     if(dX>eps && dZ>eps)
     beta = -atan(fabs(dZ/ddX));
 

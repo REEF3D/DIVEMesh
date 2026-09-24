@@ -59,11 +59,11 @@ void surface::makesurf_plate(lexer* p, dive* a)
         ILOOP
         if(p->XP[IP]<p->S201_x[qn] && p->XP[IP1]>=p->S201_x[qn])
         {
-        js = p->posc_j(p->S201_ys[qn]);
-        je = p->posc_j(p->S201_ye[qn]);
+            js = p->posc_j(p->S201_ys[qn]);
+            je = p->posc_j(p->S201_ye[qn]);
 
-        ks = p->posc_k(p->S201_zs[qn]);
-        ke = p->posc_k(p->S201_ze[qn]);
+            ks = p->posc_k(p->S201_zs[qn]);
+            ke = p->posc_k(p->S201_ze[qn]);
 
         for(j=js;j<=je;++j)
         for(k=ks;k<=ke;++k)

@@ -32,21 +32,21 @@ using namespace std;
 void print_grid::print_bottom(lexer* p,dive* a)
 {
     char name[100];
-    
+
     mkdir("./DIVEMesh_log",0777);
-    
+
     sprintf(name,"./DIVEMesh_Log/bottom_file.dat");
-    
+
     ofstream result;
-	result.open(name);
-    
+    result.open(name);
+
     JLOOP
     {
         ILOOP
         result<<a->topobed(i,j)<<"\t";
-        
+
         result<<endl;
     }
-    
+
     result.close();
 }

@@ -35,11 +35,11 @@ bedlevel::~bedlevel()
 void bedlevel::start(lexer* p, dive* a)
 {
     cout<<"bedlevel"<<endl;
-    
+
     XYLOOP
-	{
-    a->bedlevel(i,j) = MAX(a->bedlevel(i,j),MAX(a->solidbed(i,j),a->topobed(i,j)));
-	}
+    {
+        a->bedlevel(i,j) = MAX(a->bedlevel(i,j),MAX(a->solidbed(i,j),a->topobed(i,j)));
+    }
 }
 
 

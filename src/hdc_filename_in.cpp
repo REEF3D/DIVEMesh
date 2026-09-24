@@ -26,35 +26,35 @@ Author: Hans Bihs
 void hdc::filename_single_in(lexer *p, dive *a,int num, int rank)
 {
     if(p->H10==2)
-    filename_sflow_single_in(p,a,num,rank); 
-    
+    filename_sflow_single_in(p,a,num,rank);
+
     if(p->H10==4 || p->H10==44)
-    filename_fnpf_single_in(p,a,num,rank);  
-    
+    filename_fnpf_single_in(p,a,num,rank);
+
     if(p->H10==5)
-    filename_nhflow_single_in(p,a,num,rank);  
+    filename_nhflow_single_in(p,a,num,rank);
 }
 
 void hdc::filename_continuous_in(lexer *p, dive *a, int rank)
 {
     if(p->H10==2)
-    filename_sflow_continuous_in(p,a,rank); 
-    
+    filename_sflow_continuous_in(p,a,rank);
+
     if(p->H10==4 || p->H10==44)
     filename_fnpf_continuous_in(p,a,rank);
 
     if(p->H10==5)
-    filename_nhflow_continuous_in(p,a,rank); 
+    filename_nhflow_continuous_in(p,a,rank);
 }
 
 void hdc::filename_in_header(lexer *p, dive *a,int rank)
 {
     if(p->H10==2)
-    filename_sflow_in_header(p,a,rank); 
-    
+    filename_sflow_in_header(p,a,rank);
+
     if(p->H10==4 || p->H10==44)
     filename_fnpf_in_header(p,a,rank);
-    
+
     if(p->H10==5)
     filename_nhflow_in_header(p,a,rank);
 }

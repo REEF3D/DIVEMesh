@@ -28,145 +28,145 @@ Author: Tobias Martin
 void driver::analytics(lexer *p, dive *a)
 {
     ofstream nugout;
-    
+
     mkdir("./DIVEMesh_log",0777);
-    
+
     nugout.open("./DIVEMesh_Log/DIVEMesh-Non-Uniform-Mesh.txt");
-    
-    
+
+
 	// Number of Cells
-	
+
     int count=0;
 
-    
+
 
 
 	// Min/Max cell size and position
-	
+
     double dx_min, dx_max, dy_min, dy_max, dz_min, dz_max;
-	double i_min, i_max, j_min, j_max, k_min, k_max;
-	
-	dx_min = 100.0*p->DXM;
-	dy_min = 100.0*p->DXM;
-	dz_min = 100.0*p->DXM;
-	dx_max = 0.0;
-	dy_max = 0.0;
-	dz_max = 0.0;
-	
+    double i_min, i_max, j_min, j_max, k_min, k_max;
+
+    dx_min = 100.0*p->DXM;
+    dy_min = 100.0*p->DXM;
+    dz_min = 100.0*p->DXM;
+    dx_max = 0.0;
+    dy_max = 0.0;
+    dz_max = 0.0;
+
     for(i=-marge;i<p->knox+marge;++i)
-	{
-		if (p->DX[IP] < dx_min && p->DX[IP] > 1e-5)
-		{
-			dx_min = p->DX[IP];
-			i_min = p->posc_x();
-		}
-		if (p->DX[IP] > dx_max) 
-		{
-			dx_max = p->DX[IP];
-			i_max = p->posc_x();
-		}
-	}
-    
+    {
+        if (p->DX[IP] < dx_min && p->DX[IP] > 1e-5)
+        {
+            dx_min = p->DX[IP];
+            i_min = p->posc_x();
+        }
+        if (p->DX[IP] > dx_max)
+        {
+            dx_max = p->DX[IP];
+            i_max = p->posc_x();
+        }
+    }
+
     for(j=-marge;j<p->knoy+marge;++j)
-	{
-		if (p->DY[JP] < dy_min && p->DY[JP] > 1e-5) 
-		{
-			dy_min = p->DY[JP];
-			j_min = p->posc_y();
-		}
-		if (p->DY[JP] > dy_max) 
-		{
-			dy_max = p->DY[JP];	
-			j_max = p->posc_y();	
-		}
-	}
+    {
+        if (p->DY[JP] < dy_min && p->DY[JP] > 1e-5)
+        {
+            dy_min = p->DY[JP];
+            j_min = p->posc_y();
+        }
+        if (p->DY[JP] > dy_max)
+        {
+            dy_max = p->DY[JP];
+            j_max = p->posc_y();
+        }
+    }
 
     for(k=-marge;k<p->knoz+marge;++k)
-	{
-		if (p->DZ[KP] < dz_min && p->DZ[KP] > 1e-5) 
-		{
-			dz_min = p->DZ[KP];
-			k_min = p->posc_z();
-		}
-		if (p->DZ[KP] > dz_max) 
-		{
-			dz_max = p->DZ[KP];	
-			k_max = p->posc_z();		
-		}
-	}
-	
+    {
+        if (p->DZ[KP] < dz_min && p->DZ[KP] > 1e-5)
+        {
+            dz_min = p->DZ[KP];
+            k_min = p->posc_z();
+        }
+        if (p->DZ[KP] > dz_max)
+        {
+            dz_max = p->DZ[KP];
+            k_max = p->posc_z();
+        }
+    }
+
     nugout<<"Min/Max Cell Size:"<<endl;
 	nugout<<"dx = "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
 	nugout<<"dy = "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
-	nugout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
+	nugout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;
 /*
     cout<<"Min/Max Cell Size:"<<endl;
 	cout<<"dx = "<<dx_min<<"/"<<dx_max<<" at "<<i_min<<"/"<<i_max<<endl;
 	cout<<"dy = "<<dy_min<<"/"<<dy_max<<" at "<<j_min<<"/"<<j_max<<endl;
-	cout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;	
+	cout<<"dz = "<<dz_min<<"/"<<dz_max<<" at "<<k_min<<"/"<<k_max<<endl;
 */
 
-	// Min/Max Aspect Ratio
-	
-	double ratio;
-	double ratiox_max, ratioy_max, ratioz_max;
-	
+    // Min/Max Aspect Ratio
+
+    double ratio;
+    double ratiox_max, ratioy_max, ratioz_max;
+
     for (i = 0; i <= p->knox; ++i)
-	{
-		ratio =
-			p->DX[IP1] > p->DX[IP] ? p->DX[IP1]/p->DX[IP] : p->DX[IP]/p->DX[IP1];
+    {
+        ratio =
+            p->DX[IP1] > p->DX[IP] ? p->DX[IP1]/p->DX[IP] : p->DX[IP]/p->DX[IP1];
 
-		if (ratio > ratiox_max) 
-		{
-			ratiox_max = ratio;
-			i_max = p->posc_x();
-		}
-	}
-    
+        if (ratio > ratiox_max)
+        {
+            ratiox_max = ratio;
+            i_max = p->posc_x();
+        }
+    }
+
     for (j = 0; j <= p->knoy; ++j)
-	{
-		ratio =
-			p->DY[JP1] > p->DY[JP] ? p->DY[JP1]/p->DY[JP] : p->DY[JP]/p->DY[JP1];
+    {
+        ratio =
+            p->DY[JP1] > p->DY[JP] ? p->DY[JP1]/p->DY[JP] : p->DY[JP]/p->DY[JP1];
 
-		if (ratio > ratioy_max) 
-		{
-			ratioy_max = ratio;
-			j_max = p->posc_y();
-		}
-	}
+        if (ratio > ratioy_max)
+        {
+            ratioy_max = ratio;
+            j_max = p->posc_y();
+        }
+    }
 
     for (k = 0; k <= p->knoz; ++k)
-	{
-		ratio =
-			p->DZ[KP1] > p->DZ[KP] ? p->DZ[KP1]/p->DZ[KP] : p->DZ[KP]/p->DZ[KP1];
+    {
+        ratio =
+            p->DZ[KP1] > p->DZ[KP] ? p->DZ[KP1]/p->DZ[KP] : p->DZ[KP]/p->DZ[KP1];
 
-		if (ratio > ratioz_max) 
-		{
-			ratioz_max = ratio;
-			i_max = p->posc_z();
-		}
-	}
+        if (ratio > ratioz_max)
+        {
+            ratioz_max = ratio;
+            i_max = p->posc_z();
+        }
+    }
 
     nugout<<"\nMax Cell Ratio:"<<endl;
 	nugout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
 	nugout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
-	nugout<<"z "<<ratioz_max<<" at "<<k_max<<endl;		
+	nugout<<"z "<<ratioz_max<<" at "<<k_max<<endl;
 
 /*
     cout<<"\nMax Cell Ratio:"<<endl;
 	cout<<"x "<<ratiox_max<<" at "<<i_max<<endl;
 	cout<<"y "<<ratioy_max<<" at "<<j_max<<endl;
-	cout<<"z "<<ratioz_max<<" at "<<k_max<<endl;	    
+	cout<<"z "<<ratioz_max<<" at "<<k_max<<endl;
 */
-    
+
     LOOP
     if(a->flag(i,j,k)>0)
     ++count;
 
     nugout<<endl<<"Number of Cells: "<<count<<endl;
-    
+
 //    cout<<endl<<"Number of Cells: "<<count<<endl;
-	
-	
-	cout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;	    
+
+
+	cout<<endl<<endl<<"--DONE--"<<endl<<endl<<endl;
 }

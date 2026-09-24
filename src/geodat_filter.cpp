@@ -30,50 +30,50 @@ void geodat::filter(lexer *p, dive *a, field2d &bed)
 {
     int outer_iter = p->G31;
     int inner_iter = p->G32;
-    
-    field2d h(p),dh(p); 
-	
-	for(int qn=0;qn<outer_iter;++qn)
-	{
-		XYLOOP
-		h(i,j) = bed(i,j);
+
+    field2d h(p),dh(p);
+
+    for(int qn=0;qn<outer_iter;++qn)
+    {
+        XYLOOP
+        h(i,j) = bed(i,j);
 
         k=0;
         XYLOOP
         if(a->flag(i,j,k)>0)
         {
-        
+
             if(a->flag(i-1,j,k)<0)
             h(i-1,j) = bed(i,j);
-            
+
             if(a->flag(i+1,j,k)<0)
             h(i+1,j) = bed(i,j);
-            
+
             if(a->flag(i,j-1,k)<0)
             h(i,j-1) = bed(i,j);
-            
+
             if(a->flag(i,j+1,k)<0)
             h(i,j+1) = bed(i,j);
         }
-		
-	
+
+
         // predictor
-		XYLOOP
-		bed(i,j) = 0.5*h(i,j) + 0.125*(h(i-1,j) + h(i+1,j) + h(i,j-1) + h(i,j+1));
-		
+        XYLOOP
+        bed(i,j) = 0.5*h(i,j) + 0.125*(h(i-1,j) + h(i+1,j) + h(i,j-1) + h(i,j+1));
+
         // corrector
-		for(int qqn=0;qqn<inner_iter;++qqn)
-		{
+        for(int qqn=0;qqn<inner_iter;++qqn)
+        {
             XYLOOP
             dh(i,j) = h(i,j) - bed(i,j);
-            
+
             XYLOOP
             dh(i,j) = 0.5*dh(i,j) + 0.125*(dh(i-1,j) + dh(i+1,j) + dh(i,j-1) + dh(i,j+1));
-            
+
             XYLOOP
             bed(i,j) += dh(i,j);
-		}
+        }
     }
-    
-    
+
+
 }
