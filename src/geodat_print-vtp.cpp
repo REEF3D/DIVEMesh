@@ -20,13 +20,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"geodat.h"
-#include"lexer.h"
-#include"dive.h"
-#include<iostream>
-#include<fstream>
-#include<sys/stat.h>
-#include<sys/types.h>
+#include "geodat.h"
+#include "lexer.h"
+#include "dive.h"
+#include <iostream>
+#include <fstream>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz, int mode)
 {
@@ -39,33 +39,30 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
 
     if(mode==1)
     {
-    sprintf(name,"./DIVEMesh_Geo/REEF3D_geodat-%i.vtu",printcount);
-    ++printcount;
+        snprintf(name,sizeof(name),"./DIVEMesh_Geo/REEF3D_geodat-%i.vtu",printcount);
+        ++printcount;
+    }
+    else if(mode==2)
+    {
+        snprintf(name,sizeof(name),"./DIVEMesh_Geo/REEF3D_geodat_patch.vtu");
     }
 
-    if(mode==2)
-    sprintf(name,"./DIVEMesh_Geo/REEF3D_geodat_patch.vtu");
-
-
-
-
-
-	ofstream result;
-	result.open(name, ios::binary);
+    ofstream result;
+    result.open(name, ios::binary);
 
     n=0;
 
     offset[n]=0;
     ++n;
 
-	offset[n]=offset[n-1]+4*(Np)+4;
-	++n;
-	offset[n]=offset[n-1]+4*(Np)+4;
-	++n;
-	offset[n]=offset[n-1]+4*(Np)+4;
-	++n;
     offset[n]=offset[n-1]+4*(Np)+4;
-	++n;
+    ++n;
+    offset[n]=offset[n-1]+4*(Np)+4;
+    ++n;
+    offset[n]=offset[n-1]+4*(Np)+4;
+    ++n;
+    offset[n]=offset[n-1]+4*(Np)+4;
+    ++n;
 
     // end scalars
     offset[n]=offset[n-1]+4*(Np)*3+4;
@@ -77,52 +74,45 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
     offset[n]=offset[n-1]+4*(Np)+4;
     ++n;
 
-	//---------------------------------------------
-	n=0;
-	result<<"<?xml version=\"1.0\"?>"<<endl;
-	result<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">"<<endl;
-	result<<"<UnstructuredGrid>"<<endl;
-	result<<"<Piece NumberOfPoints=\""<<Np<<"\" NumberOfCells=\""<<Np<<"\">"<<endl;
+    //---------------------------------------------
+    n=0;
+    result<<"<?xml version=\"1.0\"?>\n";
+    result<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
+    result<<"<UnstructuredGrid>\n";
+    result<<"<Piece NumberOfPoints=\""<<Np<<"\" NumberOfCells=\""<<Np<<"\">\n";
 
-
-	result<<"<PointData >"<<endl;
-    result<<"<DataArray type=\"Float32\" Name=\"radius\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<PointData>\n";
+    result<<"<DataArray type=\"Float32\" Name=\"radius\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-	result<<"<DataArray type=\"Float32\" Name=\"X_Coord\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<DataArray type=\"Float32\" Name=\"X_Coord\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-    result<<"<DataArray type=\"Float32\" Name=\"Y_Coord\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<DataArray type=\"Float32\" Name=\"Y_Coord\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-    result<<"<DataArray type=\"Float32\" Name=\"Z_Coord\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<DataArray type=\"Float32\" Name=\"Z_Coord\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-	result<<"</PointData>"<<endl;
+    result<<"</PointData>\n";
 
-
-
-
-    result<<"<Points>"<<endl;
-    result<<"<DataArray type=\"Float32\"  NumberOfComponents=\"3\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<Points>\n";
+    result<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-    result<<"</Points>"<<endl;
+    result<<"</Points>\n";
 
-
-
-    result<<"<Cells>"<<endl;
-	result<<"<DataArray type=\"Int32\"  Name=\"connectivity\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<Cells>\n";
+    result<<"<DataArray type=\"Int32\" Name=\"connectivity\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-	result<<"<DataArray type=\"Int32\"  Name=\"offsets\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
-	++n;
-    result<<"<DataArray type=\"Int32\"  Name=\"types\"  format=\"appended\" offset=\""<<offset[n]<<"\" />"<<endl;
+    result<<"<DataArray type=\"Int32\" Name=\"offsets\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-	result<<"</Cells>"<<endl;
+    result<<"<DataArray type=\"Int32\" Name=\"types\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
+    ++n;
+    result<<"</Cells>\n";
 
-    result<<"</Piece>"<<endl;
-    result<<"</UnstructuredGrid>"<<endl;
+    result<<"</Piece>\n";
+    result<<"</UnstructuredGrid>\n";
 
-//----------------------------------------------------------------------------
-    result<<"<AppendedData encoding=\"raw\">"<<endl<<"_";
+    result<<"<AppendedData encoding=\"raw\">\n_";
+    //----------------------------------------------------------------------------
 
-
-//  radius
+    //  radius
     iin=4*(Np);
     result.write((char*)&iin, sizeof(int));
     for(n=0;n<Np;++n)
@@ -158,24 +148,23 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
         result.write((char*)&ffn, sizeof(float));
     }
 
-
-//  XYZ
-	iin=4*(Np)*3;
-	result.write((char*)&iin, sizeof(int));
+    //  XYZ
+    iin=4*(Np)*3;
+    result.write((char*)&iin, sizeof(int));
     for(n=0;n<Np;++n)
-	{
-	ffn=float(p->Xout(Fx[n],Fy[n]));
-	result.write((char*)&ffn, sizeof(float));
+    {
+        ffn=float(p->Xout(Fx[n],Fy[n]));
+        result.write((char*)&ffn, sizeof(float));
 
-	ffn=float(p->Yout(Fx[n],Fy[n]));
-	result.write((char*)&ffn, sizeof(float));
+        ffn=float(p->Yout(Fx[n],Fy[n]));
+        result.write((char*)&ffn, sizeof(float));
 
-	ffn=float(Fz[n]);
-	result.write((char*)&ffn, sizeof(float));
-	}
+        ffn=float(Fz[n]);
+        result.write((char*)&ffn, sizeof(float));
+    }
 
-//  Connectivity
-	count=0;
+    //  Connectivity
+    count=0;
     iin=4*(Np)*2;
     result.write((char*)&iin, sizeof(int));
     for(n=0;n<Np;++n)
@@ -199,8 +188,7 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
         ++count;
     }
 
-
-//  Cell types
+    //  Cell types
     iin=4*(Np);
     result.write((char*)&iin, sizeof(int));
     for(n=0;n<Np;++n)
@@ -209,9 +197,8 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
         result.write((char*)&iin, sizeof(int));
     }
 
-	result<<endl<<"</AppendedData>"<<endl;
+    result<<"\n</AppendedData>\n";
     result<<"</VTKFile>"<<endl;
 
     result.close();
 }
-

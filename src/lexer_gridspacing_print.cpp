@@ -50,19 +50,19 @@ void lexer::gridspacing_print()
         gridPrint<<YN[JP]<<" ";
     }
     gridPrint<<endl;
-    
+
     gridPrint << "Z_COORDINATES "<<knoz+1<<" "<<" float"<<endl;
     for (k = 0; k <= knoz; ++k)
     {
         gridPrint<<ZN[KP]<<" ";
     }
-    gridPrint<<endl;    
+    gridPrint<<endl;
 
-    
+
     // If values should be added to the file, uncomment the following lines
     /*
     int nPoints = (knox + 1)*(knoy + 1)*(knoz + 1);
-    
+
     gridPrint<<"\nPOINT_DATA " <<nPoints<<endl;
     gridPrint<<"SCALARS XXX float 1 \nLOOKUP_TABLE default"<<endl;
 

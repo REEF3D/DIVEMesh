@@ -20,12 +20,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::partition_correct_y(lexer* p, dive* a)
 {
-	int q,jj;
-	double diff_p;
+    int q,jj;
 
     ycount[0]=0;
 
@@ -74,8 +73,8 @@ void decomp::partition_correct_y(lexer* p, dive* a)
     ycount_sum+=ycount[bb];
 
 
-	for(bb=1;bb<=a->my;++bb)
-	ddout<<"old ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
+    for(bb=1;bb<=a->my;++bb)
+    ddout<<"old ycount"<<bb<<" : "<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
 
     ddout<<"ycount_sum: "<<xcount_sum<<endl;
 
@@ -127,156 +126,149 @@ void decomp::partition_correct_y(lexer* p, dive* a)
 
     a->ynode[a->my]=a->knoy;
 
-	// check last
-	for(bb=1;bb<=a->my;++bb)
-	{
-		ycount[bb]=0;
-		for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-		for(i=0;i<a->knox;++i)
-		for(k=0;k<a->knoz;++k)
-        //ddout<<j<<" "<<bb<<endl;
-		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-		++ycount[bb];
-	}
-	int fac,mincell,jloc;
-	double diff;
+    // check last
+    for(bb=1;bb<=a->my;++bb)
+    {
+        ycount[bb]=0;
+        for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
+        for(i=0;i<a->knox;++i)
+        for(k=0;k<a->knoz;++k)
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++ycount[bb];
+    }
+    int fac,mincell,jloc;
+    double diff;
 
+    mincell=1e9;
+    for(bb=1;bb<a->my;++bb)
+    mincell=MIN(mincell,ycount[bb]);
 
+    if(ycount[a->my]>yaverage+ycross_m/2)
+    {
+        for(bb=0;bb<=a->my;++bb)
+        ddout<<"inter ycount"<<bb<<" : "<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
 
-	mincell=1e9;
-	for(bb=1;bb<a->my;++bb)
-	mincell=MIN(mincell,ycount[bb]);
+        diff = ycount[a->my]-yaverage;
+        fac = diff/ycross_m;
 
+        ddout<<ycount[a->my]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
 
-	if(ycount[a->my]>yaverage+ycross_m/2)
-	{
+        count=0;
+        do{
+            mincell=1e9;
+            for(bb=1;bb<a->my;++bb)
+            if(ycount[bb]<mincell)
+            {
+                jloc=bb;
+                mincell=ycount[bb];
+            }
 
-		for(bb=0;bb<=a->my;++bb)
-		ddout<<"inter ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
+            ddout<<"Mincell: "<<mincell<<"  jloc: "<<jloc<<endl;
 
-		diff = ycount[a->my]-yaverage;
-		fac = diff/ycross_m;
+            for(jj=jloc;jj<a->my;++jj)
+            ++a->ynode[jj];
 
-		ddout<<ycount[a->my]<<"  ACTION!!!  fac: "<<fac<<" mincell: "<<mincell<<endl;
+            for(bb=1;bb<=a->my;++bb)
+            {
+                ycount[bb]=0;
+                for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
+                for(i=0;i<a->knox;++i)
+                for(k=0;k<a->knoz;++k)
+                if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+                ++ycount[bb];
+            }
 
-		count=0;
-		do{
-			mincell=1e9;
-			for(bb=1;bb<a->my;++bb)
-			if(ycount[bb]<mincell)
-			{
-			jloc=bb;
-			mincell=ycount[bb];
-			}
+            if(ycount[a->my]<yaverage+ycross_m/5)
+            break;
+            ++count;
 
-			ddout<<"Mincell: "<<mincell<<"  jloc: "<<jloc<<endl;
+        }while(ycount[a->my]>yaverage+ycross_m/2);
+    }
 
-			for(jj=jloc;jj<a->my;++jj)
-			++a->ynode[jj];
-
-
-			for(bb=1;bb<=a->my;++bb)
-			{
-				ycount[bb]=0;
-				for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-				for(i=0;i<a->knox;++i)
-				for(k=0;k<a->knoz;++k)
-				if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-				++ycount[bb];
-			}
-
-		if(ycount[a->my]<yaverage+ycross_m/5)
-		break;
-		++count;
-
-		}while(ycount[a->my]>yaverage+ycross_m/2);
-	}
-
-	//
+    //
     int maxiter = MAX(a->mx,a->my);
 
-	int maxcell,jloc_max,jloc_min;
-		count=0;
-		do{
-			mincell=1e9;
-			for(bb=1;bb<a->my;++bb)
-			if(ycount[bb]<mincell)
-			{
-			jloc_min=bb;
-			mincell=ycount[bb];
-			}
+    int maxcell,jloc_max,jloc_min;
+    count=0;
+    do{
+        mincell=1e9;
+        for(bb=1;bb<a->my;++bb)
+        if(ycount[bb]<mincell)
+        {
+            jloc_min=bb;
+            mincell=ycount[bb];
+        }
 
-			maxcell=-1e9;
-			for(bb=1;bb<a->my;++bb)
-			if(ycount[bb]>maxcell)
-			{
-			jloc_max=bb;
-			maxcell=ycount[bb];
-			}
+        maxcell=-1e9;
+        for(bb=1;bb<a->my;++bb)
+        if(ycount[bb]>maxcell)
+        {
+            jloc_max=bb;
+            maxcell=ycount[bb];
+        }
 
-			ddout<<"Maxcell: "<<maxcell<<"  jloc: "<<jloc_max<<"  Mincell: "<<mincell<<"  jloc: "<<jloc_min<<endl;
+        ddout<<"Maxcell: "<<maxcell<<"  jloc: "<<jloc_max<<"  Mincell: "<<mincell<<"  jloc: "<<jloc_min<<endl;
 
-			if(jloc_max<jloc_min)
-			for(jj=jloc_max;jj<jloc_min;++jj)
-			--a->ynode[jj];
+        if(jloc_max<jloc_min)
+        for(jj=jloc_max;jj<jloc_min;++jj)
+        --a->ynode[jj];
 
-			if(jloc_max>jloc_min)
-			for(jj=jloc_min;jj<jloc_max;++jj)
-			++a->ynode[jj];
-
-
-			for(bb=1;bb<=a->my;++bb)
-			{
-				ycount[bb]=0;
-				for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-				for(i=0;i<a->knox;++i)
-				for(k=0;k<a->knoz;++k)
-				if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-				++ycount[bb];
-			}
-
-			maxcell=-1e9;
-			for(bb=1;bb<a->my;++bb)
-			if(ycount[bb]>maxcell)
-			{
-			jloc_max=bb;
-			maxcell=ycount[bb];
-			}
+        if(jloc_max>jloc_min)
+        for(jj=jloc_min;jj<jloc_max;++jj)
+        ++a->ynode[jj];
 
 
-		++count;
+        for(bb=1;bb<=a->my;++bb)
+        {
+            ycount[bb]=0;
+            for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
+            for(i=0;i<a->knox;++i)
+            for(k=0;k<a->knoz;++k)
+            if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+            ++ycount[bb];
+        }
 
-		}while(maxcell>yaverage+ycross_m/2 && count<maxiter);
+        maxcell=-1e9;
+        for(bb=1;bb<a->my;++bb)
+        if(ycount[bb]>maxcell)
+        {
+            jloc_max=bb;
+            maxcell=ycount[bb];
+        }
 
+        ++count;
 
-	//count again
-	for(bb=1;bb<=a->my;++bb)
-	{
-		ycount[bb]=0;
-		for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
-		for(i=0;i<a->knox;++i)
-		for(k=0;k<a->knoz;++k)
-		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-		++ycount[bb];
-	}
-
-
-	for(bb=0;bb<=a->my;++bb)
-	a->yorig[bb] = p->YN[a->ynode[bb]+marge];
-
-
-	ycount_sum=0;
-	for(bb=1;bb<=a->my;++bb)
-	ycount_sum+=ycount[bb];
+    }while(maxcell>yaverage+ycross_m/2 && count<maxiter);
 
 
-	for(bb=0;bb<=a->my;++bb)
-	ddout<<"new ycount"<<bb<<" :"<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
+    //count again
+    for(bb=1;bb<=a->my;++bb)
+    {
+        ycount[bb]=0;
+        for(j=a->ynode[bb-1];j<a->ynode[bb];++j)
+        for(i=0;i<a->knox;++i)
+        for(k=0;k<a->knoz;++k)
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++ycount[bb];
+    }
 
-	ddout<<"ycount_sum: "<<ycount_sum<<endl;
+
+    for(bb=0;bb<=a->my;++bb)
+    a->yorig[bb] = p->YN[a->ynode[bb]+marge];
 
 
-	MALOOP
+    ycount_sum=0;
+    for(bb=1;bb<=a->my;++bb)
+    ycount_sum+=ycount[bb];
+
+
+    for(bb=0;bb<=a->my;++bb)
+    ddout<<"new ycount"<<bb<<" : "<<ycount[bb]<<"  ynode: "<<a->ynode[bb]<<"  yorig: "<<a->yorig[bb]<<endl;
+
+    ddout<<"ycount_sum: "<<ycount_sum<<endl;
+
+
+    MALOOP
     a->subgrid(i,j,k)=-1;
 
     NLOOP
@@ -286,21 +278,19 @@ void decomp::partition_correct_y(lexer* p, dive* a)
         a->subslice(i,j)=PARANUM;
     }
 
+    for(q=0;q<p->M10;++q)
+    subcell[q]=0;
 
-	for(q=0;q<p->M10;++q)
-	subcell[q]=0;
+    q=0;
+    NLOOP
+    {
+        SUBLOOP
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++subcell[q];
 
-	q=0;
-	NLOOP
-	{
-    SUBLOOP
-	if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-	++subcell[q];
+        ++q;
+    }
 
-	++q;
-	}
-
-	for(q=0;q<p->M10;++q)
-	ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
+    for(q=0;q<p->M10;++q)
+    ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
 }
-

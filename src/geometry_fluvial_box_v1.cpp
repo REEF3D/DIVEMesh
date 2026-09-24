@@ -26,48 +26,44 @@ Author: Hans Bihs
 
 void geometry::fluvial_box_v1(lexer *p, dive *a, int rank, int &ts, int &te)
 {
-
-    // add the rest of the geometry geometry
     ts=p->tricount;
 
-    //cout<<"yl[0]: "<<yl[0]<<endl;
-
     // Front Face
-	// Tri 1
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = -1.0;
-	p->trivec_z[p->tricount] = 0.0;
+    // Tri 1
+    p->trivec_x[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = -1.0;
+    p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xl[0];
-	p->tri_y[p->tricount][0] = yl[0];
-	p->tri_z[p->tricount][0] = box_zs+G307_bh;
+    p->tri_x[p->tricount][0] = xl[0];
+    p->tri_y[p->tricount][0] = yl[0];
+    p->tri_z[p->tricount][0] = box_zs+G307_bh;
 
-	p->tri_x[p->tricount][1] = xr[0];
-	p->tri_y[p->tricount][1] = yr[0];
-	p->tri_z[p->tricount][1] = box_zs+G307_bh;
+    p->tri_x[p->tricount][1] = xr[0];
+    p->tri_y[p->tricount][1] = yr[0];
+    p->tri_z[p->tricount][1] = box_zs+G307_bh;
 
-	p->tri_x[p->tricount][2] = xr[0];
-	p->tri_y[p->tricount][2] = yr[0];
-	p->tri_z[p->tricount][2] = box_ze;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = xr[0];
+    p->tri_y[p->tricount][2] = yr[0];
+    p->tri_z[p->tricount][2] = box_ze;
+    ++p->tricount;
 
-	// Tri 2
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = -1.0;
-	p->trivec_z[p->tricount] = 0.0;
+    // Tri 2
+    p->trivec_x[p->tricount] = 0.0;
+    p->trivec_y[p->tricount] = -1.0;
+    p->trivec_z[p->tricount] = 0.0;
 
-	p->tri_x[p->tricount][0] = xl[0];
-	p->tri_y[p->tricount][0] = yl[0];
-	p->tri_z[p->tricount][0] = box_zs+G307_bh;
+    p->tri_x[p->tricount][0] = xl[0];
+    p->tri_y[p->tricount][0] = yl[0];
+    p->tri_z[p->tricount][0] = box_zs+G307_bh;
 
-	p->tri_x[p->tricount][1] = xl[0];
-	p->tri_y[p->tricount][1] = yl[0];
-	p->tri_z[p->tricount][1] = box_ze;
+    p->tri_x[p->tricount][1] = xl[0];
+    p->tri_y[p->tricount][1] = yl[0];
+    p->tri_z[p->tricount][1] = box_ze;
 
-	p->tri_x[p->tricount][2] = xr[0];
-	p->tri_y[p->tricount][2] = yr[0];
-	p->tri_z[p->tricount][2] = box_ze;
-	++p->tricount;
+    p->tri_x[p->tricount][2] = xr[0];
+    p->tri_y[p->tricount][2] = yr[0];
+    p->tri_z[p->tricount][2] = box_ze;
+    ++p->tricount;
 
 
     // Back Face
@@ -110,7 +106,6 @@ void geometry::fluvial_box_v1(lexer *p, dive *a, int rank, int &ts, int &te)
 
     for(n=0; n<numds-1;++n)
     {
-
         // Bed
         // Tri 1
         p->trivec_x[p->tricount] = 0.0;

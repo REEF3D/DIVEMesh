@@ -23,7 +23,7 @@ Author: Hans Bihs
 #ifndef GEODAT_H_
 #define GEODAT_H_
 
-#include"increment.h"
+#include "increment.h"
 
 class lexer;
 class dive;
@@ -39,9 +39,9 @@ public:
     geodat(lexer*,dive*);
     virtual ~geodat();
 
-    virtual void start(lexer*,dive*,field2d&,field&);
-    virtual void gcb_estimate(lexer*,dive*,field2d&);
-    virtual void print(lexer*,dive*,int,double*,double*,double*,int);
+    void start(lexer*,dive*,field2d&,field&);
+    void gcb_estimate(lexer*,dive*,field2d&);
+    void print(lexer*,dive*,int,double*,double*,double*,int);
 
 private:
     void geo_patch(lexer*,dive*,double*&,double*&,double*&,int&);
@@ -92,10 +92,6 @@ private:
     int is,ie,js,je;
     int **ptnum,***ptid;
     double xmin,ymin,zmin,xmax,ymax,zmax;
-
-
 };
 
 #endif
-
-

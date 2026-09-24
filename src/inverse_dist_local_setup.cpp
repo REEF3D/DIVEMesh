@@ -20,42 +20,41 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"inverse_dist_local.h"
-#include"dive.h"
-#include"lexer.h"
+#include "inverse_dist_local.h"
+#include "dive.h"
+#include "lexer.h"
+#include <algorithm>
+#include <cmath>
+#include <limits>
 
 void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
+    int r,s,t,n;
+    int ic,jc;
 
-    xmin=+1.0e19;
-    ymin=+1.0e19;
-    zmin=+1.0e19;
+    double xmin = +std::numeric_limits<double>::max();
+    double ymin = +std::numeric_limits<double>::max();
+    double zmin = +std::numeric_limits<double>::max();
 
-    xmax=-1.0e19;
-    ymax=-1.0e19;
-    zmax=-1.0e19;
+    double xmax = -std::numeric_limits<double>::max();
+    double ymax = -std::numeric_limits<double>::max();
+    double zmax = -std::numeric_limits<double>::max();
 
     for(n=0;n<p->Np;++n)
     {
-        xmax=MAX(xmax,Fx[n]);
-        xmin=MIN(xmin,Fx[n]);
-        ymax=MAX(ymax,Fy[n]);
-        ymin=MIN(ymin,Fy[n]);
-        zmax=MAX(zmax,Fz[n]);
-        zmin=MIN(zmin,Fz[n]);
+        xmax=std::max(xmax,Fx[n]);
+        xmin=std::min(xmin,Fx[n]);
+        ymax=std::max(ymax,Fy[n]);
+        ymin=std::min(ymin,Fy[n]);
+        zmax=std::max(zmax,Fz[n]);
+        zmin=std::min(zmin,Fz[n]);
     }
 
     // Grid
-    dd = 3;
-
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 
     p->Iarray(ptnum,Nx,Ny);
-
-    for(r=0;r<Nx;++r)
-    for(s=0;s<Ny;++s)
-    ptnum[r][s]=0;
 
     for(n=0;n<p->Np;++n)
     {
@@ -66,8 +65,7 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
         ++ptnum[ic+dd][jc+dd];
     }
 
-
-    p->Iarray(ptid,Nx,Ny, ptnum);
+    p->Iarray(ptid,Nx,Ny,ptnum);
 
     for(r=0;r<Nx;++r)
     for(s=0;s<Ny;++s)
@@ -78,29 +76,27 @@ void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double
     for(t=0;t<ptnum[r][s];++t)
     ptid[r][s][t]=-1;
 
-
     for(n=0;n<p->Np;++n)
     {
         ic = p->poscgen_i(Fx[n],XC,kx);
         jc = p->poscgen_j(Fy[n],YC,ky);
 
-    ICFLAG
-    {
-    ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
-    ++ptnum[ic+dd][jc+dd];
+        ICFLAG
+        {
+            ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
+            ++ptnum[ic+dd][jc+dd];
+        }
     }
-    }
-
 
     // Radius
-    Dmax=sqrt(pow(p->xmax-p->xmin,2.0)+pow(p->ymax-p->ymin,2.0));
-    R = 0.25*Dmax*sqrt(p->G18/p->Np);
+    const double dx = p->xmax-p->xmin;
+    const double dy = p->ymax-p->ymin;
+    const double Dmax = sqrt(dx*dx+dy*dy);
+    const double R = 0.25*Dmax*sqrt(p->G18/p->Np);
 
-    dij = MAX(int(R/(p->DXM)),p->G17);
+    dij = std::max(int(R/(p->DXM)),p->G17);
 
     dij=p->G17;
 
     cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" R: "<<R<<" dij: "<<dij<<endl;
 }
-
-

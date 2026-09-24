@@ -20,16 +20,14 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"kriging.h"
-#include"dive.h"
-#include"lexer.h"
-#include"field2d.h"
+#include "kriging.h"
+#include "dive.h"
+#include "lexer.h"
 
 // source:
 
 kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
-
 }
 
 kriging::~kriging()
@@ -51,82 +49,70 @@ void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *
     p->Darray(s,p->Np+1);
     p->Darray(row,p->Np+1);
 
+    cout<<"fill Aij"<<endl;
+    for(n=0; n<p->Np; ++n)
+    for(q=0; q<p->Np; ++q)
+    {
+        dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
 
+        A[n][q] = semivariogram(dist);
+    }
 
-	cout<<"fill Aij"<<endl;
-	for(n=0; n<p->Np; ++n)
-	for(q=0; q<p->Np; ++q)
-	{
-		dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
+    n=p->Np;
+    for(q=0; q<p->Np; ++q)
+    A[n][q] = 1.0;
 
-		A[n][q] = semivariogram(dist);
-	}
+    q=p->Np;
+    for(n=0; n<p->Np; ++n)
+    A[n][q] = 1.0;
 
-	n=p->Np;
-	for(q=0; q<p->Np; ++q)
-	A[n][q] = 1.0;
+    A[p->Np][p->Np] = 0.0;
 
-	q=p->Np;
-	for(n=0; n<p->Np; ++n)
-	A[n][q] = 1.0;
+    rearrange(p);
 
-	A[p->Np][p->Np] = 0.0;
+    cout<<"matrix solver"<<endl;
+    invert(p,A,B,x,b);
 
-	rearrange(p);
+    cout<<"mainloop kriging"<<endl<<endl;
 
-	cout<<"matrix solver"<<endl;
-	invert(p,A,B,x,b);
-
-
-	cout<<"mainloop kriging"<<endl<<endl;
-
-	for(i=0;i<kx;++i)
+    for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
-	f[i+3][j+3] = 0.0;
+    f[i+3][j+3] = 0.0;
 
-	count=0;
-	for(i=0;i<kx;++i)
+    count=0;
+    for(i=0;i<kx;++i)
     for(j=0;j<ky;++j)
-	{
-	xc = XC[IP];
-    yc = YC[JP];
+    {
+        xc = XC[IP];
+        yc = YC[JP];
 
-		for(n=0; n<p->Np; ++n)
-		{
-			dist = sqrt(pow(xc-X[n],2.0) + pow(yc-Y[n],2.0));
-
-			b[n] = semivariogram(dist);
-
-		}
-
-		b[p->Np]=1.0;
-
-		rearrange_b(p);
-
-
-	matvec(p,B,b,x);
-
-		val=0.0;
-		for(n=0; n<p->Np; ++n)
+        for(n=0; n<p->Np; ++n)
         {
-		val += x[n];
-		}
+            dist = sqrt(pow(xc-X[n],2.0) + pow(yc-Y[n],2.0));
+
+            b[n] = semivariogram(dist);
+        }
+
+        b[p->Np]=1.0;
+
+        rearrange_b(p);
+
+        matvec(p,B,b,x);
+
+        val=0.0;
+        for(n=0; n<p->Np; ++n)
+        {
+            val += x[n];
+        }
         if(count%1000==0)
-		cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
+        cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
 
-	for(n=0; n<p->Np; ++n)
-	f[i+3][j+3] += x[n] * F[n];
+        for(n=0; n<p->Np; ++n)
+        f[i+3][j+3] += x[n] * F[n];
 
-	++count;
+        ++count;
 
-    if(count%1000==0)
-    cout<<"> processed cells: "<<count<<endl;
-	}
-
+        if(count%1000==0)
+        cout<<"> processed cells: "<<count<<endl;
+    }
 }
-
-
-
-
-
-

@@ -26,22 +26,18 @@ Author: Hans Bihs
 
 void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, field &dist, field2d &bedlevel)
 {
-	double ys,ye,zs,ze;
-	double Px,Py,Pz;
-	double Qx,Qy,Qz;
-	double Rx,Ry,Rz;
-	double Ax,Ay,Az;
-	double Bx,By,Bz;
-	double Cx,Cy,Cz;
-	double PQx,PQy,PQz;
-	double PAx,PAy,PAz;
-	double PBx,PBy,PBz;
-	double PCx,PCy,PCz;
-	double Mx,My,Mz;
-	int is,ie,js,je,ks,ke;
-	int ir,insidecheck;
-	double u,v,w;
-	double denom;
+    double ys,ye;
+    double Px,Py,Pz;
+    double Qx,Qy,Qz;
+    double Rz;
+    double Ax,Ay,Az;
+    double Bx,By,Bz;
+    double Cx,Cy,Cz;
+    double PQx,PQy,PQz;
+    double Mx,My,Mz;
+    int is,ie,js,je;
+    double u,v,w;
+    double denom;
     double psi = 1.0e-8*p->DXM;
 
     for(n=ts; n<te; ++n)
@@ -105,22 +101,10 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
             PQy = Qy-Py;
             PQz = Qz-Pz;
 
-		PAx = Ax-Px;
-		PAy = Ay-Py;
-		PAz = Az-Pz;
-
-		PBx = Bx-Px;
-		PBy = By-Py;
-		PBz = Bz-Pz;
-
-		PCx = Cx-Px;
-		PCy = Cy-Py;
-		PCz = Cz-Pz;
-
-		// uvw
-		Mx = PQy*Pz - PQz*Py;
-		My = PQz*Px - PQx*Pz;
-		Mz = PQx*Py - PQy*Px;
+            // uvw
+            Mx = PQy*Pz - PQz*Py;
+            My = PQz*Px - PQx*Pz;
+            Mz = PQx*Py - PQy*Px;
 
 
             u = PQx*(Cy*Bz - Cz*By) + PQy*(Cz*Bx - Cx*Bz) + PQz*(Cx*By - Cy*Bx)
@@ -175,11 +159,10 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
                     if(Rz>p->zmin+1.0e-10)
                     a->zstl_min(i,j) = MAX(a->zstl_min(i,j),Rz);
 
-            if(Rz<p->zmax-1.0e-10)
-            a->zstl_max(i,j) = MAX(a->zstl_max(i,j),Rz);
+                    if(Rz<p->zmax-1.0e-10)
+                    a->zstl_max(i,j) = MAX(a->zstl_max(i,j),Rz);
+                }
             }
-
-            }
-		}
-	}
+        }
+    }
 }

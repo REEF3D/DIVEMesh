@@ -38,8 +38,8 @@ void hdc::write_sflow(lexer *p, dive *a)
         // Open single file
         if(file_conti==1)
         {
-        filename_single_out(p,a,n,count);
-        wfile[count].open(name, ios::binary);
+            filename_out_single(p,n,count);
+            wfile[count].open(name, ios::binary);
         }
 
         // write iter
@@ -83,7 +83,3 @@ void hdc::write_sflow(lexer *p, dive *a)
     for(q=0;q<p->M10;++q)
     wfile[q].close();
 }
-
-
-
-

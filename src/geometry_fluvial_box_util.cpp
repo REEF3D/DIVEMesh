@@ -61,8 +61,6 @@ void geometry::fluvial_box_extend(lexer *p, dive *a)
         ymax = MAX(ymax,yr[n]);
     }
 
-
-
     box_xs = xmin;
     box_xe = xmax + G309_x;
 
@@ -73,5 +71,4 @@ void geometry::fluvial_box_extend(lexer *p, dive *a)
     box_ze =  G307_fh + G309_z;
 
     cout<<"fluvial box extend - xs: "<<box_xs<<" xe: "<<box_xe<<" ys: "<<box_ys<<" ye: "<<box_ye<<" zs: "<<box_zs<<" ze: "<<box_ze<<endl;
-
 }

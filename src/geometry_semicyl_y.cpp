@@ -29,16 +29,13 @@ Author: Hans Bihs
 void geometry::semicyl_y(lexer* p, dive* a,int rank, int &ts, int &te,
             double xm, double zm, double y1, double y2, double r1, double r2)
 {
-	//cout<<"SEMI_CYL "<<p->S131<<endl;
-	double U,ds,phi;
+    double U,ds,phi;
 
-	double rmax;
-	int snum;
-	int vertice_mem, center1_num,center2_num;
-	int vertice_start=a->vertice_num;
-	double Ax,Ay,Az;
-	double Bx,By,Bz;
-	double Nx,Ny,Nz,norm;
+    double rmax;
+    int snum;
+    double Ax,Ay,Az;
+    double Bx,By,Bz;
+    double Nx,Ny,Nz,norm;
 
     /*
     xm=p->S131_xm[rank];
@@ -58,70 +55,68 @@ void geometry::semicyl_y(lexer* p, dive* a,int rank, int &ts, int &te,
 
     snum = int(U/ds);
 
-	//ds = U/double(snum);
+    // Vertices
+    ds = (1.0*PI)/double(snum);
 
-// Vertices
-	ds = (1.0*PI)/double(snum);
+    phi=0.0;
 
-	phi=0.0;
+    ts=p->tricount;
 
-	ts=p->tricount;
+    for(n=0;n<snum;++n)
+    {
+        //right circle
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = 0.0;
+        p->trivec_z[p->tricount] = -1.0;
 
-	for(n=0;n<snum;++n)
-	{
-	//right circle
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = -1.0;
+        p->tri_x[p->tricount][0] = xm;
+        p->tri_y[p->tricount][0] = y1;
+        p->tri_z[p->tricount][0] = zm;
 
-	p->tri_x[p->tricount][0] = xm;
-	p->tri_y[p->tricount][0] = y1;
-	p->tri_z[p->tricount][0] = zm;
+        p->tri_x[p->tricount][1] = xm + r1*cos(phi);
+        p->tri_y[p->tricount][1] = y1;
+        p->tri_z[p->tricount][1] = zm + r1*sin(phi);
 
-	p->tri_x[p->tricount][1] = xm + r1*cos(phi);
-	p->tri_y[p->tricount][1] = y1;
-	p->tri_z[p->tricount][1] = zm + r1*sin(phi);
+        p->tri_x[p->tricount][2] = xm + r1*cos(phi+ds);
+        p->tri_y[p->tricount][2] = y1;
+        p->tri_z[p->tricount][2] = zm + r1*sin(phi+ds);
+        ++p->tricount;
 
-	p->tri_x[p->tricount][2] = xm + r1*cos(phi+ds);
-	p->tri_y[p->tricount][2] = y1;
-	p->tri_z[p->tricount][2] = zm + r1*sin(phi+ds);
-	++p->tricount;
+        //left circle
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = 0.0;
+        p->trivec_z[p->tricount] = -1.0;
 
-	//left circle
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = -1.0;
+        p->tri_x[p->tricount][0] = xm;
+        p->tri_y[p->tricount][0] = y2;
+        p->tri_z[p->tricount][0] = zm;
 
-	p->tri_x[p->tricount][0] = xm;
-	p->tri_y[p->tricount][0] = y2;
-	p->tri_z[p->tricount][0] = zm;
+        p->tri_x[p->tricount][1] = xm + r2*cos(phi);
+        p->tri_y[p->tricount][1] = y2;
+        p->tri_z[p->tricount][1] = zm + r2*sin(phi);
 
-	p->tri_x[p->tricount][1] = xm + r2*cos(phi);
-	p->tri_y[p->tricount][1] = y2;
-	p->tri_z[p->tricount][1] = zm + r2*sin(phi);
+        p->tri_x[p->tricount][2] = xm + r2*cos(phi+ds);
+        p->tri_y[p->tricount][2] = y2;
+        p->tri_z[p->tricount][2] = zm + r2*sin(phi+ds);
+        ++p->tricount;
 
-	p->tri_x[p->tricount][2] = xm + r2*cos(phi+ds);
-	p->tri_y[p->tricount][2] = y2;
-	p->tri_z[p->tricount][2] = zm + r2*sin(phi+ds);
-	++p->tricount;
+        //bottom
+        p->trivec_x[p->tricount] = 0.0;
+        p->trivec_y[p->tricount] = 0.0;
+        p->trivec_z[p->tricount] = -1.0;
 
-	//bottom
-	p->trivec_x[p->tricount] = 0.0;
-	p->trivec_y[p->tricount] = 0.0;
-	p->trivec_z[p->tricount] = -1.0;
+        p->tri_x[p->tricount][0] = xm-r1;
+        p->tri_y[p->tricount][0] = y1;
+        p->tri_z[p->tricount][0] = zm;
 
-	p->tri_x[p->tricount][0] = xm-r1;
-	p->tri_y[p->tricount][0] = y1;
-	p->tri_z[p->tricount][0] = zm;
+        p->tri_x[p->tricount][1] = xm+r2;
+        p->tri_y[p->tricount][1] = y2;
+        p->tri_z[p->tricount][1] = zm;
 
-	p->tri_x[p->tricount][1] = xm+r2;
-	p->tri_y[p->tricount][1] = y2;
-	p->tri_z[p->tricount][1] = zm;
-
-	p->tri_x[p->tricount][2] = xm-r2;
-	p->tri_y[p->tricount][2] = y2;
-	p->tri_z[p->tricount][2] = zm;
-	++p->tricount;
+        p->tri_x[p->tricount][2] = xm-r2;
+        p->tri_y[p->tricount][2] = y2;
+        p->tri_z[p->tricount][2] = zm;
+        ++p->tricount;
 
 
         p->trivec_x[p->tricount] = 0.0;
@@ -198,6 +193,5 @@ void geometry::semicyl_y(lexer* p, dive* a,int rank, int &ts, int &te,
         phi+=ds;
     }
 
-
-	te=p->tricount;
+    te=p->tricount;
 }

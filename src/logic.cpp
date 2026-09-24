@@ -36,12 +36,12 @@ void driver::logic(lexer* p)
             + p->T62 + p->T81 + p->T82 + p->T83 + p->T84 + p->T63 + p->T121 + p->T131 + p->T141
             + p->T201 + p->T202 + p->T203 + p->T300;
 
-    pini=new initialize;
+    pini = new initialize;
 
-    pbc=new bc();
-    psurf= new surface();
-    pdd=new decomp();
-    pprint=new print_grid(p);
+    pbc = new bc();
+    psurf = new surface();
+    pdd = new decomp();
+    pprint = new print_grid(p);
 
     pvtu = new print_vtu(p);
 
@@ -72,7 +72,5 @@ void driver::logic(lexer* p)
 
     cout<<"."<<endl;
 
-
     mainloop();
-
 }

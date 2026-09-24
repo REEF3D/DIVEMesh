@@ -20,29 +20,24 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-
 #ifndef FIELD1D_H_
 #define FIELD1D_H_
 
-#include<iostream>
 #include"increment.h"
 
 class lexer;
 
-using namespace std;
-
 class field1d : public increment
 {
 public:
-
-	field1d(lexer*);
-	double& operator()(int);
+    field1d(lexer*);
+    inline double& operator()(int ii)
+    {
+        return feld[ii+xma];
+    };
 
 private:
-	double *feld;
-	int dx;
-
+    double *feld;
 };
 
 #endif
-

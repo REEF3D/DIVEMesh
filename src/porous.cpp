@@ -33,8 +33,7 @@ porous::porous(lexer *p, dive *a) : geometry(p,a), porous_dist(p), porousbed(p)
 
     if(p->V9==1)
     p->V9_1=1;
-
-    if(p->V9==2)
+    else if(p->V9==2)
     p->V9_1=-1;
 
 
@@ -45,10 +44,6 @@ porous::porous(lexer *p, dive *a) : geometry(p,a), porous_dist(p), porousbed(p)
     phi=(PI/180.0)*p->V5_phi;
     theta=(PI/180.0)*p->V5_theta;
     psi=(PI/180.0)*p->V5_psi;
-}
-
-porous::~porous()
-{
 }
 
 void porous::start(lexer* p, dive* a)
@@ -218,38 +213,28 @@ void porous::start(lexer* p, dive* a)
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
         }
-
     }
-
 
     // finalize porous_dist
     LOOP
     {
         if(a->porous(i,j,k)==-1)
-        porous_dist(i,j,k)=-fabs(porous_dist(i,j,k));
-
-
-        if(a->porous(i,j,k)==1)
-        porous_dist(i,j,k)=fabs(porous_dist(i,j,k));
+            porous_dist(i,j,k)=-fabs(porous_dist(i,j,k));
+        else if(a->porous(i,j,k)==1)
+            porous_dist(i,j,k)=fabs(porous_dist(i,j,k));
     }
-
 
     LOOP
     {
         if(porous_dist(i,j,k)>10.0*p->DXM)
-        porous_dist(i,j,k)=10.0*p->DXM;
-
-        if(porous_dist(i,j,k)<-10.0*p->DXM)
-        porous_dist(i,j,k)=-10.0*p->DXM;
+            porous_dist(i,j,k)=10.0*p->DXM;
+        else if(porous_dist(i,j,k)<-10.0*p->DXM)
+            porous_dist(i,j,k)=-10.0*p->DXM;
     }
 
     LOOP
     if(porous_dist(i,j,k)!=porous_dist(i,j,k))
     cout<<"POROUS NAN: "<<porous_dist(i,j,k)<<endl;
 
-
     cout<<"porous_trinum: "<<p->trinum<<"  porous_tricount: "<<p->tricount<<endl;
-
 }
-
-

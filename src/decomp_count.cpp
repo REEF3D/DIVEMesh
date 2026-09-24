@@ -20,11 +20,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::surfcount(lexer* p,dive* a)
 {
-
     for(i=0;i<a->para1count;i++)
     {
         n=a->subgrid(a->para1sf[i][0],a->para1sf[i][1],a->para1sf[i][2]);
@@ -64,7 +63,6 @@ void decomp::surfcount(lexer* p,dive* a)
 
 void decomp::slicesurfcount(lexer* p,dive* a)
 {
-
     for(i=0;i<a->paraslice1count;i++)
     {
         n=a->subslice(a->paraslice1sf[i][0],a->paraslice1sf[i][1]);

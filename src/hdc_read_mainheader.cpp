@@ -32,18 +32,21 @@ void hdc::read_mainheader(lexer *p, dive *a)
 {
     ifstream mainhead;
     int ii1,ii2;
-    double val;
 
     if(p->H10==2)
-    sprintf(name,"./REEF3D_SFLOW_STATE/REEF3D-SFLOW_State_Mainheader.r3d");
-
-    if(p->H10==4 || p->H10==44)
-    sprintf(name,"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
-
+    {
+        snprintf(name,sizeof(name),"./REEF3D_SFLOW_STATE/REEF3D-SFLOW_State_Mainheader.r3d");
+    }
+    else if(p->H10==4 || p->H10==44)
+    {
+        snprintf(name,sizeof(name),"./REEF3D_FNPF_STATE/REEF3D-FNPF_State_Mainheader.r3d");
+    }
     if(p->H10==5)
-    sprintf(name,"./REEF3D_NHFLOW_STATE/REEF3D-NHFLOW_State_Mainheader.r3d");
+    {
+        snprintf(name,sizeof(name),"./REEF3D_NHFLOW_STATE/REEF3D-NHFLOW_State_Mainheader.r3d");
+    }
 
-	mainhead.open(name, ios::binary);
+    mainhead.open(name, ios::binary);
 
     // count numiter
     mainhead.read((char*)&iin, sizeof(int));
@@ -74,10 +77,8 @@ void hdc::read_mainheader(lexer *p, dive *a)
     SWL=ddn;
 
     mainhead.read((char*)&ddn, sizeof(double));
-	val=ddn;
 
     mainhead.read((char*)&ddn, sizeof(double));
-	val=ddn;
 
 
     // read flag
@@ -150,10 +151,8 @@ void hdc::read_mainheader(lexer *p, dive *a)
     SWL=ddn;
 
     mainhead.read((char*)&ddn, sizeof(double));
-	val=ddn;
 
     mainhead.read((char*)&ddn, sizeof(double));
-	val=ddn;
 
     cout<<"HDC numprocs: "<<numprocs<<endl;
     cout<<"HDC NGx: "<<NGx<<endl;
@@ -179,9 +178,7 @@ void hdc::read_mainheader(lexer *p, dive *a)
         mainhead.read((char*)&ddn, sizeof(double));
         simtime[count] = ddn;
 
-    //cout<<"simtime: "<<simtime[count]<<endl;
-
-    ++count;
+        ++count;
     }
 
     mainhead.close();

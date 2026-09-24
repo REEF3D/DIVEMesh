@@ -67,9 +67,8 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     // FLUVIAL BOX V1
     if(p->S301==1)
     fluvial_box_v1(p,a,rank,ts,te);
-
     // FLUVIAL BOX V2
-    if(p->S301==2)
+    else if(p->S301==2)
     fluvial_box_v2(p,a,rank,ts,te);
 
     p->del_Darray(xl,p->S300_ds);
@@ -77,14 +76,11 @@ void solid::fluvial_box(lexer *p, dive *a, int rank, int &ts, int &te)
     p->del_Darray(xr,p->S300_ds);
     p->del_Darray(yr,p->S300_ds);
 
-
     cout<<"fluvial box end  "<<te<<endl<<endl<<endl;
-
 }
 
 void solid::fluvial_box_parameterfill(lexer *p, dive *a)
 {
-
     G300_ds = p->S300_ds;
 
     p->Darray(xl,G300_ds);
@@ -97,7 +93,6 @@ void solid::fluvial_box_parameterfill(lexer *p, dive *a)
 
     for(int n=0;n<G300;++n)
     G300_ord[n] = p->S300_ord[n];
-
 
     G301 = p->S301;
 
@@ -118,7 +113,6 @@ void solid::fluvial_box_parameterfill(lexer *p, dive *a)
     for(int n=0;n<G310;++n)
     G310_l[n] = p->S310_l[n];
 
-
     G320 = p->S320;
     p->Darray(G320_r,G320);
     p->Darray(G320_phi,G320);
@@ -128,7 +122,6 @@ void solid::fluvial_box_parameterfill(lexer *p, dive *a)
         G320_r[n] = p->S320_r[n];
         G320_phi[n] = p->S320_phi[n];
     }
-
 
     G330 = p->S330;
     p->Darray(G330_r,G330);
@@ -154,10 +147,6 @@ void solid::fluvial_box_parameterfill(lexer *p, dive *a)
         G340_ds[n] = p->S340_ds[n];
     }
 
-
-
-
-
     /*
     int S300,S300_ds;
     int *S300_ord;
@@ -171,15 +160,4 @@ void solid::fluvial_box_parameterfill(lexer *p, dive *a)
     double *S330_r,*S330_phi;
     int S340;
     double *S340_teta,*S340_L,*S340_N,*S340_ds;*/
-
-
-
-
 }
-
-
-
-
-
-
-

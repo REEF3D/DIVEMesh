@@ -36,17 +36,15 @@ void lexer::read_data()
 
         while(!dataset.eof())
         {
+            if(D19==0)
+            dataset>>val>>val>>val;
+            else if(D19==1)
+            dataset>>cval>>val>>val>>val;
 
-        if(D19==0)
-        dataset>>val>>val>>val;
+            if(count%D13==0)
+            ++countD10;
 
-        if(D19==1)
-        dataset>>cval>>val>>val>>val;
-
-		if(count%D13==0)
-        ++countD10;
-
-		++count;
+            ++count;
         }
         D10=countD10;
         cout<<"DATA INTERPOLATION  "<<D10<<endl;
@@ -65,8 +63,7 @@ void lexer::read_data()
         {
             if(D19==0)
             dataset>>val1>>val2>>val3;
-
-            if(D19==1)
+            else if(D19==1)
             dataset>>cval>>val1>>val2>>val3;
 
             if(count%D13==0)
@@ -82,7 +79,5 @@ void lexer::read_data()
         }
 
         dataset.close();
-
-
     }
 }

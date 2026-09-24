@@ -20,52 +20,36 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Tobias Martin
 --------------------------------------------------------------------*/
 
-#include"lexer.h"
+#include "lexer.h"
 #include <vector>
 #include <algorithm>
 
-double lexer::cellBasedSpacing
-(
-const double& coord_start, 
-const double& coord_end, 
-const double& focus_point, 
-const double& delta_focus,
-const double& minDx, 
-const double& maxDx, 
-const double& cellRatio
-)
+double lexer::cellBasedSpacing(const double& coord_start, const double& coord_end, const double& focus_point,
+                               const double& delta_focus, const double& minDx, const double& maxDx, const double& cellRatio)
 {
     int nKnot = 0;
-    
+
     cellBasedSpacing(coord_start, coord_end, focus_point, delta_focus, minDx, maxDx, cellRatio, nKnot);
-    
+
     return nKnot;
 }
 
-void lexer::cellBasedSpacing
-(
-const double& coord_start, 
-const double& coord_end, 
-const double& focus_point, 
-const double& delta_focus_aim,
-const double& minDx, 
-const double& maxDx, 
-const double& cellRatio,
-int& cellIndex
-)
+void lexer::cellBasedSpacing(const double& coord_start, const double& coord_end, const double& focus_point,
+                             const double& delta_focus_aim, const double& minDx, const double& maxDx, const double& cellRatio,
+                             int& cellIndex)
 {
     double delta_focus = delta_focus_aim;
     double z_1 = coord_start;
     double z_2 = focus_point - delta_focus/2;
-    double z_3 = focus_point + delta_focus/2; 
-    double z_4 = coord_end; 
+    double z_3 = focus_point + delta_focus/2;
+    double z_4 = coord_end;
 
 
     // Check mesh
     double dz = minDx;
     vector<double> CN;
     CN.push_back(z_2);
-    
+
     int index = 1;
     for (int i = 1; i < 10000; i++)
     {
@@ -74,10 +58,10 @@ int& cellIndex
         {
             dz = maxDx;
         }
-        
+
         CN.push_back(CN[index - 1] - dz);
         index++;
-        
+
         if (CN.back() < z_1)
         {
             CN.back() = z_1;
@@ -87,7 +71,7 @@ int& cellIndex
     reverse(CN.begin(), CN.end());
 
     if ((CN[2] - CN[1])/(CN[1] - CN[0]) > cellRatio)
-    {  
+    {
         z_2 = focus_point - delta_focus/2 - (CN[1] - CN[0]);
     }
 
@@ -114,7 +98,7 @@ int& cellIndex
         }
 
         CN.push_back(CN[index - 1] + dz);
-        index++; 
+        index++;
 
         if (CN.back() > z_4)
         {
@@ -132,7 +116,7 @@ int& cellIndex
 
 
     // Generate mesh
-    
+
     CN.clear();
     dz = minDx;
     CN.push_back(z_2);
@@ -145,10 +129,10 @@ int& cellIndex
         {
             dz = maxDx;
         }
-    
+
         CN.push_back(CN[index - 1] - dz);
         index++;
-        
+
         if (CN.back() < z_1)
         {
             CN.back() = z_1;
@@ -156,7 +140,7 @@ int& cellIndex
         }
     }
     reverse(CN.begin(), CN.end());
-    
+
     delta_focus = z_3 - z_2;
     nKnot = round(delta_focus/minDx);
     dz = delta_focus/nKnot;
@@ -178,10 +162,10 @@ int& cellIndex
         {
             dz = maxDx;
         }
-        
+
         CN.push_back(CN[index - 1] + dz);
         index++;
-        
+
         if (CN.back() > z_4)
         {
             CN.back() = z_4;
@@ -190,7 +174,7 @@ int& cellIndex
     }
 
     // Correction
-    
+
     if ((CN[1] - CN[0]) < 1e-3)
     {
         vector<double>::iterator it_;

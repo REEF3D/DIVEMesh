@@ -52,7 +52,6 @@ void lexer::read_input()
 
 void lexer::read_preproc()
 {
-
     createspace();
 
     gridspacing();
@@ -62,12 +61,3 @@ void lexer::read_preproc()
 
     tri_space();
 }
-
-
-
-
-
-
-
-
-

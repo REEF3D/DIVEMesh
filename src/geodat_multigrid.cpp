@@ -20,9 +20,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"geodat.h"
-#include"dive.h"
-#include"lexer.h"
+#include "geodat.h"
+#include "dive.h"
+#include "lexer.h"
 
 void geodat::coarsen(lexer *p, dive *a)
 {
@@ -52,8 +52,7 @@ void geodat::coarsen(lexer *p, dive *a)
 
     p->Darray(topof,kx+2*dd+1,ky+2*dd+1);
 
-    cout<<"coarsen knox:"<<p->knox<<" kx: "<<kx<<" | knoy:"<<p->knoy<<" ky: "<<ky<<endl;
-
+    cout<<"coarsen knox: "<<p->knox<<" kx: "<<kx<<" | knoy: "<<p->knoy<<" ky: "<<ky<<endl;
 
     // bc
     XC[marge-1] = XC[marge] - 1.0*(XC[marge+1]-XC[marge]);
@@ -62,13 +61,11 @@ void geodat::coarsen(lexer *p, dive *a)
     XC[marge-4] = XC[marge] - 4.0*(XC[marge+1]-XC[marge]);
     XC[marge-5] = XC[marge] - 5.0*(XC[marge+1]-XC[marge]);
 
-
     XC[marge+kx]   = XC[marge+kx-1] + 1.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+1] = XC[marge+kx-1] + 2.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+2] = XC[marge+kx-1] + 3.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+3] = XC[marge+kx-1] + 4.0*(XC[marge+kx-1]-XC[marge+kx-2]);
     XC[marge+kx+4] = XC[marge+kx-1] + 5.0*(XC[marge+kx-1]-XC[marge+kx-2]);
-
 
     YC[marge-1] = YC[marge] - 1.0*(YC[marge+1]-YC[marge]);
     YC[marge-2] = YC[marge] - 2.0*(YC[marge+1]-YC[marge]);
@@ -76,13 +73,11 @@ void geodat::coarsen(lexer *p, dive *a)
     YC[marge-4] = YC[marge] - 4.0*(YC[marge+1]-YC[marge]);
     YC[marge-5] = YC[marge] - 5.0*(YC[marge+1]-YC[marge]);
 
-
     YC[marge+ky]   = YC[marge+ky-1] + 1.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+1] = YC[marge+ky-1] + 2.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+2] = YC[marge+ky-1] + 3.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+3] = YC[marge+ky-1] + 4.0*(YC[marge+ky-1]-YC[marge+ky-2]);
     YC[marge+ky+4] = YC[marge+ky-1] + 5.0*(YC[marge+ky-1]-YC[marge+ky-2]);
-
 }
 
 void geodat::prolong(lexer *p, dive *a, field2d& bed)
@@ -98,12 +93,6 @@ void geodat::prolong(lexer *p, dive *a, field2d& bed)
 
         val = ccipol(p,topof,xc,yc);
 
-    //cout<<" PROLONG: "<<topof[i+3][j+3]<<" val: "<<val<<endl;
-
-    bed(i,j) = val;
+        bed(i,j) = val;
     }
-
-
 }
-
-

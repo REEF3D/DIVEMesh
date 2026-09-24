@@ -20,14 +20,13 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::partition_correct_x(lexer* p, dive* a)
 {
-	int q,ii;
-	double diff_p;
-	int fac,mincell,maxcell,iloc,iloc_min,iloc_max;
-	double diff;
+    int q,ii;
+    int fac,mincell,maxcell,iloc,iloc_min,iloc_max;
+    double diff;
 
     xcount[0]=0;
 
@@ -72,8 +71,8 @@ void decomp::partition_correct_x(lexer* p, dive* a)
     for(aa=1;aa<=a->mx;++aa)
     xcount_sum+=xcount[aa];
 
-	for(aa=0;aa<=a->mx;++aa)
-	ddout<<"old xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
+    for(aa=0;aa<=a->mx;++aa)
+    ddout<<"old xcount"<<aa<<" : "<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 
     ddout<<"xcount_sum: "<<xcount_sum<<endl;
 
@@ -94,45 +93,44 @@ void decomp::partition_correct_x(lexer* p, dive* a)
     for(q=0;q<p->M10;++q)
     ddout<<"old subcell_count: "<<subcell[q]<<endl;
 
-	// re-partition
-	for(aa=1;aa<=a->mx;++aa)
-	{
-		for(ii=0;ii<a->knox;++ii)
-		{
+    // re-partition
+    for(aa=1;aa<=a->mx;++aa)
+    {
+        for(ii=0;ii<a->knox;++ii)
+        {
+            a->xnode[aa]=ii;
 
-			a->xnode[aa]=ii;
+            xcount[aa]=0;
+            for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
+            for(j=0;j<a->knoy;++j)
+            for(k=0;k<a->knoz;++k)
+            if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+            ++xcount[aa];
 
-			xcount[aa]=0;
-			for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-			for(j=0;j<a->knoy;++j)
-			for(k=0;k<a->knoz;++k)
-			if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-			++xcount[aa];
+            if(xcount[aa]>xaverage)
+            {
+                double diff_p=xcount[aa]-xaverage;
 
-			if(xcount[aa]>xaverage)
-			{
-			diff_p=xcount[aa]-xaverage;
+                //if(diff_p>xcross_m/2)
+                --a->xnode[aa];
 
-			//if(diff_p>xcross_m/2)
-			--a->xnode[aa];
+                break;
+            }
+        }
+    }
 
-			break;
-			}
-		}
-	}
+    a->xnode[a->mx]=a->knox;
 
-	a->xnode[a->mx]=a->knox;
-
-	// check last
-	for(aa=1;aa<=a->mx;++aa)
-	{
-		xcount[aa]=0;
-		for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-		for(j=0;j<a->knoy;++j)
-		for(k=0;k<a->knoz;++k)
-		if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-		++xcount[aa];
-	}
+    // check last
+    for(aa=1;aa<=a->mx;++aa)
+    {
+        xcount[aa]=0;
+        for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
+        for(j=0;j<a->knoy;++j)
+        for(k=0;k<a->knoz;++k)
+        if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
+        ++xcount[aa];
+    }
 
 
     mincell=1e9;
@@ -142,8 +140,8 @@ void decomp::partition_correct_x(lexer* p, dive* a)
     if(xcount[a->mx]>xaverage+xcross_m/2)
     {
 
-		for(aa=0;aa<=a->mx;++aa)
-		ddout<<"inter xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
+        for(aa=0;aa<=a->mx;++aa)
+        ddout<<"inter xcount"<<aa<<" : "<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 
         diff = xcount[a->mx]-xaverage;
         fac = diff/xcross_m;
@@ -177,12 +175,11 @@ void decomp::partition_correct_x(lexer* p, dive* a)
                 ++xcount[aa];
             }
 
+            if(xcount[a->mx]<xaverage+xcross_m/5)
+            break;
+            ++count;
 
-		if(xcount[a->mx]<xaverage+xcross_m/5)
-		break;
-		++count;
-
-		}while(xcount[a->mx]>xaverage+xcross_m/2);
+        }while(xcount[a->mx]>xaverage+xcross_m/2);
 
         int maxiter = MAX(a->mx,a->my);
 
@@ -237,10 +234,9 @@ void decomp::partition_correct_x(lexer* p, dive* a)
                 maxcell=xcount[aa];
             }
 
+            ++count;
 
-		++count;
-
-		}while(maxcell>xaverage+xcross_m/2 && count<maxiter);
+        }while(maxcell>xaverage+xcross_m/2 && count<maxiter);
 
         // ----------------------------------------------------------
     }
@@ -265,8 +261,8 @@ void decomp::partition_correct_x(lexer* p, dive* a)
     xcount_sum+=xcount[aa];
 
 
-	for(aa=0;aa<=a->mx;++aa)
-	ddout<<"new xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
+    for(aa=0;aa<=a->mx;++aa)
+    ddout<<"new xcount"<<aa<<" : "<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 
     ddout<<"xcount_sum: "<<xcount_sum<<endl;
 
@@ -281,9 +277,8 @@ void decomp::partition_correct_x(lexer* p, dive* a)
         a->subslice(i,j)=PARANUM;
     }
 
-
-	for(q=0;q<p->M10;++q)
-	subcell[q]=0;
+    for(q=0;q<p->M10;++q)
+    subcell[q]=0;
 
 
     q=0;
@@ -303,14 +298,9 @@ void decomp::partition_correct_x(lexer* p, dive* a)
         BLOOP
         CLOOP
         {
-        cout<<subcell[q]<<" ";
-        //ddout<<q<<" new subcell_count: "<<subcell[q]<<endl;
+            cout<<subcell[q]<<" ";
         }
         cout<<endl;
         ++q;
     }
-
-
 }
-
-	

@@ -23,49 +23,34 @@ Author: Hans Bihs
 #ifndef GAUSSIAN_H_
 #define GAUSSIAN_H_
 
-#include"interpolation.h"
-#include"increment.h"
+#include "interpolation.h"
+#include "increment.h"
 
 class lexer;
 class dive;
 
 using namespace std;
 
-class gaussian : public interpolation, public increment
+class gaussian final : public interpolation, public increment
 {
 public:
     gaussian(lexer*,dive*);
-    virtual ~gaussian();
+    virtual ~gaussian() = default;
 
-    virtual void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**);
-    virtual double gxy(lexer*,dive*,double*,double*,double*,double*,double*,int,int,double**);
-    virtual void setup(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
+    void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**) override final;
 
 private:
-    double xmin,xmax,ymin,ymax,zmin,zmax;
+    double gxy(lexer*,int,int,double*,double*,double*,double*,double*);
+    void setup(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
 
+    double sigmaP2M2,cutoff;
     int Nx,Ny;
-    int count,cp;
-    int counter;
-    double Dmax,R,dij;
-    double origx,origy,w;
 
     int **ptnum,***ptid;
 
-    int r,s,t,ic,jc,kp,dd;
-    int is,ie,js,je;
+    int dij;
 
-    double rx,ry,r2;
-    double sigma,cutoff;
-
-
-
-    double g,wsum,dist,weight;
-    double xc,yc;
-
+    static constexpr int dd = 3;
 };
 
 #endif
-
-
-

@@ -277,11 +277,9 @@ void lexer::topo_preproc()
             T300_ds += ds_count;
         }
 
+        T300_ds +=1;
+        trinum_topo+=16*T300_ds;
 
-    T300_ds +=1;
-    trinum_topo+=16*T300_ds;
-
-    cout<<"fluvial box dsnum_ini: "<<T300_ds<<" trinum_topo: "<<trinum_topo<<endl;
+        cout<<"fluvial box dsnum_ini: "<<T300_ds<<" trinum_topo: "<<trinum_topo<<endl;
     }
 }
-

@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::partition_manual(lexer* p,dive* a)
 {
@@ -55,11 +55,9 @@ void decomp::partition_manual(lexer* p,dive* a)
         a->yorig[n]=p->YN[a->ynode[n]+marge];
     }
 
-
     for(n=1;n<a->mz;n++)
     {
         a->znode[n]=p->M33[n];
         a->zorig[n]=p->ZN[a->znode[n]+marge];
     }
-
 }

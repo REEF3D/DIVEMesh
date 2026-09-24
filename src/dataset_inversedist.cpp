@@ -21,44 +21,40 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"dataset.h"
-#include"dive.h"
 #include"lexer.h"
+#include <cmath>
 
-double dataset::inverse_dist_2D(lexer *p, dive *a)
+double dataset::inverse_dist_2D(lexer *p)
 {
-    xc = p->XP[IP];
-    yc = p->YP[JP];
+    const double xc = p->XP[IP];
+    const double yc = p->YP[JP];
 
-    g=0.0;
-    wsum=0.0;
+    double g = 0.0;
+    double wsum = 0.0;
+
+    double weight;
 
     for(n=0; n<p->D10; ++n)
-    wsum += inverse_dist_w(p);
+    {
+        weight = inverse_dist_w(xc-p->D10_x[n], yc-p->D10_y[n], p->D24, p->D17);
+        wsum += weight;
 
-    for(n=0; n<p->D10; ++n)
-    g += (inverse_dist_w(p)*p->D10_dataset[n]);
+        g += weight*p->D10_dataset[n];
+    }
 
     g/=wsum;
-
 
     return g;
 }
 
-
-double dataset::inverse_dist_w(lexer *p)
+inline double dataset::inverse_dist_w(double dx, double dy, double D24, double D17)
 {
-    dist = sqrt(pow(xc-p->D10_x[n],2.0) + pow(yc-p->D10_y[n],2.0));
+    double dist = sqrt(dx*dx + dy*dy);
 
-    if(dist>p->D24 && p->D24>-1.0)
+    if(dist>D24 && D24>-1.0)
     dist=0.0;
 
-    dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),p->D17);
+    dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),D17);
 
     return dist;
 }
-
-
-
-
-
-

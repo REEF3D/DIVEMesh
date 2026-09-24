@@ -23,25 +23,21 @@ Author: Hans Bihs
 #ifndef INTFIELD2D_H_
 #define INTFIELD2D_H_
 
-#include<iostream>
 #include"increment.h"
 
 class lexer;
 
-using namespace std;
-
 class intfield2d : public increment
 {
 public:
-
-	intfield2d(lexer*);
-	int& operator()(int, int);
+    intfield2d(lexer*);
+    inline int& operator()(int ii, int jj)
+    {
+        return feld[ii+xma][jj+yma];
+    };
 
 private:
-	int **feld;
-	int dx,dy;
+    int **feld;
 };
 
 #endif
-
-

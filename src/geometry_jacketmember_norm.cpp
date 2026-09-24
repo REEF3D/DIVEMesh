@@ -28,20 +28,15 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
                 double xm1, double ym1, double zm1, double r1, double xm2, double ym2, double zm2, double r2)
 {
     double U,ds,eta;
-	double rmax;
-	int snum;
-	int vertice_mem, center1_num,center2_num;
-	int vertice_start=a->vertice_num;
-	double Ax,Ay,Az;
-	double Bx,By,Bz;
-	double Nx,Ny,Nz,norm;
+    double rmax;
+    int snum;
+    double Ax,Ay,Az;
+    double Bx,By,Bz;
+    double Nx,Ny,Nz,norm;
     double alpha,beta,gamma;
-    double dX,dY,dZ,ddX,ddY,ddZ;
+    double dX,dY,dZ;
     double length;
-    double xvec1,yvec1,zvec1;
-    double alpha1,beta1,gamma1;
     double x1,y1,z1;
-    double x2,y2,z2;
     double a1,b1,c1;
     double a2,b2,c2;
 
@@ -226,24 +221,21 @@ void geometry::jacket_member_norm(lexer *p, dive *a, int rank, int &ts, int &te,
     theta=b1;
     phi=a1;
 
-
     rotate_triangle(p,a,ts,te);
 
     xrot=p->S31_x;
-	yrot=p->S31_y;
-	zrot=p->S31_z;
-	phi=(PI/180.0)*p->S31_phi;
-	theta=(PI/180.0)*p->S31_theta;
-	psi=(PI/180.0)*p->S31_psi;
-
+    yrot=p->S31_y;
+    zrot=p->S31_z;
+    phi=(PI/180.0)*p->S31_phi;
+    theta=(PI/180.0)*p->S31_theta;
+    psi=(PI/180.0)*p->S31_psi;
 
     rotate_triangle(p,a,ts,te);
 
     xrot=p->S5_x;
-	yrot=p->S5_y;
-	zrot=p->S5_z;
-	phi=(PI/180.0)*p->S5_phi;
-	theta=(PI/180.0)*p->S5_theta;
-	psi=(PI/180.0)*p->S5_psi;
-
+    yrot=p->S5_y;
+    zrot=p->S5_z;
+    phi=(PI/180.0)*p->S5_phi;
+    theta=(PI/180.0)*p->S5_theta;
+    psi=(PI/180.0)*p->S5_psi;
 }

@@ -21,6 +21,7 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include"lexer.h"
+#include<algorithm>
 
 void lexer::origin_calc()
 {
@@ -35,19 +36,19 @@ void lexer::origin_calc()
 
     for(qn=0;qn<B10;++qn)
     {
-        xmin=MIN(xmin,B10_xs[qn]);
-        ymin=MIN(ymin,B10_ys[qn]);
-        zmin=MIN(zmin,B10_zs[qn]);
-        xmin=MIN(xmin,B10_xe[qn]);
-        ymin=MIN(ymin,B10_ye[qn]);
-        zmin=MIN(zmin,B10_ze[qn]);
+        xmin=std::min(xmin,B10_xs[qn]);
+        ymin=std::min(ymin,B10_ys[qn]);
+        zmin=std::min(zmin,B10_zs[qn]);
+        xmin=std::min(xmin,B10_xe[qn]);
+        ymin=std::min(ymin,B10_ye[qn]);
+        zmin=std::min(zmin,B10_ze[qn]);
 
-        xmax=MAX(xmax,B10_xs[qn]);
-        ymax=MAX(ymax,B10_ys[qn]);
-        zmax=MAX(zmax,B10_zs[qn]);
-        xmax=MAX(xmax,B10_xe[qn]);
-        ymax=MAX(ymax,B10_ye[qn]);
-        zmax=MAX(zmax,B10_ze[qn]);
+        xmax=std::max(xmax,B10_xs[qn]);
+        ymax=std::max(ymax,B10_ys[qn]);
+        zmax=std::max(zmax,B10_zs[qn]);
+        xmax=std::max(xmax,B10_xe[qn]);
+        ymax=std::max(ymax,B10_ye[qn]);
+        zmax=std::max(zmax,B10_ze[qn]);
     }
 
     if(S1==1 && S2==1)
@@ -77,5 +78,4 @@ void lexer::origin_apply()
         B10_ys[qn] -= global_orig_y;
         B10_ye[qn] -= global_orig_y;
     }*/
-
 }

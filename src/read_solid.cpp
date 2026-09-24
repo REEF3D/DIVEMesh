@@ -44,23 +44,23 @@ void lexer::solid_preproc()
 
         ds = S19*(U*DXM);
 
-	snum = int(U/ds);
-	//cout<<"SNUM_read: "<<DXM<<" "<<U<<" "<<ds<<" "<<snum<<endl;
-	trinum_solid+=6*snum;
-	}
+        snum = int(U/ds);
 
-	for(n=0; n<S33;++n)
-	{
-	rmax = S33_r[n];
+        trinum_solid+=6*snum;
+    }
 
-	U = 2.0 * PI * rmax;
+    for(n=0; n<S33;++n)
+    {
+        rmax = S33_r[n];
 
-	ds = S19*(U*DXM);
+        U = 2.0 * PI * rmax;
 
-	snum = int(U/ds);
+        ds = S19*(U*DXM);
 
-	trinum_solid+=6*snum;
-	}
+        snum = int(U/ds);
+
+        trinum_solid+=6*snum;
+    }
 
     for(n=0; n<S37;++n)
     {
@@ -279,11 +279,9 @@ void lexer::solid_preproc()
             S300_ds += ds_count;
         }
 
+        S300_ds +=1;
+        trinum_solid+=160*S300_ds;
 
-    S300_ds +=1;
-    trinum_solid+=160*S300_ds;
-
-    cout<<"fluvial box dsnum_ini: "<<S300_ds<<" trinum_solid: "<<trinum_solid<<endl;
+        cout<<"fluvial box dsnum_ini: "<<S300_ds<<" trinum_solid: "<<trinum_solid<<endl;
     }
 }
-

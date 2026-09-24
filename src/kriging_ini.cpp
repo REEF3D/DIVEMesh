@@ -20,43 +20,43 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"kriging.h"
-#include"dive.h"
-#include"lexer.h"
-#include"field2d.h"
-
-// source:
+#include "kriging.h"
+#include "dive.h"
+#include "lexer.h"
+#include <algorithm>
+#include <cmath>
+#include <limits>
 
 void kriging::ini(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
-    xmin=ymin=1.0e15;
-    xmax=ymax=-1.0e15;
-    mean=0.0;
+    double xmin = +std::numeric_limits<double>::max();
+    double ymin = +std::numeric_limits<double>::max();
+    double xmax = -std::numeric_limits<double>::max();
+    double ymax = -std::numeric_limits<double>::max();
+    double mean = 0.0;
 
+    for(n=0; n<numpt; ++n)
+    {
+        xmin = std::min(xmin,X[n]);
+        xmax = std::max(xmax,X[n]);
 
-	for(n=0; n<numpt; ++n)
-	{
-	xmin = MIN(xmin,X[n]);
-	xmax = MAX(xmax,X[n]);
+        ymin = std::min(ymin,Y[n]);
+        ymax = std::max(ymax,Y[n]);
 
-	ymin = MIN(ymin,Y[n]);
-	ymax = MAX(ymax,Y[n]);
+        mean += F[n];
+    }
 
-	mean += F[n];
-	}
+    const double dx = xmax-xmin;
+    const double dy = ymax-ymin;
+    range = p->D18*sqrt(dx*dx + dy*dy);
 
-	range = p->D18*sqrt(pow(xmax-xmin,2.0) + pow(ymax-ymin,2.0));
+    mean/=double(numpt);
 
-	mean/=double(numpt);
+    variance=0.0;
+    for(n=0; n<numpt; ++n)
+    variance += (F[n] - mean)*(F[n] - mean);
 
-	variance=0.0;
-	for(n=0; n<numpt; ++n)
-	variance += pow(F[n] - mean, 2.0);
+    variance/=double(numpt);
 
-	variance/=double(numpt);
-
-	cout<<"Np: "<<numpt<<"  mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
+    cout<<"Np: "<<numpt<<"  mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
 }
-
-
-

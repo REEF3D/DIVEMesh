@@ -20,15 +20,12 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"inverse_dist.h"
-#include"dive.h"
-#include"lexer.h"
+#include "inverse_dist.h"
+#include "dive.h"
+#include "lexer.h"
+#include <cmath>
 
 inverse_dist::inverse_dist(lexer *p, dive *a)
-{
-}
-
-inverse_dist::~inverse_dist()
 {
 }
 
@@ -36,10 +33,10 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
 {
     int counter=0;
 
-    for(i=0;i<kx;++i)
-    for(j=0;j<ky;++j)
+    for(int i=0; i<kx; ++i)
+    for(int j=0; j<ky; ++j)
     {
-        f[i+3][j+3] = gxy(p,a,Fx,Fy,Fz,XC,YC,kx,ky,f);
+        f[i+3][j+3] = gxy(p,i,j,Fx,Fy,Fz,XC,YC);
 
         ++counter;
 
@@ -48,33 +45,33 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
     }
 }
 
-double inverse_dist::gxy(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky, double **f)
+double inverse_dist::gxy(lexer *p, int i, int j, double *Fx, double *Fy, double *Fz, double *XC, double *YC)
 {
-    xc = XC[IP];
-    yc = YC[JP];
+    double xc = XC[IP];
+    double yc = YC[JP];
 
-    g=0.0;
-    wsum=0.0;
-
-    for(n=0; n<p->Np; ++n)
-    wsum += w(p,p->Np,Fx,Fy,Fz);
+    double g=0.0;
+    double wsum=0.0;
+double weight = 0.0;
 
     for(n=0; n<p->Np; ++n)
-    g += (w(p,p->Np,Fx,Fy,Fz)*Fz[n]);
+{
+        weight = w(xc-Fx[n],yc-Fy[n],p->G35);
+    wsum += weight;
+
+        g += (weight*Fz[n]);
+}
 
     g/=wsum;
 
     return g;
 }
 
-double inverse_dist::w(lexer  *p, int Np, double *Fx, double *Fy, double *Fz)
+double inverse_dist::w(double xcF, double ycF, double G35)
 {
-    dist = sqrt(pow(xc-Fx[n],2.0) + pow(yc-Fy[n],2.0));
+    double dist = sqrt(xcF*xcF + ycF*ycF);
 
-    dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),p->G35);
+    dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),G35);
 
     return dist;
 }
-
-
-

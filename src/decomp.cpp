@@ -20,19 +20,14 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
-#include"field2d.h"
-#include<sys/stat.h>
+#include "decomp.h"
+#include <sys/stat.h>
 
 decomp::decomp()
 {
     mkdir("./DIVEMesh_Decomp",0777);
 
     ddout.open("./DIVEMesh_Decomp/DIVEMesh-Decomposition.txt");
-}
-
-decomp::~decomp()
-{
 }
 
 void decomp::start(lexer* p, dive* a)
@@ -50,41 +45,36 @@ void decomp::start(lexer* p, dive* a)
     p->Iarray(zcross,a->knoz+10);
 
 
-	if(p->M20==1)
-	{
-    nodecalc(p,a);
-    costfunc(p,a);
-    partition(p,a);
-    print_partition(p,a);
-	}
-
-	if(p->M20==2)
-	{
-	nodecalc(p,a);
-    costfunc(p,a);
-	partition_analyse(p,a);
-    nodecalc(p,a);
-    costfunc(p,a);
-    partition(p,a);
-	partition_correction(p,a);
-	partition_voidcheck(p,a);
-    print_partition(p,a);
-	}
-
-	if(p->M20==3)
+    if(p->M20==1)
     {
-    a->mx=p->M30_x;
-    a->my=p->M30_y;
-    a->mz=p->M30_z;
-    partition(p,a);
-    print_partition(p,a);
+        nodecalc(p,a);
+        costfunc(p,a);
+        partition(p,a);
+    }
+    else if(p->M20==2)
+    {
+        nodecalc(p,a);
+        costfunc(p,a);
+        partition_analyse(p,a);
+        nodecalc(p,a);
+        costfunc(p,a);
+        partition(p,a);
+        partition_correction(p,a);
+        partition_voidcheck(p,a);
+    }
+    else if(p->M20==3)
+    {
+        a->mx=p->M30_x;
+        a->my=p->M30_y;
+        a->mz=p->M30_z;
+        partition(p,a);
+    }
+    else if(p->M20==4)
+    {
+        partition_manual(p,a);
     }
 
-    if(p->M20==4)
-    {
-    partition_manual(p,a);
     print_partition(p,a);
-    }
 
     neighbors(p,a);
     knoxcalc(p,a);
@@ -123,20 +113,16 @@ int decomp::partition_check(lexer* p, dive* a)
     partcount[n]=0;
 
     LOOP
-    {
     if(a->flag(i,j,k)>0)
     partcount[a->subgrid(i,j,k)]++;
-    }
 
     maxel=int(active/p->M10);
 
     count=0;
 
     for(n=1;n<=a->mx*a->my*a->mz;n++)
-    {
     if(partcount[n]>int(maxel*alpha))
     count++;
-    }
 
 
     if(count==p->M10)
@@ -160,13 +146,12 @@ void decomp::neighbors(lexer* p,dive* a)
     {
         count++;
 
-    a->nbpara1[count]=a->sgfield[aa-1][bb][cc]-1;
-    a->nbpara2[count]=a->sgfield[aa][bb+1][cc]-1;
-    a->nbpara3[count]=a->sgfield[aa][bb-1][cc]-1;
-    a->nbpara4[count]=a->sgfield[aa+1][bb][cc]-1;
-    a->nbpara5[count]=a->sgfield[aa][bb][cc-1]-1;
-    a->nbpara6[count]=a->sgfield[aa][bb][cc+1]-1;
-
+        a->nbpara1[count]=a->sgfield[aa-1][bb][cc]-1;
+        a->nbpara2[count]=a->sgfield[aa][bb+1][cc]-1;
+        a->nbpara3[count]=a->sgfield[aa][bb-1][cc]-1;
+        a->nbpara4[count]=a->sgfield[aa+1][bb][cc]-1;
+        a->nbpara5[count]=a->sgfield[aa][bb][cc-1]-1;
+        a->nbpara6[count]=a->sgfield[aa][bb][cc+1]-1;
     }
 
     // MPI_GRAPH
@@ -242,10 +227,9 @@ void decomp::mem_alloc(lexer *p, dive *a)
     int xsurf,ysurf,zsurf,maxsurf;
     int xco,yco,zco;
 
-
-	xsurf = 3*p->knoy*p->knoz*(a->mx);
-	ysurf = 3*p->knox*p->knoz*(a->my);
-	zsurf = 3*p->knox*p->knoy*(a->mz);
+    xsurf = 3*p->knoy*p->knoz*(a->mx);
+    ysurf = 3*p->knox*p->knoz*(a->my);
+    zsurf = 3*p->knox*p->knoy*(a->mz);
 
     maxsurf=0;
     maxsurf=MAX(xsurf,ysurf);
@@ -291,33 +275,13 @@ void decomp::mem_alloc(lexer *p, dive *a)
 
 
     // Slice
-
-    int xslicesurf,yslicesurf;
-	int xsliceco,ysliceco;
-
-    xslicesurf = 3*p->knoy*(a->mx);
-	yslicesurf = 3*p->knox*(a->my);
-
-
-	xsliceco = ysliceco = 0;
-
-	for(n=1;n<=p->M10;++n)
-    {
-	xsliceco += 3*(a->subknoy[n]+a->subknoz[n] + 4);
-	ysliceco += 3*(a->subknox[n]+a->subknoz[n] + 4);
-    }
-
     a->Iarray(a->paraslice1sf,xsurf,2);
-	a->Iarray(a->paraslice2sf,ysurf,2);
-	a->Iarray(a->paraslice3sf,ysurf,2);
-	a->Iarray(a->paraslice4sf,xsurf,2);
+    a->Iarray(a->paraslice2sf,ysurf,2);
+    a->Iarray(a->paraslice3sf,ysurf,2);
+    a->Iarray(a->paraslice4sf,xsurf,2);
 
-
-	a->Iarray(a->paracoslice1sf,xco,4);
-	a->Iarray(a->paracoslice2sf,yco,4);
-	a->Iarray(a->paracoslice3sf,yco,4);
-	a->Iarray(a->paracoslice4sf,xco,4);
-
+    a->Iarray(a->paracoslice1sf,xco,4);
+    a->Iarray(a->paracoslice2sf,yco,4);
+    a->Iarray(a->paracoslice3sf,yco,4);
+    a->Iarray(a->paracoslice4sf,xco,4);
 }
-
-

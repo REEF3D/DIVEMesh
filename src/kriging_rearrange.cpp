@@ -20,9 +20,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"kriging.h"
-#include"dive.h"
-#include"lexer.h"
+#include "kriging.h"
+#include "lexer.h"
 
 void kriging::rearrange(lexer *p)
 {
@@ -48,4 +47,3 @@ void kriging::rearrange_b(lexer *p)
 
     b[p->Np-1] = val;
 }
-

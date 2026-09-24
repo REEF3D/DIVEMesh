@@ -28,12 +28,7 @@ void geometry::sphere(lexer *p, dive *a, int rank, int &ts, int &te, double xm, 
 {
     double U,ds,dt,phi,theta;
 
-	int snum;
-	int vertice_mem, center1_num,center2_num;
-	int vertice_start=a->vertice_num;
-	double Ax,Ay,Az;
-	double Bx,By,Bz;
-	double Nx,Ny,Nz,norm;
+    int snum;
 
     /*
     xm=p->S51_xm[rank];
@@ -41,12 +36,11 @@ void geometry::sphere(lexer *p, dive *a, int rank, int &ts, int &te, double xm, 
     zm=p->S51_zm[rank];
     r=p->S51_r[rank];*/
 
+    U = 2.0 * PI * r;
 
-	U = 2.0 * PI * r;
+    ds = p->S19*(U*p->DXM);
 
-	ds = p->S19*(U*p->DXM);
-
-	snum = int(U/ds);
+    snum = int(U/ds);
 
 
     // Vertices
@@ -132,15 +126,15 @@ void geometry::sphere(lexer *p, dive *a, int rank, int &ts, int &te, double xm, 
 
             phi+=ds;
         }
-    theta+=dt;
-	}
+
+        theta+=dt;
+    }
 
     // top start /triangles
-
-        phi=-0.5*PI;
-        theta=0.5*PI-dt;
-        for(q=0;q<snum;++q)
-        {
+    phi=-0.5*PI;
+    theta=0.5*PI-dt;
+    for(q=0;q<snum;++q)
+    {
         p->tri_x[p->tricount][0] = xm;
         p->tri_y[p->tricount][0] = ym;
         p->tri_z[p->tricount][0] = zm+r;
@@ -162,8 +156,5 @@ void geometry::sphere(lexer *p, dive *a, int rank, int &ts, int &te, double xm, 
         phi+=ds;
     }
 
-    // end point
-
-
-	te=p->tricount;
+    te=p->tricount;
 }

@@ -20,10 +20,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"geodat.h"
-#include"dive.h"
-#include"lexer.h"
-#include"field2d.h"
+#include "geodat.h"
+#include "dive.h"
+#include "lexer.h"
+#include "field2d.h"
 
 
 void geodat::filter(lexer *p, dive *a, field2d &bed)
@@ -42,7 +42,6 @@ void geodat::filter(lexer *p, dive *a, field2d &bed)
         XYLOOP
         if(a->flag(i,j,k)>0)
         {
-
             if(a->flag(i-1,j,k)<0)
             h(i-1,j) = bed(i,j);
 
@@ -55,7 +54,6 @@ void geodat::filter(lexer *p, dive *a, field2d &bed)
             if(a->flag(i,j+1,k)<0)
             h(i,j+1) = bed(i,j);
         }
-
 
         // predictor
         XYLOOP
@@ -74,6 +72,4 @@ void geodat::filter(lexer *p, dive *a, field2d &bed)
             bed(i,j) += dh(i,j);
         }
     }
-
-
 }

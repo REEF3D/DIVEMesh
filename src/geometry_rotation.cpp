@@ -37,9 +37,8 @@ void geometry::rotate_triangle(lexer* p, dive* a, int ts, int te)
 
     if(fabs(p->S8)>0.0)
     {
-
-            double x0 = 0.5*(p->xmax-p->xmin);
-            double y0 = 0.5*(p->ymax-p->ymin);
+        double x0 = 0.5*(p->xmax-p->xmin);
+        double y0 = 0.5*(p->ymax-p->ymin);
 
         for(int qr=ts;qr<te;++qr)
         {
@@ -85,10 +84,9 @@ void geometry::rotation(double &xvec,double &yvec,double &zvec,double phi, doubl
 
     c = -(xvec)*sin(theta) + (zvec)*cos(theta);
 
-	xvec=a;
-	yvec=b;
-	zvec=c;
-
+    xvec=a;
+    yvec=b;
+    zvec=c;
 
     // phi
     a = xvec;
@@ -104,8 +102,7 @@ void geometry::rotation(double &xvec,double &yvec,double &zvec,double phi, doubl
 
 double geometry::xtrans(double xvec,double yvec,double zvec,double xrot,double yrot,double zrot,double alpha,double beta,double gamma)
 {
-	double a,b,c;
-
+    double a,b,c;
 
     // gamma
     a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
@@ -136,19 +133,16 @@ double geometry::xtrans(double xvec,double yvec,double zvec,double xrot,double y
 
     c = (yvec-yrot)*sin(alpha) + (zvec-zrot)*cos(alpha);
 
-	xvec=a+xrot;
-	yvec=b+yrot;
-	zvec=c+zrot;
-
+    xvec=a+xrot;
+    yvec=b+yrot;
+    zvec=c+zrot;
 
     return xvec;
-
 }
 
 double geometry::ytrans(double xvec,double yvec,double zvec,double xrot,double yrot,double zrot,double alpha,double beta,double gamma)
 {
-	double a,b,c;
-
+    double a,b,c;
 
     // gamma
     a = (xvec-xrot)*cos(gamma) - (yvec-yrot)*sin(gamma);
@@ -184,7 +178,6 @@ double geometry::ytrans(double xvec,double yvec,double zvec,double xrot,double y
     zvec=c+zrot;
 
     return yvec;
-
 }
 
 double geometry::ztrans(double xvec,double yvec,double zvec,double xrot,double yrot,double zrot,double alpha,double beta,double gamma)
@@ -225,74 +218,71 @@ double geometry::ztrans(double xvec,double yvec,double zvec,double xrot,double y
     zvec=c+zrot;
 
     return zvec;
-
 }
 
 
 void geometry::angle_calc(double dX, double dY, double dZ, double &alpha, double &beta, double &gamma)
 {
-    double ddX,ddY,ddZ;
+    double ddX,ddY;
     double eps = 1.0e-10;
 
     ddX = fabs(dX)>eps?dX:1.0e20;
     ddY = fabs(dY)>eps?dY:1.0e20;
-    ddZ = fabs(dZ)>eps?dZ:1.0e20;
 
     // alpha
     if(dY>eps && dZ>eps)
     alpha = atan(fabs(dZ/ddY));
 
-    if(dY<-eps && dZ>eps)
+    else if(dY<-eps && dZ>eps)
     alpha = -atan(fabs(dZ/ddY));
 
-    if(dY<-eps && dZ<-eps)
+    else if(dY<-eps && dZ<-eps)
     alpha = atan(fabs(dZ/ddY));
 
-    if(dY>eps && dZ<-eps)
+    else if(dY>eps && dZ<-eps)
     alpha = -atan(fabs(dZ/ddY));
 
     // beta
     if(dX>eps && dZ>eps)
     beta = -atan(fabs(dZ/ddX));
 
-    if(dX<-eps && dZ>eps)
+    else if(dX<-eps && dZ>eps)
     beta = atan(fabs(dZ/ddX));
 
-    if(dX<-eps && dZ<-eps)
+    else if(fabs(dX)<=eps && dZ>eps)
+    beta = -0.5*PI;
+
+    else if(dX<-eps && dZ<-eps)
     beta = -atan(fabs(dZ/ddX));
 
-    if(dX>eps && dZ<-eps)
+    else if(dX>eps && dZ<-eps)
     beta = atan(fabs(dZ/ddX));
 
-        if(fabs(dX)<=eps && dZ>eps)
-        beta = -0.5*PI;
-
-        if(fabs(dX)<=eps && dZ<-eps)
-        beta = 0.5*PI;
+    else if(fabs(dX)<=eps && dZ<-eps)
+    beta = 0.5*PI;
 
     // gamma
     if(dX>eps && dY>eps)
     gamma = atan(fabs(dY/ddX));
 
-    if(dX<-eps && dY>eps)
+    else if(dX<-eps && dY>eps)
     gamma = atan(fabs(dY/ddX))+0.5*PI;
 
-    if(dX<-eps && dY<-eps)
+    else if(fabs(dX)<=eps && dY>eps)
+    gamma = 0.5*PI;
+
+    else if(dX<-eps && dY<-eps)
     gamma = atan(fabs(dY/ddX))+PI;
 
-    if(dX>eps && dY<-eps)
+    else if(dX>eps && dY<-eps)
     gamma = -atan(fabs(dY/ddX));
 
+    else if(fabs(dX)<=eps && dY<-eps)
+    gamma = -0.5*PI;
 
-        if(dX>eps && fabs(dY)<=eps)
-        gamma = 0.0;
+    else if(dX>eps && fabs(dY)<=eps)
+    gamma = 0.0;
 
-        if(fabs(dX)<=eps && dY>eps)
-        gamma = 0.5*PI;
-
-        if(dX<-eps && fabs(dY)<=eps)
-        gamma = PI;
-
-        if(fabs(dX)<=eps && dY<-eps)
-        gamma = -0.5*PI;
+    else if(dX<-eps && fabs(dY)<=eps)
+    gamma = PI;
 }

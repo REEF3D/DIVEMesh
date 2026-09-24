@@ -27,25 +27,14 @@ Author: Hans Bihs
 
 class lexer;
 class dive;
-class interpolation;
-
-using namespace std;
 
 class bedlevel : public increment
 {
 public:
     bedlevel(lexer*,dive*);
-    virtual ~bedlevel();
+    virtual ~bedlevel() = default;
 
     virtual void start(lexer*,dive*);
-
-
-private:
-
-
-
 };
 
 #endif
-
-

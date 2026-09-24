@@ -20,7 +20,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"decomp.h"
+#include "decomp.h"
 
 void decomp::partition(lexer* p, dive* a)
 {
@@ -54,10 +54,9 @@ void decomp::partition(lexer* p, dive* a)
         zdiff = a->knoz - posz*a->mz;
     }
 
-     ddout<<endl<<"posx: "<<posx<<"  posy: "<<posy<<"  posz: "<<posz<<endl;
-	 ddout<<endl<<"xid: "<<xid<<"  yid: "<<yid<<"  zid: "<<zid<<endl;
-	 ddout<<endl<<"xdiff: "<<xdiff<<"  ydiff: "<<ydiff<<"  zdiff: "<<zdiff<<endl;
-
+    ddout<<endl<<"posx: "<<posx<<"  posy: "<<posy<<"  posz: "<<posz<<endl;
+    ddout<<endl<<"xid: "<<xid<<"  yid: "<<yid<<"  zid: "<<zid<<endl;
+    ddout<<endl<<"xdiff: "<<xdiff<<"  ydiff: "<<ydiff<<"  zdiff: "<<zdiff<<endl;
 
     a->xorig[0]=p->xmin;
     a->yorig[0]=p->ymin;
@@ -72,7 +71,6 @@ void decomp::partition(lexer* p, dive* a)
     a->xnode[a->mx]=p->knox;
     a->ynode[a->my]=p->knoy;
     a->znode[a->mz]=p->knoz;
-
 
     for(n=1;n<a->mx;n++)
     {
@@ -92,7 +90,6 @@ void decomp::partition(lexer* p, dive* a)
         a->yorig[n]=p->YN[a->ynode[n]+marge];
     }
 
-
     for(n=1;n<a->mz;n++)
     {
         if(n>=zdiff)
@@ -101,8 +98,6 @@ void decomp::partition(lexer* p, dive* a)
         a->znode[n]=a->znode[n-1] + (posz+zid);
         a->zorig[n]=p->ZN[a->znode[n]+marge];
     }
-
-
 
     MALOOP
     {
@@ -117,9 +112,8 @@ void decomp::partition(lexer* p, dive* a)
         a->subslice(i,j)=PARANUM;
     }
 
-
     for(aa=0;aa<=a->mx;++aa)
-	ddout<<"xcount"<<aa<<" :"<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
+    ddout<<"xcount"<<aa<<" : "<<xcount[aa]<<"  xnode: "<<a->xnode[aa]<<"  xorig: "<<a->xorig[aa]<<endl;
 }
 
 void decomp::partition_voidcheck(lexer* p, dive* a)
@@ -129,52 +123,48 @@ void decomp::partition_voidcheck(lexer* p, dive* a)
     for(q=0;q<p->M10;++q)
     subcell[q]=0;
 
+    q=0;
+    NLOOP
+    {
+        SUBLOOP
+        if(a->flag(i,j,k)>0)
+        ++subcell[q];
 
-	q=0;
-	NLOOP
-	{
-    SUBLOOP
-	if(a->flag(i,j,k)>0)
-	++subcell[q];
+        ++q;
+    }
 
-	++q;
-	}
+    for(q=0;q<p->M10;++q)
+    if(subcell[q]==0)
+    check=0;
 
-	for(q=0;q<p->M10;++q)
-	if(subcell[q]==0)
-	check=0;
+    if(check==0)
+    {
+        ddout<<"Void partition detected !!!"<<endl;
 
-	if(check==0)
-	{
-		ddout<<"Void partition detected !!!"<<endl;
+        if(maindir==1)
+        {
+            p->M11=1;
+            p->M12=0;
+            p->M13=0;
+        }
+        else if(maindir==2)
+        {
+            p->M11=0;
+            p->M12=1;
+            p->M13=0;
+        }
+        else if(maindir==3)
+        {
+            p->M11=0;
+            p->M12=0;
+            p->M13=1;
+        }
 
-		if(maindir==1)
-		{
-		p->M11=1;
-		p->M12=0;
-		p->M13=0;
-		}
-
-		if(maindir==2)
-		{
-		p->M11=0;
-		p->M12=1;
-		p->M13=0;
-		}
-
-		if(maindir==3)
-		{
-		p->M11=0;
-		p->M12=0;
-		p->M13=1;
-		}
-
-		costfunc(p,a);
-		partition(p,a);
-		partition_correction(p,a);
-	}
+        costfunc(p,a);
+        partition(p,a);
+        partition_correction(p,a);
+    }
 }
-
 
 void decomp::rank(lexer *p, dive *a, int &dc_i, int &dc_j, int &dc_k, int &rank1, int &rank2, int &rank3)
 {
@@ -189,23 +179,20 @@ void decomp::rank(lexer *p, dive *a, int &dc_i, int &dc_j, int &dc_k, int &rank1
                 rank2=2;
                 rank3=3;
             }
-
-            if(dc_j<dc_k)
+            else if(dc_j<dc_k)
             {
                 rank2=3;
                 rank3=2;
             }
         }
-
-        if(dc_i<dc_k)
+        else if(dc_i<dc_k)
         {
             rank1=3;
             rank2=1;
             rank3=2;
         }
    }
-
-   if(dc_i<dc_j)
+   else if(dc_i<dc_j)
    {
         if(dc_i>=dc_k)
         {
@@ -213,8 +200,7 @@ void decomp::rank(lexer *p, dive *a, int &dc_i, int &dc_j, int &dc_k, int &rank1
             rank2=1;
             rank3=3;
         }
-
-        if(dc_i<dc_k)
+        else if(dc_i<dc_k)
         {
             rank3=1;
 
@@ -223,18 +209,11 @@ void decomp::rank(lexer *p, dive *a, int &dc_i, int &dc_j, int &dc_k, int &rank1
                 rank1=2;
                 rank2=3;
             }
-
-            if(dc_j<dc_k)
+            else if(dc_j<dc_k)
             {
                 rank1=3;
                 rank2=2;
             }
         }
-
    }
-
-
-
-
 }
-

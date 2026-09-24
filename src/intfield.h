@@ -23,24 +23,21 @@ Author: Hans Bihs
 #ifndef INTFIELD_H_
 #define INTFIELD_H_
 
-#include<iostream>
 #include"increment.h"
 
 class lexer;
 
-using namespace std;
-
 class intfield : public increment
 {
 public:
-
-	intfield (lexer*);
-	int& operator()(int, int, int);
+    intfield (lexer*);
+    inline int& operator()(int ii, int jj, int kk)
+    {
+        return feld[ii+xma][jj+yma][kk+zma];
+    };
 
 private:
-	int ***feld;
-	int dx,dy,dz;
+    int ***feld;
 };
 
 #endif
-

@@ -29,7 +29,6 @@ void hdc::allocate(lexer *p, dive *a)
     // allocated arrays
     result = new ifstream[numprocs];
     wfile  = new ofstream[p->M10];
-    testfile  = new ofstream[p->M10];
 
     p->Darray(X,NGx);
     p->Darray(Y,NGy);
@@ -59,5 +58,4 @@ void hdc::allocate(lexer *p, dive *a)
     p->Iarray(NLx,numprocs);
     p->Iarray(NLy,numprocs);
     p->Iarray(NLz,numprocs);
-
 }

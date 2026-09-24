@@ -25,15 +25,5 @@ Author: Hans Bihs
 
 intfield1d::intfield1d(lexer *p)
 {
-   	p->Iarray(feld,p->knox+2*xma);
-
-	dx=xma;
+    p->Iarray(feld,p->knox+2*xma);
 }
-
-int& intfield1d::operator()(int ii)
-{
-	return feld[ii+dx];
-}
-
-
-
