@@ -25,6 +25,11 @@ Author: Hans Bihs
 #include "lexer.h"
 #include <algorithm>
 #include <cmath>
+#include <sstream>
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 gaussian::gaussian(lexer *p, dive *a)
 {
@@ -40,14 +45,21 @@ void gaussian::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, doubl
     setup(p,a,Fx,Fy,Fz,XC,YC,kx,ky);
 
     int counter=0;
+
+    const int progress_output_interval = 1000;
+    #pragma omp parallel for collapse(2) schedule(dynamic)
     for(int i=0; i<kx; ++i)
     for(int j=0; j<ky; ++j)
     {
         f[i+3][j+3] = gxy(p,i,j,Fx,Fy,Fz,XC,YC);
         ++counter;
 
-        if(counter%1000==0)
-        cout<<"> processed cells: "<<counter<<endl;
+        if(counter%progress_output_interval==0)
+        {
+            std::stringstream ss;
+            ss<<"> processed cells: "<<counter<<endl;
+            cout<<ss.str();
+        }
     }
 }
 
@@ -92,9 +104,9 @@ double gaussian::gxy(lexer *p, int i, int j, double *Fx, double *Fy, double *Fz,
 
                     //if(r2<cutoff)
                     //{
-                    w = exp(-r2 / sigmaP2M2);
+                        w = exp(-r2 / sigmaP2M2);
 
-                    wsum += w;
+                        wsum += w;
 
                         g += w*Fz[q];
 

@@ -21,11 +21,13 @@ Author: Hans Bihs
 --------------------------------------------------------------------*/
 
 #include "decomp.h"
+#include <algorithm>
+#include <vector>
 
 void decomp::partition_correct_x(lexer* p, dive* a)
 {
     int q,ii;
-    int fac,mincell,maxcell,iloc,iloc_min,iloc_max;
+    int fac,mincell,maxcell,iloc=0,iloc_min=0,iloc_max=0;
     double diff;
 
     xcount[0]=0;
@@ -93,35 +95,36 @@ void decomp::partition_correct_x(lexer* p, dive* a)
     for(q=0;q<p->M10;++q)
     ddout<<"old subcell_count: "<<subcell[q]<<endl;
 
-    // re-partition
-    for(aa=1;aa<=a->mx;++aa)
+    // re-partition (two-phase): 1) build prefix sums from `xcross`,
+    // 2) sequentially determine monotonic `a->xnode` boundaries, 3) compute `xcount` from prefix
+
+    std::vector<long long> prefix(a->knox + 1);
+    prefix[0] = 0;
+    for(i = 0; i < a->knox; ++i)
     {
-        for(ii=0;ii<a->knox;++ii)
-        {
-            a->xnode[aa]=ii;
-
-            xcount[aa]=0;
-            for(i=a->xnode[aa-1];i<a->xnode[aa];++i)
-            for(j=0;j<a->knoy;++j)
-            for(k=0;k<a->knoz;++k)
-            if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
-            ++xcount[aa];
-
-            if(xcount[aa]>xaverage)
-            {
-                double diff_p=xcount[aa]-xaverage;
-
-                //if(diff_p>xcross_m/2)
-                --a->xnode[aa];
-
-                break;
-            }
-        }
+        prefix[i+1] = prefix[i] + xcross[i];
     }
 
-    a->xnode[a->mx]=a->knox;
+    int startx = a->xnode[0];
+    for(aa = 1; aa < a->mx; ++aa)
+    {
+        double target = static_cast<double>(prefix[startx]) + xaverage;
+        auto it = std::upper_bound(prefix.begin() + startx + 1, prefix.end(), target);
+        int ii_idx = static_cast<int>(it - prefix.begin()) - 1;
+        if(ii_idx < startx) ii_idx = startx;
+        if(ii_idx > a->knox) ii_idx = a->knox;
+        a->xnode[aa] = ii_idx;
+        startx = a->xnode[aa];
+    }
+    a->xnode[a->mx] = a->knox;
 
-    // check last
+    // compute xcount for the (new) partitions in parallel
+    for(int b = 1; b <= a->mx; ++b)
+    {
+        xcount[b] = static_cast<int>(prefix[a->xnode[b]] - prefix[a->xnode[b-1]]);
+    }
+
+    // check last (recompute by scanning as in original for verification)
     for(aa=1;aa<=a->mx;++aa)
     {
         xcount[aa]=0;

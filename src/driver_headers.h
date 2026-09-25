@@ -31,7 +31,7 @@ Author: Hans Bihs
 #include"lexer.h"
 #include"dive.h"
 #include"print_grid.h"
-#include"print_vtu.h"
+#include"print_vts.h"
 #include"surface.h"
 #include"solid.h"
 #include"topo.h"
@@ -41,7 +41,7 @@ Author: Hans Bihs
 #include"dataset.h"
 #include"slice.h"
 
-#include"print_stl.h"
+#include"print_3D.h"
 #include"print_stl_geodat.h"
 
 #include"hdc.h"

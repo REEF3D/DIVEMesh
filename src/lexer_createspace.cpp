@@ -53,7 +53,7 @@ void lexer::createspace()
         int count;
         double val,val0;
 
-        sprintf(name,"x-spacing.dat");
+        snprintf(name,sizeof(name),"x-spacing.dat");
 
         // open file------------
         ifstream file(name, ios_base::in);
@@ -99,7 +99,7 @@ void lexer::createspace()
         int count;
         double val,val0;
 
-        sprintf(name,"y-spacing.dat");
+        snprintf(name,sizeof(name),"y-spacing.dat");
 
         // open file------------
         ifstream file(name, ios_base::in);
@@ -146,7 +146,7 @@ void lexer::createspace()
         double val,val0;
 
 
-        sprintf(name,"z-spacing.dat");
+        snprintf(name,sizeof(name),"z-spacing.dat");
 
         // open file------------
         ifstream file(name, ios_base::in);

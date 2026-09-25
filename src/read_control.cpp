@@ -26,7 +26,7 @@ Author: Hans Bihs
 void lexer::read_control()
 {
     char c;
-    int numint,numval;
+    int numint;
     int count;
     numlinsurf=0;
 
@@ -1671,5 +1671,5 @@ void lexer::read_control()
 
 void lexer::clear(char& b, int& j)
 {
-    b='null';
+    b='\0';
 }

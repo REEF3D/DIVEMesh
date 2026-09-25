@@ -27,11 +27,11 @@ Author: Hans Bihs
 #include"dive.h"
 #include"increment.h"
 
-class print_vtu : public increment
+class print_vts : public increment
 {
 public:
-    print_vtu(lexer*);
-    virtual ~print_vtu() = default;
+    print_vts(lexer*);
+    virtual ~print_vts() = default;
     void start(lexer*,dive*);
 private:
     double ipol(dive*,field&);

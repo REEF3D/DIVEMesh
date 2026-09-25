@@ -42,7 +42,7 @@ public:
     lexer *p;
     dive *a;
     print_grid *pprint;
-    print_vtu *pvtu;
+    print_vts *pvts;
     surface *psurf;
     decomp *pdd;
     initialize *pini;

@@ -81,7 +81,7 @@ void driver::mainloop()
 
     if(p->topo_count>0)
     {
-        print_stl print_topo(p,a);
+        print_3D print_topo(p,a);
 
         print_topo.topo_vtp(p,a);
         if(p->S6==1)
@@ -97,7 +97,7 @@ void driver::mainloop()
 
     if(p->solid_count>0 || p->S1==1)
     {
-        print_stl print_solid(p,a);
+        print_3D print_solid(p,a);
 
         print_solid.solid_vtp(p,a);
         if(p->S6==1)
@@ -135,7 +135,7 @@ void driver::mainloop()
     if(p->H10>0)
     phdc->start(p,a);
 
-    pvtu->start(p,a);
+    pvts->start(p,a);
     pprint->start(p,a);
 
     analytics(p,a);

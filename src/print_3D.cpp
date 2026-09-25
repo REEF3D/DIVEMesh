@@ -20,16 +20,16 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#include"print_stl.h"
+#include"print_3D.h"
 #include"lexer.h"
 #include"dive.h"
 #include<sys/stat.h>
 
-print_stl::print_stl(lexer *p, dive *a)
+print_3D::print_3D(lexer *p, dive *a)
 {
 }
 
-void print_stl::solid_stl(lexer *p, dive *a)
+void print_3D::solid_stl(lexer *p, dive *a)
 {
     mkdir("./DIVEMesh_Paraview",0777);
     snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Solid.stl");
@@ -37,7 +37,7 @@ void print_stl::solid_stl(lexer *p, dive *a)
     write_stl(p,a);
 }
 
-void print_stl::topo_stl(lexer *p, dive *a)
+void print_3D::topo_stl(lexer *p, dive *a)
 {
     mkdir("./DIVEMesh_Paraview",0777);
     snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Topo.stl");
@@ -45,7 +45,7 @@ void print_stl::topo_stl(lexer *p, dive *a)
     write_stl(p,a);
 }
 
-void print_stl::write_stl(lexer *p, dive *a)
+void print_3D::write_stl(lexer *p, dive *a)
 {
     ofstream result;
     result.open(name, ios::binary);
@@ -68,7 +68,7 @@ void print_stl::write_stl(lexer *p, dive *a)
     result.close();
 }
 
-void print_stl::solid_vtp(lexer *p, dive *a)
+void print_3D::solid_vtp(lexer *p, dive *a)
 {
     mkdir("./DIVEMesh_Paraview",0777);
     snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Solid.vtp");
@@ -78,7 +78,7 @@ void print_stl::solid_vtp(lexer *p, dive *a)
     write_vtp(p,a);
 }
 
-void print_stl::topo_vtp(lexer *p, dive *a)
+void print_3D::topo_vtp(lexer *p, dive *a)
 {
     mkdir("./DIVEMesh_Paraview",0777);
     snprintf(name,sizeof(name),"./DIVEMesh_Paraview/REEF3D_Topo.vtp");
@@ -170,7 +170,7 @@ void print_stl::topo_vtp(lexer *p, dive *a)
     result.close();
 }
 
-void print_stl::write_vtp(lexer *p, dive *a)
+void print_3D::write_vtp(lexer *p, dive *a)
 {
     ofstream result;
     result.open(name, ios::binary);
