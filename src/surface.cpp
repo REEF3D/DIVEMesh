@@ -35,7 +35,6 @@ surface::~surface()
 void surface::start(lexer* p, dive* a)
 {
 	mem_alloc(p,a);
-    direction(p,a);
     makesurf(p,a);
     makesurf_plate(p,a);
     makesurfsolid(p,a);
