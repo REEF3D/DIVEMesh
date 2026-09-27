@@ -31,7 +31,7 @@ Author: Hans Bihs
 void hdc::read_mainheader(lexer *p, dive *a)
 {
     ifstream mainhead;
-    int ii1,ii2;
+    int ii1=0,ii2=0;
 
     if(p->H10==2)
     {

@@ -69,7 +69,7 @@ void geometry::ray_cast_x_gcb(lexer* p, dive* a, int ts, int te, intfield &flag,
         ze = MAX3(Az,Bz,Cz);
 
         js = p->posc_j(ys);
-        js = p->posc_j(ye);
+        je = p->posc_j(ye);
 
         ks = p->posc_k(zs);
         ke = p->posc_k(ze);

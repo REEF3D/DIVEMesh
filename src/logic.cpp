@@ -43,7 +43,7 @@ void driver::logic(lexer* p)
     pdd = new decomp();
     pprint = new print_grid(p);
 
-    pvtu = new print_vtu(p);
+    pvts = new print_vts(p);
 
     if(p->G10>0)
     pgeo = new geodat(p,a);

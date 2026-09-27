@@ -39,12 +39,12 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
 
     if(mode==1)
     {
-        snprintf(name,sizeof(name),"./DIVEMesh_Geo/REEF3D_geodat-%i.vtu",printcount);
+        snprintf(name,sizeof(name),"./DIVEMesh_Geo/REEF3D_geodat-%i.vtp",printcount);
         ++printcount;
     }
     else if(mode==2)
     {
-        snprintf(name,sizeof(name),"./DIVEMesh_Geo/REEF3D_geodat_patch.vtu");
+        snprintf(name,sizeof(name),"./DIVEMesh_Geo/REEF3D_geodat_patch.vtp");
     }
 
     ofstream result;
@@ -55,31 +55,29 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
     offset[n]=0;
     ++n;
 
-    offset[n]=offset[n-1]+4*(Np)+4;
+    offset[n]=offset[n-1]+sizeof(float)*Np+sizeof(int); // radius
     ++n;
-    offset[n]=offset[n-1]+4*(Np)+4;
+    offset[n]=offset[n-1]+sizeof(float)*Np+sizeof(int); // X_Coord
     ++n;
-    offset[n]=offset[n-1]+4*(Np)+4;
+    offset[n]=offset[n-1]+sizeof(float)*Np+sizeof(int); // Y_Coord
     ++n;
-    offset[n]=offset[n-1]+4*(Np)+4;
+    offset[n]=offset[n-1]+sizeof(float)*Np+sizeof(int); // Z_Coord
     ++n;
 
     // end scalars
-    offset[n]=offset[n-1]+4*(Np)*3+4;
+    offset[n]=offset[n-1]+sizeof(float)*Np*3+sizeof(int); // points
     ++n;
-    offset[n]=offset[n-1]+4*(Np)*2+4;
+    offset[n]=offset[n-1]+sizeof(int)*Np*2+sizeof(int); // connectivity
     ++n;
-    offset[n]=offset[n-1]+4*(Np)+4;
-    ++n;
-    offset[n]=offset[n-1]+4*(Np)+4;
+    offset[n]=offset[n-1]+sizeof(int)*Np+sizeof(int); // offsets
     ++n;
 
     //---------------------------------------------
     n=0;
     result<<"<?xml version=\"1.0\"?>\n";
-    result<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
-    result<<"<UnstructuredGrid>\n";
-    result<<"<Piece NumberOfPoints=\""<<Np<<"\" NumberOfCells=\""<<Np<<"\">\n";
+    result<<"<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\">\n";
+    result<<"<PolyData>\n";
+    result<<"<Piece NumberOfPoints=\""<<Np<<"\" NumberOfVerts=\""<<Np<<"\">\n";
 
     result<<"<PointData>\n";
     result<<"<DataArray type=\"Float32\" Name=\"radius\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
@@ -97,104 +95,93 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
     ++n;
     result<<"</Points>\n";
 
-    result<<"<Cells>\n";
+    result<<"<Verts>\n";
     result<<"<DataArray type=\"Int32\" Name=\"connectivity\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
     result<<"<DataArray type=\"Int32\" Name=\"offsets\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
     ++n;
-    result<<"<DataArray type=\"Int32\" Name=\"types\" format=\"appended\" offset=\""<<offset[n]<<"\"/>\n";
-    ++n;
-    result<<"</Cells>\n";
+    result<<"</Verts>\n";
 
     result<<"</Piece>\n";
-    result<<"</UnstructuredGrid>\n";
+    result<<"</PolyData>\n";
 
     result<<"<AppendedData encoding=\"raw\">\n_";
     //----------------------------------------------------------------------------
 
     //  radius
-    iin=4*(Np);
-    result.write((char*)&iin, sizeof(int));
+    iin=sizeof(float)*Np;
+    result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
         ffn=0.1*p->DXM;
-        result.write((char*)&ffn, sizeof(float));
+        result.write((char*)&ffn,sizeof(float));
     }
 
     //  X_coord
-    iin=4*(Np);
-    result.write((char*)&iin, sizeof(int));
+    iin=sizeof(float)*Np;
+    result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
         ffn=float(p->Xout(Fx[n],Fy[n]));
-        result.write((char*)&ffn, sizeof(float));
+        result.write((char*)&ffn,sizeof(float));
     }
 
     //  Y_Coord
-    iin=4*(Np);
-    result.write((char*)&iin, sizeof(int));
+    iin=sizeof(float)*Np;
+    result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
         ffn=float(p->Yout(Fx[n],Fy[n]));
-        result.write((char*)&ffn, sizeof(float));
+        result.write((char*)&ffn,sizeof(float));
     }
 
     //  Z_Coord
-    iin=4*(Np);
-    result.write((char*)&iin, sizeof(int));
+    iin=sizeof(float)*Np;
+    result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
         ffn=float(Fz[n]);
-        result.write((char*)&ffn, sizeof(float));
+        result.write((char*)&ffn,sizeof(float));
     }
 
     //  XYZ
-    iin=4*(Np)*3;
-    result.write((char*)&iin, sizeof(int));
+    iin=sizeof(float)*Np*3;
+    result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
         ffn=float(p->Xout(Fx[n],Fy[n]));
-        result.write((char*)&ffn, sizeof(float));
+        result.write((char*)&ffn,sizeof(float));
 
         ffn=float(p->Yout(Fx[n],Fy[n]));
-        result.write((char*)&ffn, sizeof(float));
+        result.write((char*)&ffn,sizeof(float));
 
         ffn=float(Fz[n]);
-        result.write((char*)&ffn, sizeof(float));
+        result.write((char*)&ffn,sizeof(float));
     }
 
     //  Connectivity
     count=0;
-    iin=4*(Np)*2;
-    result.write((char*)&iin, sizeof(int));
+    iin=sizeof(int)*Np*2;
+    result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
         iin=int(0);
-        result.write((char*)&iin, sizeof(int));
+        result.write((char*)&iin,sizeof(int));
 
         iin=int(count);
-        result.write((char*)&iin, sizeof(int));
+        result.write((char*)&iin,sizeof(int));
         ++count;
     }
 
     //  Offset of Connectivity
     count=0;
-    iin=4*(Np);
-    result.write((char*)&iin, sizeof(int));
+    iin=sizeof(int)*Np;
+    result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
         iin=(count+1)*2;
-        result.write((char*)&iin, sizeof(int));
+        result.write((char*)&iin,sizeof(int));
         ++count;
-    }
-
-    //  Cell types
-    iin=4*(Np);
-    result.write((char*)&iin, sizeof(int));
-    for(n=0;n<Np;++n)
-    {
-        iin=1;
-        result.write((char*)&iin, sizeof(int));
     }
 
     result<<"\n</AppendedData>\n";

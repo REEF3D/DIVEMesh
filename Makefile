@@ -20,7 +20,7 @@ OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 all: CXXFLAGS += -w -O3
 all: $(APP_DIR)/$(TARGET)
 
-debug: CXXFLAGS += -O0 -w -g -g3
+debug: CXXFLAGS += -O0 -Wall -g -g3
 debug: $(APP_DIR)/$(TARGET)
 
 $(OBJ_DIR)/%.o: %.cpp

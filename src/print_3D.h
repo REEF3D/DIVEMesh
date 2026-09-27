@@ -32,11 +32,11 @@ class dive;
 
 using namespace std;
 
-class print_stl : public increment
+class print_3D : public increment
 {
 public:
-    print_stl(lexer*,dive*);
-    ~print_stl() = default;
+    print_3D(lexer*,dive*);
+    ~print_3D() = default;
     void solid_vtp(lexer*,dive*);
     void solid_stl(lexer*,dive*);
     void topo_vtp(lexer*,dive*);

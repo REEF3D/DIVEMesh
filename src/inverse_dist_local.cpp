@@ -27,6 +27,10 @@ Author: Hans Bihs
 #include <cmath>
 #include <sstream>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 inverse_dist_local::inverse_dist_local(lexer *p, dive *a)
 {
 }
@@ -35,18 +39,27 @@ void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double 
 {
     setup(p,a,Fx,Fy,Fz,XC,YC,kx,ky);
 
+    int progress_output_interval = 1000;
+    if(p->knox*p->knoy*p->knoz>1000000)
+    progress_output_interval = 100000;
+
     double smooth_length = p->G34*p->DXM;
     smooth_lengthP4 = smooth_length*smooth_length*smooth_length*smooth_length;
 
     int counter = 0;
+    #pragma omp parallel for collapse(2) schedule(dynamic)
     for(int i=0; i<kx; ++i)
     for(int j=0; j<ky; ++j)
     {
         f[i+3][j+3] = gxy(p,a,i,j,Fx,Fy,Fz,XC,YC,kx,ky);
         ++counter;
 
-        if(counter%1000==0)
-        cout<<"> processed cells: "<<counter<<endl;
+        if(counter%progress_output_interval==0)
+        {
+            std::stringstream ss;
+            ss<<"> processed cells: "<<counter<<endl;
+            cout<<ss.str();
+        }
     }
 }
 
