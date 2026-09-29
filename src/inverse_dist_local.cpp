@@ -79,19 +79,22 @@ double inverse_dist_local::gxy(lexer *p, dive *a, int i, int j, double *Fx, doub
     int is, ie, js, je;
     int r, s, t, q;
     int count;
+    bool fullwindow;
 
     do{
         is=std::max(i-dij-cp,-radius);
-        ie=std::min(i+dij+cp,Nx-radius);
+        ie=std::min(i+dij+cp,Nx-radius-1);
 
         js=std::max(j-dij-cp,-radius);
-        je=std::min(j+dij+cp,Ny-radius);
+        je=std::min(j+dij+cp,Ny-radius-1);
 
         zmean=0.0;
         count=0;
-        for(r=is; r<ie; ++r)
+        g=0.0;
+        wsum=0.0;
+        for(r=is; r<=ie; ++r)
         {
-            for(s=js; s<je; ++s)
+            for(s=js; s<=je; ++s)
             {
                 for(t=0; t<ptnum[r+dd][s+dd]; ++t)
                 {
@@ -115,12 +118,14 @@ double inverse_dist_local::gxy(lexer *p, dive *a, int i, int j, double *Fx, doub
             }
         }
 
+        fullwindow = (is==-radius && ie==Nx-radius-1 && js==-radius && je==Ny-radius-1);
+
         if(count>0)
         zmean = zmean/double(count);
 
         cp += 2;
     }
-    while(count<std::min(p->G18,p->Np));
+    while(count<std::min(p->G18,p->Np) && !fullwindow);
 
     if(wsum>0.0)
     g /= wsum;
