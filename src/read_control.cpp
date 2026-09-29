@@ -22,6 +22,7 @@ Author: Hans Bihs
 
 #include"lexer.h"
 #include <fstream>
+#include <limits>
 
 void lexer::read_control()
 {
@@ -41,13 +42,13 @@ void lexer::read_control()
     }
 
     count=0;
-    while(!control.eof())
+    while(control>>c)
     {
-        control>>c;
+        char key=c;
 
         if (c == '/')
         {
-            control.ignore(1000, '\n');
+            control.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         else
         {
@@ -848,6 +849,12 @@ void lexer::read_control()
             ++count;
         }
 
+        if(control.fail() && !control.eof())
+        {
+            cout<<endl<<"!!! could not read the values of '"<<key<<" "<<numint<<"' in control.txt !!!"<<endl<<endl;
+            exit(1);
+        }
+
         if(count>1e7)
         {
             cout<<endl;
@@ -1298,9 +1305,16 @@ void lexer::read_control()
     int countT340=0;
 
     control.open("control.txt", ios_base::in);
-    while(!control.eof())
+    while(control>>c)
     {
-        control>>c;
+        char key=c;
+
+        if(c == '/')
+        {
+            control.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
         switch(c)
         {
             case 'M': control>>numint;
@@ -1663,6 +1677,12 @@ void lexer::read_control()
                          break;
                 }
                 break;
+        }
+
+        if(control.fail() && !control.eof())
+        {
+            cout<<endl<<"!!! could not read the values of '"<<key<<" "<<numint<<"' in control.txt !!!"<<endl<<endl;
+            exit(1);
         }
     }
 
