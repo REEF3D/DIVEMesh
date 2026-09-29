@@ -263,12 +263,12 @@ void decomp::mem_alloc(lexer *p, dive *a)
     a->Iarray(a->para5void,zsurf,4);
     a->Iarray(a->para6void,zsurf,4);
 
-    a->Iarray(a->para1co,xco,5);
-    a->Iarray(a->para2co,yco,5);
-    a->Iarray(a->para3co,yco,5);
-    a->Iarray(a->para4co,xco,5);
-    a->Iarray(a->para5co,zco,5);
-    a->Iarray(a->para6co,zco,5);
+    a->Iarray(a->para1co,xco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->Iarray(a->para2co,yco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->Iarray(a->para3co,yco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->Iarray(a->para4co,xco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->Iarray(a->para5co,zco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->Iarray(a->para6co,zco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
 
     a->Iarray(a->periodicXall,6);
     a->Iarray(a->periodicX,p->M10+1,6);
