@@ -48,12 +48,14 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
     {
         f[i+3][j+3] = gxy(p,i,j,Fx,Fy,Fz,XC,YC);
 
-        ++counter;
+        int done;
+        #pragma omp atomic capture
+        done = ++counter;
 
-        if(counter%progress_output_interval==0)
+        if(done%progress_output_interval==0)
         {
             std::stringstream ss;
-            ss<<"> processed cells: "<<counter<<endl;
+            ss<<"> processed cells: "<<done<<endl;
             cout<<ss.str();
         }
     }
@@ -61,20 +63,37 @@ void inverse_dist::start(lexer *p, dive *a, int numpt, double *Fx, double *Fy, d
 
 double inverse_dist::gxy(lexer *p, int i, int j, double *Fx, double *Fy, double *Fz, double *XC, double *YC)
 {
-    double xc = XC[IP];
-    double yc = YC[JP];
+    const double xc = XC[IP];
+    const double yc = YC[JP];
 
     double g=0.0;
     double wsum=0.0;
-    double weight = 0.0;
 
-    for(n=0; n<p->Np; ++n)
+    // points at the cell centre (dist <= 1e-10): the cell takes their value
+    double zcentre=0.0;
+    int ncentre=0;
+
+    // local loop index: the member n is shared between OpenMP threads
+    for(int q=0; q<p->Np; ++q)
     {
-        weight = w(xc-Fx[n],yc-Fy[n],p->G35);
+        const double xcF = xc-Fx[q];
+        const double ycF = yc-Fy[q];
+
+        if(sqrt(xcF*xcF + ycF*ycF)<=1.0e-10)
+        {
+            zcentre += Fz[q];
+            ++ncentre;
+            continue;
+        }
+
+        const double weight = w(xcF,ycF,p->G35);
         wsum += weight;
 
-        g += (weight*Fz[n]);
+        g += (weight*Fz[q]);
     }
+
+    if(ncentre>0)
+    return zcentre/double(ncentre);
 
     g/=wsum;
 
@@ -85,7 +104,7 @@ double inverse_dist::w(double xcF, double ycF, double G35)
 {
     double dist = sqrt(xcF*xcF + ycF*ycF);
 
-    dist = pow(1.0/(dist>1.0e-10?dist:1.0e10),G35);
+    dist = pow(1.0/dist,G35);
 
     return dist;
 }

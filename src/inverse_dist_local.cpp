@@ -123,6 +123,10 @@ double inverse_dist_local::gxy(lexer *p, int i, int j, double *XC, double *YC)
     double g = 0.0;
     double wsum = 0.0;
 
+    // points at the cell centre (dist <= 1e-15): the cell takes their value
+    double zcentre = 0.0;
+    int ncentre = 0;
+
     for(int r=is; r<=ie; ++r)
     {
         const int *start = &binstart[size_t(r+dd)*Ny + (js+dd)];
@@ -135,14 +139,24 @@ double inverse_dist_local::gxy(lexer *p, int i, int j, double *XC, double *YC)
             const double ycF = yc-by[q];
             const double d2 = xcF*xcF + ycF*ycF + smooth_lengthP4;
 
+            if(d2<=1.0e-30)
+            {
+                zcentre += bz[q];
+                ++ncentre;
+                continue;
+            }
+
             // w = (1/dist)^G35 = (1/dist^2)^(G35/2)
-            const double inv = d2>1.0e-30 ? 1.0/d2 : 1.0e-30;
+            const double inv = 1.0/d2;
             const double w = half_power>0 ? ipow(inv,half_power) : pow(inv,0.5*G35);
 
             wsum += w;
             g += w*bz[q];
         }
     }
+
+    if(ncentre>0)
+    return zcentre/double(ncentre);
 
     if(wsum>0.0)
     g /= wsum;
