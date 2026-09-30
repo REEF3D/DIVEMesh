@@ -87,6 +87,10 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
     if(p->G39==1)
     remove_bounds(p,a);
 
+    // point bins are only used by the point checks, hole fill and geo patch
+    const bool use_bins = (p->G36_select==1 || p->G37_select==1 || p->G51==1 || p->G60==1);
+
+    if(use_bins)
     setup_ijk(p,a,p->G10_x,p->G10_y,p->G10_z,p->XP,p->YP,p->knox,p->knoy);
 
     if(p->G36_select==1)
@@ -109,6 +113,9 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
     // geo_patch
     if(p->G60==1)
     geo_patch(p,a,p->G10_x,p->G10_y,p->G10_z,p->Np);
+
+    if(use_bins)
+    setup_ijk_delete(p,a,p->knox,p->knoy);
 
     print(p,a,p->Np,p->G10_x,p->G10_y,p->G10_z,1);
 
