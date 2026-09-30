@@ -85,6 +85,7 @@
           <File Name="intfield.h"/>
           <File Name="intfield1d.h"/>
           <File Name="intfield2d.h"/>
+          <File Name="int_table.h"/>
         </VirtualDirectory>
         <File Name="resize.h"/>
       </VirtualDirectory>
