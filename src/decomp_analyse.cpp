@@ -185,7 +185,7 @@ void decomp::partition_analyse(lexer *p, dive *a)
         if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10))
         p->M13=0;
 
-        if(xvar==yvar)
+        if(yvar==zvar)
         {
             if(maindir==2)
             if((p->M11==1 && p->knox>p->M10) || (p->M12==1 && p->knoy>p->M10))
