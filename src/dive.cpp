@@ -23,7 +23,7 @@ Author: Hans Bihs
 #include "dive.h"
 
 dive::dive(lexer* p) : flag(p),
-                    solid(p),topo(p),porous(p),
+                    solid(p),topo(p),
                     solid_dist(p),topo_dist(p),
                     subgrid(p),
                     topobed(p),solidbed(p),
@@ -154,12 +154,6 @@ dive::dive(lexer* p) : flag(p),
 //object print
 
 
-    int polyval=1e6;
-
-    Iarray(polygon,polyval,5);
-    Iarray(numvert,5*polyval);
-    Iarray(polygon_offset,5*polyval);
-    Darray(vertice,5*polyval,3);
 
 
     Iarray(solid_gcb,p->M10+2);

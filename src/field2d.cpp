@@ -25,5 +25,6 @@ Author: Hans Bihs
 
 field2d::field2d(lexer *p)
 {
-    p->Darray(feld,p->knox+2*xma,p->knoy+2*yma);
+    nj = size_t(p->knoy+2*yma);
+    feld.assign(size_t(p->knox+2*xma)*nj, 0);
 }

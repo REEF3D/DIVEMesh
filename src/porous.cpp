@@ -25,7 +25,7 @@ Author: Hans Bihs
 #include"lexer.h"
 
 
-porous::porous(lexer *p, dive *a) : geometry(p,a), porous_dist(p), porousbed(p)
+porous::porous(lexer *p, dive *a) : geometry(p,a), porous_flag(p), porous_dist(p), porousbed(p)
 {
     cout<<"porous structures ini";
 
@@ -63,7 +63,7 @@ void porous::start(lexer* p, dive* a)
     cout<<"porous "<<endl;
 
     LOOP
-    a->porous(i,j,k)=0;
+    porous_flag(i,j,k)=0;
 
     ts_stl=tri_start;
     te_stl=tri_end;
@@ -78,10 +78,10 @@ void porous::start(lexer* p, dive* a)
 
 
         stl_preproc(p,a,tri_start,tri_end);
-        ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+        ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
 
         if(rayiter==0)
-        stl_postproc(p,a,tri_start,tri_end,a->porous,porous_dist,p->V9_1);
+        stl_postproc(p,a,tri_start,tri_end,porous_flag,porous_dist,p->V9_1);
     }
 
     ts_stl=tri_start;
@@ -99,12 +99,12 @@ void porous::start(lexer* p, dive* a)
         {
             box(p,a,qn,tri_start,tri_end,p->V10_xs[qn],p->V10_xe[qn],p->V10_ys[qn],p->V10_ye[qn],p->V10_zs[qn],p->V10_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V11;++qn)
         {
-            box_array(p,a,a->porous,porous_dist,porousbed,qn,tri_start,tri_end,p->V11_xs[qn],p->V11_ys[qn],p->V11_zs[qn],
+            box_array(p,a,porous_flag,porous_dist,porousbed,qn,tri_start,tri_end,p->V11_xs[qn],p->V11_ys[qn],p->V11_zs[qn],
                     p->V11_L[qn],p->V11_G[qn],p->V11_ni[qn],p->V11_nj[qn],p->V11_nk[qn]);
         }
 
@@ -112,14 +112,14 @@ void porous::start(lexer* p, dive* a)
         {
             cylinder_y(p,a,qn,tri_start,tri_end,p->V32_xm[qn],p->V32_zm[qn],p->ymin,p->ymax,p->V32_r[qn],p->V32_r[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V33;++qn)
         {
             cylinder_z(p,a,qn,tri_start,tri_end,p->V33_xm[qn],p->V33_ym[qn],p->zmin,p->zmax,p->V33_r[qn],p->V33_r[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V37;++qn)
@@ -127,100 +127,100 @@ void porous::start(lexer* p, dive* a)
             jacket_member_norm(p,a,qn,tri_start,tri_end,p->V37_xm1[qn],
                     p->V37_ym1[qn],p->V37_ym1[qn],p->V37_r1[qn],p->V37_xm2[qn],p->V37_ym2[qn],p->V37_ym2[qn],p->V37_r1[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V41;++qn)
         {
             cone_x(p,a,qn,tri_start,tri_end,p->V41_ym[qn],p->V41_zm[qn],p->V41_x1[qn],p->V41_x2[qn],p->V41_r1[qn],p->V41_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V42;++qn)
         {
             cone_y(p,a,qn,tri_start,tri_end,p->V42_xm[qn],p->V42_zm[qn],p->V42_y1[qn],p->V42_y2[qn],p->V42_r1[qn],p->V42_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V43;++qn)
         {
             cone_z(p,a,qn,tri_start,tri_end,p->V43_xm[qn],p->V43_ym[qn],p->V43_z1[qn],p->V43_z2[qn],p->V43_r1[qn],p->V43_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V51;++qn)
         {
             sphere(p,a,qn,tri_start,tri_end,p->V51_xm[qn],p->V51_ym[qn],p->V51_zm[qn],p->V51_r[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V61;++qn)
         {
             wedge_x(p,a,qn,tri_start,tri_end,p->V61_xs[qn],p->V61_xe[qn],p->V61_ys[qn],p->V61_ye[qn],p->V61_zs[qn],p->V61_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V62;++qn)
         {
             wedge_y(p,a,qn,tri_start,tri_end,p->V62_xs[qn],p->V62_xe[qn],p->V62_ys[qn],p->V62_ye[qn],p->V62_zs[qn],p->V62_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V63;++qn)
         {
             wedge_z(p,a,qn,tri_start,tri_end,p->V63_xs[qn],p->V63_xe[qn],p->V63_ys[qn],p->V63_ye[qn],p->V63_zs[qn],p->V63_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V81;++qn)
         {
             tetrahedon(p,a,qn,tri_start,tri_end,p->V81_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V82;++qn)
         {
             pyramid(p,a,qn,tri_start,tri_end,p->V82_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V83;++qn)
         {
             wedge(p,a,qn,tri_start,tri_end,p->V83_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V84;++qn)
         {
             hexahedron(p,a,qn,tri_start,tri_end,p->V84_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
 
         for(qn=0;qn<p->V131;++qn)
         {
             semicyl_y(p,a,qn,tri_start,tri_end,p->V131_xm[qn],p->V131_zm[qn],p->V131_y1[qn],p->V131_y2[qn],p->V131_r1[qn],p->V131_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
-            ray_cast(p,a,tri_start,tri_end,a->porous,porous_dist,porousbed);
+            ray_cast(p,a,tri_start,tri_end,porous_flag,porous_dist,porousbed);
         }
     }
 
     // finalize porous_dist
     LOOP
     {
-        if(a->porous(i,j,k)==-1)
+        if(porous_flag(i,j,k)==-1)
             porous_dist(i,j,k)=-fabs(porous_dist(i,j,k));
-        else if(a->porous(i,j,k)==1)
+        else if(porous_flag(i,j,k)==1)
             porous_dist(i,j,k)=fabs(porous_dist(i,j,k));
     }
 

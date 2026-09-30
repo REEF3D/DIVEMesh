@@ -25,5 +25,5 @@ Author: Hans Bihs
 
 intfield1d::intfield1d(lexer *p)
 {
-    p->Iarray(feld,p->knox+2*xma);
+    feld.assign(size_t(p->knox+2*xma), 0);
 }

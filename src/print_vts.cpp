@@ -40,18 +40,8 @@ print_vts::print_vts(lexer* p)
 
 void print_vts::start(lexer* p, dive* a)
 {
-    field nodeval(p);
-
-    // NODELOOP
-    int count=0;
-    int pointnum=0;
-
-    TPLOOP
-    {
-        ++count;
-        ++pointnum;
-        nodeval(i,j,k)=count;
-    }
+    // number of grid points written by TPLOOP
+    const size_t pointnum = size_t(p->knox+1)*size_t(p->knoy+1)*size_t(p->knoz+1);
 
     size_t offset[10];
     size_t n = 0;
@@ -95,69 +85,69 @@ void print_vts::start(lexer* p, dive* a)
     header<<"<AppendedData encoding=\"raw\">\n_";
 
     //----------------------------------------------------------------------------
-    std::vector<char> buffer;
-    size_t file_offset = header.str().length();
-    const size_t total_size = file_offset + offset[n] + 28;
-    buffer.resize(total_size);
-    std::memcpy(&buffer[0], header.str().data(), file_offset);
-
-    int iin;
-    float ffn;
-
-    //  topo
-    iin=sizeof(float)*pointnum;
-    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-    file_offset+=sizeof(int);
-    TPLOOP
-    {
-        ffn=float(ipol(a,a->topo_dist));
-        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
-        file_offset+=sizeof(float);
-    }
-
-    //  solid
-    iin=sizeof(float)*pointnum;
-    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-    file_offset+=sizeof(int);
-    TPLOOP
-    {
-        ffn=float(ipol(a,a->solid_dist));
-        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
-        file_offset+=sizeof(float);
-    }
-
-    //  XYZ
-    iin=sizeof(float)*pointnum*3;
-    std::memcpy(&buffer[file_offset],&iin,sizeof(int));
-    file_offset+=sizeof(int);
-    TPLOOP
-    {
-        ffn=float(p->XN[IP1]);
-        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
-        file_offset+=sizeof(float);
-
-        ffn=float(p->YN[JP1]);
-        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
-        file_offset+=sizeof(float);
-
-        ffn=float(p->ZN[KP1]);
-        std::memcpy(&buffer[file_offset],&ffn,sizeof(float));
-        file_offset+=sizeof(float);
-    }
-
-    std::string footer = "\n</AppendedData>\n</VTKFile>\n";
-    std::memcpy(&buffer[file_offset],footer.data(),footer.size());
+    // stream to file through a small buffer instead of assembling the whole file in memory
 
     mkdir("./DIVEMesh_Paraview",0777);
     char filename[100];
     snprintf(filename,sizeof(filename),"./DIVEMesh_Paraview/DIVEMesh_grid-preview.vts");
     FILE* file = fopen(filename, "wb");
     bool ok = (file!=nullptr);
-    if(ok)
+
+    std::vector<char> buffer(1<<20);
+    size_t m=0;
+
+    auto flush = [&]()
     {
-        ok = (fwrite(buffer.data(), buffer.size(), 1, file)==1);
-        ok = (fclose(file)==0) && ok;
+        if(ok && m>0)
+        ok = (fwrite(buffer.data(), m, 1, file)==1);
+        m=0;
+    };
+    auto put = [&](const void *val, size_t bytes)
+    {
+        if(m+bytes>buffer.size())
+        flush();
+
+        if(bytes>buffer.size())
+        {
+            if(ok)
+            ok = (fwrite(val, bytes, 1, file)==1);
+            return;
+        }
+
+        std::memcpy(&buffer[m],val,bytes);
+        m+=bytes;
+    };
+    auto put_int = [&](int val) { put(&val,sizeof(int)); };
+    auto put_float = [&](float val) { put(&val,sizeof(float)); };
+
+    const std::string head = header.str();
+    put(head.data(),head.size());
+
+    //  topo
+    put_int(int(sizeof(float)*pointnum));
+    TPLOOP
+    put_float(float(ipol(a,a->topo_dist)));
+
+    //  solid
+    put_int(int(sizeof(float)*pointnum));
+    TPLOOP
+    put_float(float(ipol(a,a->solid_dist)));
+
+    //  XYZ
+    put_int(int(sizeof(float)*pointnum*3));
+    TPLOOP
+    {
+        put_float(float(p->XN[IP1]));
+        put_float(float(p->YN[JP1]));
+        put_float(float(p->ZN[KP1]));
     }
+
+    const std::string footer = "\n</AppendedData>\n</VTKFile>\n";
+    put(footer.data(),footer.size());
+    flush();
+
+    if(file!=nullptr)
+    ok = (fclose(file)==0) && ok;
 
     if(!ok)
     cout<<"!!! could not write "<<filename<<" !!!"<<endl;

@@ -25,5 +25,5 @@ Author: Hans Bihs
 
 field1d::field1d(lexer *p)
 {
-    p->Darray(feld,p->knox+2*xma);
+    feld.assign(size_t(p->knox+2*xma), 0);
 }

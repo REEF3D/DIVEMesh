@@ -69,6 +69,7 @@
         <File Name="print_3D.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Grid">
+        <File Name="int_table.h"/>
         <VirtualDirectory Name="Coordinates">
           <File Name="coordinates.h"/>
         </VirtualDirectory>

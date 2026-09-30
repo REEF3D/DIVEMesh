@@ -20,30 +20,39 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 
-#ifndef FIELD2D_H_
-#define FIELD2D_H_
+#ifndef INT_TABLE_H_
+#define INT_TABLE_H_
 
-#include"increment.h"
-#include<vector>
+#include<cstdlib>
+#include<cstddef>
+#include<memory>
+#include<new>
 
-class lexer;
-
-class field2d : public increment
+// rows x cols ints in one block, used as table[q][c]. calloc leaves large
+// untouched blocks as unmapped zero pages, so over-allocated rows are free.
+class int_table
 {
 public:
-    field2d(lexer*);
-    field2d(const field2d&) = delete;
-    field2d& operator=(const field2d&) = delete;
-
-    inline double& operator()(int ii, int jj)
+    void allocate(size_t rows, int cols)
     {
-        return feld[(size_t)(ii+xma)*nj + (size_t)(jj+yma)];
-    };
+        ncols = size_t(cols);
+        nrows = rows;
+        data.reset(static_cast<int*>(std::calloc(rows*ncols>0 ? rows*ncols : 1, sizeof(int))));
+
+        if(!data)
+        throw std::bad_alloc();
+    }
+
+    inline int* operator[](size_t q) { return data.get() + q*ncols; }
+    inline const int* operator[](size_t q) const { return data.get() + q*ncols; }
+
+    size_t rows() const { return nrows; }
 
 private:
-    // contiguous storage, index (i,j,k) -> ((i+xma)*nj + j+yma)*nk + k+zma
-    size_t nj;
-    std::vector<double> feld;
+    struct free_deleter { void operator()(int *ptr) const { std::free(ptr); } };
+
+    std::unique_ptr<int,free_deleter> data;
+    size_t ncols = 0, nrows = 0;
 };
 
 #endif

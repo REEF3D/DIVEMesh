@@ -24,6 +24,7 @@ Author: Hans Bihs
 #define FIELD1D_H_
 
 #include"increment.h"
+#include<vector>
 
 class lexer;
 
@@ -31,13 +32,17 @@ class field1d : public increment
 {
 public:
     field1d(lexer*);
+    field1d(const field1d&) = delete;
+    field1d& operator=(const field1d&) = delete;
+
     inline double& operator()(int ii)
     {
-        return feld[ii+xma];
+        return feld[(size_t)(ii+xma)];
     };
 
 private:
-    double *feld;
+    // contiguous storage, index (i,j,k) -> ((i+xma)*nj + j+yma)*nk + k+zma
+    std::vector<double> feld;
 };
 
 #endif

@@ -30,6 +30,7 @@ Author: Hans Bihs
 #include"increment.h"
 #include"field2d.h"
 #include"intfield2d.h"
+#include"int_table.h"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ public:
     virtual ~dive();
 
     intfield flag;         // water/soC12/empty  +  which bc
-    intfield solid,topo,porous;
+    intfield solid,topo;
     field solid_dist,topo_dist;
     intfield subgrid;      // for all water cells: number of subgrid
     field2d topobed,solidbed;
@@ -69,11 +70,10 @@ public:
     int paraslice1count,paraslice2count,paraslice3count,paraslice4count;
     int paracoslice1count,paracoslice2count,paracoslice3count,paracoslice4count;
     int paraco1count,paraco2count,paraco3count,paraco4count,paraco5count,paraco6count;
-    int **para1sf,**para2sf,**para3sf,**para4sf,**para5sf,**para6sf;
-    int **paraslice1sf,**paraslice2sf,**paraslice3sf,**paraslice4sf;
-    int **para1void,**para2void,**para3void,**para4void,**para5void,**para6void;
-    int **para1co,**para2co,**para3co,**para4co,**para5co,**para6co;
-    int **paracoslice1sf,**paracoslice2sf,**paracoslice3sf,**paracoslice4sf;
+    int_table para1sf,para2sf,para3sf,para4sf,para5sf,para6sf;
+    int_table paraslice1sf,paraslice2sf,paraslice3sf,paraslice4sf;
+    int_table para1co,para2co,para3co,para4co,para5co,para6co;
+    int_table paracoslice1sf,paracoslice2sf,paracoslice3sf,paracoslice4sf;
     int *para1,*para2,*para3,*para4,*para5,*para6;              // para surface counter
     int *paraco1,*paraco2,*paraco3,*paraco4,*paraco5,*paraco6;
     int *paraslice1,*paraslice2,*paraslice3,*paraslice4;              // paraslice surface counter
@@ -89,10 +89,6 @@ public:
     int *mpi_index, *mpi_edges, mpi_edgenum;
     int *solid_gcb,*topo_gcb;
 
-    //polygon objects
-    int vertice_num, polygon_num;
-    int **polygon,*numvert,*polygon_offset,polygon_sum;
-    double **vertice;
 
 
     // MG

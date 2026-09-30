@@ -24,20 +24,25 @@ Author: Hans Bihs
 #define INTFIELD1D_H_
 
 #include"increment.h"
+#include<vector>
 
 class lexer;
 
 class intfield1d : public increment
 {
 public:
-    intfield1d(lexer *p);
+    intfield1d(lexer*);
+    intfield1d(const intfield1d&) = delete;
+    intfield1d& operator=(const intfield1d&) = delete;
+
     inline int& operator()(int ii)
     {
-        return feld[ii+xma];
+        return feld[(size_t)(ii+xma)];
     };
 
 private:
-    int *feld;
+    // contiguous storage, index (i,j,k) -> ((i+xma)*nj + j+yma)*nk + k+zma
+    std::vector<int> feld;
 };
 
 #endif

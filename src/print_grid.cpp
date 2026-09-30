@@ -103,26 +103,26 @@ void print_grid::start(lexer* p,dive* a)
     subdomain_lists bk;
     bk.surf.build(nsub,a->surfcount,[&](int q){return a->subgrid(a->surf[q][0],a->surf[q][1],a->surf[q][2]);});
 
-    int **parasf[6] = {a->para1sf,a->para2sf,a->para3sf,a->para4sf,a->para5sf,a->para6sf};
-    int **paraco[6] = {a->para1co,a->para2co,a->para3co,a->para4co,a->para5co,a->para6co};
+    const int_table *parasf[6] = {&a->para1sf,&a->para2sf,&a->para3sf,&a->para4sf,&a->para5sf,&a->para6sf};
+    const int_table *paraco[6] = {&a->para1co,&a->para2co,&a->para3co,&a->para4co,&a->para5co,&a->para6co};
     const int paracount[6] = {a->para1count,a->para2count,a->para3count,a->para4count,a->para5count,a->para6count};
     const int paracocount[6] = {a->paraco1count,a->paraco2count,a->paraco3count,a->paraco4count,a->paraco5count,a->paraco6count};
 
     for(int d=0;d<6;++d)
     {
-        int **sf=parasf[d], **co=paraco[d];
+        const int_table &sf=*parasf[d], &co=*paraco[d];
         bk.para[d].build(nsub,paracount[d],[&](int q){return a->subgrid(sf[q][0],sf[q][1],sf[q][2]);});
         bk.paraco[d].build(nsub,paracocount[d],[&](int q){return co[q][3];});
     }
 
-    int **paraslicesf[4] = {a->paraslice1sf,a->paraslice2sf,a->paraslice3sf,a->paraslice4sf};
-    int **paracoslicesf[4] = {a->paracoslice1sf,a->paracoslice2sf,a->paracoslice3sf,a->paracoslice4sf};
+    const int_table *paraslicesf[4] = {&a->paraslice1sf,&a->paraslice2sf,&a->paraslice3sf,&a->paraslice4sf};
+    const int_table *paracoslicesf[4] = {&a->paracoslice1sf,&a->paracoslice2sf,&a->paracoslice3sf,&a->paracoslice4sf};
     const int paraslicecount[4] = {a->paraslice1count,a->paraslice2count,a->paraslice3count,a->paraslice4count};
     const int paracoslicecount[4] = {a->paracoslice1count,a->paracoslice2count,a->paracoslice3count,a->paracoslice4count};
 
     for(int d=0;d<4;++d)
     {
-        int **sf=paraslicesf[d], **co=paracoslicesf[d];
+        const int_table &sf=*paraslicesf[d], &co=*paracoslicesf[d];
         bk.paraslice[d].build(nsub,paraslicecount[d],[&](int q){return a->subslice(sf[q][0],sf[q][1]);});
         bk.paracoslice[d].build(nsub,paracoslicecount[d],[&](int q){return co[q][2];});
     }

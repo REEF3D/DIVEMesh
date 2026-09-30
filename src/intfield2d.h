@@ -24,6 +24,7 @@ Author: Hans Bihs
 #define INTFIELD2D_H_
 
 #include"increment.h"
+#include<vector>
 
 class lexer;
 
@@ -31,13 +32,18 @@ class intfield2d : public increment
 {
 public:
     intfield2d(lexer*);
+    intfield2d(const intfield2d&) = delete;
+    intfield2d& operator=(const intfield2d&) = delete;
+
     inline int& operator()(int ii, int jj)
     {
-        return feld[ii+xma][jj+yma];
+        return feld[(size_t)(ii+xma)*nj + (size_t)(jj+yma)];
     };
 
 private:
-    int **feld;
+    // contiguous storage, index (i,j,k) -> ((i+xma)*nj + j+yma)*nk + k+zma
+    size_t nj;
+    std::vector<int> feld;
 };
 
 #endif

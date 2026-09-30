@@ -42,6 +42,7 @@ public:
     void start(lexer*,dive*);
 
 private:
+    intfield porous_flag;
     field porous_dist;
     field2d porousbed;
 };

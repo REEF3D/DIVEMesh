@@ -252,39 +252,33 @@ void decomp::mem_alloc(lexer *p, dive *a)
     ddout<<"xco: "<<xco<<"  yco: "<<yco<<"  zco: "<<zco<<endl<<endl;
 
 
-    a->Iarray(a->para1sf,xsurf,3);
-    a->Iarray(a->para2sf,ysurf,3);
-    a->Iarray(a->para3sf,ysurf,3);
-    a->Iarray(a->para4sf,xsurf,3);
-    a->Iarray(a->para5sf,zsurf,3);
-    a->Iarray(a->para6sf,zsurf,3);
+    a->para1sf.allocate(xsurf,3);
+    a->para2sf.allocate(ysurf,3);
+    a->para3sf.allocate(ysurf,3);
+    a->para4sf.allocate(xsurf,3);
+    a->para5sf.allocate(zsurf,3);
+    a->para6sf.allocate(zsurf,3);
 
-    a->Iarray(a->para1void,xsurf,4);
-    a->Iarray(a->para2void,ysurf,4);
-    a->Iarray(a->para3void,ysurf,4);
-    a->Iarray(a->para4void,xsurf,4);
-    a->Iarray(a->para5void,zsurf,4);
-    a->Iarray(a->para6void,zsurf,4);
 
-    a->Iarray(a->para1co,xco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
-    a->Iarray(a->para2co,yco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
-    a->Iarray(a->para3co,yco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
-    a->Iarray(a->para4co,xco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
-    a->Iarray(a->para5co,zco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
-    a->Iarray(a->para6co,zco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->para1co.allocate(xco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->para2co.allocate(yco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->para3co.allocate(yco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->para4co.allocate(xco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->para5co.allocate(zco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
+    a->para6co.allocate(zco,7);   // cols 5,6 written in decomp_surfco and read in print_grid
 
     a->Iarray(a->periodicXall,6);
     a->Iarray(a->periodicX,p->M10+1,6);
 
 
     // Slice
-    a->Iarray(a->paraslice1sf,xsurf,2);
-    a->Iarray(a->paraslice2sf,ysurf,2);
-    a->Iarray(a->paraslice3sf,ysurf,2);
-    a->Iarray(a->paraslice4sf,xsurf,2);
+    a->paraslice1sf.allocate(xsurf,2);
+    a->paraslice2sf.allocate(ysurf,2);
+    a->paraslice3sf.allocate(ysurf,2);
+    a->paraslice4sf.allocate(xsurf,2);
 
-    a->Iarray(a->paracoslice1sf,xco,4);
-    a->Iarray(a->paracoslice2sf,yco,4);
-    a->Iarray(a->paracoslice3sf,yco,4);
-    a->Iarray(a->paracoslice4sf,xco,4);
+    a->paracoslice1sf.allocate(xco,4);
+    a->paracoslice2sf.allocate(yco,4);
+    a->paracoslice3sf.allocate(yco,4);
+    a->paracoslice4sf.allocate(xco,4);
 }

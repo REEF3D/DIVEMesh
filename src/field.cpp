@@ -25,5 +25,7 @@ Author: Hans Bihs
 
 field::field(lexer *p)
 {
-    p->Darray(feld,p->knox+2*xma,p->knoy+2*yma,p->knoz+2*zma);
+    nj = size_t(p->knoy+2*yma);
+    nk = size_t(p->knoz+2*zma);
+    feld.assign(size_t(p->knox+2*xma)*nj*nk, 0);
 }
