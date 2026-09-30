@@ -137,7 +137,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
         if(a->flag(i,j,k)>0 && a->solid(i,j,k)>0)
         ++ycount[bb];
     }
-    int fac,mincell,jloc;
+    int fac,mincell,jloc=0;
     double diff;
 
     mincell=1e9;
@@ -189,7 +189,7 @@ void decomp::partition_correct_y(lexer* p, dive* a)
     //
     int maxiter = MAX(a->mx,a->my);
 
-    int maxcell,jloc_max,jloc_min;
+    int maxcell,jloc_max=0,jloc_min=0;
     count=0;
     do{
         mincell=1e9;

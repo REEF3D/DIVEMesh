@@ -152,11 +152,15 @@ void print_vts::start(lexer* p, dive* a)
     char filename[100];
     snprintf(filename,sizeof(filename),"./DIVEMesh_Paraview/DIVEMesh_grid-preview.vts");
     FILE* file = fopen(filename, "wb");
-    if(file)
+    bool ok = (file!=nullptr);
+    if(ok)
     {
-        fwrite(buffer.data(), buffer.size(), 1, file);
-        fclose(file);
+        ok = (fwrite(buffer.data(), buffer.size(), 1, file)==1);
+        ok = (fclose(file)==0) && ok;
     }
+
+    if(!ok)
+    cout<<"!!! could not write "<<filename<<" !!!"<<endl;
 }
 
 double print_vts::ipol(dive *a, field &b)

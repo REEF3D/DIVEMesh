@@ -49,6 +49,8 @@ void print_grid::start(lexer* p,dive* a)
 
     cout<<"printing ";
 
+    int write_errors=0;
+
     #pragma omp parallel for collapse(3) schedule(dynamic)
     for(int aa=1;aa<=a->mx;++aa)
     for(int bb=1;bb<=a->my;++bb)
@@ -1078,17 +1080,33 @@ void print_grid::start(lexer* p,dive* a)
         snprintf(name,sizeof(name),"DIVEMesh_Grid/grid-%0*i.dat",padding,count);
 
         FILE* file = fopen(name, "wb");
-        if(file)
+        bool ok = (file!=nullptr);
+        if(ok)
         {
             setvbuf(file, nullptr, _IOFBF, 131072);
-            fwrite(buffer.data(), buffer.size(), 1, file);
-            fclose(file);
+            ok = (fwrite(buffer.data(), buffer.size(), 1, file)==1);
+            ok = (fclose(file)==0) && ok;
+        }
+
+        if(!ok)
+        {
+            #pragma omp critical
+            {
+                cout<<endl<<"!!! could not write "<<name<<" !!!"<<endl;
+                ++write_errors;
+            }
         }
 
         #pragma omp critical
         {
             cout<<".";
         }
+    }
+
+    if(write_errors>0)
+    {
+        cout<<endl<<"!!! "<<write_errors<<" grid file(s) could not be written !!!"<<endl<<endl;
+        exit(1);
     }
 
     cout<<"\nprinting complete\n"

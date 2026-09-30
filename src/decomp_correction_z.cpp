@@ -132,7 +132,7 @@ void decomp::partition_correct_z(lexer* p, dive* a)
         ++zcount[cc];
     }
 
-    int fac,mincell,kloc;
+    int fac,mincell,kloc=0;
     double diff;
 
     mincell=1e9;
@@ -183,7 +183,7 @@ void decomp::partition_correct_z(lexer* p, dive* a)
     }
 
     //
-    int maxcell,kloc_max,kloc_min;
+    int maxcell,kloc_max=0,kloc_min=0;
     count=0;
     do{
         mincell=1e9;

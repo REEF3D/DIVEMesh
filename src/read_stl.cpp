@@ -63,8 +63,6 @@ void lexer::read_stl()
         else if(word=="normal")
         {
             stl>>trivec_x[count]>>trivec_y[count]>>trivec_z[count];
-
-            XYin(trivec_x[count],trivec_y[count]);
         }
         else if(word=="vertex")
         {
@@ -108,6 +106,15 @@ void lexer::read_stl()
 
         tri_x[n][q] = xval;
         tri_y[n][q] = yval;
+    }
+
+    for(n=0; n<trinum_stl; ++n)
+    {
+        xval = trivec_x[n]*cos(S8) - trivec_y[n]*sin(S8);
+        yval = trivec_x[n]*sin(S8) + trivec_y[n]*cos(S8);
+
+        trivec_x[n] = xval;
+        trivec_y[n] = yval;
     }
 
     // find min/max coordinates

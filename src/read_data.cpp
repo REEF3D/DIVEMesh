@@ -34,12 +34,13 @@ void lexer::read_data()
         char cval;
         ifstream dataset("gmdataset.dat", ios_base::in);
 
-        while(!dataset.eof())
+        while(true)
         {
-            if(D19==0)
-            dataset>>val>>val>>val;
-            else if(D19==1)
-            dataset>>cval>>val>>val>>val;
+            if(D19==1)
+            dataset>>cval;
+
+            if(!(dataset>>val>>val>>val))
+            break;
 
             if(count%D13==0)
             ++countD10;
@@ -59,12 +60,13 @@ void lexer::read_data()
 
         count=0;
         countD10=0;
-        while(!dataset.eof())
+        while(countD10<D10)
         {
-            if(D19==0)
-            dataset>>val1>>val2>>val3;
-            else if(D19==1)
-            dataset>>cval>>val1>>val2>>val3;
+            if(D19==1)
+            dataset>>cval;
+
+            if(!(dataset>>val1>>val2>>val3))
+            break;
 
             if(count%D13==0)
             {

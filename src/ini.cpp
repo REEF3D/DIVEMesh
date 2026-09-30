@@ -38,6 +38,7 @@ void lexer::ini_default()
     B3_dx=0.0;        // int global origin_x
     B3_dy=0.0;        // int global origin_y
     B4=0.0;           // double grid rotation alpha
+    alpha_grid=0.0;
     B5=1;             // int turn on true
     B6=0;             // int turn on CMS
     B10=0;

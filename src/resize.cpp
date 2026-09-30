@@ -98,7 +98,7 @@ void resize_class::Darray(double ****& field, int numi, int numj, int numk, int 
     for(n=0;n<numi;++n)
     for(m=0;m<numj;++m)
     for(q=0;q<numk;++q)
-    for(l=0;l<numk;++l)
+    for(l=0;l<numl;++l)
     field[n][m][q][l]=0.0;
 }
 
@@ -170,7 +170,7 @@ void resize_class::Farray(float ****& field, int numi, int numj, int numk, int n
     for(n=0;n<numi;++n)
     for(m=0;m<numj;++m)
     for(q=0;q<numk;++q)
-    for(l=0;l<numk;++l)
+    for(l=0;l<numl;++l)
     field[n][m][q][l]=0.0;
 }
 

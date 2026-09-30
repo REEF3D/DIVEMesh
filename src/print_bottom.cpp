@@ -33,7 +33,7 @@ void print_grid::print_bottom(lexer* p, dive* a)
 {
     char name[100];
 
-    mkdir("./DIVEMesh_log",0777);
+    mkdir("./DIVEMesh_Log",0777);
 
     snprintf(name,sizeof(name),"./DIVEMesh_Log/bottom_file.dat");
 

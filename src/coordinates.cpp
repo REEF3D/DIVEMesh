@@ -32,7 +32,7 @@ coordinates::coordinates(lexer *pp)
 void coordinates::XYin(double &Xcoor, double &Ycoor)
 {
     double Xtemp = (Xcoor-p->global_orig_x)*cos(-p->alpha_grid) - (Ycoor-p->global_orig_y)*sin(-p->alpha_grid);
-    double Ytemp = (Xcoor-p->global_orig_x)*cos(-p->alpha_grid) - (Ycoor-p->global_orig_y)*sin(-p->alpha_grid);
+    double Ytemp = (Xcoor-p->global_orig_x)*sin(-p->alpha_grid) + (Ycoor-p->global_orig_y)*cos(-p->alpha_grid);
 
     Xcoor = Xtemp;
     Ycoor = Ytemp;
