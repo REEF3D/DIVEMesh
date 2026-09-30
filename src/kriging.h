@@ -25,11 +25,16 @@ Author: Hans Bihs
 
 #include "interpolation.h"
 #include "increment.h"
+#include <vector>
 
 class lexer;
 class dive;
 
 using namespace std;
+
+// Ordinary kriging with a spherical semivariogram.
+// G 15 3: global kriging, all geodat points in one system
+// G 15 4: local kriging, the G 16 nearest geodat points for each grid cell
 
 class kriging final : public interpolation, public increment
 {
@@ -40,36 +45,29 @@ public:
     void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**) override final;
 
 private:
-    void rearrange(lexer*);
-    void rearrange_b(lexer*);
-
-    void invert(lexer*,double**, double**, double*, double*);
-    void decomp(lexer*,double**, double**);
-    void backsubstitution(lexer*,double**, double*);
-    void matvec(lexer*,double**, double*, double*);
-    void solve(lexer*,double**, double*, double*);
-
     void ini(lexer*,dive*,int,double*,double*,double*);
 
-    inline double semivariogram(double dist)
+    void start_global(lexer*,int,double*,double*,double*,double*,double*,int,int,double**);
+    void start_local(lexer*,int,double*,double*,double*,double*,double*,int,int,double**);
+
+    void decomp(vector<double>&, vector<int>&, int);
+    void solve(const vector<double>&, const vector<int>&, vector<double>&, int);
+    static void solve_small(double*, double*, int);
+
+    // spherical semivariogram: variance*(1.5*h/range - 0.5*(h/range)^3)
+    inline double semivariogram(double dist) const
     {
         if(dist<range)
-            return variance*((3.0*dist)/(2.0*range) - 0.5*pow(dist/range,3.0));
+            return dist*(c1 - c3*dist*dist);
         else
             return variance;
     }
 
-    double **A,**B;
-    double*x,*b,*s,*row;
-
-    int Np,n,m,q,r,count;
-    double dist,xc,yc;
-
     double variance, range;
-    double gamma,aii;
+    double c1, c3;
 
-    double vmax,sum,val;
-    int imax,np,nn;
+    bool local;
+    int nnb;
 };
 
 #endif

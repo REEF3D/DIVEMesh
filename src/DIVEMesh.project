@@ -289,9 +289,9 @@
         <File Name="inverse_dist.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Kriging">
+        <File Name="kriging_local.cpp"/>
         <File Name="kriging_ini.cpp"/>
         <File Name="kriging_solve.cpp"/>
-        <File Name="kriging_rearrange.cpp"/>
         <File Name="kriging.cpp"/>
       </VirtualDirectory>
       <File Name="geodat_multigrid.cpp"/>

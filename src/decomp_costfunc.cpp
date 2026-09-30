@@ -56,8 +56,13 @@ void decomp::costfunc(lexer* p, dive* a)
     int n;
     costmin=1.0e18;
 
+    a->mx=a->my=a->mz=0;
+
     for(n=0;n<numfactor;n++)
     {
+        if(a->mpx[n]>a->knox || a->mpy[n]>a->knoy || a->mpz[n]>a->knoz)
+        continue;
+
         cost = double(a->knox)/double(a->mpx[n])*double(a->knoy)/double(a->mpy[n])
              + double(a->knox)/double(a->mpx[n])*double(a->knoz)/double(a->mpz[n])
              + double(a->knoy)/double(a->mpy[n])*double(a->knoz)/double(a->mpz[n]);
@@ -117,6 +122,13 @@ void decomp::costfunc(lexer* p, dive* a)
             a->my=a->mpy[n];
             a->mz=a->mpz[n];
         }
+    }
+
+    if(a->mx*a->my*a->mz!=p->M10)
+    {
+        cout<<endl<<"!!! no domain decomposition for M 10 "<<p->M10<<" fits the grid ("
+            <<a->knox<<" x "<<a->knoy<<" x "<<a->knoz<<" cells) with the directions enabled by M 11/12/13 !!!"<<endl<<endl;
+        exit(1);
     }
 
     ddout<<"partition:  "<<a->mx<<' '<<a->my<<' '<<a->mz<<endl;

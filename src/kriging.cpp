@@ -23,11 +23,12 @@ Author: Hans Bihs
 #include "kriging.h"
 #include "dive.h"
 #include "lexer.h"
-
-// source:
+#include <cmath>
 
 kriging::kriging(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 {
+    local = (p->G15==4);
+    nnb = p->G16;
 }
 
 kriging::~kriging()
@@ -36,83 +37,97 @@ kriging::~kriging()
 
 void kriging::start(lexer* p, dive* a, int numpt, double *X, double *Y, double *F, double *XC, double *YC, int kx, int ky, double **f)
 {
-    ini(p,a,numpt,X,F,F);
+    const int N = p->Np;
 
-    //p->Np=numpt;
-    cout<<"kriging  p->Np: "<<p->Np<<endl;
+    for(int ii=0; ii<kx; ++ii)
+    for(int jj=0; jj<ky; ++jj)
+    f[ii+3][jj+3] = 0.0;
 
-    p->Darray(A,p->Np+1,p->Np+1);
-    p->Darray(B,p->Np+1,p->Np+1);
-
-    p->Darray(b,p->Np+1);
-    p->Darray(x,p->Np+1);
-    p->Darray(s,p->Np+1);
-    p->Darray(row,p->Np+1);
-
-    cout<<"fill Aij"<<endl;
-    for(n=0; n<p->Np; ++n)
-    for(q=0; q<p->Np; ++q)
+    if(N<1)
     {
-        dist = sqrt(pow(X[n]-X[q],2.0) + pow(Y[n]-Y[q],2.0));
-
-        A[n][q] = semivariogram(dist);
+        cout<<"kriging: no geodat points"<<endl;
+        return;
     }
 
-    n=p->Np;
-    for(q=0; q<p->Np; ++q)
-    A[n][q] = 1.0;
+    ini(p,a,N,X,Y,F);
 
-    q=p->Np;
-    for(n=0; n<p->Np; ++n)
-    A[n][q] = 1.0;
+    if(local)
+    start_local(p,N,X,Y,F,XC,YC,kx,ky,f);
+    else
+    start_global(p,N,X,Y,F,XC,YC,kx,ky,f);
+}
 
-    A[p->Np][p->Np] = 0.0;
+// Global ordinary kriging in dual form:
+// the kriging matrix K = [Gamma 1; 1^T 0] is symmetric, so the estimate
+// f(x0) = [F;0]^T K^-1 [g(x0);1] equals sum_n w_n*g_n(x0) + mu, with K*[w;mu] = [F;0].
+// One LU decomposition, then O(Np) per grid cell.
+void kriging::start_global(lexer* p, int N, double *X, double *Y, double *F, double *XC, double *YC, int kx, int ky, double **f)
+{
+    const int M = N+1;
 
-    rearrange(p);
+    cout<<"kriging global  Np: "<<N<<endl;
+
+    vector<double> G((size_t)M*M);
+    vector<int> piv(M);
+    vector<double> w(M);
+
+    for(int nn=0; nn<N; ++nn)
+    w[nn] = F[nn];
+
+    w[N] = 0.0;
+
+    cout<<"fill Aij"<<endl;
+    #pragma omp parallel for schedule(static)
+    for(int nn=0; nn<N; ++nn)
+    {
+        double *Gn = &G[(size_t)nn*M];
+
+        for(int qq=0; qq<N; ++qq)
+        {
+            const double dx = X[nn]-X[qq];
+            const double dy = Y[nn]-Y[qq];
+
+            Gn[qq] = semivariogram(sqrt(dx*dx + dy*dy));
+        }
+
+        Gn[N] = 1.0;
+    }
+
+    for(int qq=0; qq<N; ++qq)
+    G[(size_t)N*M+qq] = 1.0;
+
+    G[(size_t)N*M+N] = 0.0;
 
     cout<<"matrix solver"<<endl;
-    invert(p,A,B,x,b);
+    decomp(G,piv,M);
+    solve(G,piv,w,M);
+
+    G.clear();
+    G.shrink_to_fit();
+
+    const double mu = w[N];
 
     cout<<"mainloop kriging"<<endl<<endl;
 
-    for(i=0;i<kx;++i)
-    for(j=0;j<ky;++j)
-    f[i+3][j+3] = 0.0;
-
-    count=0;
-    for(i=0;i<kx;++i)
-    for(j=0;j<ky;++j)
+    #pragma omp parallel for collapse(2) schedule(static)
+    for(int ii=0; ii<kx; ++ii)
+    for(int jj=0; jj<ky; ++jj)
     {
-        xc = XC[IP];
-        yc = YC[JP];
+        const double xc = XC[ii+marge];
+        const double yc = YC[jj+marge];
 
-        for(n=0; n<p->Np; ++n)
+        double val = mu;
+
+        for(int nn=0; nn<N; ++nn)
         {
-            dist = sqrt(pow(xc-X[n],2.0) + pow(yc-Y[n],2.0));
+            const double dx = xc-X[nn];
+            const double dy = yc-Y[nn];
 
-            b[n] = semivariogram(dist);
+            val += w[nn]*semivariogram(sqrt(dx*dx + dy*dy));
         }
 
-        b[p->Np]=1.0;
-
-        rearrange_b(p);
-
-        matvec(p,B,b,x);
-
-        val=0.0;
-        for(n=0; n<p->Np; ++n)
-        {
-            val += x[n];
-        }
-        if(count%1000==0)
-        cout<<"ij_iter  "<<count<<"   Weights: "<<val<<endl;
-
-        for(n=0; n<p->Np; ++n)
-        f[i+3][j+3] += x[n] * F[n];
-
-        ++count;
-
-        if(count%1000==0)
-        cout<<"> processed cells: "<<count<<endl;
+        f[ii+3][jj+3] = val;
     }
+
+    cout<<"> processed cells: "<<kx*ky<<endl;
 }

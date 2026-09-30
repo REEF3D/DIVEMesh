@@ -44,6 +44,7 @@ void decomp::start(lexer* p, dive* a)
     p->Iarray(ycross,a->knoy+10);
     p->Iarray(zcross,a->knoz+10);
 
+    partition_input_check(p,a);
 
     if(p->M20==1)
     {
@@ -73,6 +74,8 @@ void decomp::start(lexer* p, dive* a)
     {
         partition_manual(p,a);
     }
+
+    partition_verify(p,a);
 
     print_partition(p,a);
 

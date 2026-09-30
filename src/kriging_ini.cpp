@@ -58,5 +58,8 @@ void kriging::ini(lexer *p, dive *a, int numpt, double *X, double *Y, double *F)
 
     variance/=double(numpt);
 
+    c1 = 1.5*variance/range;
+    c3 = 0.5*variance/(range*range*range);
+
     cout<<"Np: "<<numpt<<"  mean: "<<mean<<"  variance: "<<variance<<"  range: "<<range<<endl;
 }

@@ -260,6 +260,9 @@ void lexer::read_control()
                 case 15: control>>G15;
                          clear(c,numint);
                          break;
+                case 16: control>>G16;
+                         clear(c,numint);
+                         break;
                 case 17: control>>G17;
                          clear(c,numint);
                          break;

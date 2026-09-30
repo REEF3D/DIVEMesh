@@ -22,116 +22,140 @@ Author: Hans Bihs
 
 #include "kriging.h"
 #include "lexer.h"
+#include <cmath>
+#include <utility>
 
-void kriging::solve(lexer *p, double **A, double *x, double *b)
+// in-place LU decomposition with partial pivoting, row-major N x N
+void kriging::decomp(vector<double> &G, vector<int> &piv, int N)
 {
-    // LU decomp
-    for (r=0; r<p->Np; r++)
-    {
-        aii=1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
-
-        for (n=r+1; n<p->Np; n++)
-        {
-            A[n][r]=A[n][r]*aii;
-
-            for (q=r+1; q<p->Np; q++)
-            A[n][q]-=A[r][q]*A[n][r];
-        }
-    }
-
-    // forward substitution
-    for (q=0;q<p->Np;++q)
-    {
-        for (n=0;n<q;++n)
-        b[q]-=A[q][n]*b[n];
-    }
-
-    // backward substitution
-    for (q=p->Np-1;q>=0;q--)
-    {
-        for (n=1+q; n < p->Np; n++)
-        b[q]-=A[q][n]*b[n];
-
-        b[q]=b[q]/(fabs(A[q][q])>1.0e-19?A[q][q]:1.0e-19);
-    }
-}
-
-void kriging::invert(lexer *p, double **A, double **B, double *x, double *b)
-{
-    cout<<"    decomp"<<endl;
-    // LU decomp
-    decomp(p,A,B);
-
-    cout<<"    invert"<<endl;
-
-    // invert
-    for(q=0;q<p->Np;++q)
-    {
-        if(q%1000==0)
-        cout<<"column: "<<q<<endl;
-
-        for(n=0;n<p->Np;++n)
-        s[n]=0.0;
-
-        s[q]=1.0;
-
-        backsubstitution(p,A,s);
-
-        for(n=0;n<p->Np;++n)
-        B[n][q] = s[n];
-    }
-}
-
-void kriging::decomp(lexer *p, double **A, double **B)
-{
-    // LU decomp
-    for(r=0; r<p->Np; ++r)
+    for(int r=0; r<N; ++r)
     {
         if(r%1000==0)
         cout<<"decomp: "<<r<<endl;
 
-        aii = 1.0/(fabs(A[r][r])>1.0e-19?A[r][r]:1.0e-19);
+        // pivot search
+        int pr = r;
+        double vmax = fabs(G[(size_t)r*N+r]);
 
-        for(n=r+1; n<p->Np; ++n)
+        for(int nn=r+1; nn<N; ++nn)
         {
-            A[n][r] = A[n][r]*aii;
+            const double v = fabs(G[(size_t)nn*N+r]);
 
-            for(q=r+1; q<p->Np; q++)
-            A[n][q]-=A[r][q]*A[n][r];
+            if(v>vmax)
+            {
+                vmax = v;
+                pr = nn;
+            }
+        }
+
+        piv[r] = pr;
+
+        if(pr!=r)
+        {
+            double *Ga = &G[(size_t)r*N];
+            double *Gb = &G[(size_t)pr*N];
+
+            for(int qq=0; qq<N; ++qq)
+            std::swap(Ga[qq],Gb[qq]);
+        }
+
+        const double *Gr = &G[(size_t)r*N];
+        const double aii = 1.0/(fabs(Gr[r])>1.0e-19?Gr[r]:1.0e-19);
+
+        // update trailing submatrix
+        #pragma omp parallel for schedule(static)
+        for(int nn=r+1; nn<N; ++nn)
+        {
+            double *Gn = &G[(size_t)nn*N];
+
+            const double l = Gn[r]*aii;
+            Gn[r] = l;
+
+            if(l!=0.0)
+            for(int qq=r+1; qq<N; ++qq)
+            Gn[qq] -= l*Gr[qq];
         }
     }
 }
 
-void kriging::backsubstitution(lexer *p, double **A, double *b)
+// solve LU * x = P*b, b is overwritten with x
+void kriging::solve(const vector<double> &G, const vector<int> &piv, vector<double> &b, int N)
 {
-    int qq,nn;
+    for(int r=0; r<N; ++r)
+    if(piv[r]!=r)
+    std::swap(b[r],b[piv[r]]);
 
     // forward substitution
-    for(qq=0;qq<p->Np;++qq)
+    for(int qq=0; qq<N; ++qq)
     {
-        for (nn=0;nn<qq;++nn)
-        b[qq]-=A[qq][nn]*b[nn];
+        const double *Gq = &G[(size_t)qq*N];
+        double sum = b[qq];
+
+        for(int nn=0; nn<qq; ++nn)
+        sum -= Gq[nn]*b[nn];
+
+        b[qq] = sum;
     }
 
     // backward substitution
-    for (qq=p->Np-1;qq>=0;qq--)
+    for(int qq=N-1; qq>=0; --qq)
     {
-        for (nn=1+qq; nn < p->Np; nn++)
-        b[qq]-=A[qq][nn]*b[nn];
+        const double *Gq = &G[(size_t)qq*N];
+        double sum = b[qq];
 
-        b[qq]=b[qq]/(fabs(A[qq][qq])>1.0e-19?A[qq][qq]:1.0e-19);
+        for(int nn=qq+1; nn<N; ++nn)
+        sum -= Gq[nn]*b[nn];
+
+        b[qq] = sum/(fabs(Gq[qq])>1.0e-19?Gq[qq]:1.0e-19);
     }
 }
 
-void kriging::matvec(lexer *p, double **A, double *b, double *x)
+// small dense system A*x = b with partial pivoting, row-major m x m, A and b are overwritten, b holds x
+void kriging::solve_small(double *A, double *b, int m)
 {
-    int qq,nn;
-
-    for(nn=0;nn<p->Np;++nn)
+    for(int r=0; r<m; ++r)
     {
-        x[nn]=0.0;
+        int pr = r;
+        double vmax = fabs(A[r*m+r]);
 
-        for(qq=0;qq<p->Np;++qq)
-        x[nn]+=A[nn][qq]*b[qq];
+        for(int nn=r+1; nn<m; ++nn)
+        if(fabs(A[nn*m+r])>vmax)
+        {
+            vmax = fabs(A[nn*m+r]);
+            pr = nn;
+        }
+
+        if(pr!=r)
+        {
+            for(int qq=0; qq<m; ++qq)
+            std::swap(A[r*m+qq],A[pr*m+qq]);
+
+            std::swap(b[r],b[pr]);
+        }
+
+        const double aii = 1.0/(fabs(A[r*m+r])>1.0e-19?A[r*m+r]:1.0e-19);
+
+        for(int nn=r+1; nn<m; ++nn)
+        {
+            const double l = A[nn*m+r]*aii;
+
+            if(l!=0.0)
+            {
+                for(int qq=r+1; qq<m; ++qq)
+                A[nn*m+qq] -= l*A[r*m+qq];
+
+                b[nn] -= l*b[r];
+            }
+        }
+    }
+
+    for(int qq=m-1; qq>=0; --qq)
+    {
+        double sum = b[qq];
+
+        for(int nn=qq+1; nn<m; ++nn)
+        sum -= A[qq*m+nn]*b[nn];
+
+        b[qq] = sum/(fabs(A[qq*m+qq])>1.0e-19?A[qq*m+qq]:1.0e-19);
     }
 }
