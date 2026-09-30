@@ -66,6 +66,25 @@ void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double 
     }
 }
 
+namespace
+{
+    inline double ipow(double x, int n)
+    {
+        double r = 1.0;
+
+        while(n>0)
+        {
+            if(n&1)
+            r *= x;
+
+            x *= x;
+            n >>= 1;
+        }
+
+        return r;
+    }
+}
+
 double inverse_dist_local::gxy(lexer *p, int i, int j, double *XC, double *YC)
 {
     constexpr int radius = 3;
@@ -73,6 +92,9 @@ double inverse_dist_local::gxy(lexer *p, int i, int j, double *XC, double *YC)
     const double xc = XC[IP];
     const double yc = YC[JP];
     const double G35 = p->G35;
+
+    // even integer exponents (default 16): repeated squaring instead of pow
+    const int half_power = (G35>0.0 && G35<=64.0 && G35==std::floor(G35) && int(G35)%2==0) ? int(G35)/2 : 0;
     const long long target = std::min(p->G18,p->Np);
 
     // Find the window the search ends with: it starts at +-dij bins and grows
@@ -111,9 +133,11 @@ double inverse_dist_local::gxy(lexer *p, int i, int j, double *XC, double *YC)
         {
             const double xcF = xc-bx[q];
             const double ycF = yc-by[q];
-            const double dist = sqrt(xcF*xcF + ycF*ycF + smooth_lengthP4);
+            const double d2 = xcF*xcF + ycF*ycF + smooth_lengthP4;
 
-            const double w = pow(1.0/(dist>1.0e-15?dist:1.0e15),G35);
+            // w = (1/dist)^G35 = (1/dist^2)^(G35/2)
+            const double inv = d2>1.0e-30 ? 1.0/d2 : 1.0e-30;
+            const double w = half_power>0 ? ipow(inv,half_power) : pow(inv,0.5*G35);
 
             wsum += w;
             g += w*bz[q];
