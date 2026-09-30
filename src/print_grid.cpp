@@ -30,12 +30,59 @@ Author: Hans Bihs
 #include<iomanip>
 #include<vector>
 #include<cstring>
+#include<span>
+#include<algorithm>
 
 #ifdef _OPENMP
 #include <omp.h>
 #endif
 
 using namespace std;
+
+namespace
+{
+    // indices 0..num-1 grouped by a key 1..nsub; each group keeps ascending order
+    struct index_lists
+    {
+        std::vector<int> start, idx;
+
+        template<class Key>
+        void build(int nsub, int num, Key key)
+        {
+            start.assign(nsub+2,0);
+
+            for(int q=0;q<num;++q)
+            {
+                const int n=key(q);
+                if(n>=1 && n<=nsub)
+                ++start[n+1];
+            }
+
+            for(int n=1;n<nsub+2;++n)
+            start[n]+=start[n-1];
+
+            idx.resize(start[nsub+1]);
+            std::vector<int> pos(start.begin(),start.end());
+
+            for(int q=0;q<num;++q)
+            {
+                const int n=key(q);
+                if(n>=1 && n<=nsub)
+                idx[pos[n]++]=q;
+            }
+        }
+
+        std::span<const int> list(int n) const { return {idx.data()+start[n], idx.data()+start[n+1]}; }
+        size_t size(int n) const { return size_t(start[n+1]-start[n]); }
+    };
+
+    struct subdomain_lists
+    {
+        index_lists surf, slice;
+        index_lists para[6], paraco[6];
+        index_lists paraslice[4], paracoslice[4];
+    };
+}
 
 print_grid::print_grid(lexer* p)
 {
@@ -51,6 +98,38 @@ void print_grid::start(lexer* p,dive* a)
 
     int write_errors=0;
 
+    // entries of every surface list, sorted by subdomain (stable, keeps the original order)
+    const int nsub = a->mx*a->my*a->mz;
+    subdomain_lists bk;
+    bk.surf.build(nsub,a->surfcount,[&](int q){return a->subgrid(a->surf[q][0],a->surf[q][1],a->surf[q][2]);});
+
+    int **parasf[6] = {a->para1sf,a->para2sf,a->para3sf,a->para4sf,a->para5sf,a->para6sf};
+    int **paraco[6] = {a->para1co,a->para2co,a->para3co,a->para4co,a->para5co,a->para6co};
+    const int paracount[6] = {a->para1count,a->para2count,a->para3count,a->para4count,a->para5count,a->para6count};
+    const int paracocount[6] = {a->paraco1count,a->paraco2count,a->paraco3count,a->paraco4count,a->paraco5count,a->paraco6count};
+
+    for(int d=0;d<6;++d)
+    {
+        int **sf=parasf[d], **co=paraco[d];
+        bk.para[d].build(nsub,paracount[d],[&](int q){return a->subgrid(sf[q][0],sf[q][1],sf[q][2]);});
+        bk.paraco[d].build(nsub,paracocount[d],[&](int q){return co[q][3];});
+    }
+
+    int **paraslicesf[4] = {a->paraslice1sf,a->paraslice2sf,a->paraslice3sf,a->paraslice4sf};
+    int **paracoslicesf[4] = {a->paracoslice1sf,a->paracoslice2sf,a->paracoslice3sf,a->paracoslice4sf};
+    const int paraslicecount[4] = {a->paraslice1count,a->paraslice2count,a->paraslice3count,a->paraslice4count};
+    const int paracoslicecount[4] = {a->paracoslice1count,a->paracoslice2count,a->paracoslice3count,a->paracoslice4count};
+
+    for(int d=0;d<4;++d)
+    {
+        int **sf=paraslicesf[d], **co=paracoslicesf[d];
+        bk.paraslice[d].build(nsub,paraslicecount[d],[&](int q){return a->subslice(sf[q][0],sf[q][1]);});
+        bk.paracoslice[d].build(nsub,paracoslicecount[d],[&](int q){return co[q][2];});
+    }
+
+    // x-y cells (index i*knoy+j) by the subdomain of their bottom cell k=0
+    bk.slice.build(nsub,a->knox*a->knoy,[&](int c){return a->subgrid(c/a->knoy,c%a->knoy,0);});
+
     #pragma omp parallel for collapse(3) schedule(dynamic)
     for(int aa=1;aa<=a->mx;++aa)
     for(int bb=1;bb<=a->my;++bb)
@@ -60,401 +139,194 @@ void print_grid::start(lexer* p,dive* a)
         int j = 0;
         int k = 0;
         int n = 0;
-        int q = 0;
-        int iin = 0;
-        double ddn = 0.0;
         const int count = ((aa-1)*a->my + (bb-1))*a->mz + cc;
 
-        std::vector<char> buffer;
-        size_t size = 16*sizeof(double)+74*sizeof(int)
-                    +((a->xnode[aa]-a->xnode[aa-1])*(a->ynode[bb]-a->ynode[bb-1])*(a->znode[cc]-a->znode[cc-1]))*sizeof(int)
-                    +(a->xnode[aa]+marge-(a->xnode[aa-1]-marge))*sizeof(double)*2
-                    +(a->ynode[bb]+marge-(a->ynode[bb-1]-marge))*sizeof(double)*2
-                    +(a->znode[cc]+marge-(a->znode[cc-1]-marge))*sizeof(double)*2
-                    +((a->xnode[aa]-a->xnode[aa-1])*(a->ynode[bb]-a->ynode[bb-1])*(a->znode[cc]-a->znode[cc-1]))*2*sizeof(double)
-                    +a->surfcount*5*sizeof(int)
-                    +a->para1count*3*sizeof(int)
-                    +a->para2count*3*sizeof(int)
-                    +a->para3count*3*sizeof(int)
-                    +a->para4count*3*sizeof(int)
-                    +a->para5count*3*sizeof(int)
-                    +a->para6count*3*sizeof(int)
-                    +a->paraco1count*6*sizeof(int)
-                    +a->paraco2count*6*sizeof(int)
-                    +a->paraco3count*6*sizeof(int)
-                    +a->paraco4count*6*sizeof(int)
-                    +a->paraco5count*6*sizeof(int)
-                    +a->paraco6count*6*sizeof(int)
-                    +a->knox*a->knoy*sizeof(int)
-                    +a->paraslice1count*2*sizeof(int)
-                    +a->paraslice2count*2*sizeof(int)
-                    +a->paraslice3count*2*sizeof(int)
-                    +a->paraslice4count*2*sizeof(int)
-                    +a->paracoslice1count*3*sizeof(int)
-                    +a->paracoslice2count*3*sizeof(int)
-                    +a->paracoslice3count*3*sizeof(int)
-                    +a->paracoslice4count*3*sizeof(int)
-                    +a->knox*a->knoy*4*sizeof(double);
-        buffer.resize(size);
+        const size_t cells = size_t(a->xnode[aa]-a->xnode[aa-1])*size_t(a->ynode[bb]-a->ynode[bb-1])*size_t(a->znode[cc]-a->znode[cc-1]);
+        const size_t nodes = size_t(a->xnode[aa]-a->xnode[aa-1] + a->ynode[bb]-a->ynode[bb-1] + a->znode[cc]-a->znode[cc-1] + 6*marge+3);
+
+        size_t size = 32*sizeof(double) + 96*sizeof(int)
+                    + cells*(sizeof(int) + 2*sizeof(double))
+                    + nodes*sizeof(double)
+                    + bk.surf.size(count)*5*sizeof(int)
+                    + size_t(bk.slice.size(count))*(sizeof(int) + 4*sizeof(double));
+
+        for(int d=0;d<6;++d)
+        size += (bk.para[d].size(count)*3 + bk.paraco[d].size(count)*6)*sizeof(int);
+
+        for(int d=0;d<4;++d)
+        size += (bk.paraslice[d].size(count)*2 + bk.paracoslice[d].size(count)*3)*sizeof(int);
+
+        std::vector<char> buffer(size);
         size_t m=0;
 
+        auto put = [&](const void *val, size_t bytes)
+        {
+            if(m+bytes>buffer.size())
+            buffer.resize(std::max(2*buffer.size(),m+bytes));
+
+            std::memcpy(&buffer[m],val,bytes);
+            m+=bytes;
+        };
+        auto put_int = [&](int val) { put(&val,sizeof(int)); };
+        auto put_double = [&](double val) { put(&val,sizeof(double)); };
+
         //HEADER
-        iin = p->M10;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(p->M10);
 
 
-        iin = a->subknox[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->subknoy[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->subknoz[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->subknox[count]);
+        put_int(a->subknoy[count]);
+        put_int(a->subknoz[count]);
 
 
-        ddn = p->DXM;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
+        put_double(p->DXM);
 
-        ddn = p->DR;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->DS;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->DT;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
+        put_double(p->DR);
+        put_double(p->DS);
+        put_double(p->DT);
 
 
-        ddn = a->xorig[aa-1];
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = a->yorig[bb-1];
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = a->zorig[cc-1];
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = a->xorig[aa];
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = a->yorig[bb];
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = a->zorig[cc];
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
+        put_double(a->xorig[aa-1]);
+        put_double(a->yorig[bb-1]);
+        put_double(a->zorig[cc-1]);
+        put_double(a->xorig[aa]);
+        put_double(a->yorig[bb]);
+        put_double(a->zorig[cc]);
 
 
-        ddn = p->xmin;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->ymin;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->zmin;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->xmax;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->ymax;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->zmax;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
+        put_double(p->xmin);
+        put_double(p->ymin);
+        put_double(p->zmin);
+        put_double(p->xmax);
+        put_double(p->ymax);
+        put_double(p->zmax);
 
 
-        iin = a->knox;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->knoy;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->knoz;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->knox);
+        put_int(a->knoy);
+        put_int(a->knoz);
 
 
-        iin = a->xnode[aa-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->ynode[bb-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->znode[cc-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->xnode[aa-1]);
+        put_int(a->ynode[bb-1]);
+        put_int(a->znode[cc-1]);
 
 
-        iin = a->wall[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->wall[count]);
 
-        iin = a->para1[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->para2[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->para3[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->para4[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->para5[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->para6[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->para1[count]);
+        put_int(a->para2[count]);
+        put_int(a->para3[count]);
+        put_int(a->para4[count]);
+        put_int(a->para5[count]);
+        put_int(a->para6[count]);
 
-        iin = a->paraco1[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraco2[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraco3[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraco4[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraco5[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraco6[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->paraco1[count]);
+        put_int(a->paraco2[count]);
+        put_int(a->paraco3[count]);
+        put_int(a->paraco4[count]);
+        put_int(a->paraco5[count]);
+        put_int(a->paraco6[count]);
 
-        iin = a->paraslice1[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraslice2[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraslice3[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paraslice4[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->paraslice1[count]);
+        put_int(a->paraslice2[count]);
+        put_int(a->paraslice3[count]);
+        put_int(a->paraslice4[count]);
 
-        iin = a->paracoslice1[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paracoslice2[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paracoslice3[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->paracoslice4[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->paracoslice1[count]);
+        put_int(a->paracoslice2[count]);
+        put_int(a->paracoslice3[count]);
+        put_int(a->paracoslice4[count]);
 
 
-        iin = a->nbpara1[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->nbpara2[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->nbpara3[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->nbpara4[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->nbpara5[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->nbpara6[count];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->nbpara1[count]);
+        put_int(a->nbpara2[count]);
+        put_int(a->nbpara3[count]);
+        put_int(a->nbpara4[count]);
+        put_int(a->nbpara5[count]);
+        put_int(a->nbpara6[count]);
 
 
-        iin = a->mx;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->my;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->mz;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->mx);
+        put_int(a->my);
+        put_int(a->mz);
 
-        iin = aa-1; // dead
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = bb-1; // dead
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = cc-1; // dead
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(aa-1); // dead
+        put_int(bb-1); // dead
+        put_int(cc-1); // dead
 
-        iin = p->C11;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->C12;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->C13;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->C14;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->C15;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->C16;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(p->C11);
+        put_int(p->C12);
+        put_int(p->C13);
+        put_int(p->C14);
+        put_int(p->C15);
+        put_int(p->C16);
 
-        iin = p->C21;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->C22;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->C23;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(p->C21);
+        put_int(p->C22);
+        put_int(p->C23);
 
-        iin = a->periodicX[count][0];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->periodicX[count][1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->periodicX[count][2];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->periodicX[count][3];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->periodicX[count][4];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->periodicX[count][5];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->periodicX[count][0]);
+        put_int(a->periodicX[count][1]);
+        put_int(a->periodicX[count][2]);
+        put_int(a->periodicX[count][3]);
+        put_int(a->periodicX[count][4]);
+        put_int(a->periodicX[count][5]);
 
-        iin = a->i_dir;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->j_dir;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->k_dir;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->i_dir);
+        put_int(a->j_dir);
+        put_int(a->k_dir);
 
-        iin = p->D10;
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(p->D10);
 
 
-        iin = p->solidprint;    // write solid
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->topoprint; //write topo
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->solid_gcb[count-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->topo_gcb[count-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(p->solidprint);    // write solid
+        put_int(p->topoprint); //write topo
+        put_int(a->solid_gcb[count-1]);
+        put_int(a->topo_gcb[count-1]);
 
-        iin = a->solid_gcbextra[count-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->topo_gcbextra[count-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = a->tot_gcbextra[count-1];
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(a->solid_gcbextra[count-1]);
+        put_int(a->topo_gcbextra[count-1]);
+        put_int(a->tot_gcbextra[count-1]);
 
 
-        iin = p->porousprint;    // write porous // dead
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = p->B6; // CMS on/off
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = 0; // dead
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = 0; // dead
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
-        iin = 0; // dead
-        std::memcpy(&buffer[m],&iin,sizeof(int));
-        m+=sizeof(int);
+        put_int(p->porousprint);    // write porous // dead
+        put_int(p->B6); // CMS on/off
+        put_int(0); // dead
+        put_int(0); // dead
+        put_int(0); // dead
 
-        ddn = p->global_orig_x;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->global_orig_y;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = p->alpha_grid;
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
+        put_double(p->global_orig_x);
+        put_double(p->global_orig_y);
+        put_double(p->alpha_grid);
 
-        ddn = 0.0; // dead
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = 0.0; // dead
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
-        ddn = 0.0; // dead
-        std::memcpy(&buffer[m],&ddn,sizeof(double));
-        m+=sizeof(double);
+        put_double(0.0); // dead
+        put_double(0.0); // dead
+        put_double(0.0); // dead
 
         // ---------------------------------------------------------------------------------------------------------------------
         // FLAG
 
         SUBLOOP
         {
-            iin = a->flag(i,j,k);
-            std::memcpy(&buffer[m],&iin,sizeof(int));
-            m+=sizeof(int);
+            put_int(a->flag(i,j,k));
         }
 
         // ---------------------------------------------------------------------------------------------------------------------
         // Nodes XYZ
         SNODEILOOP
         {
-            ddn = p->XN[IP];
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            put_double(p->XN[IP]);
         }
 
         SNODEJLOOP
         {
-            ddn = p->YN[JP];
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            put_double(p->YN[JP]);
         }
 
         SNODEKLOOP
         {
-            ddn = p->ZN[KP];
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            put_double(p->ZN[KP]);
         }
 
         // ---------------------------------------------------------------------------------------------------------------------
@@ -463,9 +335,7 @@ void print_grid::start(lexer* p,dive* a)
         if(p->solidprint==1)
         SUBLOOP
         {
-            ddn = a->solid_dist(i,j,k);
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            put_double(a->solid_dist(i,j,k));
         }
 
         // topo_dist
@@ -473,15 +343,13 @@ void print_grid::start(lexer* p,dive* a)
         if(p->topoprint==1)
         SUBLOOP
         {
-            ddn = a->topo_dist(i,j,k);
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            put_double(a->topo_dist(i,j,k));
         }
 
         // ---------------------------------------------------------------------------------------------------------------------
         //SURFACES
 
-        for(q=0;q<a->surfcount;q++)
+        for(const int q : bk.surf.list(count))
         {
             i=a->surf[q][0];
             j=a->surf[q][1];
@@ -490,28 +358,18 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = a->surf[q][3]; // side
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = a->surf[q][4]; // group
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
+                put_int(k-a->znode[cc-1]);
+                put_int(a->surf[q][3]); // side
+                put_int(a->surf[q][4]); // group
             }
         }
 
         // --------------------------------------------------------------------------------------------------------------
         // Parasurface
 
-        for(q=0;q<a->para1count;q++)
+        for(const int q : bk.para[0].list(count))
         {
             i=a->para1sf[q][0];
             j=a->para1sf[q][1];
@@ -520,21 +378,15 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
             }
         }
 
-        for(q=0;q<a->para2count;q++)
+        for(const int q : bk.para[1].list(count))
         {
             i=a->para2sf[q][0];
             j=a->para2sf[q][1];
@@ -543,21 +395,15 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
             }
         }
 
-        for(q=0;q<a->para3count;q++)
+        for(const int q : bk.para[2].list(count))
         {
             i=a->para3sf[q][0];
             j=a->para3sf[q][1];
@@ -566,21 +412,15 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
             }
         }
 
-        for(q=0;q<a->para4count;q++)
+        for(const int q : bk.para[3].list(count))
         {
             i=a->para4sf[q][0];
             j=a->para4sf[q][1];
@@ -589,21 +429,15 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
             }
         }
 
-        for(q=0;q<a->para5count;q++)
+        for(const int q : bk.para[4].list(count))
         {
             i=a->para5sf[q][0];
             j=a->para5sf[q][1];
@@ -612,21 +446,15 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
             }
         }
 
-        for(q=0;q<a->para6count;q++)
+        for(const int q : bk.para[5].list(count))
         {
             i=a->para6sf[q][0];
             j=a->para6sf[q][1];
@@ -635,24 +463,18 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
             }
         }
 
         // -----------------------------------------------------------------------------
         // Para Corners
 
-        for(q=0;q<a->paraco1count;q++)
+        for(const int q : bk.paraco[0].list(count))
         {
             i=a->para1co[q][0];
             j=a->para1co[q][1];
@@ -661,33 +483,21 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
 
-                iin = a->para1co[q][4]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para1co[q][4]); // dead
 
-                iin = a->para1co[q][5]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para1co[q][5]); // dead
 
-                iin = a->para1co[q][6]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para1co[q][6]); // dead
             }
         }
 
-        for(q=0;q<a->paraco2count;q++)
+        for(const int q : bk.paraco[1].list(count))
         {
             i=a->para2co[q][0];
             j=a->para2co[q][1];
@@ -696,33 +506,21 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
 
-                iin = a->para2co[q][4]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para2co[q][4]); // dead
 
-                iin = a->para2co[q][5]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para2co[q][5]); // dead
 
-                iin = a->para2co[q][6]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para2co[q][6]); // dead
             }
         }
 
-        for(q=0;q<a->paraco3count;q++)
+        for(const int q : bk.paraco[2].list(count))
         {
             i=a->para3co[q][0];
             j=a->para3co[q][1];
@@ -731,33 +529,21 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
 
-                iin = a->para3co[q][4]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para3co[q][4]); // dead
 
-                iin = a->para3co[q][5]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para3co[q][5]); // dead
 
-                iin = a->para3co[q][6]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para3co[q][6]); // dead
             }
         }
 
-        for(q=0;q<a->paraco4count;q++)
+        for(const int q : bk.paraco[3].list(count))
         {
             i=a->para4co[q][0];
             j=a->para4co[q][1];
@@ -766,33 +552,21 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
 
-                iin = a->para4co[q][4]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para4co[q][4]); // dead
 
-                iin = a->para4co[q][5]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para4co[q][5]); // dead
 
-                iin = a->para4co[q][6]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para4co[q][6]); // dead
             }
         }
 
-        for(q=0;q<a->paraco5count;q++)
+        for(const int q : bk.paraco[4].list(count))
         {
             i=a->para5co[q][0];
             j=a->para5co[q][1];
@@ -801,33 +575,21 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
 
-                iin = a->para5co[q][4]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para5co[q][4]); // dead
 
-                iin = a->para5co[q][5]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para5co[q][5]); // dead
 
-                iin = a->para5co[q][6]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para5co[q][6]); // dead
             }
         }
 
-        for(q=0;q<a->paraco6count;q++)
+        for(const int q : bk.paraco[5].list(count))
         {
             i=a->para6co[q][0];
             j=a->para6co[q][1];
@@ -836,29 +598,17 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
 
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(j-a->ynode[bb-1]);
 
-                iin = k-a->znode[cc-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(k-a->znode[cc-1]);
 
-                iin = a->para6co[q][4]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para6co[q][4]); // dead
 
-                iin = a->para6co[q][5]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para6co[q][5]); // dead
 
-                iin = a->para6co[q][6]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(a->para6co[q][6]); // dead
             }
         }
 
@@ -866,18 +616,18 @@ void print_grid::start(lexer* p,dive* a)
         //Slice
 
         k=0;
-        XYLOOP
-        if(a->subgrid(i,j,k)==count)
+        for(const int c : bk.slice.list(count))
         {
-            iin = a->flagslice(i,j);
-            std::memcpy(&buffer[m],&iin,sizeof(int));
-            m+=sizeof(int);
+            i = c/a->knoy;
+            j = c%a->knoy;
+
+            put_int(a->flagslice(i,j));
         }
 
         // --------------------------------------------------------------------------------------------------------------
         // Paraslicesurface
 
-        for(q=0;q<a->paraslice1count;q++)
+        for(const int q : bk.paraslice[0].list(count))
         {
             i=a->paraslice1sf[q][0];
             j=a->paraslice1sf[q][1];
@@ -885,16 +635,12 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
             }
         }
 
-        for(q=0;q<a->paraslice2count;q++)
+        for(const int q : bk.paraslice[1].list(count))
         {
             i=a->paraslice2sf[q][0];
             j=a->paraslice2sf[q][1];
@@ -902,16 +648,12 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
             }
         }
 
-        for(q=0;q<a->paraslice3count;q++)
+        for(const int q : bk.paraslice[2].list(count))
         {
             i=a->paraslice3sf[q][0];
             j=a->paraslice3sf[q][1];
@@ -919,16 +661,12 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
             }
         }
 
-        for(q=0;q<a->paraslice4count;q++)
+        for(const int q : bk.paraslice[3].list(count))
         {
             i=a->paraslice4sf[q][0];
             j=a->paraslice4sf[q][1];
@@ -936,12 +674,8 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
             }
         }
 
@@ -949,7 +683,7 @@ void print_grid::start(lexer* p,dive* a)
         // --------------------------------------------------------------------------------------------------------------
         // Paracoslicesurface
 
-        for(q=0;q<a->paracoslice1count;q++)
+        for(const int q : bk.paracoslice[0].list(count))
         {
             i=a->paracoslice1sf[q][0];
             j=a->paracoslice1sf[q][1];
@@ -957,19 +691,13 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = a->paracoslice1sf[q][3]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
+                put_int(a->paracoslice1sf[q][3]); // dead
             }
         }
 
-        for(q=0;q<a->paracoslice2count;q++)
+        for(const int q : bk.paracoslice[1].list(count))
         {
             i=a->paracoslice2sf[q][0];
             j=a->paracoslice2sf[q][1];
@@ -977,19 +705,13 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = a->paracoslice2sf[q][3]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
+                put_int(a->paracoslice2sf[q][3]); // dead
             }
         }
 
-        for(q=0;q<a->paracoslice3count;q++)
+        for(const int q : bk.paracoslice[2].list(count))
         {
             i=a->paracoslice3sf[q][0];
             j=a->paracoslice3sf[q][1];
@@ -997,19 +719,13 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = a->paracoslice3sf[q][3]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
+                put_int(a->paracoslice3sf[q][3]); // dead
             }
         }
 
-        for(q=0;q<a->paracoslice4count;q++)
+        for(const int q : bk.paracoslice[3].list(count))
         {
             i=a->paracoslice4sf[q][0];
             j=a->paracoslice4sf[q][1];
@@ -1017,15 +733,9 @@ void print_grid::start(lexer* p,dive* a)
 
             if(n==count)
             {
-                iin = i-a->xnode[aa-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = j-a->ynode[bb-1];
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
-                iin = a->paracoslice4sf[q][3]; // dead
-                std::memcpy(&buffer[m],&iin,sizeof(int));
-                m+=sizeof(int);
+                put_int(i-a->xnode[aa-1]);
+                put_int(j-a->ynode[bb-1]);
+                put_int(a->paracoslice4sf[q][3]); // dead
             }
         }
 
@@ -1033,44 +743,44 @@ void print_grid::start(lexer* p,dive* a)
         // ---------------------------------------------------------------------------------------------------------------------
         //Bedlevels
         // *********************
-        XYLOOP
-        if(a->subgrid(i,j,k)==count)
+        for(const int c : bk.slice.list(count))
         {
-            ddn = a->bedlevel(i,j);
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            i = c/a->knoy;
+            j = c%a->knoy;
+
+            put_double(a->bedlevel(i,j));
         }
 
         //GEODAT
         // *********************
         if(p->solidprint>0)
-        XYLOOP
-        if(a->subgrid(i,j,k)==count)
+        for(const int c : bk.slice.list(count))
         {
-            ddn = a->solidbed(i,j);
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            i = c/a->knoy;
+            j = c%a->knoy;
+
+            put_double(a->solidbed(i,j));
         }
 
         if(p->topoprint>0)
-        XYLOOP
-        if(a->subgrid(i,j,k)==count)
+        for(const int c : bk.slice.list(count))
         {
-            ddn = a->topobed(i,j);
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            i = c/a->knoy;
+            j = c%a->knoy;
+
+            put_double(a->topobed(i,j));
         }
 
         //DATA INTERPOLATION
         // *********************
         k=0;
         if(p->D10>0)
-        XYLOOP
-        if(a->subgrid(i,j,k)==count)
+        for(const int c : bk.slice.list(count))
         {
-            ddn = a->dataset(i,j);
-            std::memcpy(&buffer[m],&ddn,sizeof(double));
-            m+=sizeof(double);
+            i = c/a->knoy;
+            j = c%a->knoy;
+
+            put_double(a->dataset(i,j));
         }
 
         buffer.resize(m);
