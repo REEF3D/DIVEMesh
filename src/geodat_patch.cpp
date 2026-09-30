@@ -24,6 +24,9 @@ Author: Hans Bihs
 #include "dive.h"
 #include "lexer.h"
 #include "interpolation.h"
+#include "read_points.h"
+#include <algorithm>
+#include <vector>
 
 void geodat::geo_patch(lexer *p, dive *a, double *&Fx, double *&Fy, double *&Fz, int &Np)
 {
@@ -103,46 +106,27 @@ double geodat::geo_patch_kernel(double dist)
 
 void geodat::geo_patch_read(lexer *p, dive *a)
 {
-    cout<<"open geo_patch.dat and count entries"<<endl;
-    double val;
-    char cval;
-    ifstream geo("geo_patch.dat", ios_base::in);
-
-    while(!geo.eof())
-    {
-        if(p->G19==0)
-        geo>>val>>val>>val;
-
-        if(p->G19==1)
-        geo>>cval>>val>>val>>val;
-
-        ++countGP;
-    }
-
-    numGP=countGP-1;
-    cout<<"> geo_patch entries: "<<numGP<<endl;
-    geo.close();
-
-    GP_x = new double[countGP];
-    GP_y = new double[countGP];
-    GP_z = new double[countGP];
-
     cout<<"read geo_patch.dat"<<endl;
 
-    geo.open("geo_patch.dat", ios_base::in);
+    std::vector<double> px,py,pz;
 
-    countGP=0;
-    while(!geo.eof()&&countGP<numGP)
+    if(!read_points("geo_patch.dat",p->G19,px,py,pz))
     {
-        if(p->G19==0)
-        geo>>GP_x[countGP]>>GP_y[countGP]>>GP_z[countGP];
-
-        if(p->G19==1)
-        geo>>cval>>GP_x[countGP]>>GP_y[countGP]>>GP_z[countGP];
-        ++countGP;
+        cout<<endl<<"!!! G 60 is set, but geo_patch.dat cannot be opened !!!"<<endl<<endl;
+        exit(1);
     }
 
-    geo.close();
+    numGP = int(px.size());
+    countGP = numGP;
+    cout<<"> geo_patch entries: "<<numGP<<endl;
+
+    GP_x = new double[numGP>0?numGP:1];
+    GP_y = new double[numGP>0?numGP:1];
+    GP_z = new double[numGP>0?numGP:1];
+
+    std::copy(px.begin(),px.end(),GP_x);
+    std::copy(py.begin(),py.end(),GP_y);
+    std::copy(pz.begin(),pz.end(),GP_z);
 
     cout<<"read geo_patch.dat finish"<<endl;
 

@@ -86,6 +86,7 @@
           <File Name="intfield1d.h"/>
           <File Name="intfield2d.h"/>
           <File Name="int_table.h"/>
+          <File Name="read_points.h"/>
         </VirtualDirectory>
         <File Name="resize.h"/>
       </VirtualDirectory>

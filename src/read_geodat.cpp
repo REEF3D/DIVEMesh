@@ -20,54 +20,35 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 Author: Hans Bihs
 --------------------------------------------------------------------*/
 #include "lexer.h"
+#include "read_points.h"
+#include <algorithm>
+#include <vector>
 
 void lexer::read_geodat()
 {
-    int countG10=0;
-
         // read geodat
     if(G10>0)
     {
-        cout<<"open geo.dat and count entries"<<endl;
-        double val;
-        char cval;
-        ifstream geo("geo.dat", ios_base::in);
-
-        while(true)
-        {
-            if(G19==1)
-            geo>>cval;
-
-            if(!(geo>>val>>val>>val))
-            break;
-
-            ++countG10;
-        }
-        G10=countG10;
-        cout<<"> geo entries: "<<G10<<endl;
-        geo.close();
-
-        G10_x = new double[countG10];
-        G10_y = new double[countG10];
-        G10_z = new double[countG10];
-
         cout<<"read geo.dat"<<endl;
 
-        geo.open("geo.dat", ios_base::in);
+        std::vector<double> gx,gy,gz;
 
-        countG10=0;
-        while(countG10<G10)
+        if(!read_points("geo.dat",G19,gx,gy,gz))
         {
-            if(G19==1)
-            geo>>cval;
-
-            if(!(geo>>G10_x[countG10]>>G10_y[countG10]>>G10_z[countG10]))
-            break;
-
-            ++countG10;
+            cout<<endl<<"!!! G 10 is set, but geo.dat cannot be opened !!!"<<endl<<endl;
+            exit(1);
         }
 
-        geo.close();
+        G10 = int(gx.size());
+        cout<<"> geo entries: "<<G10<<endl;
+
+        G10_x = new double[G10];
+        G10_y = new double[G10];
+        G10_z = new double[G10];
+
+        std::copy(gx.begin(),gx.end(),G10_x);
+        std::copy(gy.begin(),gy.end(),G10_y);
+        std::copy(gz.begin(),gz.end(),G10_z);
 
         if(G13>0)
         {
