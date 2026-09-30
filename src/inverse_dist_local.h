@@ -25,6 +25,7 @@ Author: Hans Bihs
 
 #include "interpolation.h"
 #include "increment.h"
+#include <vector>
 
 class lexer;
 class dive;
@@ -40,15 +41,25 @@ public:
     void start(lexer*,dive*,int,double*,double*,double*,double*,double*,int,int,double**) override final;
 
 private:
-    double gxy(lexer*,dive*,int,int,double*,double*,double*,double*,double*,int,int);
+    double gxy(lexer*,int,int,double*,double*);
     void setup(lexer*,dive*,double*,double*,double*,double*,double*,int,int);
+
+    // number of points in bins [r0..r1] x [s0..s1] (bin indices incl. dd offset)
+    inline long long window_count(int r0, int r1, int s0, int s1) const
+    {
+        return sat[size_t(r1+1)*(Ny+1)+s1+1] - sat[size_t(r0)*(Ny+1)+s1+1]
+             - sat[size_t(r1+1)*(Ny+1)+s0] + sat[size_t(r0)*(Ny+1)+s0];
+    }
 
     int Nx,Ny;
     int dij;
-
-    int **ptnum,***ptid;
-
     double smooth_lengthP4;
+
+    // points sorted by bin (bin = (ic+dd)*Ny + jc+dd), original order kept inside a bin
+    std::vector<int> binstart;
+    std::vector<double> bx,by,bz;
+    // summed-area table of points per bin, (Nx+1) x (Ny+1)
+    std::vector<long long> sat;
 
     static constexpr int dd = 3;
 };

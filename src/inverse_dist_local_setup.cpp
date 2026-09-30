@@ -25,78 +25,62 @@ Author: Hans Bihs
 #include "lexer.h"
 #include <algorithm>
 #include <cmath>
-#include <limits>
 
 void inverse_dist_local::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
 {
-    int r,s,t,n;
     int ic,jc;
 
-    double xmin = +std::numeric_limits<double>::max();
-    double ymin = +std::numeric_limits<double>::max();
-    double zmin = +std::numeric_limits<double>::max();
-
-    double xmax = -std::numeric_limits<double>::max();
-    double ymax = -std::numeric_limits<double>::max();
-    double zmax = -std::numeric_limits<double>::max();
-
-    for(n=0;n<p->Np;++n)
-    {
-        xmax=std::max(xmax,Fx[n]);
-        xmin=std::min(xmin,Fx[n]);
-        ymax=std::max(ymax,Fy[n]);
-        ymin=std::min(ymin,Fy[n]);
-        zmax=std::max(zmax,Fz[n]);
-        zmin=std::min(zmin,Fz[n]);
-    }
-
-    // Grid
+    // Grid of bins
     Nx = kx + 2*dd+1;
     Ny = ky + 2*dd+1;
 
-    p->Iarray(ptnum,Nx,Ny);
+    const size_t nbin = size_t(Nx)*size_t(Ny);
 
-    for(n=0;n<p->Np;++n)
-    {
-        ic = p->poscgen_i(Fx[n],XC,kx);
-        jc = p->poscgen_j(Fy[n],YC,ky);
+    // bin of every point (-1: outside)
+    std::vector<int> bin(p->Np,-1);
+    binstart.assign(nbin+1,0);
 
-        ICFLAG
-        ++ptnum[ic+dd][jc+dd];
-    }
-
-    p->Iarray(ptid,Nx,Ny,ptnum);
-
-    for(r=0;r<Nx;++r)
-    for(s=0;s<Ny;++s)
-    ptnum[r][s]=0;
-
-    for(r=0;r<Nx;++r)
-    for(s=0;s<Ny;++s)
-    for(t=0;t<ptnum[r][s];++t)
-    ptid[r][s][t]=-1;
-
-    for(n=0;n<p->Np;++n)
+    for(int n=0;n<p->Np;++n)
     {
         ic = p->poscgen_i(Fx[n],XC,kx);
         jc = p->poscgen_j(Fy[n],YC,ky);
 
         ICFLAG
         {
-            ptid[ic+dd][jc+dd][ptnum[ic+dd][jc+dd]]=n;
-            ++ptnum[ic+dd][jc+dd];
+            bin[n] = (ic+dd)*Ny + (jc+dd);
+            ++binstart[bin[n]+1];
         }
     }
 
-    // Radius
-    const double dx = p->xmax-p->xmin;
-    const double dy = p->ymax-p->ymin;
-    const double Dmax = sqrt(dx*dx+dy*dy);
-    const double R = 0.25*Dmax*sqrt(p->G18/p->Np);
+    for(size_t b=0;b<nbin;++b)
+    binstart[b+1] += binstart[b];
 
-    dij = std::max(int(R/(p->DXM)),p->G17);
+    // points sorted by bin, stable
+    const int npt = binstart[nbin];
+    bx.resize(npt);
+    by.resize(npt);
+    bz.resize(npt);
 
-    dij=p->G17;
+    std::vector<int> pos(binstart.begin(),binstart.end()-1);
 
-    cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" R: "<<R<<" dij: "<<dij<<endl;
+    for(int n=0;n<p->Np;++n)
+    if(bin[n]>=0)
+    {
+        const int q = pos[bin[n]]++;
+        bx[q] = Fx[n];
+        by[q] = Fy[n];
+        bz[q] = Fz[n];
+    }
+
+    // summed-area table of point counts
+    sat.assign(size_t(Nx+1)*(Ny+1),0);
+
+    for(int r=0;r<Nx;++r)
+    for(int s=0;s<Ny;++s)
+    sat[size_t(r+1)*(Ny+1)+s+1] = (binstart[size_t(r)*Ny+s+1]-binstart[size_t(r)*Ny+s])
+                                + sat[size_t(r)*(Ny+1)+s+1] + sat[size_t(r+1)*(Ny+1)+s] - sat[size_t(r)*(Ny+1)+s];
+
+    dij = p->G17;
+
+    cout<<"IDW local "<<" Nx: "<<Nx<<" Ny: "<<Ny<<" dij: "<<dij<<endl;
 }

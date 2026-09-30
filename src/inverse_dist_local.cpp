@@ -51,81 +51,74 @@ void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double 
     for(int i=0; i<kx; ++i)
     for(int j=0; j<ky; ++j)
     {
-        f[i+3][j+3] = gxy(p,a,i,j,Fx,Fy,Fz,XC,YC,kx,ky);
-        ++counter;
+        f[i+3][j+3] = gxy(p,i,j,XC,YC);
 
-        if(counter%progress_output_interval==0)
+        int done;
+        #pragma omp atomic capture
+        done = ++counter;
+
+        if(done%progress_output_interval==0)
         {
             std::stringstream ss;
-            ss<<"> processed cells: "<<counter<<endl;
+            ss<<"> processed cells: "<<done<<endl;
             cout<<ss.str();
         }
     }
 }
 
-double inverse_dist_local::gxy(lexer *p, dive *a, int i, int j, double *Fx, double *Fy, double *Fz, double *XC, double *YC, int kx, int ky)
+double inverse_dist_local::gxy(lexer *p, int i, int j, double *XC, double *YC)
 {
     constexpr int radius = 3;
 
     const double xc = XC[IP];
     const double yc = YC[JP];
+    const double G35 = p->G35;
+    const long long target = std::min(p->G18,p->Np);
 
-    double g = 0.0;
-    double wsum = 0.0;
-    double zmean = 0.0;
+    // Find the window the search ends with: it starts at +-dij bins and grows
+    // by 2 bins per side until it holds at least G18 points or covers the grid.
+    // The point count of a window comes from the summed-area table.
+    int is, ie, js, je;
     int cp = 0;
 
-    double xcF, ycF, dist, w;
-    int is, ie, js, je;
-    int r, s, t, q;
-    int count;
-    bool fullwindow;
+    while(true)
+    {
+        is = std::max(i-dij-cp,-radius);
+        ie = std::min(i+dij+cp,Nx-radius-1);
 
-    do{
-        is=std::max(i-dij-cp,-radius);
-        ie=std::min(i+dij+cp,Nx-radius-1);
+        js = std::max(j-dij-cp,-radius);
+        je = std::min(j+dij+cp,Ny-radius-1);
 
-        js=std::max(j-dij-cp,-radius);
-        je=std::min(j+dij+cp,Ny-radius-1);
+        const bool fullwindow = (is==-radius && ie==Nx-radius-1 && js==-radius && je==Ny-radius-1);
 
-        zmean=0.0;
-        count=0;
-        g=0.0;
-        wsum=0.0;
-        for(r=is; r<=ie; ++r)
-        {
-            for(s=js; s<=je; ++s)
-            {
-                for(t=0; t<ptnum[r+dd][s+dd]; ++t)
-                {
-                    q = ptid[r+dd][s+dd][t];
-
-                    xcF = xc-Fx[q];
-                    ycF = yc-Fy[q];
-                    dist = sqrt(xcF*xcF + ycF*ycF + smooth_lengthP4);
-
-                    // interpolation loop
-                    w = pow(1.0/(dist>1.0e-15?dist:1.0e15),p->G35);
-
-                    wsum += w;
-
-                    g += w*Fz[q];
-
-                    zmean += Fz[q];
-
-                    ++count;
-                }
-            }
-        }
-
-        fullwindow = (is==-radius && ie==Nx-radius-1 && js==-radius && je==Ny-radius-1);
-
-        if(count>0)
-        zmean = zmean/double(count);
+        if(window_count(is+dd,ie+dd,js+dd,je+dd)>=target || fullwindow)
+        break;
 
         cp += 2;
     }
-    while(count<std::min(p->G18,p->Np) && !fullwindow);
+
+    // weighted sum over that window, in the original order (bins r, s, points t)
+    double g = 0.0;
+    double wsum = 0.0;
+
+    for(int r=is; r<=ie; ++r)
+    {
+        const int *start = &binstart[size_t(r+dd)*Ny + (js+dd)];
+        const int q0 = start[0];
+        const int q1 = start[je-js+1];
+
+        for(int q=q0; q<q1; ++q)
+        {
+            const double xcF = xc-bx[q];
+            const double ycF = yc-by[q];
+            const double dist = sqrt(xcF*xcF + ycF*ycF + smooth_lengthP4);
+
+            const double w = pow(1.0/(dist>1.0e-15?dist:1.0e15),G35);
+
+            wsum += w;
+            g += w*bz[q];
+        }
+    }
 
     if(wsum>0.0)
     g /= wsum;
