@@ -23,6 +23,7 @@ Author: Hans Bihs
 #include"print_grid.h"
 #include"lexer.h"
 #include"dive.h"
+#include"gridfile_v2.h"
 #include<iostream>
 #include<fstream>
 #include<sys/stat.h>
@@ -78,7 +79,7 @@ namespace
 
     struct subdomain_lists
     {
-        index_lists surf, slice;
+        index_lists surf;
         index_lists para[6], paraco[6];
         index_lists paraslice[4], paracoslice[4];
     };
@@ -127,8 +128,19 @@ void print_grid::start(lexer* p,dive* a)
         bk.paracoslice[d].build(nsub,paracoslicecount[d],[&](int q){return co[q][2];});
     }
 
-    // x-y cells (index i*knoy+j) by the subdomain of their bottom cell k=0
-    bk.slice.build(nsub,a->knox*a->knoy,[&](int c){return a->subgrid(c/a->knoy,c%a->knoy,0);});
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // GEOMETRY: S/T entities for REEF3D, one file for all ranks
+
+    {
+        const int geodat = (p->G10>0) ? ((p->G9==2) ? geo_export::role_solid : geo_export::role_topo) : 0;
+
+        if(!a->gex.write(p,"DIVEMesh_Grid/grid-geometry.dat",p->solidprint,p->topoprint,geodat))
+        {
+            cout<<endl<<"!!! could not write DIVEMesh_Grid/grid-geometry.dat !!!"<<endl;
+            ++write_errors;
+        }
+    }
 
     #pragma omp parallel for collapse(3) schedule(dynamic)
     for(int aa=1;aa<=a->mx;++aa)
@@ -138,652 +150,269 @@ void print_grid::start(lexer* p,dive* a)
         int i = 0;
         int j = 0;
         int k = 0;
-        int n = 0;
         const int count = ((aa-1)*a->my + (bb-1))*a->mz + cc;
 
-        const size_t cells = size_t(a->xnode[aa]-a->xnode[aa-1])*size_t(a->ynode[bb]-a->ynode[bb-1])*size_t(a->znode[cc]-a->znode[cc-1]);
-        const size_t nodes = size_t(a->xnode[aa]-a->xnode[aa-1] + a->ynode[bb]-a->ynode[bb-1] + a->znode[cc]-a->znode[cc-1] + 6*marge+3);
+        const int i0 = a->xnode[aa-1], i1 = a->xnode[aa];
+        const int j0 = a->ynode[bb-1], j1 = a->ynode[bb];
+        const int k0 = a->znode[cc-1], k1 = a->znode[cc];
+        const int ni = i1-i0, nj = j1-j0, nk = k1-k0;
 
-        size_t size = 32*sizeof(double) + 96*sizeof(int)
-                    + cells*(sizeof(int) + 2*sizeof(double))
-                    + nodes*sizeof(double)
-                    + bk.surf.size(count)*5*sizeof(int)
-                    + size_t(bk.slice.size(count))*(sizeof(int) + 4*sizeof(double));
+        gridv2::writer w;
+        size_t pos;
 
-        for(int d=0;d<6;++d)
-        size += (bk.para[d].size(count)*3 + bk.paraco[d].size(count)*6)*sizeof(int);
+        w.buf.reserve(size_t(ni+nj+nk+6*marge+3)*sizeof(double) + size_t(ni)*size_t(nj)*4*sizeof(double) + 65536);
 
-        for(int d=0;d<4;++d)
-        size += (bk.paraslice[d].size(count)*2 + bk.paracoslice[d].size(count)*3)*sizeof(int);
+        w.start(gridv2::magic_grid);
 
-        std::vector<char> buffer(size);
-        size_t m=0;
+        // -------------------------------------------------------------------------------------------------------------
+        // HEAD
+        pos = w.begin("HEAD");
 
-        auto put = [&](const void *val, size_t bytes)
-        {
-            if(m+bytes>buffer.size())
-            buffer.resize(std::max(2*buffer.size(),m+bytes));
+        const int nint = 62;
+        w.put_int(nint);
 
-            std::memcpy(&buffer[m],val,bytes);
-            m+=bytes;
-        };
-        auto put_int = [&](int val) { put(&val,sizeof(int)); };
-        auto put_double = [&](double val) { put(&val,sizeof(double)); };
+        w.put_int(p->M10);
 
-        //HEADER
-        put_int(p->M10);
+        w.put_int(a->subknox[count]);
+        w.put_int(a->subknoy[count]);
+        w.put_int(a->subknoz[count]);
 
+        w.put_int(a->knox);
+        w.put_int(a->knoy);
+        w.put_int(a->knoz);
 
-        put_int(a->subknox[count]);
-        put_int(a->subknoy[count]);
-        put_int(a->subknoz[count]);
+        w.put_int(i0);
+        w.put_int(j0);
+        w.put_int(k0);
 
+        w.put_int(int(bk.surf.size(count)));     // boundary surfaces incl. plates (wall[] counts no plate surfaces)
 
-        put_double(p->DXM);
+        w.put_int(a->para1[count]);
+        w.put_int(a->para2[count]);
+        w.put_int(a->para3[count]);
+        w.put_int(a->para4[count]);
+        w.put_int(a->para5[count]);
+        w.put_int(a->para6[count]);
 
-        put_double(p->DR);
-        put_double(p->DS);
-        put_double(p->DT);
+        w.put_int(a->paraco1[count]);
+        w.put_int(a->paraco2[count]);
+        w.put_int(a->paraco3[count]);
+        w.put_int(a->paraco4[count]);
+        w.put_int(a->paraco5[count]);
+        w.put_int(a->paraco6[count]);
 
+        w.put_int(a->paraslice1[count]);
+        w.put_int(a->paraslice2[count]);
+        w.put_int(a->paraslice3[count]);
+        w.put_int(a->paraslice4[count]);
 
-        put_double(a->xorig[aa-1]);
-        put_double(a->yorig[bb-1]);
-        put_double(a->zorig[cc-1]);
-        put_double(a->xorig[aa]);
-        put_double(a->yorig[bb]);
-        put_double(a->zorig[cc]);
+        w.put_int(a->paracoslice1[count]);
+        w.put_int(a->paracoslice2[count]);
+        w.put_int(a->paracoslice3[count]);
+        w.put_int(a->paracoslice4[count]);
 
+        w.put_int(a->nbpara1[count]);
+        w.put_int(a->nbpara2[count]);
+        w.put_int(a->nbpara3[count]);
+        w.put_int(a->nbpara4[count]);
+        w.put_int(a->nbpara5[count]);
+        w.put_int(a->nbpara6[count]);
 
-        put_double(p->xmin);
-        put_double(p->ymin);
-        put_double(p->zmin);
-        put_double(p->xmax);
-        put_double(p->ymax);
-        put_double(p->zmax);
+        w.put_int(a->mx);
+        w.put_int(a->my);
+        w.put_int(a->mz);
 
+        w.put_int(p->C11);
+        w.put_int(p->C12);
+        w.put_int(p->C13);
+        w.put_int(p->C14);
+        w.put_int(p->C15);
+        w.put_int(p->C16);
 
-        put_int(a->knox);
-        put_int(a->knoy);
-        put_int(a->knoz);
+        w.put_int(p->C21);
+        w.put_int(p->C22);
+        w.put_int(p->C23);
 
+        w.put_int(a->periodicX[count][0]);
+        w.put_int(a->periodicX[count][1]);
+        w.put_int(a->periodicX[count][2]);
+        w.put_int(a->periodicX[count][3]);
+        w.put_int(a->periodicX[count][4]);
+        w.put_int(a->periodicX[count][5]);
 
-        put_int(a->xnode[aa-1]);
-        put_int(a->ynode[bb-1]);
-        put_int(a->znode[cc-1]);
+        w.put_int(a->i_dir);
+        w.put_int(a->j_dir);
+        w.put_int(a->k_dir);
 
+        w.put_int(p->D10);
+        w.put_int(p->B6);           // CMS
+        w.put_int(marge);           // node margin of the NODE section
+        w.put_int(count);           // rank+1
 
-        put_int(a->wall[count]);
+        const int ndbl = 22;
+        w.put_int(ndbl);
 
-        put_int(a->para1[count]);
-        put_int(a->para2[count]);
-        put_int(a->para3[count]);
-        put_int(a->para4[count]);
-        put_int(a->para5[count]);
-        put_int(a->para6[count]);
+        w.put_double(p->DXM);
 
-        put_int(a->paraco1[count]);
-        put_int(a->paraco2[count]);
-        put_int(a->paraco3[count]);
-        put_int(a->paraco4[count]);
-        put_int(a->paraco5[count]);
-        put_int(a->paraco6[count]);
+        w.put_double(p->DR);
+        w.put_double(p->DS);
+        w.put_double(p->DT);
 
-        put_int(a->paraslice1[count]);
-        put_int(a->paraslice2[count]);
-        put_int(a->paraslice3[count]);
-        put_int(a->paraslice4[count]);
+        w.put_double(a->xorig[aa-1]);
+        w.put_double(a->yorig[bb-1]);
+        w.put_double(a->zorig[cc-1]);
+        w.put_double(a->xorig[aa]);
+        w.put_double(a->yorig[bb]);
+        w.put_double(a->zorig[cc]);
 
-        put_int(a->paracoslice1[count]);
-        put_int(a->paracoslice2[count]);
-        put_int(a->paracoslice3[count]);
-        put_int(a->paracoslice4[count]);
+        w.put_double(p->xmin);
+        w.put_double(p->ymin);
+        w.put_double(p->zmin);
+        w.put_double(p->xmax);
+        w.put_double(p->ymax);
+        w.put_double(p->zmax);
 
+        w.put_double(p->global_orig_x);
+        w.put_double(p->global_orig_y);
+        w.put_double(p->alpha_grid);
 
-        put_int(a->nbpara1[count]);
-        put_int(a->nbpara2[count]);
-        put_int(a->nbpara3[count]);
-        put_int(a->nbpara4[count]);
-        put_int(a->nbpara5[count]);
-        put_int(a->nbpara6[count]);
+        w.put_double(0.0);          // reserved
+        w.put_double(0.0);          // reserved
+        w.put_double(0.0);          // reserved
 
+        w.end(pos);
 
-        put_int(a->mx);
-        put_int(a->my);
-        put_int(a->mz);
-
-        put_int(aa-1); // dead
-        put_int(bb-1); // dead
-        put_int(cc-1); // dead
-
-        put_int(p->C11);
-        put_int(p->C12);
-        put_int(p->C13);
-        put_int(p->C14);
-        put_int(p->C15);
-        put_int(p->C16);
-
-        put_int(p->C21);
-        put_int(p->C22);
-        put_int(p->C23);
-
-        put_int(a->periodicX[count][0]);
-        put_int(a->periodicX[count][1]);
-        put_int(a->periodicX[count][2]);
-        put_int(a->periodicX[count][3]);
-        put_int(a->periodicX[count][4]);
-        put_int(a->periodicX[count][5]);
-
-        put_int(a->i_dir);
-        put_int(a->j_dir);
-        put_int(a->k_dir);
-
-        put_int(p->D10);
-
-
-        put_int(p->solidprint);    // write solid
-        put_int(p->topoprint); //write topo
-        put_int(a->solid_gcb[count-1]);
-        put_int(a->topo_gcb[count-1]);
-
-        put_int(a->solid_gcbextra[count-1]);
-        put_int(a->topo_gcbextra[count-1]);
-        put_int(a->tot_gcbextra[count-1]);
-
-
-        put_int(p->porousprint);    // write porous // dead
-        put_int(p->B6); // CMS on/off
-        put_int(0); // dead
-        put_int(0); // dead
-        put_int(0); // dead
-
-        put_double(p->global_orig_x);
-        put_double(p->global_orig_y);
-        put_double(p->alpha_grid);
-
-        put_double(0.0); // dead
-        put_double(0.0); // dead
-        put_double(0.0); // dead
-
-        // ---------------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
         // FLAG
+        pos = w.begin("FLAG");
 
-        SUBLOOP
+        w.put_rle(size_t(ni)*size_t(nj)*size_t(nk),[&](size_t q)
         {
-            put_int(a->flag(i,j,k));
-        }
+            const int ii = int(q/(size_t(nj)*size_t(nk)));
+            const int jj = int((q/size_t(nk))%size_t(nj));
+            const int kk = int(q%size_t(nk));
+            return a->flag(i0+ii,j0+jj,k0+kk);
+        });
 
-        // ---------------------------------------------------------------------------------------------------------------------
-        // Nodes XYZ
+        w.end(pos);
+
+        // -------------------------------------------------------------------------------------------------------------
+        // NODE
+        pos = w.begin("NODE");
+
         SNODEILOOP
-        {
-            put_double(p->XN[IP]);
-        }
+        w.put_double(p->XN[IP]);
 
         SNODEJLOOP
-        {
-            put_double(p->YN[JP]);
-        }
+        w.put_double(p->YN[JP]);
 
         SNODEKLOOP
+        w.put_double(p->ZN[KP]);
+
+        w.end(pos);
+
+        // -------------------------------------------------------------------------------------------------------------
+        // SURF: all boundary surfaces of the subdomain, including the plate surfaces
+        pos = w.begin("SURF");
+
         {
-            put_double(p->ZN[KP]);
+            const auto lst = bk.surf.list(count);
+
+            w.put_table((long long)lst.size(),5,[&](long long r, int c){return a->surf[lst[r]][c] - (c==0 ? i0 : (c==1 ? j0 : (c==2 ? k0 : 0)));});
         }
 
-        // ---------------------------------------------------------------------------------------------------------------------
-        // solid_dist
+        w.end(pos);
 
-        if(p->solidprint==1)
-        SUBLOOP
+        // -------------------------------------------------------------------------------------------------------------
+        // PARA
+        pos = w.begin("PARA");
+
+        for(int d=0;d<6;++d)
         {
-            put_double(a->solid_dist(i,j,k));
+            const int_table &sf=*parasf[d];
+            const auto lst = bk.para[d].list(count);
+
+            w.put_table((long long)lst.size(),3,[&](long long r, int c){return sf[lst[r]][c] - (c==0 ? i0 : (c==1 ? j0 : k0));});
         }
 
-        // topo_dist
+        w.end(pos);
 
-        if(p->topoprint==1)
-        SUBLOOP
+        // PACO
+        pos = w.begin("PACO");
+
+        for(int d=0;d<6;++d)
         {
-            put_double(a->topo_dist(i,j,k));
+            const int_table &co=*paraco[d];
+            const auto lst = bk.paraco[d].list(count);
+
+            w.put_table((long long)lst.size(),3,[&](long long r, int c){return co[lst[r]][c] - (c==0 ? i0 : (c==1 ? j0 : k0));});
         }
 
-        // ---------------------------------------------------------------------------------------------------------------------
-        //SURFACES
+        w.end(pos);
 
-        for(const int q : bk.surf.list(count))
+        // -------------------------------------------------------------------------------------------------------------
+        // SLFL: the columns of the subdomain (every subdomain, also above the bottom layer)
+        pos = w.begin("SLFL");
+
+        w.put_rle(size_t(ni)*size_t(nj),[&](size_t q)
         {
-            i=a->surf[q][0];
-            j=a->surf[q][1];
-            k=a->surf[q][2];
-            n=a->subgrid(i,j,k);
+            return a->flagslice(i0+int(q/size_t(nj)),j0+int(q%size_t(nj)));
+        });
 
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-                put_int(k-a->znode[cc-1]);
-                put_int(a->surf[q][3]); // side
-                put_int(a->surf[q][4]); // group
-            }
+        w.end(pos);
+
+        // SLPA
+        pos = w.begin("SLPA");
+
+        for(int d=0;d<4;++d)
+        {
+            const int_table &sf=*paraslicesf[d];
+            const auto lst = bk.paraslice[d].list(count);
+
+            w.put_table((long long)lst.size(),2,[&](long long r, int c){return sf[lst[r]][c] - (c==0 ? i0 : j0);});
         }
 
-        // --------------------------------------------------------------------------------------------------------------
-        // Parasurface
+        w.end(pos);
 
-        for(const int q : bk.para[0].list(count))
+        // SLPC
+        pos = w.begin("SLPC");
+
+        for(int d=0;d<4;++d)
         {
-            i=a->para1sf[q][0];
-            j=a->para1sf[q][1];
-            k=a->para1sf[q][2];
-            n=a->subgrid(i,j,k);
+            const int_table &co=*paracoslicesf[d];
+            const auto lst = bk.paracoslice[d].list(count);
 
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-            }
+            w.put_table((long long)lst.size(),2,[&](long long r, int c){return co[lst[r]][c] - (c==0 ? i0 : j0);});
         }
 
-        for(const int q : bk.para[1].list(count))
+        w.end(pos);
+
+        // -------------------------------------------------------------------------------------------------------------
+        // GEOB: geodat bed level
+        if(p->G10>0)
         {
-            i=a->para2sf[q][0];
-            j=a->para2sf[q][1];
-            k=a->para2sf[q][2];
-            n=a->subgrid(i,j,k);
+            pos = w.begin("GEOB");
 
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
+            for(i=i0;i<i1;++i)
+            for(j=j0;j<j1;++j)
+            w.put_double(a->geobed(i,j));
 
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-            }
+            w.end(pos);
         }
 
-        for(const int q : bk.para[2].list(count))
-        {
-            i=a->para3sf[q][0];
-            j=a->para3sf[q][1];
-            k=a->para3sf[q][2];
-            n=a->subgrid(i,j,k);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-            }
-        }
-
-        for(const int q : bk.para[3].list(count))
-        {
-            i=a->para4sf[q][0];
-            j=a->para4sf[q][1];
-            k=a->para4sf[q][2];
-            n=a->subgrid(i,j,k);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-            }
-        }
-
-        for(const int q : bk.para[4].list(count))
-        {
-            i=a->para5sf[q][0];
-            j=a->para5sf[q][1];
-            k=a->para5sf[q][2];
-            n=a->subgrid(i,j,k);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-            }
-        }
-
-        for(const int q : bk.para[5].list(count))
-        {
-            i=a->para6sf[q][0];
-            j=a->para6sf[q][1];
-            k=a->para6sf[q][2];
-            n=a->subgrid(i,j,k);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-            }
-        }
-
-        // -----------------------------------------------------------------------------
-        // Para Corners
-
-        for(const int q : bk.paraco[0].list(count))
-        {
-            i=a->para1co[q][0];
-            j=a->para1co[q][1];
-            k=a->para1co[q][2];
-            n=a->para1co[q][3];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-
-                put_int(a->para1co[q][4]); // dead
-
-                put_int(a->para1co[q][5]); // dead
-
-                put_int(a->para1co[q][6]); // dead
-            }
-        }
-
-        for(const int q : bk.paraco[1].list(count))
-        {
-            i=a->para2co[q][0];
-            j=a->para2co[q][1];
-            k=a->para2co[q][2];
-            n=a->para2co[q][3];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-
-                put_int(a->para2co[q][4]); // dead
-
-                put_int(a->para2co[q][5]); // dead
-
-                put_int(a->para2co[q][6]); // dead
-            }
-        }
-
-        for(const int q : bk.paraco[2].list(count))
-        {
-            i=a->para3co[q][0];
-            j=a->para3co[q][1];
-            k=a->para3co[q][2];
-            n=a->para3co[q][3];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-
-                put_int(a->para3co[q][4]); // dead
-
-                put_int(a->para3co[q][5]); // dead
-
-                put_int(a->para3co[q][6]); // dead
-            }
-        }
-
-        for(const int q : bk.paraco[3].list(count))
-        {
-            i=a->para4co[q][0];
-            j=a->para4co[q][1];
-            k=a->para4co[q][2];
-            n=a->para4co[q][3];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-
-                put_int(a->para4co[q][4]); // dead
-
-                put_int(a->para4co[q][5]); // dead
-
-                put_int(a->para4co[q][6]); // dead
-            }
-        }
-
-        for(const int q : bk.paraco[4].list(count))
-        {
-            i=a->para5co[q][0];
-            j=a->para5co[q][1];
-            k=a->para5co[q][2];
-            n=a->para5co[q][3];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-
-                put_int(a->para5co[q][4]); // dead
-
-                put_int(a->para5co[q][5]); // dead
-
-                put_int(a->para5co[q][6]); // dead
-            }
-        }
-
-        for(const int q : bk.paraco[5].list(count))
-        {
-            i=a->para6co[q][0];
-            j=a->para6co[q][1];
-            k=a->para6co[q][2];
-            n=a->para6co[q][3];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-
-                put_int(j-a->ynode[bb-1]);
-
-                put_int(k-a->znode[cc-1]);
-
-                put_int(a->para6co[q][4]); // dead
-
-                put_int(a->para6co[q][5]); // dead
-
-                put_int(a->para6co[q][6]); // dead
-            }
-        }
-
-        // --------------------------------------------------------------------------------------------------------------
-        //Slice
-
-        k=0;
-        for(const int c : bk.slice.list(count))
-        {
-            i = c/a->knoy;
-            j = c%a->knoy;
-
-            put_int(a->flagslice(i,j));
-        }
-
-        // --------------------------------------------------------------------------------------------------------------
-        // Paraslicesurface
-
-        for(const int q : bk.paraslice[0].list(count))
-        {
-            i=a->paraslice1sf[q][0];
-            j=a->paraslice1sf[q][1];
-            n=a->subslice(i,j);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-            }
-        }
-
-        for(const int q : bk.paraslice[1].list(count))
-        {
-            i=a->paraslice2sf[q][0];
-            j=a->paraslice2sf[q][1];
-            n=a->subslice(i,j);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-            }
-        }
-
-        for(const int q : bk.paraslice[2].list(count))
-        {
-            i=a->paraslice3sf[q][0];
-            j=a->paraslice3sf[q][1];
-            n=a->subslice(i,j);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-            }
-        }
-
-        for(const int q : bk.paraslice[3].list(count))
-        {
-            i=a->paraslice4sf[q][0];
-            j=a->paraslice4sf[q][1];
-            n=a->subslice(i,j);
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-            }
-        }
-
-
-        // --------------------------------------------------------------------------------------------------------------
-        // Paracoslicesurface
-
-        for(const int q : bk.paracoslice[0].list(count))
-        {
-            i=a->paracoslice1sf[q][0];
-            j=a->paracoslice1sf[q][1];
-            n=a->paracoslice1sf[q][2];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-                put_int(a->paracoslice1sf[q][3]); // dead
-            }
-        }
-
-        for(const int q : bk.paracoslice[1].list(count))
-        {
-            i=a->paracoslice2sf[q][0];
-            j=a->paracoslice2sf[q][1];
-            n=a->paracoslice2sf[q][2];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-                put_int(a->paracoslice2sf[q][3]); // dead
-            }
-        }
-
-        for(const int q : bk.paracoslice[2].list(count))
-        {
-            i=a->paracoslice3sf[q][0];
-            j=a->paracoslice3sf[q][1];
-            n=a->paracoslice3sf[q][2];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-                put_int(a->paracoslice3sf[q][3]); // dead
-            }
-        }
-
-        for(const int q : bk.paracoslice[3].list(count))
-        {
-            i=a->paracoslice4sf[q][0];
-            j=a->paracoslice4sf[q][1];
-            n=a->paracoslice4sf[q][2];
-
-            if(n==count)
-            {
-                put_int(i-a->xnode[aa-1]);
-                put_int(j-a->ynode[bb-1]);
-                put_int(a->paracoslice4sf[q][3]); // dead
-            }
-        }
-
-
-        // ---------------------------------------------------------------------------------------------------------------------
-        //Bedlevels
-        // *********************
-        for(const int c : bk.slice.list(count))
-        {
-            i = c/a->knoy;
-            j = c%a->knoy;
-
-            put_double(a->bedlevel(i,j));
-        }
-
-        //GEODAT
-        // *********************
-        if(p->solidprint>0)
-        for(const int c : bk.slice.list(count))
-        {
-            i = c/a->knoy;
-            j = c%a->knoy;
-
-            put_double(a->solidbed(i,j));
-        }
-
-        if(p->topoprint>0)
-        for(const int c : bk.slice.list(count))
-        {
-            i = c/a->knoy;
-            j = c%a->knoy;
-
-            put_double(a->topobed(i,j));
-        }
-
-        //DATA INTERPOLATION
-        // *********************
-        k=0;
+        // DATA: interpolated data
         if(p->D10>0)
-        for(const int c : bk.slice.list(count))
         {
-            i = c/a->knoy;
-            j = c%a->knoy;
+            pos = w.begin("DATA");
 
-            put_double(a->dataset(i,j));
+            for(i=i0;i<i1;++i)
+            for(j=j0;j<j1;++j)
+            w.put_double(a->dataset(i,j));
+
+            w.end(pos);
         }
 
-        buffer.resize(m);
+        w.finish();
 
         char name[100];
         const int padding = 6;
@@ -794,7 +423,7 @@ void print_grid::start(lexer* p,dive* a)
         if(ok)
         {
             setvbuf(file, nullptr, _IOFBF, 131072);
-            ok = (fwrite(buffer.data(), buffer.size(), 1, file)==1);
+            ok = (fwrite(w.buf.data(), w.buf.size(), 1, file)==1);
             ok = (fclose(file)==0) && ok;
         }
 

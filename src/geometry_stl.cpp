@@ -32,6 +32,15 @@ void geometry::stl_preproc(lexer* p, dive* a, int &ts, int &te)
 
 void geometry::stl_postproc(lexer* p, dive* a, int &ts, int &te, intfield &f, field &dist, int sign)
 {
+    if(sign<0)
+    {
+        if(&f==&a->solid)
+        a->gex.invert_last(geo_export::role_solid);
+
+        else if(&f==&a->topo)
+        a->gex.invert_last(geo_export::role_topo);
+    }
+
     LOOP
     {
         f(i,j,k)*=sign;

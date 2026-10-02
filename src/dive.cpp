@@ -27,7 +27,7 @@ dive::dive(lexer* p) : flag(p),
                     solid_dist(p),topo_dist(p),
                     subgrid(p),
                     topobed(p),solidbed(p),
-                    bedlevel(p),dataset(p),
+                    bedlevel(p),geobed(p),dataset(p),
                     zstl_min(p),zstl_max(p),
                     flagslice(p),subslice(p)
 {

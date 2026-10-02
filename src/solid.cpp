@@ -109,6 +109,9 @@ void solid::start(lexer* p, dive* a)
     p->tricount=p->trinum_stl;
 
     if(p->S1==1)
+    a->gex.meta(1,0,{double(p->S4)});
+
+    if(p->S1==1)
     for(rayiter=0; rayiter<2; ++rayiter)
     {
         tri_start=ts_stl;
@@ -134,6 +137,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S10;++qn)
         {
+            a->gex.meta(10,qn,{double(p->S10_xs[qn]),double(p->S10_xe[qn]),double(p->S10_ys[qn]),double(p->S10_ye[qn]),double(p->S10_zs[qn]),double(p->S10_ze[qn])});
             box(p,a,qn,tri_start,tri_end,p->S10_xs[qn],p->S10_xe[qn],p->S10_ys[qn],p->S10_ye[qn],p->S10_zs[qn],p->S10_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -141,12 +145,14 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S11;++qn)
         {
+            a->gex.meta(11,qn,{double(p->S11_xs[qn]),double(p->S11_ys[qn]),double(p->S11_zs[qn]),double(p->S11_L[qn]),double(p->S11_G[qn]),double(p->S11_ni[qn]),double(p->S11_nj[qn]),double(p->S11_nk[qn])});
             box_array(p,a,a->solid,a->solid_dist,a->solidbed,qn,tri_start,tri_end,p->S11_xs[qn],p->S11_ys[qn],p->S11_zs[qn],
                     p->S11_L[qn],p->S11_G[qn],p->S11_ni[qn],p->S11_nj[qn],p->S11_nk[qn]);
         }
 
         for(qn=0;qn<p->S12;++qn)
         {
+            a->gex.meta(12,qn,{double(p->S12_xs[qn]),double(p->S12_ys[qn]),double(p->S12_zs[qn]),double(p->S12_xe[qn]),double(p->S12_ye[qn]),double(p->S12_ze[qn]),double(p->S12_b[qn]),double(p->S12_h[qn])});
             beam(p,a,qn,tri_start,tri_end,p->S12_xs[qn],
                     p->S12_ys[qn],p->S12_zs[qn],p->S12_xe[qn],p->S12_ye[qn],p->S12_ze[qn],p->S12_b[qn],p->S12_h[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
@@ -155,6 +161,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S32;++qn)
         {
+            a->gex.meta(32,qn,{double(p->S32_xm[qn]),double(p->S32_zm[qn]),double(p->ymin),double(p->ymax),double(p->S32_r[qn]),double(p->S32_r[qn])});
             cylinder_y(p,a,qn,tri_start,tri_end,p->S32_xm[qn],p->S32_zm[qn],p->ymin,p->ymax,p->S32_r[qn],p->S32_r[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -162,6 +169,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S33;++qn)
         {
+            a->gex.meta(33,qn,{double(p->S33_xm[qn]),double(p->S33_ym[qn]),double(p->zmin),double(p->zmax),double(p->S33_r[qn]),double(p->S33_r[qn])});
             cylinder_z(p,a,qn,tri_start,tri_end,p->S33_xm[qn],p->S33_ym[qn],p->zmin,p->zmax,p->S33_r[qn],p->S33_r[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -169,6 +177,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S37;++qn)
         {
+            a->gex.meta(37,qn,{double(p->S37_xm1[qn]),double(p->S37_ym1[qn]),double(p->S37_zm1[qn]),double(p->S37_r1[qn]),double(p->S37_xm2[qn]),double(p->S37_ym2[qn]),double(p->S37_zm2[qn]),double(p->S37_r2[qn])});
             jacket_member_norm(p,a,qn,tri_start,tri_end,p->S37_xm1[qn],
                     p->S37_ym1[qn],p->S37_zm1[qn],p->S37_r1[qn],p->S37_xm2[qn],p->S37_ym2[qn],p->S37_zm2[qn],p->S37_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
@@ -177,6 +186,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S41;++qn)
         {
+            a->gex.meta(41,qn,{double(p->S41_ym[qn]),double(p->S41_zm[qn]),double(p->S41_x1[qn]),double(p->S41_x2[qn]),double(p->S41_r1[qn]),double(p->S41_r2[qn])});
             cone_x(p,a,qn,tri_start,tri_end,p->S41_ym[qn],p->S41_zm[qn],p->S41_x1[qn],p->S41_x2[qn],p->S41_r1[qn],p->S41_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -184,6 +194,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S42;++qn)
         {
+            a->gex.meta(42,qn,{double(p->S42_xm[qn]),double(p->S42_zm[qn]),double(p->S42_y1[qn]),double(p->S42_y2[qn]),double(p->S42_r1[qn]),double(p->S42_r2[qn])});
             cone_y(p,a,qn,tri_start,tri_end,p->S42_xm[qn],p->S42_zm[qn],p->S42_y1[qn],p->S42_y2[qn],p->S42_r1[qn],p->S42_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -191,6 +202,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S43;++qn)
         {
+            a->gex.meta(43,qn,{double(p->S43_xm[qn]),double(p->S43_ym[qn]),double(p->S43_z1[qn]),double(p->S43_z2[qn]),double(p->S43_r1[qn]),double(p->S43_r2[qn])});
             cone_z(p,a,qn,tri_start,tri_end,p->S43_xm[qn],p->S43_ym[qn],p->S43_z1[qn],p->S43_z2[qn],p->S43_r1[qn],p->S43_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -198,6 +210,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S51;++qn)
         {
+            a->gex.meta(51,qn,{double(p->S51_xm[qn]),double(p->S51_ym[qn]),double(p->S51_zm[qn]),double(p->S51_r[qn])});
             sphere(p,a,qn,tri_start,tri_end,p->S51_xm[qn],p->S51_ym[qn],p->S51_zm[qn],p->S51_r[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -205,6 +218,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S52;++qn)
         {
+            a->gex.meta(52,qn,{double(p->S52_xm[qn]),double(p->S52_ym[qn]),double(p->S52_zm[qn]),double(p->S52_a[qn]),double(p->S52_b[qn]),double(p->S52_c[qn])});
             ellipsoid(p,a,qn,tri_start,tri_end,p->S52_xm[qn],p->S52_ym[qn],p->S52_zm[qn],p->S52_a[qn],p->S52_b[qn],p->S52_c[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -212,6 +226,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S53;++qn)
         {
+            a->gex.meta(53,qn,{double(p->S53_xm[qn]),double(p->S53_ym[qn]),double(p->S53_zm[qn]),double(p->S53_a[qn]),double(p->S53_b[qn]),double(p->S53_c[qn]),double(p->S53_h[qn])});
             ellipsoid_semi(p,a,qn,tri_start,tri_end,p->S53_xm[qn],p->S53_ym[qn],p->S53_zm[qn],p->S53_a[qn],p->S53_b[qn],p->S53_c[qn],p->S53_h[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -219,6 +234,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S54;++qn)
         {
+            a->gex.meta(54,qn,{double(p->S54_xm[qn]),double(p->S54_ym[qn]),double(p->S54_zm[qn]),double(p->S54_a[qn]),double(p->S54_b[qn]),double(p->S54_c[qn]),double(p->S54_h[qn])});
             ellipsoid_semi_rot(p,a,qn,tri_start,tri_end,p->S54_xm[qn],p->S54_ym[qn],p->S54_zm[qn],p->S54_a[qn],p->S54_b[qn],p->S54_c[qn],p->S54_h[qn]);
             rotate_triangle_ellipsoid(p,a,qn,tri_start,tri_end,p->S54_xm[qn],p->S54_ym[qn],p->S54_zm[qn]);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -226,6 +242,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S61;++qn)
         {
+            a->gex.meta(61,qn,{double(p->S61_xs[qn]),double(p->S61_xe[qn]),double(p->S61_ys[qn]),double(p->S61_ye[qn]),double(p->S61_zs[qn]),double(p->S61_ze[qn])});
             wedge_x(p,a,qn,tri_start,tri_end,p->S61_xs[qn],p->S61_xe[qn],p->S61_ys[qn],p->S61_ye[qn],p->S61_zs[qn],p->S61_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -233,6 +250,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S62;++qn)
         {
+            a->gex.meta(62,qn,{double(p->S62_xs[qn]),double(p->S62_xe[qn]),double(p->S62_ys[qn]),double(p->S62_ye[qn]),double(p->S62_zs[qn]),double(p->S62_ze[qn])});
             wedge_y(p,a,qn,tri_start,tri_end,p->S62_xs[qn],p->S62_xe[qn],p->S62_ys[qn],p->S62_ye[qn],p->S62_zs[qn],p->S62_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -240,6 +258,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S63;++qn)
         {
+            a->gex.meta(63,qn,{double(p->S63_xs[qn]),double(p->S63_xe[qn]),double(p->S63_ys[qn]),double(p->S63_ye[qn]),double(p->S63_zs[qn]),double(p->S63_ze[qn])});
             wedge_z(p,a,qn,tri_start,tri_end,p->S63_xs[qn],p->S63_xe[qn],p->S63_ys[qn],p->S63_ye[qn],p->S63_zs[qn],p->S63_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -247,6 +266,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S81;++qn)
         {
+            a->gex.meta(81,qn,{});
             tetrahedon(p,a,qn,tri_start,tri_end,p->S81_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -254,6 +274,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S82;++qn)
         {
+            a->gex.meta(82,qn,{});
             pyramid(p,a,qn,tri_start,tri_end,p->S82_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -261,6 +282,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S83;++qn)
         {
+            a->gex.meta(83,qn,{});
             wedge(p,a,qn,tri_start,tri_end,p->S83_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -268,6 +290,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S84;++qn)
         {
+            a->gex.meta(84,qn,{});
             hexahedron(p,a,qn,tri_start,tri_end,p->S84_xyz);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -275,6 +298,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S121;++qn)
         {
+            a->gex.meta(121,qn,{double(p->S121_x[qn]),double(p->S121_y[qn]),double(p->S121_z[qn]),double(p->S121_Pd[qn]),double(p->S121_b[qn]),double(p->S121_H0[qn]),double(p->S122_K[qn]),double(p->S122_n[qn]),double(p->S122_xc[qn]),double(p->S122_yc[qn]),double(p->S123_R1[qn]),double(p->S123_R2[qn])});
             ogee_weir(p,a,qn,tri_start,tri_end,p->S121_x[qn],p->S121_y[qn],p->S121_z[qn],p->S121_Pd[qn],p->S121_b[qn],
                     p->S121_H0[qn],p->S122_K[qn],p->S122_n[qn],p->S122_xc[qn],p->S122_yc[qn],p->S123_R1[qn],p->S123_R2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
@@ -283,6 +307,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S131;++qn)
         {
+            a->gex.meta(131,qn,{double(p->S131_xm[qn]),double(p->S131_zm[qn]),double(p->S131_y1[qn]),double(p->S131_y2[qn]),double(p->S131_r1[qn]),double(p->S131_r2[qn])});
             semicyl_y(p,a,qn,tri_start,tri_end,p->S131_xm[qn],p->S131_zm[qn],p->S131_y1[qn],p->S131_y2[qn],p->S131_r1[qn],p->S131_r2[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -290,6 +315,7 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S141;++qn)
         {
+            a->gex.meta(141,qn,{double(p->S141_xs[qn]),double(p->S141_xe[qn]),double(p->S141_ys[qn]),double(p->S141_ye[qn]),double(p->S141_zs[qn]),double(p->S141_ze[qn]),double(p->S141_r[qn])});
             arch(p,a,qn,tri_start,tri_end,p->S141_xs[qn],p->S141_xe[qn],p->S141_ys[qn],p->S141_ye[qn],p->S141_zs[qn],p->S141_ze[qn],p->S141_r[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast(p,a,tri_start,tri_end,a->solid,a->solid_dist,a->solidbed);
@@ -297,13 +323,19 @@ void solid::start(lexer* p, dive* a)
 
         for(qn=0;qn<p->S201;++qn)
         {
+            a->gex.meta(201,qn,{double(p->S201_x[qn]),double(p->S201_ys[qn]),double(p->S201_ye[qn]),double(p->S201_zs[qn]),double(p->S201_ze[qn])});
             plate_x(p,a,qn,tri_start,tri_end,p->S201_x[qn],p->S201_ys[qn],p->S201_ye[qn],p->S201_zs[qn],p->S201_ze[qn]);
             rotate_triangle(p,a,tri_start,tri_end);
             ray_cast_x_gcb(p,a,tri_start,tri_end,a->solid,a->solid_dist);
+
+            if(rayiter==0)
+            a->gex.add(p,geo_export::role_plate,tri_start,tri_end,p->S18);
         }
 
         if(p->S300>0)
         {
+            a->gex.meta(300,0,{double(p->S301)});
+
             fluvial_box(p,a,qn,tri_start,tri_end);
             rotate_triangle(p,a,tri_start,tri_end);
 

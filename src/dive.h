@@ -31,6 +31,7 @@ Author: Hans Bihs
 #include"field2d.h"
 #include"intfield2d.h"
 #include"int_table.h"
+#include"geo_export.h"
 
 using namespace std;
 
@@ -46,9 +47,12 @@ public:
     intfield subgrid;      // for all water cells: number of subgrid
     field2d topobed,solidbed;
     field2d bedlevel;      // combined bedlevel
+    field2d geobed;        // geodat bed level, before the S/T entities
     field2d dataset;
     field2d zstl_min,zstl_max;
     intfield2d flagslice,subslice;
+
+    geo_export gex;        // S/T geometry for REEF3D
 
     int knox,knoy,knoz;
     int maxknox;

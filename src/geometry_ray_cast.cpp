@@ -28,6 +28,13 @@ void geometry::ray_cast(lexer* p, dive* a, int ts, int te, intfield &flag, field
 {
     if(rayiter==0)
     {
+        // hand the entity to REEF3D (grid format v2)
+        if(&flag==&a->solid)
+        a->gex.add(p,geo_export::role_solid,tri_start,tri_end,p->S18);
+
+        else if(&flag==&a->topo)
+        a->gex.add(p,geo_export::role_topo,tri_start,tri_end,p->S18);
+
         ray_cast_io_x(p,a,tri_start,tri_end,flag,dist);
         ray_cast_io_ycorr(p,a,tri_start,tri_end,flag,dist);
         ray_cast_io_zcorr(p,a,tri_start,tri_end,flag,dist);

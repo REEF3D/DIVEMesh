@@ -30,7 +30,7 @@ driver::driver()
     cout<<"DIVEMesh (c) 2008-2026 Hans Bihs"<<endl<<endl;
 
     cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_260929" <<endl<<endl;
+    cout<<endl<<"v_260102" <<endl<<endl;
 
     mkdir("./DIVEMesh_Log",0777);
 
@@ -71,6 +71,11 @@ void driver::mainloop()
 
     if(p->G10>0 && p->G9==2)
     pgeo->start(p,a,a->solidbed,a->solid_dist);
+
+    // geodat bed level for REEF3D, before the S/T entities raise topobed/solidbed
+    if(p->G10>0)
+    XYLOOP
+    a->geobed(i,j) = (p->G9==2) ? a->solidbed(i,j) : a->topobed(i,j);
 
     if(p->D10>0)
     pdata->start(p,a);

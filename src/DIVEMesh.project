@@ -65,6 +65,8 @@
       <VirtualDirectory Name="Printer">
         <File Name="print_stl_geodat.h"/>
         <File Name="print_grid.h"/>
+        <File Name="gridfile_v2.h"/>
+        <File Name="geo_export.h"/>
         <File Name="print_vts.h"/>
         <File Name="print_3D.h"/>
       </VirtualDirectory>
@@ -264,6 +266,7 @@
       <VirtualDirectory Name="Printer">
         <File Name="print_stl_geodat.cpp"/>
         <File Name="print_grid.cpp"/>
+        <File Name="geo_export.cpp"/>
         <File Name="print_vts.cpp"/>
         <File Name="print_debug.cpp"/>
         <File Name="print_3D.cpp"/>
