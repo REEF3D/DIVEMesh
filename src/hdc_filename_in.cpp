@@ -25,12 +25,12 @@ Author: Hans Bihs
 
 auto in_single = [] (char *name, int size, const char *model, int num, int rank)
 {
-    snprintf(name,size,"./REEF3D_%s_STATE/REEF3D-%s-State-%08i-%06i.r3d",model,model,num,rank+1);
+    snprintf(name,size,"./REEF3D_%s_STATE/REEF3D_%s-State-%08i-%06i.r3d",model,model,num,rank+1);
 };
 
 auto in_continuous = [] (char *name, int size, const char *model, int rank)
 {
-    snprintf(name,size,"./REEF3D_%s_STATE/REEF3D-%s-State-%06i.r3d",model,model,rank+1);
+    snprintf(name,size,"./REEF3D_%s_STATE/REEF3D_%s-State-%06i.r3d",model,model,rank+1);
 };
 
 auto in_header = [] (char *name, int size, const char *model, int rank)
