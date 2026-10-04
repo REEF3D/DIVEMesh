@@ -84,6 +84,15 @@ void hdc::read_nhflow(lexer *p, dive *a)
             result[q].read((char*)&ffn, sizeof(float));
             W[i+orig_i[q]][j+orig_j[q]][k+orig_k[q]] = ffn;
         }
+
+        // pressure (NHFLOW state with P 44 1, the default): not used, skip it
+        if(file_type==1)
+        for(i=0;i<NLx[q];++i)
+        for(j=0;j<NLy[q];++j)
+        for(k=0;k<NLz[q]+1;++k)
+        {
+            result[q].read((char*)&ffn, sizeof(float));
+        }
     }
 
     if(file_conti==1)
