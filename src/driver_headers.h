@@ -38,6 +38,7 @@ Author: Hans Bihs
 
 #include"geodat.h"
 #include"bedlevel.h"
+#include"corridor.h"
 #include"dataset.h"
 #include"slice.h"
 

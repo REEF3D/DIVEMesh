@@ -74,6 +74,14 @@ public:
     std::vector<object> obj;
     std::vector<double> tri;      // 9 doubles per triangle
 
+    // river corridor grid (R 1 1), written as section CURV when ni > 0
+    struct curvgrid
+    {
+        int ni=0, nj=0;
+        std::vector<double> par;                  // R 2, R 3 wl, R 3 margin, R 5, raster spacing
+        std::vector<double> x, y, zb;             // nodes, index i + (ni+1)*j
+    } curv;
+
 private:
     int kw, idx;
     std::vector<double> par;

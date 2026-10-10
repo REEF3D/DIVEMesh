@@ -132,6 +132,10 @@ public:
     int B130;
 
     int C11,C12,C13,C14,C15,C16;
+
+    // river corridor grid (corridor.h)
+    int R1,R3,R4_ni,R4_nj,R6,R7;
+    double R2,R3_wl,R3_m,R5,R8,R9;
     int C21,C22,C23;
 
     int D10,D13,D14,D15,D19;

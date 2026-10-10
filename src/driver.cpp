@@ -30,7 +30,7 @@ driver::driver()
     cout<<"DIVEMesh (c) 2008-2026 Hans Bihs"<<endl<<endl;
 
     cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_260102" <<endl<<endl;
+    cout<<endl<<"v_260110" <<endl<<endl;
 
     mkdir("./DIVEMesh_Log",0777);
 
@@ -120,6 +120,13 @@ void driver::mainloop()
 
 // Bedlevel
     pbed->start(p,a);
+
+// River corridor grid (R 1 1): extra output, the Cartesian grid is unchanged
+    if(p->R1==1)
+    {
+        corridor pcorr(p,a);
+        pcorr.start(p,a);
+    }
 
 // Decomp
     pdd->start(p,a);

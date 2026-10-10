@@ -53,6 +53,19 @@ void lexer::ini_default()
     B116=0;           // int stretch position given zdir
     B130=0;           // int print grid vtk
 
+    R1=0;             // int river corridor grid on/off
+    R2=0.0;           // double water level for the centreline
+    R3=0;             // int corridor level given
+    R3_wl=0.0;        // double highest water level the corridor holds (default R 2 + 1 m)
+    R3_m=5.0;         // double dry margin beyond it
+    R4_ni=0;          // int cells along the river (0: from R 4 nj, about 3:1 cells)
+    R4_nj=200;        // int cells across the corridor
+    R5=12.0;          // double side inlets narrower than 2 x R 5 are removed
+    R6=2000;          // int Winslow smoothing iterations
+    R7=0;             // int 1: centreline from corridor-centreline.dat
+    R8=20.0;          // double smoothing length of the centreline
+    R9=0.0;           // double working raster spacing (0: max(DXM,1 m))
+
     C11=21;           // C12
     C12=21;           // C12
     C13=21;           // C12

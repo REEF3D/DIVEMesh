@@ -197,6 +197,28 @@ bool geo_export::write(lexer *p, const char *name, int solidread, int toporead, 
         w.end(pos);
     }
 
+    // river corridor grid
+    if(curv.ni>0)
+    {
+        pos = w.begin("CURV");
+
+        w.put_int(3);
+        w.put_int(1);                   // layout version of the section
+        w.put_int(curv.ni);
+        w.put_int(curv.nj);
+
+        w.put_int(int(curv.par.size()));
+        for(double v : curv.par)
+        w.put_double(v);
+
+        const size_t nn = size_t(curv.ni+1)*size_t(curv.nj+1);
+        w.put(curv.x.data(),nn*sizeof(double));
+        w.put(curv.y.data(),nn*sizeof(double));
+        w.put(curv.zb.data(),nn*sizeof(double));
+
+        w.end(pos);
+    }
+
     w.finish();
 
     FILE* file = fopen(name, "wb");

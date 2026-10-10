@@ -17,6 +17,9 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="Headers">
+    <VirtualDirectory Name="Curvilinear">
+      <File Name="corridor.h"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Porous Structures">
       <File Name="porous.h"/>
     </VirtualDirectory>
@@ -101,6 +104,13 @@
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="Sources">
+    <VirtualDirectory Name="Curvilinear">
+      <File Name="corridor.cpp"/>
+      <File Name="corridor_grid.cpp"/>
+      <File Name="corridor_harmonic.cpp"/>
+      <File Name="corridor_path.cpp"/>
+      <File Name="corridor_raster.cpp"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Porous Structures">
       <File Name="porous.cpp"/>
     </VirtualDirectory>
