@@ -30,6 +30,8 @@ Author: Hans Bihs
 
 using namespace std;
 
+class corridor;
+
 class driver : public increment
 {
 public:
@@ -38,6 +40,7 @@ public:
     void mainloop();
     void logic(lexer*);
     void analytics(lexer*,dive*);
+    void curv_box(lexer*, corridor&);
 
     lexer *p;
     dive *a;

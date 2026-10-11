@@ -265,14 +265,20 @@ void corridor::quality_and_output(lexer *p, dive *a)
         double am=0.0;
         for(int c=0; c<nc; ++c)
         am += dxi[c]*det[c];
-        const double hm = std::sqrt(am/double(nc));
+        hm = std::sqrt(am/double(nc));
 
         std::ostringstream box;
         box<<std::setprecision(8);
-        box<<"curvilinear REEF3D run: curvgrid.dat written; DIVEMesh grid of the logical box (second run), ctrl.txt G 50 2:\n";
-        box<<"  C 11 1\n  C 12 3\n  C 13 3\n  C 14 2\n";
+        if(p->R1==2)
+        box<<"curvilinear REEF3D run (R 1 2): the logical box "<<ni<<" x "<<nj<<" (spacing "<<hm<<" m) is written as the grid, ctrl.txt G 50 1\n";
+        else
+        {
+        box<<"curvilinear REEF3D run: curvgrid.dat written; DIVEMesh grid of the logical box (second run), ctrl.txt G 50 2"
+           <<" (or R 1 2 for both in one DIVEMesh run):\n";
+        box<<"  C 11 "<<code_in<<"\n  C 12 21\n  C 13 21\n  C 14 "<<code_out<<"\n";
         box<<"  B 2 "<<ni<<" "<<nj<<" 1\n";
         box<<"  B 10 0.0 "<<ni*hm<<" 0.0 "<<nj*hm<<" 0.0 "<<hm<<"\n";
+        }
 
         cout<<box.str();
         std::ofstream log("DIVEMesh_Log/corridor.log",std::ios::app);

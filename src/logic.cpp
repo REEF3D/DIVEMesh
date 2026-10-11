@@ -36,6 +36,10 @@ void driver::logic(lexer* p)
             + p->T62 + p->T81 + p->T82 + p->T83 + p->T84 + p->T63 + p->T121 + p->T131 + p->T141
             + p->T201 + p->T202 + p->T203 + p->T300;
 
+    // R 1 2, second pass: the logical box without geometry
+    if(p->curv_box==1)
+    p->solid_count = p->topo_count = 0;
+
     pini = new initialize;
 
     pbc = new bc();

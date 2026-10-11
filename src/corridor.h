@@ -48,9 +48,12 @@ using namespace std;
 //                  phi levels uniform in centreline arc length; nodes traced along the phi levels
 //   4 clean-up     banks smoothed along the river, R 6 Winslow iterations from the harmonic grid
 //
-//  Output: the grid as section CURV of DIVEMesh_Grid/grid-geometry.dat (REEF3D skips it until it
-//  reads curvilinear grids), DIVEMesh_Paraview/corridor-grid.vtk and DIVEMesh_Log/corridor.log.
-//  The Cartesian grid and all other output are unchanged.
+//  Output: the grid as section CURV of DIVEMesh_Grid/grid-geometry.dat, curvgrid.dat (nodes and bed
+//  levels as text), DIVEMesh_Paraview/corridor-grid.vtk and DIVEMesh_Log/corridor.log.
+//  R 1 1: extra output, the Cartesian grid and all other output are unchanged; REEF3D reads the
+//         grid with G 50 2 from curvgrid.dat after a second DIVEMesh run of the logical box
+//  R 1 2: one pass - DIVEMesh then builds the logical box of the corridor grid (driver::curv_box)
+//         and writes it as the grid of the run, with CURV; REEF3D G 50 1
 
 class corridor
 {
@@ -60,7 +63,15 @@ public:
 
     void start(lexer*, dive*);
 
+    // the grid for the one-pass mode (R 1 2): cells, mean spacing, boundary codes of the
+    // inflow side (C 1x = 1 or 6) and the outflow side (2, 7 or 8) of the Cartesian domain
+    int cells_i() const { return ni; }
+    int cells_j() const { return nj; }
+    double mean_spacing() const { return hm; }
+    int code_in=1, code_out=2;
+
 private:
+    double hm=0.0;
     // ---- working raster
     int nx,ny;
     double x0,y0,h;
@@ -84,7 +95,7 @@ private:
     void centreline(lexer*);
     bool read_centreline(lexer*);
     void stations(vector<double>&, vector<double>&, double sigma);
-    void side_runs(const vector<char>&, int &start, int &end, lexer*) const;
+    void side_runs(const vector<char>&, int &start, int &end, lexer*);
 
     // ---- corridor region
     vector<char> env, R;

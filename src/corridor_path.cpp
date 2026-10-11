@@ -32,7 +32,7 @@ Author: Hans Bihs
 // the wet runs where the river leaves the raster: inflow on a side with C 1x = 1 or 6, outflow on a
 // side with C 1x = 2, 7 or 8 (C 11 x-min, C 14 x-max, C 13 y-min, C 12 y-max); without those the two
 // longest runs.  start/end: the cell of the run farthest from the banks.
-void corridor::side_runs(const vector<char> &m, int &start, int &end, lexer *p) const
+void corridor::side_runs(const vector<char> &m, int &start, int &end, lexer *p)
 {
     struct run { int side, len, best; double dmax; };
     vector<run> runs;
@@ -99,6 +99,11 @@ void corridor::side_runs(const vector<char> &m, int &start, int &end, lexer *p) 
 
     start=runs[bi].best;
     end=runs[bo].best;
+
+    // boundary codes of the two sides for the logical box (R 1 2)
+    const int ci=ctype[runs[bi].side], co=ctype[runs[bo].side];
+    code_in  = (ci==1 || ci==6) ? ci : 1;
+    code_out = (co==2 || co==7 || co==8) ? co : 2;
 }
 
 // centreline: least-cost path along the medial ridge of the wet area below R 2

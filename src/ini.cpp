@@ -53,7 +53,8 @@ void lexer::ini_default()
     B116=0;           // int stretch position given zdir
     B130=0;           // int print grid vtk
 
-    R1=0;             // int river corridor grid on/off
+    R1=0;             // int river corridor grid: 0 off, 1 extra output, 2 one pass (the grid of the run)
+    curv_box=0;
     R2=0.0;           // double water level for the centreline
     R3=0;             // int corridor level given
     R3_wl=0.0;        // double highest water level the corridor holds (default R 2 + 1 m)

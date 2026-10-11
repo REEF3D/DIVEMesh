@@ -122,10 +122,17 @@ void driver::mainloop()
     pbed->start(p,a);
 
 // River corridor grid (R 1 1): extra output, the Cartesian grid is unchanged
-    if(p->R1==1)
+// R 1 2: the logical box of the corridor grid becomes the grid of the run (second pass)
+    if(p->R1>=1 && p->curv_box==0)
     {
         corridor pcorr(p,a);
         pcorr.start(p,a);
+
+        if(p->R1==2)
+        {
+            curv_box(p,pcorr);
+            return;
+        }
     }
 
 // Decomp
@@ -151,4 +158,48 @@ void driver::mainloop()
     pprint->start(p,a);
 
     analytics(p,a);
+}
+
+// R 1 2: second pass on the logical box of the corridor grid (ni x nj cells of the mean spacing,
+// the vertical of the Cartesian grid), inflow at i = 0, outflow at i = ni, banks at j = 0, nj;
+// no geodat, solids or topography (the bed levels are the CURV node bed levels in REEF3D G 50 1)
+void driver::curv_box(lexer *p, corridor &c)
+{
+    geo_export::curvgrid curv = a->gex.curv;
+
+    const double hm = c.mean_spacing();
+
+    cout<<endl<<"corridor grid (R 1 2): second pass, logical box "<<c.cells_i()<<" x "<<c.cells_j()<<" x "<<p->knoz
+        <<", spacing "<<hm<<" m"<<endl<<endl;
+
+    p->curv_box = 1;
+
+    p->B2 = 1;
+    p->B2_knox = c.cells_i();
+    p->B2_knoy = c.cells_j();
+    p->B2_knoz = p->knoz;
+    p->B101 = p->B102 = 0;
+    p->xmin = 0.0;
+    p->xmax = hm*double(c.cells_i());
+    p->ymin = 0.0;
+    p->ymax = hm*double(c.cells_j());
+    p->global_orig_x = p->xmin + p->B3_dx;
+    p->global_orig_y = p->ymin + p->B3_dy;
+
+    p->C11 = c.code_in;
+    p->C14 = c.code_out;
+    p->C12 = p->C13 = 21;
+
+    p->G10 = 0;
+    p->D10 = 0;
+    p->S1 = 0;
+    p->solidprint = p->topoprint = 0;
+
+    p->createspace();
+    p->gridspacing();
+
+    a = new dive(p);
+    a->gex.curv = curv;
+
+    logic(p);
 }
