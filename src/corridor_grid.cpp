@@ -252,6 +252,33 @@ void corridor::quality_and_output(lexer *p, dive *a)
         field("dx_across",det);
     }
 
+    // REEF3D curvilinear SFLOW (G 50 2): the nodes as curvgrid.dat in the case folder, and the
+    // DIVEMesh grid of the logical box (second DIVEMesh run) in the log
+    {
+        std::ofstream g("curvgrid.dat");
+        g<<ni<<" "<<nj<<"\n";
+        g<<std::setprecision(17);
+        for(int j=0; j<=nj; ++j)
+        for(int i=0; i<=ni; ++i)
+        g<<X[nd(i,j)]<<" "<<Y[nd(i,j)]<<" "<<ZB[nd(i,j)]<<"\n";
+
+        double am=0.0;
+        for(int c=0; c<nc; ++c)
+        am += dxi[c]*det[c];
+        const double hm = std::sqrt(am/double(nc));
+
+        std::ostringstream box;
+        box<<std::setprecision(8);
+        box<<"curvilinear REEF3D run: curvgrid.dat written; DIVEMesh grid of the logical box (second run), ctrl.txt G 50 2:\n";
+        box<<"  C 11 1\n  C 12 3\n  C 13 3\n  C 14 2\n";
+        box<<"  B 2 "<<ni<<" "<<nj<<" 1\n";
+        box<<"  B 10 0.0 "<<ni*hm<<" 0.0 "<<nj*hm<<" 0.0 "<<hm<<"\n";
+
+        cout<<box.str();
+        std::ofstream log("DIVEMesh_Log/corridor.log",std::ios::app);
+        log<<box.str();
+    }
+
     // grid file section CURV
     a->gex.curv.ni=ni;
     a->gex.curv.nj=nj;
