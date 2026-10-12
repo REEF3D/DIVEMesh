@@ -443,6 +443,12 @@ void lexer::read_control()
                 case 8: control>>R8;
                          clear(c,numint);
                          break;
+                case 20: control>>R20;
+                         clear(c,numint);
+                         break;
+                case 21: control>>R21;
+                         clear(c,numint);
+                         break;
                 case 9: control>>R9;
                          clear(c,numint);
                          break;

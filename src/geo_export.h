@@ -82,6 +82,21 @@ public:
         std::vector<double> x, y, zb;             // nodes, index i + (ni+1)*j
     } curv;
 
+    // multi-block grid (R 20 1, multiblock.h), written as section BLKS when blocks are present:
+    // per block its cells, the ring of block 0 and the interface segments (SEGI ints each: face,
+    // lo, hi, neighbour, its face, perm 0 1, sign 0 1, off 0 1); the nodes of blocks 1.. (block 0
+    // is the grid of the run: CURV)
+    static const int SEGI = 11;
+    struct mblock
+    {
+        int ni=0, nj=0;
+        int ring[4] = {0,0,0,0};
+        std::vector<int> seg;
+        std::vector<double> x, y, zb;
+    };
+    std::vector<mblock> blks;
+    int blk_ring = 0;
+
 private:
     int kw, idx;
     std::vector<double> par;

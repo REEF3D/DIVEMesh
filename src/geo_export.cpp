@@ -219,6 +219,40 @@ bool geo_export::write(lexer *p, const char *name, int solidread, int toporead, 
         w.end(pos);
     }
 
+    // multi-block grid
+    if(!blks.empty())
+    {
+        pos = w.begin("BLKS");
+
+        w.put_int(4);
+        w.put_int(1);                   // layout version of the section
+        w.put_int(int(blks.size()));
+        w.put_int(blk_ring);
+        w.put_int(SEGI);
+
+        for(const mblock &B : blks)
+        {
+            w.put_int(B.ni);
+            w.put_int(B.nj);
+            for(int f=0; f<4; ++f)
+            w.put_int(B.ring[f]);
+            w.put_int(int(B.seg.size())/SEGI);
+            for(int v : B.seg)
+            w.put_int(v);
+        }
+
+        for(size_t q=1; q<blks.size(); ++q)
+        {
+            const mblock &B = blks[q];
+            const size_t nn = size_t(B.ni+1)*size_t(B.nj+1);
+            w.put(B.x.data(),nn*sizeof(double));
+            w.put(B.y.data(),nn*sizeof(double));
+            w.put(B.zb.data(),nn*sizeof(double));
+        }
+
+        w.end(pos);
+    }
+
     w.finish();
 
     FILE* file = fopen(name, "wb");

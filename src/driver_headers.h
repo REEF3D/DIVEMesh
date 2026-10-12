@@ -39,6 +39,7 @@ Author: Hans Bihs
 #include"geodat.h"
 #include"bedlevel.h"
 #include"corridor.h"
+#include"multiblock.h"
 #include"dataset.h"
 #include"slice.h"
 

@@ -31,6 +31,7 @@ Author: Hans Bihs
 using namespace std;
 
 class corridor;
+class multiblock;
 
 class driver : public increment
 {
@@ -41,6 +42,7 @@ public:
     void logic(lexer*);
     void analytics(lexer*,dive*);
     void curv_box(lexer*, corridor&);
+    void mb_box(lexer*, multiblock&);
 
     lexer *p;
     dive *a;

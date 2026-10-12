@@ -40,7 +40,48 @@ driver::driver()
     p->read_input();
     p->read_preproc();
 
+    // multi-block grid (R 20 1): block 0 with its ring is the grid of the run
+    multiblock *mb = nullptr;
+    if(p->R20==1)
+    {
+        mb = new multiblock;
+        if(!mb->start(p))
+        exit(1);
+        mb_box(p,*mb);
+    }
+
     a = new dive(p);
+
+    if(mb!=nullptr)
+    {
+        geo_export &g = a->gex;
+        g.curv.ni = mb->box_ni();
+        g.curv.nj = mb->box_nj();
+        g.curv.par = {0.0,0.0,0.0,0.0,mb->spacing()};
+        g.curv.x = mb->X0;
+        g.curv.y = mb->Y0;
+        g.curv.zb = mb->Z0;
+        g.blk_ring = mb->W;
+        g.blks.resize(mb->b.size());
+        for(size_t q=0; q<mb->b.size(); ++q)
+        {
+            const multiblock::block &B = mb->b[q];
+            geo_export::mblock &G = g.blks[q];
+            G.ni = B.ni; G.nj = B.nj;
+            for(int f=0; f<4; ++f)
+            G.ring[f] = B.ring[f];
+            for(const multiblock::seg &S : B.segs)
+            {
+                const int v[geo_export::SEGI] = {S.face,S.lo,S.hi,S.nbr,S.nface,S.perm[0],S.perm[1],S.sign[0],S.sign[1],S.off[0],S.off[1]};
+                G.seg.insert(G.seg.end(),v,v+geo_export::SEGI);
+            }
+            if(q>0)
+            {
+                G.x = B.x; G.y = B.y; G.zb = B.zb;
+            }
+        }
+        delete mb;
+    }
 
     logic(p);
 }
@@ -158,6 +199,37 @@ void driver::mainloop()
     pprint->start(p,a);
 
     analytics(p,a);
+}
+
+// R 20 1: the box of block 0 with its ring (cells of the mean spacing, the vertical of the
+// Cartesian grid), walls all around; no geodat, solids or topography (bed levels: the nodes)
+void driver::mb_box(lexer *p, multiblock &mb)
+{
+    const double hm = mb.spacing();
+
+    p->curv_box = 1;
+
+    p->B2 = 1;
+    p->B2_knox = mb.box_ni();
+    p->B2_knoy = mb.box_nj();
+    p->B2_knoz = p->knoz;
+    p->B101 = p->B102 = 0;
+    p->xmin = 0.0;
+    p->xmax = hm*double(mb.box_ni());
+    p->ymin = 0.0;
+    p->ymax = hm*double(mb.box_nj());
+    p->global_orig_x = p->xmin + p->B3_dx;
+    p->global_orig_y = p->ymin + p->B3_dy;
+
+    p->C11 = p->C12 = p->C13 = p->C14 = 21;
+
+    p->G10 = 0;
+    p->D10 = 0;
+    p->S1 = 0;
+    p->solidprint = p->topoprint = 0;
+
+    p->createspace();
+    p->gridspacing();
 }
 
 // R 1 2: second pass on the logical box of the corridor grid (ni x nj cells of the mean spacing,

@@ -136,6 +136,7 @@ public:
     // river corridor grid (corridor.h)
     int R1,R3,R4_ni,R4_nj,R6,R7;
     int curv_box;     // R 1 2: second pass, the grid is the logical box of the corridor grid
+    int R20,R21;      // multi-block grid (multiblock.h): R 20 1 blocks.dat, R 21 ring cells
     double R2,R3_wl,R3_m,R5,R8,R9;
     int C21,C22,C23;
 

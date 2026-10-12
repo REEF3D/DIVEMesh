@@ -70,6 +70,8 @@
         <File Name="print_grid.h"/>
         <File Name="gridfile_v2.h"/>
         <File Name="geo_export.h"/>
+        <File Name="multiblock.h"/>
+        <File Name="corridor.h"/>
         <File Name="print_vts.h"/>
         <File Name="print_3D.h"/>
       </VirtualDirectory>
@@ -277,6 +279,12 @@
         <File Name="print_stl_geodat.cpp"/>
         <File Name="print_grid.cpp"/>
         <File Name="geo_export.cpp"/>
+        <File Name="multiblock.cpp"/>
+        <File Name="corridor.cpp"/>
+        <File Name="corridor_grid.cpp"/>
+        <File Name="corridor_harmonic.cpp"/>
+        <File Name="corridor_path.cpp"/>
+        <File Name="corridor_raster.cpp"/>
         <File Name="print_vts.cpp"/>
         <File Name="print_debug.cpp"/>
         <File Name="print_3D.cpp"/>
