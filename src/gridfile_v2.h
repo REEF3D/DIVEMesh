@@ -38,6 +38,8 @@ Author: Hans Bihs
 //         R 3 margin, R 5, raster spacing), double x[n], y[n], zbed[n] with n = (ni+1)(nj+1),
 //         node (i,j) at i + (ni+1)*j: river corridor grid (R 1 1), i along the river from the
 //         inflow, j across from the right bank; only with R 1 1
+//   GREF  char[nbytes]                  the case's georef.json as one line of JSON (where the
+//         model lies on the Earth, LAGOON lagoon-format SPEC.md 1.2); only with a georef.json
 //
 // DIVEMesh_Grid/grid-%06i.dat (one file per rank)
 //   HEAD  int32 nint, int32[nint], int32 ndbl, double[ndbl]

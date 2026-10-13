@@ -66,6 +66,7 @@
         <File Name="driver_declarations.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Printer">
+        <File Name="georef.h"/>
         <File Name="print_stl_geodat.h"/>
         <File Name="print_grid.h"/>
         <File Name="gridfile_v2.h"/>

@@ -22,6 +22,7 @@ Author: Hans Bihs
 
 #include"geo_export.h"
 #include"gridfile_v2.h"
+#include"georef.h"
 #include"lexer.h"
 #include<cstdio>
 #include<iostream>
@@ -253,6 +254,16 @@ bool geo_export::write(lexer *p, const char *name, int solidread, int toporead, 
         w.end(pos);
     }
 
+    // where the model lies on the Earth: the case's georef.json, unchanged
+    const std::string georef = georef_json();
+
+    if(!georef.empty())
+    {
+        pos = w.begin("GREF");
+        w.put(georef.data(),georef.size());
+        w.end(pos);
+    }
+
     w.finish();
 
     FILE* file = fopen(name, "wb");
@@ -265,7 +276,8 @@ bool geo_export::write(lexer *p, const char *name, int solidread, int toporead, 
     }
 
     if(ok)
-    std::cout<<"geometry: "<<obj.size()<<" objects, "<<tri.size()/9<<" triangles"<<std::endl;
+    std::cout<<"geometry: "<<obj.size()<<" objects, "<<tri.size()/9<<" triangles"
+             <<(georef.empty() ? "" : ", georeference of georef.json")<<std::endl;
 
     return ok;
 }
