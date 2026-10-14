@@ -132,7 +132,7 @@ void lexer::ini_default()
     G32=0;            // int number of inner filter iterations
     G34=0.0;          // double smoothing length IDW
     G35=2.0;         // double inverse distance factor
-    G36=1.0;          // doulble duplicate points factor times DXM
+    G36=1.0;          // double duplicate points factor times DXYM
     G36_select=0;
     G37_select=0;
     G37=1e8;          // int maximum number of geaodat after duplicate removal

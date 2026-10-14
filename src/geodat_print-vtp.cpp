@@ -113,7 +113,7 @@ void geodat::print(lexer* p, dive* a, int Np, double *Fx, double *Fy, double *Fz
     result.write((char*)&iin,sizeof(int));
     for(n=0;n<Np;++n)
     {
-        ffn=0.1*p->DXM;
+        ffn=0.1*p->DXYM;
         result.write((char*)&ffn,sizeof(float));
     }
 

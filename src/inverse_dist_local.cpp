@@ -43,7 +43,7 @@ void inverse_dist_local::start(lexer *p, dive *a, int numpt, double *Fx, double 
     if(p->knox*p->knoy*p->knoz>1000000)
     progress_output_interval = 100000;
 
-    double smooth_length = p->G34*p->DXYM;   // horizontal: DXM contains dz
+    double smooth_length = p->G34*p->DXYM;
     smooth_lengthP4 = smooth_length*smooth_length*smooth_length*smooth_length;
 
     int counter = 0;
