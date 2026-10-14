@@ -26,6 +26,10 @@ Author: Hans Bihs
 
 void lexer::read_geodat()
 {
+    // local bounds of the geodat points: must not overwrite the domain extents
+    // xmin..zmax that origin_calc() has set from B 10
+    double xmin,ymin,zmin,xmax,ymax,zmax;
+
         // read geodat
     if(G10>0)
     {
@@ -152,6 +156,9 @@ void lexer::read_geodat()
                 B10_zs[0] -= zmin;
                 B10_ze[0] -= zmin;
             }
+
+            // domain extents from the B 10 set above
+            origin_calc();
         }
 
         double Gx, Gy;
