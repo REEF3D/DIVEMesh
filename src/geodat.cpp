@@ -130,8 +130,7 @@ void geodat::start(lexer* p, dive* a, field2d &bed, field &dist)
     LOOP
     dist(i,j,k) = -bed(i,j) + p->ZP[KP];
 
-    XYLOOP
-    a->bedlevel(i,j) = MAX(a->bedlevel(i,j),bed(i,j));
+    // the combined bed level (bedlevel::start) takes the geodat bed as it is: no floor at zmin
 }
 
 void geodat::gcb_estimate(lexer *p, dive *a, field2d &bed)
