@@ -33,7 +33,7 @@ Author: Hans Bihs
 
 gaussian::gaussian(lexer *p, dive *a)
 {
-    const double sigma = 5.0*p->DXM;
+    const double sigma = 5.0*p->DXYM;   // horizontal: DXM contains dz
 
     cutoff = 3.0*sigma;
 

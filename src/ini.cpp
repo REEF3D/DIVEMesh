@@ -143,7 +143,7 @@ void lexer::ini_default()
     G51=0;            // int turn on holefill
     G52=0.0;          // double base topo level for local IDW
     G53_flag=0;       // int turn on manual search radius
-    G53=0.0;          // double manual search radius
+    G53=0.0;          // double hole check cover radius, factor times the horizontal cell size
     G60=0;            // int patch geo
     G61=0;            // int add patch geo points
     G62=3.0;          // double patch geo search radius factor
