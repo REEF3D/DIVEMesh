@@ -94,7 +94,7 @@ void gaussian::setup(lexer *p, dive *a, double *Fx, double *Fy, double *Fz, doub
     const double Dmax = sqrt(dx*dx+dy*dy);
     const double R = 0.25*Dmax*sqrt(p->G18/p->Np);
 
-    dij = std::max(int(R/(p->DXM)),p->G17);
+    dij = std::max(int(R/(p->DXYM)),p->G17);
 
     dij=p->G17;
 

@@ -39,7 +39,7 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
     // Radius
     Dmax=sqrt(pow(p->xmax-p->xmin,2.0)+pow(p->ymax-p->ymin,2.0));
     R = 0.25*Dmax*sqrt(p->G18/p->Np);
-    dij = MAX(int(R/(p->DXM)),p->G17);
+    dij = MAX(int(R/(p->DXYM)),p->G17);
 
 
     kx = p->knox;
@@ -104,10 +104,10 @@ void geodat::holecheck(lexer *p, dive *a, double *X, double *Y, double *F)
         // resize ptid
         // fill ptid
 
-    dij =int(2.6*meandist/(p->DXM));
+    dij =int(2.6*meandist/(p->DXYM));
 
     if(p->G53_flag==1)
-    dij = int(p->G53/(p->DXM));
+    dij = int(p->G53/(p->DXYM));
 
     cout<<"DIJ: "<<dij<<endl;
 
