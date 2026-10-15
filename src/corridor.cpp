@@ -28,6 +28,8 @@ Author: Hans Bihs
 #include<algorithm>
 #include<iostream>
 #include<cstdlib>
+#include<queue>
+#include<vector>
 
 corridor::corridor(lexer *p, dive *a) : nx(0),ny(0),x0(0.0),y0(0.0),h(1.0),ni(0),nj(0)
 {
@@ -112,7 +114,190 @@ double corridor::reach(int q, double sign) const
     return r;
 }
 
-// corridor region: envelope of R 3 wl + margin, islands filled, inlets removed, banks smoothed,
+// thalweg: least-cost path over the bed between two raster cells, cost exp((z - zmin)/2 m) per length
+vector<int> corridor::thalweg(int c0, int c1) const
+{
+    const int N=nx*ny;
+    typedef std::pair<double,int> item;
+
+    double zmin=1.0e20;
+    for(int q=0; q<N; ++q)
+    if(!solid[q]) zmin=std::min(zmin,bed[q]);
+
+    vector<double> dist(N,1.0e300);
+    vector<int> pred(N,-1);
+    std::priority_queue<item,vector<item>,std::greater<item>> pq;
+    dist[c0]=0.0;
+    pq.push(item(0.0,c0));
+    while(!pq.empty())
+    {
+        const item it=pq.top();
+        pq.pop();
+        const int q=it.second;
+        if(it.first>dist[q]) continue;
+        if(q==c1) break;
+        const int qi=q%nx, qj=q/nx;
+        for(int dj=-1; dj<=1; ++dj)
+        for(int di=-1; di<=1; ++di)
+        {
+            if(di==0 && dj==0) continue;
+            const int ii=qi+di, jj=qj+dj;
+            if(ii<0 || ii>=nx || jj<0 || jj>=ny) continue;
+            const int r=id(ii,jj);
+            if(solid[r]) continue;
+            const double L=(di!=0 && dj!=0) ? std::sqrt(2.0) : 1.0;
+            const double nd=dist[q]+L*std::exp(std::min((bed[r]-zmin)/2.0,600.0));
+            if(nd<dist[r])
+            {
+                dist[r]=nd;
+                pred[r]=q;
+                pq.push(item(nd,r));
+            }
+        }
+    }
+
+    vector<int> path;
+    if(pred[c1]<0 && c1!=c0)
+    {
+        cout<<"!!! corridor grid: R 10 finds no thalweg between the inflow and the outflow !!!"<<endl;
+        exit(1);
+    }
+    for(int q=c1; q>=0; q=pred[q])
+    {
+        path.push_back(q);
+        if(q==c0) break;
+    }
+    std::reverse(path.begin(),path.end());
+    return path;
+}
+
+// lowest cell near cell c: on the raster edge the lowest cell of the run of cells below the level wl along
+// that edge that holds c (the wet edge run of the centreline), elsewhere within 200 m of c
+int corridor::lowest_near(int c, double wl) const
+{
+    const int ci=c%nx, cj=c/nx;
+    const bool ei=(ci==0 || ci==nx-1), ej=(cj==0 || cj==ny-1);
+    int best=c;
+
+    if(ei || ej)
+    {
+        // walk along the edge in both directions
+        const int n = ei ? ny : nx;
+        const int k0 = ei ? cj : ci;
+        auto at=[&](int k){ return ei ? id(ci,k) : id(k,cj); };
+        for(int dir=-1; dir<=1; dir+=2)
+        for(int k=k0; k>=0 && k<n; k+=dir)
+        {
+            const int q=at(k);
+            if(solid[q] || (k!=k0 && bed[q]>=wl))
+            break;
+            if(bed[q]<bed[best])
+            best=q;
+        }
+        return best;
+    }
+
+    const int r=int(std::ceil(200.0/h));
+    for(int jj=std::max(cj-r,0); jj<=std::min(cj+r,ny-1); ++jj)
+    for(int ii=std::max(ci-r,0); ii<=std::min(ci+r,nx-1); ++ii)
+    {
+        const int q=id(ii,jj);
+        if((ii-ci)*(ii-ci)+(jj-cj)*(jj-cj)<=r*r && !solid[q] && bed[q]<bed[best])
+        best=q;
+    }
+    return best;
+}
+
+// river bed level for R 10 (sloping rivers), a height-above-the-river reference:
+//   1 thalweg  (corridor::thalweg) from the centreline (R 10 without R 7), or between the lowest cells
+//              near the ends of the given centreline (R 7 1: within 200 m, or the edge cell itself)
+//   2 profile  bed along the thalweg, smoothed over 200 m of its length (pools, saddles, bridges)
+//   3 field    every raster cell takes the profile level of its nearest thalweg cell (Dijkstra over the
+//              raster, 8 neighbours), solid cells included
+void corridor::river_level(vector<double> &zr) const
+{
+    const int N=nx*ny, ns=int(cx.size());
+    typedef std::pair<double,int> item;
+
+    vector<int> path=tpath;
+    if(path.empty())
+    {
+        const int a=cell(cx[0],cy[0]), b=cell(cx[ns-1],cy[ns-1]);
+        if(a<0 || b<0)
+        {
+            cout<<"!!! corridor grid: R 10, the centreline ends lie outside the raster !!!"<<endl;
+            exit(1);
+        }
+        path=thalweg(lowest_near(a,-1.0e20),lowest_near(b,-1.0e20));
+    }
+
+    // 2 profile, Gaussian over 200 m of the thalweg length
+    const int np=int(path.size());
+    vector<double> sp(np,0.0), zp(np), zs(np);
+    for(int k=0; k<np; ++k)
+    {
+        zp[k]=bed[path[k]];
+        if(k>0)
+        sp[k]=sp[k-1]+h*std::hypot(double(path[k]%nx-path[k-1]%nx),double(path[k]/nx-path[k-1]/nx));
+    }
+    {
+        const double sg=200.0;
+        int lo=0, hi=0;
+        for(int k=0; k<np; ++k)
+        {
+            while(sp[k]-sp[lo]>3.0*sg) ++lo;
+            while(hi<np-1 && sp[hi+1]-sp[k]<=3.0*sg) ++hi;
+            double wz=0.0, ws=0.0;
+            for(int m=lo; m<=hi; ++m)
+            {
+                const double w=std::exp(-0.5*(sp[m]-sp[k])*(sp[m]-sp[k])/(sg*sg));
+                wz+=w*zp[m]; ws+=w;
+            }
+            zs[k]=wz/ws;
+        }
+    }
+
+    // 3 field: level of the nearest thalweg cell
+    zr.assign(N,-1.0e20);
+    {
+        vector<double> d(N,1.0e300);
+        std::priority_queue<item,vector<item>,std::greater<item>> pq;
+        for(int k=0; k<np; ++k)
+        {
+            d[path[k]]=0.0;
+            zr[path[k]]=zs[k];
+            pq.push(item(0.0,path[k]));
+        }
+        while(!pq.empty())
+        {
+            const item it=pq.top();
+            pq.pop();
+            const int q=it.second;
+            if(it.first>d[q]) continue;
+            const int qi=q%nx, qj=q/nx;
+            for(int dj=-1; dj<=1; ++dj)
+            for(int di=-1; di<=1; ++di)
+            {
+                if(di==0 && dj==0) continue;
+                const int ii=qi+di, jj=qj+dj;
+                if(ii<0 || ii>=nx || jj<0 || jj>=ny) continue;
+                const int r=id(ii,jj);
+                const double nd=d[q]+((di!=0 && dj!=0) ? std::sqrt(2.0) : 1.0);
+                if(nd<d[r])
+                {
+                    d[r]=nd;
+                    zr[r]=zr[q];
+                    pq.push(item(nd,r));
+                }
+            }
+        }
+    }
+
+    cout<<"corridor grid: thalweg "<<sp.back()<<" m, river bed level "<<zs.front()<<" m at the inflow, "<<zs.back()
+        <<" m at the outflow (R 10)"<<endl;
+}
+
+// corridor region: envelope of R 3 wl (or R 10: river bed level + H) + margin, islands filled, inlets removed, banks smoothed,
 // cut square to the channel at the first and last station whose cross-section fits the raster
 void corridor::region(lexer *p)
 {
@@ -120,8 +305,19 @@ void corridor::region(lexer *p)
     vector<double> d;
 
     env.assign(N,0);
+
+    if(p->R10==0)
     for(int q=0; q<N; ++q)
     env[q] = (bed[q]<p->R3_wl && !solid[q]);
+
+    // R 10 H: corridor relative to the river, the bed below the river bed level of the nearest station + H
+    if(p->R10==1)
+    {
+        vector<double> zr;
+        river_level(zr);
+        for(int q=0; q<N; ++q)
+        env[q] = (zr[q]>-1.0e19 && bed[q]<zr[q]+p->R10_H && !solid[q]);
+    }
 
     main_component(env,4);
     fill_holes(env);

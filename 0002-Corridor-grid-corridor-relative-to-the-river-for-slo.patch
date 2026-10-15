@@ -1,0 +1,382 @@
+From 904836d5281374625c33d59e2df8f9f721f60a4c Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 15 Oct 2026 08:58:07 +0200
+Subject: [PATCH] Corridor grid: corridor relative to the river for sloping
+ rivers (R 10)
+
+R 10 H builds the corridor of the curvilinear corridor grid from the bed
+less than H above the river instead of the bed below one level (R 3 wl).
+With one level, a sloping river (Lenne: 20 m drop over 8.4 km) gets
+either a corridor that is only the channel upstream or one that takes
+the whole valley floor downstream.
+
+- thalweg: least-cost path over the bed (cost exp((z - zmin)/2 m) per
+  length) between the lowest cells of the two wet edge runs (below R 2)
+  on the inflow and outflow sides; with R 10 this path, smoothed over
+  R 8, is also the centreline (with R 7 1 the given line stays the
+  centreline and the thalweg runs between the lowest cells near its
+  ends)
+- river bed level: the bed along the thalweg smoothed over 200 m of its
+  length (pools, saddles, bridges), at every raster cell the level of
+  its nearest thalweg cell
+- corridor: bed below that level + H, then as before (main component,
+  holes filled, dry margin R 3 m, side inlets R 5, cuts at the ends)
+
+Without R 10 the corridor grid is unchanged (Lenne setup with R 3 and
+the 26 curvilinear and multi-block SFLOW/NHFLOW regression cases of
+REEF3D: grids and results bitwise identical).
+
+Lenne, R 3 130 5 -> R 10 10, R 8 50, R 4 0 140: 3.47 -> 2.49 km2,
+249k -> 164k columns, widths in the middle reach 220-310 m -> 65-190 m,
+the 400 m3/s flood area (F 65 2) still inside, no folded cells, max
+non-orthogonality 49 deg.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01SNSbKfgx2N4udXVThPoqfD
+---
+ src/corridor.cpp      | 198 +++++++++++++++++++++++++++++++++++++++++-
+ src/corridor.h        |   8 +-
+ src/corridor_grid.cpp |   5 +-
+ src/corridor_path.cpp |  14 +++
+ src/ini.cpp           |   2 +
+ src/lexer.h           |   2 +
+ src/read_control.cpp  |   4 +
+ 7 files changed, 230 insertions(+), 3 deletions(-)
+
+diff --git a/src/corridor.cpp b/src/corridor.cpp
+index 4cd4928..4ef9565 100644
+--- a/src/corridor.cpp
++++ b/src/corridor.cpp
+@@ -28,6 +28,8 @@ Author: Hans Bihs
+ #include<algorithm>
+ #include<iostream>
+ #include<cstdlib>
++#include<queue>
++#include<vector>
+ 
+ corridor::corridor(lexer *p, dive *a) : nx(0),ny(0),x0(0.0),y0(0.0),h(1.0),ni(0),nj(0)
+ {
+@@ -112,7 +114,190 @@ double corridor::reach(int q, double sign) const
+     return r;
+ }
+ 
+-// corridor region: envelope of R 3 wl + margin, islands filled, inlets removed, banks smoothed,
++// thalweg: least-cost path over the bed between two raster cells, cost exp((z - zmin)/2 m) per length
++vector<int> corridor::thalweg(int c0, int c1) const
++{
++    const int N=nx*ny;
++    typedef std::pair<double,int> item;
++
++    double zmin=1.0e20;
++    for(int q=0; q<N; ++q)
++    if(!solid[q]) zmin=std::min(zmin,bed[q]);
++
++    vector<double> dist(N,1.0e300);
++    vector<int> pred(N,-1);
++    std::priority_queue<item,vector<item>,std::greater<item>> pq;
++    dist[c0]=0.0;
++    pq.push(item(0.0,c0));
++    while(!pq.empty())
++    {
++        const item it=pq.top();
++        pq.pop();
++        const int q=it.second;
++        if(it.first>dist[q]) continue;
++        if(q==c1) break;
++        const int qi=q%nx, qj=q/nx;
++        for(int dj=-1; dj<=1; ++dj)
++        for(int di=-1; di<=1; ++di)
++        {
++            if(di==0 && dj==0) continue;
++            const int ii=qi+di, jj=qj+dj;
++            if(ii<0 || ii>=nx || jj<0 || jj>=ny) continue;
++            const int r=id(ii,jj);
++            if(solid[r]) continue;
++            const double L=(di!=0 && dj!=0) ? std::sqrt(2.0) : 1.0;
++            const double nd=dist[q]+L*std::exp(std::min((bed[r]-zmin)/2.0,600.0));
++            if(nd<dist[r])
++            {
++                dist[r]=nd;
++                pred[r]=q;
++                pq.push(item(nd,r));
++            }
++        }
++    }
++
++    vector<int> path;
++    if(pred[c1]<0 && c1!=c0)
++    {
++        cout<<"!!! corridor grid: R 10 finds no thalweg between the inflow and the outflow !!!"<<endl;
++        exit(1);
++    }
++    for(int q=c1; q>=0; q=pred[q])
++    {
++        path.push_back(q);
++        if(q==c0) break;
++    }
++    std::reverse(path.begin(),path.end());
++    return path;
++}
++
++// lowest cell near cell c: on the raster edge the lowest cell of the run of cells below the level wl along
++// that edge that holds c (the wet edge run of the centreline), elsewhere within 200 m of c
++int corridor::lowest_near(int c, double wl) const
++{
++    const int ci=c%nx, cj=c/nx;
++    const bool ei=(ci==0 || ci==nx-1), ej=(cj==0 || cj==ny-1);
++    int best=c;
++
++    if(ei || ej)
++    {
++        // walk along the edge in both directions
++        const int n = ei ? ny : nx;
++        const int k0 = ei ? cj : ci;
++        auto at=[&](int k){ return ei ? id(ci,k) : id(k,cj); };
++        for(int dir=-1; dir<=1; dir+=2)
++        for(int k=k0; k>=0 && k<n; k+=dir)
++        {
++            const int q=at(k);
++            if(solid[q] || (k!=k0 && bed[q]>=wl))
++            break;
++            if(bed[q]<bed[best])
++            best=q;
++        }
++        return best;
++    }
++
++    const int r=int(std::ceil(200.0/h));
++    for(int jj=std::max(cj-r,0); jj<=std::min(cj+r,ny-1); ++jj)
++    for(int ii=std::max(ci-r,0); ii<=std::min(ci+r,nx-1); ++ii)
++    {
++        const int q=id(ii,jj);
++        if((ii-ci)*(ii-ci)+(jj-cj)*(jj-cj)<=r*r && !solid[q] && bed[q]<bed[best])
++        best=q;
++    }
++    return best;
++}
++
++// river bed level for R 10 (sloping rivers), a height-above-the-river reference:
++//   1 thalweg  (corridor::thalweg) from the centreline (R 10 without R 7), or between the lowest cells
++//              near the ends of the given centreline (R 7 1: within 200 m, or the edge cell itself)
++//   2 profile  bed along the thalweg, smoothed over 200 m of its length (pools, saddles, bridges)
++//   3 field    every raster cell takes the profile level of its nearest thalweg cell (Dijkstra over the
++//              raster, 8 neighbours), solid cells included
++void corridor::river_level(vector<double> &zr) const
++{
++    const int N=nx*ny, ns=int(cx.size());
++    typedef std::pair<double,int> item;
++
++    vector<int> path=tpath;
++    if(path.empty())
++    {
++        const int a=cell(cx[0],cy[0]), b=cell(cx[ns-1],cy[ns-1]);
++        if(a<0 || b<0)
++        {
++            cout<<"!!! corridor grid: R 10, the centreline ends lie outside the raster !!!"<<endl;
++            exit(1);
++        }
++        path=thalweg(lowest_near(a,-1.0e20),lowest_near(b,-1.0e20));
++    }
++
++    // 2 profile, Gaussian over 200 m of the thalweg length
++    const int np=int(path.size());
++    vector<double> sp(np,0.0), zp(np), zs(np);
++    for(int k=0; k<np; ++k)
++    {
++        zp[k]=bed[path[k]];
++        if(k>0)
++        sp[k]=sp[k-1]+h*std::hypot(double(path[k]%nx-path[k-1]%nx),double(path[k]/nx-path[k-1]/nx));
++    }
++    {
++        const double sg=200.0;
++        int lo=0, hi=0;
++        for(int k=0; k<np; ++k)
++        {
++            while(sp[k]-sp[lo]>3.0*sg) ++lo;
++            while(hi<np-1 && sp[hi+1]-sp[k]<=3.0*sg) ++hi;
++            double wz=0.0, ws=0.0;
++            for(int m=lo; m<=hi; ++m)
++            {
++                const double w=std::exp(-0.5*(sp[m]-sp[k])*(sp[m]-sp[k])/(sg*sg));
++                wz+=w*zp[m]; ws+=w;
++            }
++            zs[k]=wz/ws;
++        }
++    }
++
++    // 3 field: level of the nearest thalweg cell
++    zr.assign(N,-1.0e20);
++    {
++        vector<double> d(N,1.0e300);
++        std::priority_queue<item,vector<item>,std::greater<item>> pq;
++        for(int k=0; k<np; ++k)
++        {
++            d[path[k]]=0.0;
++            zr[path[k]]=zs[k];
++            pq.push(item(0.0,path[k]));
++        }
++        while(!pq.empty())
++        {
++            const item it=pq.top();
++            pq.pop();
++            const int q=it.second;
++            if(it.first>d[q]) continue;
++            const int qi=q%nx, qj=q/nx;
++            for(int dj=-1; dj<=1; ++dj)
++            for(int di=-1; di<=1; ++di)
++            {
++                if(di==0 && dj==0) continue;
++                const int ii=qi+di, jj=qj+dj;
++                if(ii<0 || ii>=nx || jj<0 || jj>=ny) continue;
++                const int r=id(ii,jj);
++                const double nd=d[q]+((di!=0 && dj!=0) ? std::sqrt(2.0) : 1.0);
++                if(nd<d[r])
++                {
++                    d[r]=nd;
++                    zr[r]=zr[q];
++                    pq.push(item(nd,r));
++                }
++            }
++        }
++    }
++
++    cout<<"corridor grid: thalweg "<<sp.back()<<" m, river bed level "<<zs.front()<<" m at the inflow, "<<zs.back()
++        <<" m at the outflow (R 10)"<<endl;
++}
++
++// corridor region: envelope of R 3 wl (or R 10: river bed level + H) + margin, islands filled, inlets removed, banks smoothed,
+ // cut square to the channel at the first and last station whose cross-section fits the raster
+ void corridor::region(lexer *p)
+ {
+@@ -120,9 +305,20 @@ void corridor::region(lexer *p)
+     vector<double> d;
+ 
+     env.assign(N,0);
++
++    if(p->R10==0)
+     for(int q=0; q<N; ++q)
+     env[q] = (bed[q]<p->R3_wl && !solid[q]);
+ 
++    // R 10 H: corridor relative to the river, the bed below the river bed level of the nearest station + H
++    if(p->R10==1)
++    {
++        vector<double> zr;
++        river_level(zr);
++        for(int q=0; q<N; ++q)
++        env[q] = (zr[q]>-1.0e19 && bed[q]<zr[q]+p->R10_H && !solid[q]);
++    }
++
+     main_component(env,4);
+     fill_holes(env);
+ 
+diff --git a/src/corridor.h b/src/corridor.h
+index b010861..c52386e 100644
+--- a/src/corridor.h
++++ b/src/corridor.h
+@@ -42,7 +42,9 @@ using namespace std;
+ //                  with R 7 1 the polyline in corridor-centreline.dat (x y, inflow to outflow)
+ //   2 corridor     area below R 3 wl (connected to the river) plus a dry margin of R 3 m, islands
+ //                  filled, side inlets narrower than 2 x R 5 removed, banks smoothed; cut square
+-//                  to the channel near the domain edges
++//                  to the channel near the domain edges. R 10 H (sloping rivers): instead of the level
++//                  R 3 wl the bed less than H above the river: the bed level along the thalweg (least-
++//                  cost path over the bed), smoothed over 200 m, at the nearest thalweg cell
+ //   3 harmonic grid  phi = 0/1 at the two cuts (Neumann on the banks) gives the cross-sections,
+ //                  psi = 0/1 on the right/left bank (Neumann at the cuts) the along-channel lines;
+ //                  phi levels uniform in centreline arc length; nodes traced along the phi levels
+@@ -101,6 +103,10 @@ private:
+     vector<char> env, R;
+     double reach(int q, double sign) const;
+     void region(lexer*);
++    void river_level(vector<double>&) const;      // R 10: river bed level at the nearest thalweg cell
++    vector<int> thalweg(int c0, int c1) const;    // R 10: least-cost path over the bed
++    int lowest_near(int c, double wl) const;    // lowest cell of the wet edge run (below wl) or within 200 m
++    vector<int> tpath;                            // R 10 without R 7: the thalweg, also the centreline
+     vector<double> cut_t[2], cut_n[2];
+     double cut_L[2];
+ 
+diff --git a/src/corridor_grid.cpp b/src/corridor_grid.cpp
+index db0c393..2061b3e 100644
+--- a/src/corridor_grid.cpp
++++ b/src/corridor_grid.cpp
+@@ -226,7 +226,10 @@ void corridor::quality_and_output(lexer *p, dive *a)
+     {
+         std::ofstream log("DIVEMesh_Log/corridor.log");
+         log<<st.str();
+-        log<<"  R 2 "<<p->R2<<"  R 3 "<<p->R3_wl<<" "<<p->R3_m<<"  R 4 "<<ni<<" "<<nj<<"  R 5 "<<p->R5
++        log<<"  R 2 "<<p->R2<<"  R 3 "<<p->R3_wl<<" "<<p->R3_m;
++        if(p->R10==1)
++        log<<"  R 10 "<<p->R10_H;
++        log<<"  R 4 "<<ni<<" "<<nj<<"  R 5 "<<p->R5
+            <<"  R 6 "<<p->R6<<"  R 7 "<<p->R7<<"  R 8 "<<p->R8<<"  raster "<<nx<<" x "<<ny<<", h "<<h<<"\n";
+     }
+ 
+diff --git a/src/corridor_path.cpp b/src/corridor_path.cpp
+index 563fc2b..b7ddeef 100644
+--- a/src/corridor_path.cpp
++++ b/src/corridor_path.cpp
+@@ -149,6 +149,20 @@ void corridor::centreline(lexer *p)
+     int s0,s1;
+     side_runs(m,s0,s1,p);
+ 
++    // R 10 (sloping rivers): the centreline is the thalweg between the lowest cells of the two wet
++    // edge runs (below R 2), smoothed over R 8
++    if(p->R10==1)
++    {
++        tpath=thalweg(lowest_near(s0,p->R2),lowest_near(s1,p->R2));
++        for(int q : tpath)
++        {
++            px.push_back(x0+(q%nx)*h);
++            py.push_back(y0+(q/nx)*h);
++        }
++        stations(px,py,p->R8);
++        return;
++    }
++
+     // Dijkstra on the wet cells, 8 neighbours, cost = length / (distance to the bank + 0.5)^2
+     vector<double> dist(N,1.0e300);
+     vector<int> pred(N,-1);
+diff --git a/src/ini.cpp b/src/ini.cpp
+index e94e799..41d2640 100644
+--- a/src/ini.cpp
++++ b/src/ini.cpp
+@@ -68,6 +68,8 @@ void lexer::ini_default()
+     R20=0;            // int multi-block grid from blocks.dat: 0 off, 1 on (block 0 is the grid of the run)
+     R21=8;            // int ring cells of block 0 on its interface faces (REEF3D: at least EXT + 3)
+     R9=0.0;           // double working raster spacing (0: max(DXM,1 m))
++    R10=0;            // int corridor relative to the river: 0 off (level R 3 wl), 1 bed below the river bed level + R10_H
++    R10_H=0.0;        // double height above the river bed level the corridor holds
+ 
+     C11=21;           // C12
+     C12=21;           // C12
+diff --git a/src/lexer.h b/src/lexer.h
+index 65cf06c..0a0e718 100644
+--- a/src/lexer.h
++++ b/src/lexer.h
+@@ -138,6 +138,8 @@ public:
+     int curv_box;     // R 1 2: second pass, the grid is the logical box of the corridor grid
+     int R20,R21;      // multi-block grid (multiblock.h): R 20 1 blocks.dat, R 21 ring cells
+     double R2,R3_wl,R3_m,R5,R8,R9;
++    int R10;          // corridor relative to the river bed level (R 10 H)
++    double R10_H;
+     int C21,C22,C23;
+ 
+     int D10,D13,D14,D15,D19;
+diff --git a/src/read_control.cpp b/src/read_control.cpp
+index 9d2d842..0a1ed86 100644
+--- a/src/read_control.cpp
++++ b/src/read_control.cpp
+@@ -452,6 +452,10 @@ void lexer::read_control()
+                 case 9: control>>R9;
+                          clear(c,numint);
+                          break;
++                case 10: control>>R10_H;
++                         R10=1;
++                         clear(c,numint);
++                         break;
+                 }
+                 break;
+             case 'S':
+-- 
+2.43.0
+

@@ -452,6 +452,10 @@ void lexer::read_control()
                 case 9: control>>R9;
                          clear(c,numint);
                          break;
+                case 10: control>>R10_H;
+                         R10=1;
+                         clear(c,numint);
+                         break;
                 }
                 break;
             case 'S':

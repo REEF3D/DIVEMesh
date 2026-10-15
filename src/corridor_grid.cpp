@@ -226,7 +226,10 @@ void corridor::quality_and_output(lexer *p, dive *a)
     {
         std::ofstream log("DIVEMesh_Log/corridor.log");
         log<<st.str();
-        log<<"  R 2 "<<p->R2<<"  R 3 "<<p->R3_wl<<" "<<p->R3_m<<"  R 4 "<<ni<<" "<<nj<<"  R 5 "<<p->R5
+        log<<"  R 2 "<<p->R2<<"  R 3 "<<p->R3_wl<<" "<<p->R3_m;
+        if(p->R10==1)
+        log<<"  R 10 "<<p->R10_H;
+        log<<"  R 4 "<<ni<<" "<<nj<<"  R 5 "<<p->R5
            <<"  R 6 "<<p->R6<<"  R 7 "<<p->R7<<"  R 8 "<<p->R8<<"  raster "<<nx<<" x "<<ny<<", h "<<h<<"\n";
     }
 

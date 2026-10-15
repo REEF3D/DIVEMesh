@@ -42,7 +42,9 @@ using namespace std;
 //                  with R 7 1 the polyline in corridor-centreline.dat (x y, inflow to outflow)
 //   2 corridor     area below R 3 wl (connected to the river) plus a dry margin of R 3 m, islands
 //                  filled, side inlets narrower than 2 x R 5 removed, banks smoothed; cut square
-//                  to the channel near the domain edges
+//                  to the channel near the domain edges. R 10 H (sloping rivers): instead of the level
+//                  R 3 wl the bed less than H above the river: the bed level along the thalweg (least-
+//                  cost path over the bed), smoothed over 200 m, at the nearest thalweg cell
 //   3 harmonic grid  phi = 0/1 at the two cuts (Neumann on the banks) gives the cross-sections,
 //                  psi = 0/1 on the right/left bank (Neumann at the cuts) the along-channel lines;
 //                  phi levels uniform in centreline arc length; nodes traced along the phi levels
@@ -101,6 +103,10 @@ private:
     vector<char> env, R;
     double reach(int q, double sign) const;
     void region(lexer*);
+    void river_level(vector<double>&) const;      // R 10: river bed level at the nearest thalweg cell
+    vector<int> thalweg(int c0, int c1) const;    // R 10: least-cost path over the bed
+    int lowest_near(int c, double wl) const;    // lowest cell of the wet edge run (below wl) or within 200 m
+    vector<int> tpath;                            // R 10 without R 7: the thalweg, also the centreline
     vector<double> cut_t[2], cut_n[2];
     double cut_L[2];
 

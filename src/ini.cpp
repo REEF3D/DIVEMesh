@@ -68,6 +68,8 @@ void lexer::ini_default()
     R20=0;            // int multi-block grid from blocks.dat: 0 off, 1 on (block 0 is the grid of the run)
     R21=8;            // int ring cells of block 0 on its interface faces (REEF3D: at least EXT + 3)
     R9=0.0;           // double working raster spacing (0: max(DXM,1 m))
+    R10=0;            // int corridor relative to the river: 0 off (level R 3 wl), 1 bed below the river bed level + R10_H
+    R10_H=0.0;        // double height above the river bed level the corridor holds
 
     C11=21;           // C12
     C12=21;           // C12

@@ -149,6 +149,20 @@ void corridor::centreline(lexer *p)
     int s0,s1;
     side_runs(m,s0,s1,p);
 
+    // R 10 (sloping rivers): the centreline is the thalweg between the lowest cells of the two wet
+    // edge runs (below R 2), smoothed over R 8
+    if(p->R10==1)
+    {
+        tpath=thalweg(lowest_near(s0,p->R2),lowest_near(s1,p->R2));
+        for(int q : tpath)
+        {
+            px.push_back(x0+(q%nx)*h);
+            py.push_back(y0+(q/nx)*h);
+        }
+        stations(px,py,p->R8);
+        return;
+    }
+
     // Dijkstra on the wet cells, 8 neighbours, cost = length / (distance to the bank + 0.5)^2
     vector<double> dist(N,1.0e300);
     vector<int> pred(N,-1);
