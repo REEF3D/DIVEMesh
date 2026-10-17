@@ -110,19 +110,39 @@ bool multiblock::start(lexer *p)
 
     find_interfaces(p);
 
-    // block 0: interfaces over whole faces, a ring of W cells there
+    // block 0: the interfaces of a face (one or several neighbour blocks) over the whole face, a ring of
+    // W cells there
     bool ok = true;
-    for(const seg &S : b[0].segs)
+    for(int f=0; f<4; ++f)
     {
-        if(S.lo!=0 || S.hi!=face_len(S.face,b[0].ni,b[0].nj)-1)
+        const int n = face_len(f,b[0].ni,b[0].nj);
+        vector<int> cov(n,0);
+        int nseg = 0;
+        for(const seg &S : b[0].segs)
+        if(S.face==f)
+        {
+            for(int k=S.lo; k<=S.hi; ++k)
+            ++cov[k];
+            ++nseg;
+        }
+        if(nseg==0)
+        continue;
+        int lo=-1, hi=-1;
+        for(int k=0; k<n; ++k)
+        if(cov[k]!=1)
+        {
+            if(lo<0) lo=k;
+            hi=k;
+        }
+        if(lo>=0)
         {
             ostringstream o;
-            o<<"block 0, face "<<S.face<<": interface with block "<<S.nbr<<" over cells "<<S.lo<<".."<<S.hi
-             <<" only; the interfaces of block 0 (the grid of the run) have to cover whole faces";
+            o<<"block 0, face "<<f<<": cells "<<lo<<".."<<hi<<" without an interface (or with several); the interfaces of "
+             <<"block 0 (the grid of the run) have to cover whole faces";
             msg.push_back(o.str());
             ok = false;
         }
-        b[0].ring[S.face] = W;
+        b[0].ring[f] = W;
     }
 
     // the neighbours reach W cells beyond every face (ring, ghost cells of the other blocks)

@@ -221,7 +221,16 @@ void driver::mb_box(lexer *p, multiblock &mb)
     p->global_orig_x = p->xmin + p->B3_dx;
     p->global_orig_y = p->ymin + p->B3_dy;
 
-    p->C11 = p->C12 = p->C13 = p->C14 = 21;
+    // faces of block 0 with an interface: the outer edge of the ring is a wall; the other faces keep
+    // their boundary types (C 11 -i, C 14 +i, C 13 -j, C 12 +j: in- and outflow of the run)
+    const int ctype[4] = {p->C11,p->C14,p->C13,p->C12};
+    int c[4];
+    for(int f=0; f<4; ++f)
+    c[f] = (mb.b[0].ring[f]>0) ? 21 : ctype[f];
+    p->C11 = c[0];
+    p->C14 = c[1];
+    p->C13 = c[2];
+    p->C12 = c[3];
 
     p->G10 = 0;
     p->D10 = 0;
