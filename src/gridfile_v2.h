@@ -57,6 +57,18 @@ Author: Hans Bihs
 //   GEOB  double[knox*knoy]              geodat bed level (if G 10 > 0)
 //   DATA  double[knox*knoy]              interpolated data (if D 10 > 0)
 //
+// DIVEMesh_Grid/grid-global.dat (M 50 1, 2: one file, REEF3D decomposes, REEF3D M 40)
+//   GHED  int32 nint, int32[nint], int32 ndbl, double[ndbl]   global header and the
+//         decomposition keys (M 11-13, 20, 21, 30, 34, 35, 41, 45)
+//   GFLG  run-length coded cell flags with the margins (knox+2xma)(knoy+2yma)(knoz+2zma), i-j-k
+//   GSOL  run-length coded solid flags, as GFLG (M 20 2)
+//   GSLF  run-length coded column flags with the margins (knox+2xma)(knoy+2yma), i-j
+//   NODE  double XN[knox+1+2*marge], YN[...], ZN[...]
+//   SURF  table(nsurf x 5)               i j k side group, global indices
+//   MANP  int32 M 31[M30_x-1], M 32[M30_y-1], M 33[M30_z-1]   (M 20 4)
+//   WBOX  double[7*M34]                  weight boxes (M 20 5)
+//   GEOB, DATA as above, all columns
+//
 // The layout of the HEAD and GHDR int/double lists is fixed by the version.
 // Unknown sections are skipped by the reader.
 
@@ -68,6 +80,7 @@ namespace gridv2
 {
     const char magic_grid[8] = {'D','M','G','R','I','D','0','2'};
     const char magic_geom[8] = {'D','M','G','E','O','M','0','2'};
+    const char magic_glob[8] = {'D','M','G','L','O','B','0','2'};
     const int version = 2;
     const int endian = 0x01020304;
 

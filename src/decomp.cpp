@@ -74,6 +74,10 @@ void decomp::start(lexer* p, dive* a)
     {
         partition_manual(p,a);
     }
+    else if(p->M20==5)
+    {
+        partition_weighted(p,a);
+    }
 
     partition_verify(p,a);
 

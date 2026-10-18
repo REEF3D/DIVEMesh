@@ -182,6 +182,11 @@ public:
     int M30,M30_x,M30_y,M30_z;
     int *M31,*M32,*M33;
     double M41, M45;
+    double M21;                     // M 20 5: weight of a cell that is not active
+    int M34;                        // M 20 5: weight boxes xs xe ys ye zs ze factor
+    double *M34_xs,*M34_xe,*M34_ys,*M34_ye,*M34_zs,*M34_ze,*M34_f;
+    int M35;                        // M 20 5: 1 the load map of a REEF3D run (REEF3D G 45)
+    int M50;                        // grid files: 0 per rank, 1 global (REEF3D decomposes, M 40), 2 both
 
 
     // solid

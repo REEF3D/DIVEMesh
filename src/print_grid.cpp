@@ -142,8 +142,22 @@ void print_grid::start(lexer* p,dive* a)
         }
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // M 50 1, 2: one global grid file, REEF3D decomposes (REEF3D M 40, dmpart)
+    if(p->M50>=1)
+    {
+        if(!print_global(p,a))
+        {
+            cout<<endl<<"!!! could not write DIVEMesh_Grid/grid-global.dat !!!"<<endl;
+            ++write_errors;
+        }
+    }
+
+    // M 50 1: no grid files per rank
+    const int amax = (p->M50==1) ? 0 : a->mx;
+
     #pragma omp parallel for collapse(3) schedule(dynamic)
-    for(int aa=1;aa<=a->mx;++aa)
+    for(int aa=1;aa<=amax;++aa)
     for(int bb=1;bb<=a->my;++bb)
     for(int cc=1;cc<=a->mz;++cc)
     {
@@ -450,4 +464,131 @@ void print_grid::start(lexer* p,dive* a)
 
     cout<<"\nprinting complete\n"
         <<"__________________________________________\n"<<endl;
+}
+
+// DIVEMesh_Grid/grid-global.dat: everything REEF3D needs to decompose the grid itself (gridfile_v2.h)
+bool print_grid::print_global(lexer* p, dive* a)
+{
+    gridv2::writer w;
+    size_t pos;
+
+    const int xma=a->xma, yma=a->yma, zma=a->zma;
+    const int NI=a->knox+2*xma, NJ=a->knoy+2*yma, NK=a->knoz+2*zma;
+
+    w.buf.reserve(size_t(1)<<20);
+    w.start(gridv2::magic_glob);
+
+    // GHED
+    pos = w.begin("GHED");
+    {
+        const int iv[] = {a->knox, a->knoy, a->knoz, xma, yma, zma, marge,
+                          p->C11, p->C12, p->C13, p->C14, p->C15, p->C16, p->C21, p->C22, p->C23,
+                          a->i_dir, a->j_dir, a->k_dir, p->D10, p->B6, (p->G10>0 ? 1 : 0),
+                          p->M11, p->M12, p->M13, p->M20, p->M30_x, p->M30_y, p->M30_z, p->M34, p->M35, p->M10,
+                          a->surfcount};
+        const int nint = int(sizeof(iv)/sizeof(int));
+        w.put_int(nint);
+        for(int q=0;q<nint;++q)
+        w.put_int(iv[q]);
+
+        const double dv[] = {p->DXM, p->DR, p->DS, p->DT, p->xmin, p->ymin, p->zmin, p->xmax, p->ymax, p->zmax,
+                             p->global_orig_x, p->global_orig_y, p->alpha_grid, p->M21, p->M41, p->M45};
+        const int ndbl = int(sizeof(dv)/sizeof(double));
+        w.put_int(ndbl);
+        for(int q=0;q<ndbl;++q)
+        w.put_double(dv[q]);
+    }
+    w.end(pos);
+
+    // GFLG, GSOL: cells with the margins, i-j-k
+    auto cell3 = [&](size_t q, int &ii, int &jj, int &kk)
+    {
+        ii = int(q/(size_t(NJ)*size_t(NK))) - xma;
+        jj = int((q/size_t(NK))%size_t(NJ)) - yma;
+        kk = int(q%size_t(NK)) - zma;
+    };
+
+    pos = w.begin("GFLG");
+    w.put_rle(size_t(NI)*size_t(NJ)*size_t(NK),[&](size_t q){int ii,jj,kk; cell3(q,ii,jj,kk); return a->flag(ii,jj,kk);});
+    w.end(pos);
+
+    pos = w.begin("GSOL");
+    w.put_rle(size_t(NI)*size_t(NJ)*size_t(NK),[&](size_t q){int ii,jj,kk; cell3(q,ii,jj,kk); return a->solid(ii,jj,kk);});
+    w.end(pos);
+
+    // GSLF: columns with the margins, i-j
+    pos = w.begin("GSLF");
+    w.put_rle(size_t(NI)*size_t(NJ),[&](size_t q){return a->flagslice(int(q/size_t(NJ))-xma,int(q%size_t(NJ))-yma);});
+    w.end(pos);
+
+    // NODE
+    pos = w.begin("NODE");
+    for(int q=0;q<a->knox+1+2*marge;++q)
+    w.put_double(p->XN[q]);
+    for(int q=0;q<a->knoy+1+2*marge;++q)
+    w.put_double(p->YN[q]);
+    for(int q=0;q<a->knoz+1+2*marge;++q)
+    w.put_double(p->ZN[q]);
+    w.end(pos);
+
+    // SURF: all boundary surfaces, global indices, in their order
+    pos = w.begin("SURF");
+    w.put_table((long long)a->surfcount,5,[&](long long r, int c){return a->surf[r][c];});
+    w.end(pos);
+
+    // MANP: manual partition (M 20 4)
+    if(p->M20==4)
+    {
+        pos = w.begin("MANP");
+        for(int q=0;q<p->M30_x-1;++q) w.put_int(p->M31[q]);
+        for(int q=0;q<p->M30_y-1;++q) w.put_int(p->M32[q]);
+        for(int q=0;q<p->M30_z-1;++q) w.put_int(p->M33[q]);
+        w.end(pos);
+    }
+
+    // WBOX: weight boxes (M 20 5)
+    if(p->M34>0)
+    {
+        pos = w.begin("WBOX");
+        for(int b=0;b<p->M34;++b)
+        {
+            w.put_double(p->M34_xs[b]); w.put_double(p->M34_xe[b]);
+            w.put_double(p->M34_ys[b]); w.put_double(p->M34_ye[b]);
+            w.put_double(p->M34_zs[b]); w.put_double(p->M34_ze[b]);
+            w.put_double(p->M34_f[b]);
+        }
+        w.end(pos);
+    }
+
+    // GEOB, DATA: all columns
+    if(p->G10>0)
+    {
+        pos = w.begin("GEOB");
+        for(int ii=0;ii<a->knox;++ii)
+        for(int jj=0;jj<a->knoy;++jj)
+        w.put_double(a->geobed(ii,jj));
+        w.end(pos);
+    }
+
+    if(p->D10>0)
+    {
+        pos = w.begin("DATA");
+        for(int ii=0;ii<a->knox;++ii)
+        for(int jj=0;jj<a->knoy;++jj)
+        w.put_double(a->dataset(ii,jj));
+        w.end(pos);
+    }
+
+    w.finish();
+
+    FILE* file = fopen("DIVEMesh_Grid/grid-global.dat","wb");
+    bool ok = (file!=nullptr);
+    if(ok)
+    {
+        ok = (fwrite(w.buf.data(), w.buf.size(), 1, file)==1);
+        ok = (fclose(file)==0) && ok;
+    }
+    if(ok)
+    cout<<" global grid file (M 50 "<<p->M50<<") ";
+    return ok;
 }

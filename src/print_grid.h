@@ -37,6 +37,7 @@ public:
 private:
     void print_debug(lexer*,dive*);
     void print_bottom(lexer*,dive*);
+    bool print_global(lexer*,dive*);    // M 50 1, 2: DIVEMesh_Grid/grid-global.dat
 };
 
 #endif
