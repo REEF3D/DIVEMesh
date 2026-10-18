@@ -403,6 +403,18 @@ void lexer::read_control()
                 case 20: control>>M20;
                          clear(c,numint);
                          break;
+                case 21: control>>M21;
+                         clear(c,numint);
+                         break;
+                case 34: ++M34;
+                         clear(c,numint);
+                         break;
+                case 35: control>>M35;
+                         clear(c,numint);
+                         break;
+                case 50: control>>M50;
+                         clear(c,numint);
+                         break;
                 case 30: control>>M30_x>>M30_y>>M30_z;
                          clear(c,numint);
                          break;
@@ -918,6 +930,14 @@ void lexer::read_control()
     Iarray(M32,M30_y);
     Iarray(M33,M30_z);
 
+    M34_xs = new double[MAX(M34,1)];
+    M34_xe = new double[MAX(M34,1)];
+    M34_ys = new double[MAX(M34,1)];
+    M34_ye = new double[MAX(M34,1)];
+    M34_zs = new double[MAX(M34,1)];
+    M34_ze = new double[MAX(M34,1)];
+    M34_f  = new double[MAX(M34,1)];
+
     S10_xs = new double[S10];
     S10_xe = new double[S10];
     S10_ys = new double[S10];
@@ -1284,6 +1304,7 @@ void lexer::read_control()
     Darray(T340_ds,T340);
 
 
+    int countM34=0;
     int countS10=0;
     int countS11=0;
     int countS12=0;
@@ -1379,6 +1400,11 @@ void lexer::read_control()
             case 33:
                 for(int qn=0;qn<M30_z-1;++qn)
                 control>>M33[qn];
+                        clear(c,numint);
+                        break;
+            case 34:
+                control>>M34_xs[countM34]>>M34_xe[countM34]>>M34_ys[countM34]>>M34_ye[countM34]>>M34_zs[countM34]>>M34_ze[countM34]>>M34_f[countM34];
+                ++countM34;
                         clear(c,numint);
                         break;
             }

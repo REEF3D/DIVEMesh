@@ -197,6 +197,7 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
+      <File Name="decomp_partition_weighted.cpp"/>
       <VirtualDirectory Name="Correction">
         <File Name="decomp_correction_z.cpp"/>
         <File Name="decomp_correction_y.cpp"/>

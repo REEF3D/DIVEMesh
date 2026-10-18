@@ -164,12 +164,17 @@ void lexer::ini_default()
     M12=1;            // int decompose in y-dir
     M13=0;            // int decompose in z-dir
     M20=1;            // int decompossition method
+    M21=0.0;          // double M 20 5: weight of a cell that is not active (solid)
     M30=0;            // int manual partition distribution
+    M30_x=M30_y=M30_z=0; // int M 20 3, 4 (and 5 if given): subdomains in x, y and z
     M31=0;            // int manual partition x-dir
     M32=0;            // int manual partition y-dir
     M33=0;            // int manual partition z-dir
     M41=0.1;          // double variance percentage parameter
     M45=5.0;          // double xvar factor
+    M34=0;            // int M 20 5: number of weight boxes (M 34 xs xe ys ye zs ze factor)
+    M50=0;            // int grid files: 0 one per rank (DIVEMesh_Grid/grid-%06i.dat), 1 one global file (DIVEMesh_Grid/grid-global.dat; REEF3D decomposes the grid itself for any number of ranks), 2 both
+    M35=0;            // int M 20 5: 1 reads the load map of a REEF3D run (loadmap.dat, or REEF3D_<M>_AMR/REEF3D_<M>_AMR_loadmap.dat)
 
     S1 = 0;           // int read STL file
     S2 = 0;           // int auto margins

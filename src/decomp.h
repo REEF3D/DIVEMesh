@@ -51,6 +51,7 @@ private:
     void partition_balance(lexer*,dive*,int);
     void partition_voidcheck(lexer*,dive*);
     void partition_manual(lexer*,dive*);
+    void partition_weighted(lexer*,dive*);
     void partition_input_check(lexer*,dive*);
     void partition_verify(lexer*,dive*);
     void partition_planes(lexer*,dive*);

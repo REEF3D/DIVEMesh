@@ -64,9 +64,9 @@ void decomp::partition_manual(lexer* p,dive* a)
 
 void decomp::partition_input_check(lexer* p, dive* a)
 {
-    if(p->M20<1 || p->M20>4)
+    if(p->M20<1 || p->M20>5)
     {
-        cout<<endl<<"!!! M 20 "<<p->M20<<" is not a decomposition method (1-4) !!!"<<endl<<endl;
+        cout<<endl<<"!!! M 20 "<<p->M20<<" is not a decomposition method (1-5) !!!"<<endl<<endl;
         exit(1);
     }
 
@@ -76,7 +76,7 @@ void decomp::partition_input_check(lexer* p, dive* a)
         exit(1);
     }
 
-    if(p->M20==3 || p->M20==4)
+    if(p->M20==3 || p->M20==4 || (p->M20==5 && (p->M30_x>0 || p->M30_y>0 || p->M30_z>0)))
     {
         if(p->M30_x<1 || p->M30_y<1 || p->M30_z<1 || p->M30_x*p->M30_y*p->M30_z!=p->M10)
         {
