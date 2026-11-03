@@ -44,7 +44,8 @@ Steps:  1. depression filling and flow directions in one priority flood (Barnes 
         4. hydrology cells of size W 11: area, elevation bands (W 12, equal area), outlet pixel
            (largest upstream area), downstream cell found along the fine flow path from outlet to outlet,
            channel length and slope along that path
-Output: hydro_grid.dat (read by REEF3D, R 100), DIVEMesh_Hydro/hydro_cells.vtk, hydro_network.vtk,
+Output: hydro_grid.dat (version 2: with the fine flow path of every cell; read by REEF3D, R 100),
+        DIVEMesh_Hydro/hydro_cells.vtk, hydro_network.vtk,
         catchment_fine.vtk (W 40 1)
 */
 

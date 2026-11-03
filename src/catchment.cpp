@@ -148,7 +148,7 @@ void catchment::write(lexer *p)
     ofstream f("hydro_grid.dat");
 
     f<<setprecision(12);
-    f<<"REEF3D_HYDRO_GRID 1"<<endl;
+    f<<"REEF3D_HYDRO_GRID 2"<<endl;
     f<<"origin "<<dem.x0<<" "<<dem.y0<<endl;
     f<<"cellsize "<<D<<endl;
     f<<"raster "<<ni<<" "<<nj<<endl;
@@ -182,6 +182,31 @@ void catchment::write(lexer *p)
         const int q=gpix[g];
         const int gid = (g==0) ? 0 : p->W21_id[g-1];
         f<<gid<<" "<<xc(q)<<" "<<yc(q)<<" "<<gcell[g]<<" "<<acc[q]<<" "<<hc[gcell[g]].aup_cells<<endl;
+    }
+
+    // version 2: the fine flow path of every cell, pixel centres from its outlet pixel to the outlet pixel of the
+    // downstream cell (or the last pixel in the catchment); REEF3D finds where it enters an SFLOW grid (R 100 2)
+    f<<"paths "<<hc.size()<<endl;
+    f<<"// id points x1 y1 x2 y2 ..."<<endl;
+    for(size_t n=0; n<hc.size(); ++n)
+    {
+        vector<int> pp(1,hc[n].out);
+        int q=hc[n].out;
+        while(true)
+        {
+            const int m=dn[q];
+            if(m<0 || !inside[m])
+            break;
+            pp.push_back(m);
+            if(cellout[m]>=0)
+            break;
+            q=m;
+        }
+
+        f<<n<<" "<<pp.size();
+        for(int r : pp)
+        f<<" "<<xc(r)<<" "<<yc(r);
+        f<<endl;
     }
 
     cout<<"hydro_grid.dat: "<<hc.size()<<" cells of "<<D<<" m, "<<nb<<" elevation bands, "<<ng<<" gauges"<<endl;
