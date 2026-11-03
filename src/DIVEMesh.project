@@ -20,6 +20,9 @@
     <VirtualDirectory Name="Curvilinear">
       <File Name="corridor.h"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="Hydro">
+      <File Name="catchment.h"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="Porous Structures">
       <File Name="porous.h"/>
     </VirtualDirectory>
@@ -113,6 +116,11 @@
       <File Name="corridor_harmonic.cpp"/>
       <File Name="corridor_path.cpp"/>
       <File Name="corridor_raster.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Hydro">
+      <File Name="catchment.cpp"/>
+      <File Name="catchment_flow.cpp"/>
+      <File Name="catchment_grid.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Porous Structures">
       <File Name="porous.cpp"/>

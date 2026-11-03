@@ -66,6 +66,18 @@ void lexer::ini_default()
     R7=0;             // int 1: centreline from corridor-centreline.dat
     R8=20.0;          // double smoothing length of the centreline
     R20=0;            // int multi-block grid from blocks.dat: 0 off, 1 on (block 0 is the grid of the run)
+
+    W10=0;            // int catchment preprocessing for REEF3D::HYDRO from catchment_dem.asc: 0 off, 1 on -> hydro_grid.dat
+    W11=0.0;          // double size of the hydrology cells [m], at least the DEM pixel size
+    W12=5;            // int elevation bands of equal area per hydrology cell
+    W20=0;            // int outlet of the catchment given (W 20 x y), otherwise every pixel of the DEM
+    W20_x=W20_y=0.0;  // double outlet [m], DEM coordinates
+    W23=0.0;          // double snapping radius of the outlet and gauges to the pixel with the largest upstream area [m]
+    W24=1.0e-4;       // double smallest channel slope [-]
+    W30=0;            // int glacier fraction from catchment_glacier.asc
+    W31=0;            // int lake fraction from catchment_lake.asc
+    W32=0;            // int parameter zones from catchment_zone.asc (integer, majority per cell)
+    W40=0;            // int fine raster output DIVEMesh_Hydro/catchment_fine.vtk
     R21=8;            // int ring cells of block 0 on its interface faces (REEF3D: at least EXT + 3)
     R9=0.0;           // double working raster spacing (0: max(DXM,1 m))
     R10=0;            // int corridor relative to the river: 0 off (level R 3 wl), 1 bed below the river bed level + R10_H

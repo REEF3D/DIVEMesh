@@ -30,7 +30,7 @@ driver::driver()
     cout<<"DIVEMesh (c) 2008-2026 Hans Bihs"<<endl<<endl;
 
     cout<<":: Open-Source Meshing"<<endl<<endl;
-    cout<<endl<<"v_260118" <<endl<<endl;
+    cout<<endl<<"v_261103" <<endl<<endl;
 
     mkdir("./DIVEMesh_Log",0777);
 
@@ -38,6 +38,14 @@ driver::driver()
     p = new lexer();
 
     p->read_input();
+
+    // catchment preprocessing for REEF3D::HYDRO (W 10): hydro_grid.dat, independent of the grid of the run
+    if(p->W10>0)
+    {
+        catchment pcat(p);
+        pcat.start(p);
+    }
+
     p->read_preproc();
 
     // multi-block grid (R 20 1): block 0 with its ring is the grid of the run

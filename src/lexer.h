@@ -27,6 +27,7 @@ Author: Hans Bihs
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<vector>
 #include"resize.h"
 #include"field.h"
 #include"increment.h"
@@ -140,6 +141,12 @@ public:
     double R2,R3_wl,R3_m,R5,R8,R9;
     int R10;          // corridor relative to the river bed level (R 10 H)
     double R10_H;
+
+    // catchment preprocessing for REEF3D::HYDRO (catchment.h)
+    int W10,W12,W20,W30,W31,W32,W40;
+    double W11,W20_x,W20_y,W23,W24;
+    vector<int> W21_id;
+    vector<double> W21_x,W21_y;
     int C21,C22,C23;
 
     int D10,D13,D14,D15,D19;

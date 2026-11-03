@@ -903,6 +903,50 @@ void lexer::read_control()
                          break;
                 }
                 break;
+
+            case 'W': control>>numint;
+                switch(numint)
+                {
+                case 10: control>>W10;
+                         clear(c,numint);
+                         break;
+                case 11: control>>W11;
+                         clear(c,numint);
+                         break;
+                case 12: control>>W12;
+                         clear(c,numint);
+                         break;
+                case 20: control>>W20_x>>W20_y;
+                         W20=1;
+                         clear(c,numint);
+                         break;
+                case 21: {int gid; double gx,gy;
+                         control>>gid>>gx>>gy;
+                         W21_id.push_back(gid);
+                         W21_x.push_back(gx);
+                         W21_y.push_back(gy);}
+                         clear(c,numint);
+                         break;
+                case 23: control>>W23;
+                         clear(c,numint);
+                         break;
+                case 24: control>>W24;
+                         clear(c,numint);
+                         break;
+                case 30: control>>W30;
+                         clear(c,numint);
+                         break;
+                case 31: control>>W31;
+                         clear(c,numint);
+                         break;
+                case 32: control>>W32;
+                         clear(c,numint);
+                         break;
+                case 40: control>>W40;
+                         clear(c,numint);
+                         break;
+                }
+                break;
             }
             ++count;
         }
