@@ -39,6 +39,9 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
     double u,v,w;
     double denom;
     double psi = 1.0e-8*p->DXM;
+    // the two offsets of the ray differ (irrational ratio): with equal offsets the ray stayed on a triangle
+    // edge at 45 deg to the grid (the diagonal of a wedge face) and missed both triangles
+    double psi2 = 0.7548776662*psi;
 
     for(n=ts; n<te; ++n)
     {
@@ -90,11 +93,11 @@ void geometry::ray_cast_z(lexer* p, dive* a, int ts, int te, intfield &flag, fie
         for(j=js;j<je;j++)
         {
             Px = p->XP[IP]+psi;
-            Py = p->YP[JP]+psi;
+            Py = p->YP[JP]+psi2;
             Pz = p->zmin-10.0*p->DXM ;
 
             Qx = p->XP[IP]+psi;
-            Qy = p->YP[JP]+psi;
+            Qy = p->YP[JP]+psi2;
             Qz = p->zmax+10.0*p->DXM ;
 
             PQx = Qx-Px;
