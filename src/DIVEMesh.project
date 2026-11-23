@@ -205,12 +205,8 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Decomposition">
-      <File Name="decomp_partition_weighted.cpp"/>
+      <File Name="decomp_partition_auto.cpp"/>
       <VirtualDirectory Name="Correction">
-        <File Name="decomp_correction_z.cpp"/>
-        <File Name="decomp_correction_y.cpp"/>
-        <File Name="decomp_correction_x.cpp"/>
-        <File Name="decomp_correction.cpp"/>
       </VirtualDirectory>
       <File Name="decomp_partition_planes.cpp"/>
       <File Name="decomp_vtp.cpp"/>
@@ -224,7 +220,6 @@
       <File Name="decomp_periodic.cpp"/>
       <File Name="decomp_surface.cpp"/>
       <File Name="decomp_partition.cpp"/>
-      <File Name="decomp_analyse.cpp"/>
       <File Name="decomp_costfunc.cpp"/>
       <File Name="decomp_paraslice.cpp"/>
     </VirtualDirectory>

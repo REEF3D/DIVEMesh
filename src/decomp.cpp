@@ -46,22 +46,16 @@ void decomp::start(lexer* p, dive* a)
 
     partition_input_check(p,a);
 
+    // M 20 2 and 5 are retired: the automatic partition of M 20 1 chooses by the load
+    if(p->M20==2 || p->M20==5)
+    {
+        cout<<"M 20 "<<p->M20<<" is no longer used: M 20 1, the partition is chosen automatically"<<endl;
+        p->M20 = 1;
+    }
+
     if(p->M20==1)
     {
-        nodecalc(p,a);
-        costfunc(p,a);
-        partition(p,a);
-    }
-    else if(p->M20==2)
-    {
-        nodecalc(p,a);
-        costfunc(p,a);
-        partition_analyse(p,a);
-        nodecalc(p,a);
-        costfunc(p,a);
-        partition(p,a);
-        partition_correction(p,a);
-        partition_voidcheck(p,a);
+        partition_auto(p,a);
     }
     else if(p->M20==3)
     {
@@ -73,10 +67,6 @@ void decomp::start(lexer* p, dive* a)
     else if(p->M20==4)
     {
         partition_manual(p,a);
-    }
-    else if(p->M20==5)
-    {
-        partition_weighted(p,a);
     }
 
     partition_verify(p,a);

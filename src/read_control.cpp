@@ -403,13 +403,10 @@ void lexer::read_control()
                 case 20: control>>M20;
                          clear(c,numint);
                          break;
-                case 21: control>>M21;
-                         clear(c,numint);
-                         break;
-                case 34: ++M34;
-                         clear(c,numint);
-                         break;
-                case 35: control>>M35;
+                case 21:
+                case 34:
+                case 35: cout<<"control.txt: M "<<numint<<" is no longer used and is ignored (M 20 1 chooses the partition by the load)"<<endl;
+                         control.ignore(numeric_limits<streamsize>::max(), '\n');
                          clear(c,numint);
                          break;
                 case 50: control>>M50;
@@ -418,10 +415,9 @@ void lexer::read_control()
                 case 30: control>>M30_x>>M30_y>>M30_z;
                          clear(c,numint);
                          break;
-                case 41: control>>M41;
-                         clear(c,numint);
-                         break;
-                case 45: control>>M45;
+                case 41:
+                case 45: cout<<"control.txt: M "<<numint<<" is no longer used and is ignored (M 20 1 chooses the partition by the load)"<<endl;
+                         control.ignore(numeric_limits<streamsize>::max(), '\n');
                          clear(c,numint);
                          break;
                 }
@@ -1447,8 +1443,7 @@ void lexer::read_control()
                         clear(c,numint);
                         break;
             case 34:
-                control>>M34_xs[countM34]>>M34_xe[countM34]>>M34_ys[countM34]>>M34_ye[countM34]>>M34_zs[countM34]>>M34_ze[countM34]>>M34_f[countM34];
-                ++countM34;
+                control.ignore(numeric_limits<streamsize>::max(), '\n');
                         clear(c,numint);
                         break;
             }
