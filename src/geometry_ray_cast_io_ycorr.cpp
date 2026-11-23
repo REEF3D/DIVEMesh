@@ -41,6 +41,9 @@ void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te, intfield &fl
     double u,v,w;
     double denom;
     double psi = 1.0e-8*p->DXM;
+    // the two offsets of the ray differ (irrational ratio): with equal offsets the ray stayed on a triangle
+    // edge at 45 deg to the grid (the diagonal of a wedge face) and missed both triangles
+    double psi2 = 0.7548776662*psi;
 
 
     MALOOP
@@ -99,11 +102,11 @@ void geometry::ray_cast_io_ycorr(lexer* p, dive* a, int ts, int te, intfield &fl
         {
             Px = p->XP[IP]+psi;
             Py = p->ymin-10.0*p->DXM ;
-            Pz = p->ZP[KP]+psi;
+            Pz = p->ZP[KP]+psi2;
 
             Qx = p->XP[IP]+psi;
             Qy = p->ymax+10.0*p->DXM ;
-            Qz = p->ZP[KP]+psi;
+            Qz = p->ZP[KP]+psi2;
 
 
             PQx = Qx-Px;
