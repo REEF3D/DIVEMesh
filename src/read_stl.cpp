@@ -30,8 +30,15 @@ void lexer::read_stl()
     // reopen and read triangles
     ifstream stl("solid.stl", ios_base::in);
 
+    // S 1 without the file: the loops below never reach the end of a stream that did not open
+    if(!stl.is_open())
+    {
+        cout<<endl<<"!!! S 1: solid.stl not found in the case folder !!!"<<endl<<endl;
+        exit(1);
+    }
+
     bool ascii_chk=false;
-    while(!stl.eof())
+    while(stl.good())
     {
         stl>>word;
 
@@ -51,7 +58,7 @@ void lexer::read_stl()
     stl.open("solid.stl", ios_base::in);
 
     count=-1;
-    while(!stl.eof())
+    while(stl.good())
     {
         stl>>word;
 
@@ -174,8 +181,15 @@ void lexer::pre_read_stl()
 
     ifstream stl("solid.stl", ios_base::in);
 
+    // S 1 without the file: the loops below never reach the end of a stream that did not open
+    if(!stl.is_open())
+    {
+        cout<<endl<<"!!! S 1: solid.stl not found in the case folder !!!"<<endl<<endl;
+        exit(1);
+    }
+
     bool ascii_chk=false;
-    while(!stl.eof())
+    while(stl.good())
     {
         stl>>word;
 
@@ -196,7 +210,7 @@ void lexer::pre_read_stl()
     stl.open("solid.stl", ios_base::in);
 
     count=0;
-    while(!stl.eof())
+    while(stl.good())
     {
         stl>>word;
 
@@ -220,7 +234,7 @@ void lexer::pre_read_stl()
     stl.open("solid.stl", ios_base::in);
 
     count=-1;
-    while(!stl.eof())
+    while(stl.good())
     {
         stl>>word;
 
